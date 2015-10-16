@@ -1,0 +1,73 @@
+<ion-view view-title="Organisation Name" class="touch-effect">
+    <div class="row">
+        <div class="bar bar-header">
+        <div class="col-15 col-offset-10">
+            <img class="title-image" src="img/institute_logo.png"/>
+        </div>
+        <div class="col-75">
+            <h1 class="header-title">Institute Name</h1>
+        </div>
+    </div>
+    </div>
+    <div class="row">
+        <div class="tabs-striped tabs-color-positive tabs-top">
+            <div class="tabs tab-align">
+                <a class="tab-item margin-top-10 col-33">
+                    <i class="icon ion-notify"></i>
+                </a>
+                <a class="tab-item margin-top-10 col-33 active">
+                    <i class="icon ion-homie"></i>
+                </a>
+                <a class="tab-item margin-top-10 col-33">
+                    <i class="icon ion-message"></i>
+                </a>
+            </div>
+    </div>
+    </div>
+    
+    <ion-content ng-class="{expanded:$scope.isExpanded}" ng-controller="DashboardCtrl" id="dashboard" class="has-header">
+        <div class="home-dashboard animate-fade-slide-in-right">
+                <div class="row">
+                    <div class="col-33">
+                        <div class="full-width"><img class="dashboard-icon" src="img/1_announcement_shadow.png"/></div>
+                        <span class="full-width">Announcement</span>
+                    </div>
+                    <div class="col-33">
+                        <div class="full-width"><img class="dashboard-icon" src="img/2_homework_shadow.png"/></div>
+                        <span class="full-width">Homework</span>
+                    </div>
+                    <div class="col-33">
+                        <div class="full-width"><img class="dashboard-icon" src="img/3_attendance_shadow.png"/></div>
+                        <span class="full-width">Attendance</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-33">
+                        <div class="full-width"><img class="dashboard-icon" src="img/4_events_shadow.png"/></div>
+                        <span class="full-width">Events</span>
+                    </div>
+                    <div class="col-33">
+                        <div class="full-width"><img class="dashboard-icon" src="img/5_results_shadow.png"/></div>
+                        <span class="full-width">Results</span>
+                    </div>
+                    <div class="col-33">
+                        <div class="full-width"><img class="dashboard-icon" src="img/6_fees_shadow.png"/></div>                        
+                        <span class="full-width">Fees</span>
+                    </div>
+                </div>
+                <div class="row col-offset-17">
+                    <div class="col-33">
+                        <div class="full-width"><img class="dashboard-icon" src="img/6_history_shadow.png"/></div>
+                        <span class="full-width">Student History</span>
+                    </div>
+                    <div class="col-33">
+                        <div class="full-width"><img class="dashboard-icon" src="img/7_about_shadow.png"/></div>
+                        <span class="full-width">About</span>
+                    </div>                    
+                </div>
+            </div>        
+    </ion-content>
+    <div class="bar bar-footer footer-bottom">
+            <div class="footer-title">Powered by Veza</div>
+        </div>
+</ion-view>
