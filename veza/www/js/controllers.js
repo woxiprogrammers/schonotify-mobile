@@ -136,4 +136,71 @@ angular.module('starter.controllers', [])
 
     // Set Ink
     ionicMaterialInk.displayEffect();
+})
+
+.controller('NotificationCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+
+// Set Header
+    $scope.$parent.hideHeader();
+    $ionicSideMenuDelegate.canDragContent(true);
+
+
+    // Set Motion
+    $timeout(function() {
+        ionicMaterialMotion.fadeSlideInRight({
+            startVelocity: 3000
+        });
+    }, 700);
+
+    // Set Ink
+    ionicMaterialInk.displayEffect();
+
+        $scope.nMessages = [{
+            Status: "unRead",
+            Subject: "Notification 1",
+            Message: "The Attendance is Compulsary",
+            Timestamp: "Date: 18 Oct 2015"
+        }, {
+            Status: "unRead",
+            Subject: "Notification 2",
+            Message: "The Attendance is Compulsary",
+            Timestamp: "Date: 17 Oct 2015"
+        }, {
+            Status: "Read",
+            Subject: "Notification 3",
+            Message: "The Attendance is Compulsary",
+            Timestamp: "Date: 15 Oct 2015"
+        },{
+            Status: "Read",
+            Subject: "Notification 4",
+            Message: "The Attendance is Compulsary",
+            Timestamp: "Date: 14 Oct 2015"
+        },{
+            Status: "Read",
+            Subject: "Notification 5",
+            Message: "The Attendance is Compulsary",
+            Timestamp: "Date: 14 Oct 2015"
+        },{
+            Status: "Read",
+            Subject: "Notification 6",
+            Message: "The Attendance is Compulsary",
+            Timestamp: "Date: 11 Oct 2015"
+        },{
+            Status: "Read",
+            Subject: "Notification 7",
+            Message: "The Attendance is Compulsary",
+            Timestamp: "Date: 08 Oct 2015"
+        }];
+
+        $scope.checkAll = function () {
+            if ($scope.selectedAll) {
+                $scope.selectedAll = true;
+            } else {
+                $scope.selectedAll = false;
+            }
+            angular.forEach($scope.nMessages, function (nmsg) {
+                nmsg.Selected = $scope.selectedAll;
+            });
+
+        };
 });

@@ -53,6 +53,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                 controller: 'DashboardCtrl'
             }
         }
+    })
+    .state('app.notification', {
+        url: '/notification',
+        views: {
+           'menuContent': {
+                templateUrl: 'templates/notification.html',
+                controller: 'NotificationCtrl'
+           }
+        }
     });
 
     // if none of the above states are matched, use this as the fallback

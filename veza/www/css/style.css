@@ -134,7 +134,7 @@ margin-top: 10px;
 
 .tab-align{
     left: 0px!important;
-    top: 45px!important;
+    top: 44px!important;
 }
 
 .display-no{
@@ -272,10 +272,73 @@ display: none;
     float: right;
 }
     
-.list .item {
+.sm-item-border {
     border-bottom: 1px solid #fceaf6!important;    
 }
 
 .no-scroll {
     overflow: hidden;
 }
+
+.align-delete-bar{
+    margin-top: 44px;
+}
+
+.tab-align-inner{
+    top: 0px!important;
+}
+
+.padding-0{
+    padding: 0px!important;
+}
+
+.checkboxList{
+    border-style: none;
+}
+
+.checkbox input:before, .checkbox .checkbox-icon:before {
+    border-color: #cccccc;
+}
+
+.align-delete-bin {
+    font-size: 180%;
+   // margin-left: 48px;
+    float: right;
+    margin-right: 28%;
+}
+
+.margin-left-16{
+    margin-left: 16%;
+}
+
+.notify-item-border{
+    border-bottom: 1px solid #636360!important;
+}
+
+.margin-top-48{
+    margin-top: 48px;
+}
+.padding-l-r-5{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.msg-Read p{
+    color: #adabab;
+}
+
+.msg-unRead p{
+    color: black;
+}
+
+.avatar-notify{
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    display: inline-block;
+    height: 56px;
+    right: 16px;
+    position: absolute;
+    width: 56px;
+}
+

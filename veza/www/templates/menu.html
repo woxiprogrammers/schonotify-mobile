@@ -25,24 +25,24 @@
         </ion-header-bar>
         <ion-content class="has-expanded-header">
             <ion-list ng-show="studToggle">
-                <ion-item nav-clear menu-close class="bottom-border" ui-sref="app.dashboard">
+                <ion-item nav-clear menu-close class="sm-item-border" ui-sref="app.dashboard">
                     Home
                 </ion-item> 
-                <ion-item nav-clear menu-close class="bottom-border" ui-sref="app.dashboard" >
+                <ion-item nav-clear menu-close class="sm-item-border" ui-sref="app.dashboard" >
                     Settings
                 </ion-item> 
-                <ion-item nav-clear menu-close class="bottom-border" ui-sref="app.dashboard">
+                <ion-item nav-clear menu-close class="sm-item-border" ui-sref="app.dashboard">
                     App Info
                 </ion-item> 
-                <ion-item nav-clear menu-close class="bottom-border" ui-sref="app.dashboard">
+                <ion-item nav-clear menu-close class="sm-item-border" ui-sref="app.dashboard">
                     Contact
                 </ion-item> 
-                <ion-item nav-clear menu-close class="bottom-border" ng-click="signOut()">
+                <ion-item nav-clear menu-close class="sm-item-border" ng-click="signOut()">
                     Logout
                 </ion-item>                              
             </ion-list>
             <ion-list ng-hide="studToggle">
-                <ion-item nav-clear menu-close class="bottom-border" ng-hide="studToggle">
+                <ion-item nav-clear menu-close class="sm-item-border" ng-hide="studToggle">
                     Salman
                 </ion-item>
                 <ion-item nav-clear menu-close ng-show="studToggle">
@@ -51,4 +51,5 @@
             </ion-list>
         </ion-content>
     </ion-side-menu-content>
+   </ion-side-menu>
 </ion-side-menus>
