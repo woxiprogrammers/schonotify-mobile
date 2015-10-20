@@ -1,0 +1,50 @@
+<ion-view view-title="Notification" name="notify" class="touch-effect">
+<div class="row padding-0">
+        <div class="tabs-striped tabs-color-positive tabs-top">
+            <div class="tabs tab-align-inner">
+                <a class="tab-item margin-top-0">
+                    <i class="icon ion-android-menu" ng-click="toggleLeftSideMenu()"></i>
+                </a>
+                <a class="tab-item margin-top-10 active" ui-sref="app.notification">
+                    <i class="icon ion-notify"></i>
+                </a>
+                <a class="tab-item margin-top-10" ui-sref="app.dashboard">
+                    <i class="icon ion-homie"></i>
+                </a>
+                <a class="tab-item margin-top-10">
+                    <i class="icon ion-message"><span class="badge badge-assertive">3</span></i>
+                </a>
+            </div>
+    	</div>
+    </div>
+    <div class="bar bar-calm bar-header align-delete-bar">
+    		<iion-item class="row">
+    			<div class="row">
+    				<div class="col-25">
+    						<ion-checkbox class="checkbox-square checkboxList checkbox-assertive margin-left-16" ng-model="selectedAll" ng-click="checkAll()">        
+      						</ion-checkbox>    					
+    				</div>
+    				<div class="col-25 col-offset-50">
+    					<a><i class="icon ion-trash-b align-delete-bin"></i></a>
+    				</div>
+    			</div>
+    		</iion-item>
+    </div>
+    <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
+    	<ion-list>
+    		<ion-item class="notify-item-border" ng-repeat="nMsg in nMessages">
+    			<div class="row">
+    				<div class="col-25">
+    					<ion-checkbox class="checkbox-square checkbox-assertive" ng-model="nMsg.Selected">
+    					</ion-checkbox>
+    				</div>
+    				<div class="col-50 msg-{{nMsg.Status}}">
+  							<h2><strong>{{nMsg.Subject}}</strong></h2>
+  							<p>{{nMsg.Message}}<br><strong>{{nMsg.Timestamp}}</strong></p>
+  					</div>
+  					<div class="col-25 avatar-notify profile-bg"></div>
+    			</div>
+    		</ion-item>    		
+    	</ion-list>
+    </ion-content>
+</ion-view>
