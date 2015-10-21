@@ -375,7 +375,8 @@ angular.module('starter.controllers', [])
             Message: "Answer Questions from Textbook",
             Timestamp: "Date: 18 Oct 2015",
             Class: "5th B div",
-            Subject: "Science"
+            Subject: "Science",
+            Attach: "yes"
 
         }, {
             Status: "Read",
@@ -383,14 +384,16 @@ angular.module('starter.controllers', [])
             Message: "Still some answers are remaining",
             Timestamp: "Date: 17 Oct 2015",
             Class: "8th A div",
-            Subject: "Geography"
+            Subject: "Geography",
+            Attach: "no"
         }, {
             Status: "Read",
             Title: "Project Details",
             Message: "Sending project details",
             Timestamp: "Date: 15 Oct 2015",
             Class: "9th C div",
-            Subject: "Maths"
+            Subject: "Maths",
+            Attach: "yes"
         }];
 
         $scope.checkAll = function () {

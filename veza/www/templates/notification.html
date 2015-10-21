@@ -21,7 +21,7 @@
     		<iion-item class="row">
     			<div class="row">
     				<div class="col-25">
-    						<ion-checkbox class="checkbox-square checkboxList checkbox-assertive margin-left-16" ng-model="selectedAll" ng-click="checkAll()">        
+    						<ion-checkbox class="checkbox-square checkboxList checkbox-assertive master-checkbox-align" ng-model="selectedAll" ng-click="checkAll()">
       						</ion-checkbox>    					
     				</div>
     				<div class="col-25 col-offset-50">
@@ -42,7 +42,9 @@
   							<h2><strong>{{nMsg.Subject}}</strong></h2>
   							<p>{{nMsg.Message}}<br><strong>{{nMsg.Timestamp}}</strong></p>
   					</div>
-  					<div class="col-25 avatar-notify profile-bg"></div>
+  					<div class="col-25">
+                        <div class="avatar-notify profile-bg"></div>
+  					</div>
     			</div>
     		</ion-item>    		
     	</ion-list>
