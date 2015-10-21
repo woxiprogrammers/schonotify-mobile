@@ -11,7 +11,7 @@
         <div class="tabs-striped tabs-color-positive tabs-top">
             <div class="tabs tab-align">
                 <a class="tab-item margin-top-0">
-                    <i class="icon ion-navicon" ng-click="toggleLeftSideMenu()"></i>
+                    <i class="icon ion-navicon slide-button" ng-click="toggleLeftSideMenu()"></i>
                 </a>
                 <a class="tab-item margin-top-10" ui-sref="app.notification">
                     <i class="icon ion-notify"></i>
@@ -30,11 +30,11 @@
         <div class="home-dashboard animate-fade-slide-in-right margin-bottom-10">
                 <div class="row">
                     <div class="col-33">
-                        <div class="full-width"><img class="dashboard-icon" src="img/1_announcement_shadow.png"/></div>
+                        <div class="full-width"><img class="dashboard-icon" src="img/1_announcement_shadow.png" ng-click="noticeBoard()"/></div>
                         <span class="full-width">Notice Board</span>
                     </div>
                     <div class="col-33">
-                        <div class="full-width"><img class="dashboard-icon" src="img/2_homework_shadow.png"/></div>
+                        <div class="full-width"><img class="dashboard-icon" src="img/2_homework_shadow.png" ui-sref="app.homework"/></div>
                         <span class="full-width">Homework</span>
                     </div>
                     <div class="col-33">

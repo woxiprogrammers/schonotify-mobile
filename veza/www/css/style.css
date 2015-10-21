@@ -95,6 +95,7 @@ p {
     height: 100%;
     width: 18%;
     background-size:contain;
+    margin-top: 5px!important;
 }
 
 .ion-homie {
@@ -104,6 +105,7 @@ p {
     height: 100%;
     width: 18%;
     background-size:contain;
+    margin-top: 5px!important;
 }
 
 .ion-message {
@@ -113,6 +115,7 @@ p {
     height: 100%;
     width: 18%;
     background-size:contain;
+    margin-top: 5px!important;
 }
 
 .font-black{
@@ -281,7 +284,7 @@ display: none;
 }
 
 .align-delete-bar{
-    margin-top: 44px;
+    margin-top: 52px;
 }
 
 .tab-align-inner{
@@ -300,8 +303,13 @@ display: none;
     border-color: #cccccc;
 }
 
+.slide-button {
+    padding: 5px;
+    color: #444444;
+}
+
 .align-delete-bin {
-    font-size: 180%;
+    font-size: 160%;
    // margin-left: 48px;
     float: right;
     margin-right: 28%;
@@ -316,8 +324,13 @@ display: none;
 }
 
 .margin-top-48{
-    margin-top: 48px;
+    margin-top: 52px;
 }
+.padding-l-r-10{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 .padding-l-r-5{
     padding-left: 5px;
     padding-right: 5px;
@@ -342,3 +355,178 @@ display: none;
     width: 56px;
 }
 
+/*.ion-s-notify {*/
+    /*background: url('../img/home.png') center;*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: 50%;*/
+    /*height: 100%;*/
+    /*width: 18%;*/
+    /*background-size:contain;*/
+    /*margin-top: 5px!important;*/
+/*}*/
+
+/*.ion-s-achievement {*/
+    /*background: url('../img/home.png') center;*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: 50%;*/
+    /*height: 100%;*/
+    /*width: 18%;*/
+    /*background-size:contain;*/
+    /*margin-top: 5px!important;*/
+/*}*/
+
+.priority-high{
+    background-color: #ee1c24;
+}
+.priority-medium{
+    background-color: #ffcb05;
+}
+.priority-low{
+    background-color: #00a651;
+}
+
+.col-offset-15{
+    margin-left: 15%;
+}
+
+.tab-align-inner-inner{
+    top: 8%!important;
+}
+
+.align-delete-bar-divided{
+    margin-top: 27%;
+}
+
+.top-22 {
+    top: 22%;
+}
+
+.padding-5{
+    padding: 5px !important;
+}
+
+.active-inner-black {
+    color: #444;
+    border-style: solid;
+    //border-width: 2px 0 0 0;
+    border-color: #444;
+    background-color: #444!important;
+    max-width: 100%;
+    border-bottom-width: 4px!important;
+}
+
+.ion-annoncement-active {
+    background: url('../img/announcement_0n.png') center;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    height: 100%;
+    width: 18%;
+    background-size:contain;
+    margin-top: 5px!important;
+}
+
+.ion-achievement-active {
+    background: url('../img/achievement_on.png') center;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    height: 100%;
+    width: 18%;
+    background-size:contain;
+    margin-top: 5px!important;
+}
+
+.ion-annoncement {
+    background: url('../img/announcement.png') center;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    height: 100%;
+    width: 18%;
+    background-size:contain;
+    margin-top: 5px!important;
+}
+
+.ion-achievement {
+    background: url('../img/achievement.png') center;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    height: 100%;
+    width: 18%;
+    background-size:contain;
+    margin-top: 5px!important;
+}
+
+.col-5 {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 5%;
+    -moz-box-flex: 0;
+    -moz-flex: 0 0 5%;
+    -ms-flex: 0 0 5%;
+    flex: 0 0 5%;
+    max-width: 5%;
+}
+
+.achievement-text{
+    font-size: 172%;
+    font-weight: 400;
+    color: #444444;
+}
+
+.annoncement-text-active{
+    font-size: 172%;
+    font-weight: 400;
+    color: #ffffff;
+    margin-left: 4px;
+}
+
+.achievement-text-active{
+    font-size: 172%;
+    font-weight: 400;
+    color: #ffffff;
+    margin-left: 4px;
+}
+
+.annoncement-text{
+    font-size: 172%;
+    font-weight: 400;
+    color: #444444;
+}
+
+.fab-button-brown{
+    background-color: #bf3f3f;
+    color: #fff;
+}
+
+.inner-header{
+    color: #ffffff;
+    font-size: 100%;
+    font-weight: bold;
+}
+
+.margin-top-5{margin-top: 5px;}
+
+
+/*********** MEDIA QUERIES ***********/
+
+@media only screen and (min-device-width: 320px) and (orientation : portrait){
+    /* Styles */
+}
+
+@media only screen and (min-device-width: 360px) and (orientation : portrait){
+    /* Styles */
+}
+
+@media only screen and (min-device-width: 380px) and (orientation : portrait){
+    /* Styles */
+}
+
+@media only screen and (min-device-width: 480px) and (orientation : portrait){
+    /* Styles */
+}
+
+@media only screen and (min-device-width: 768px) and (orientation : portrait){
+    /* Styles */
+
+    h1 {
+        text-shadow: 0 0px 0px #000;
+    }
+}
