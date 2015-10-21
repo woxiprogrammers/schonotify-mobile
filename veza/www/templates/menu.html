@@ -7,14 +7,14 @@
     </ion-side-menu-content>
     <ion-side-menu side="left" id="left-menu">
         <ion-header-bar class="side-menu-bg expanded">
-             <ul class="font-black col-90">
+             <ul class="font-black col-90" ng-click="toggleStudent()">
                  <li>
                      <div class="avatar profile-bg"></div>
                  </li>
                  <li>
                      <ul class="profile-uname">
                          <li>Salim Khan</li>
-                         <li ng-click="toggleStudent()">
+                         <li>
                             <span class="float-left">Sohail</span>
                             <i class="ion-chevron-down float-right" ng-show="studToggle"></i>
                             <i class="ion-chevron-up float-right" ng-hide="studToggle"></i>

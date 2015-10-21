@@ -23,19 +23,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="style.css" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="78" column="4" selection-start="1277" selection-end="1277" vertical-scroll-proportion="0.33333334" vertical-offset="854" max-vertical-offset="5235">
+            <state line="504" column="1" selection-start="8434" selection-end="8446" vertical-scroll-proportion="0.0" vertical-offset="6803" max-vertical-offset="8055">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="notification.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/templates/notification.html">
+      <file leaf-file-name="homework-listing.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/templates/homework-listing.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="47" selection-start="1551" selection-end="1551" vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="825">
+            <state line="43" column="38" selection-start="2078" selection-end="2078" vertical-scroll-proportion="-26.875" vertical-offset="0" max-vertical-offset="855">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="shared-notify.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/templates/shared-notify.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="25" column="53" selection-start="1369" selection-end="1400" vertical-scroll-proportion="-4.6875" vertical-offset="0" max-vertical-offset="1005">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="shared-achievement.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/templates/shared-achievement.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="44" column="70" selection-start="2171" selection-end="2171" vertical-scroll-proportion="-27.5" vertical-offset="0" max-vertical-offset="1020">
               <folding />
             </state>
           </provider>
@@ -44,16 +62,34 @@
       <file leaf-file-name="menu.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/templates/menu.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="68" selection-start="1917" selection-end="1917" vertical-scroll-proportion="0.0" vertical-offset="540" max-vertical-offset="915">
+            <state line="9" column="69" selection-start="661" selection-end="661" vertical-scroll-proportion="-5.625" vertical-offset="0" max-vertical-offset="915">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="controllers.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="controllers.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="201" column="20" selection-start="5788" selection-end="5788" vertical-scroll-proportion="0.0" vertical-offset="1169" max-vertical-offset="3165">
+            <state line="389" column="45" selection-start="11731" selection-end="11731" vertical-scroll-proportion="0.78147763" vertical-offset="5084" max-vertical-offset="6180">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dashboard.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/templates/dashboard.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="36" column="129" selection-start="1749" selection-end="1749" vertical-scroll-proportion="-15.0" vertical-offset="180" max-vertical-offset="1200">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/js/app.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="103" column="28" selection-start="3573" selection-end="3581" vertical-scroll-proportion="0.0" vertical-offset="974" max-vertical-offset="1935">
               <folding />
             </state>
           </provider>
@@ -69,12 +105,17 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
+        <option value="$PROJECT_DIR$/www/css/media-resolutions" />
+        <option value="$PROJECT_DIR$/www/templates/notification.html" />
+        <option value="$PROJECT_DIR$/www/templates/menu.html" />
+        <option value="$PROJECT_DIR$/www/templates/shared-achievement.html" />
+        <option value="$PROJECT_DIR$/www/templates/shared-notify.html" />
+        <option value="$PROJECT_DIR$/config.xml" />
         <option value="$PROJECT_DIR$/www/js/app.js" />
         <option value="$PROJECT_DIR$/www/templates/dashboard.html" />
-        <option value="$PROJECT_DIR$/www/js/controllers.js" />
-        <option value="$PROJECT_DIR$/www/templates/menu.html" />
-        <option value="$PROJECT_DIR$/www/templates/notification.html" />
         <option value="$PROJECT_DIR$/www/css/style.css" />
+        <option value="$PROJECT_DIR$/www/templates/homework-listing.html" />
+        <option value="$PROJECT_DIR$/www/js/controllers.js" />
       </list>
     </option>
   </component>
@@ -205,6 +246,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="SearchEverywhereHistory" value="" />
+    <property name="DefaultHtmlFileTemplate" value="Html5" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -274,6 +316,146 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/www/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="395" column="13" selection-start="6310" selection-end="6310" vertical-scroll-proportion="0.0" vertical-offset="5277" max-vertical-offset="6420">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/shared-notify.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="47" selection-start="973" selection-end="973" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="1005">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/notification.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="28" selection-start="916" selection-end="916" vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="825">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/menu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="70" selection-start="2071" selection-end="2091" vertical-scroll-proportion="0.0" vertical-offset="585" max-vertical-offset="915">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="140" column="27" selection-start="3866" selection-end="3866" vertical-scroll-proportion="0.0" vertical-offset="1620" max-vertical-offset="4320">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="34" selection-start="1986" selection-end="2004" vertical-scroll-proportion="0.0" vertical-offset="975" max-vertical-offset="1245">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/dashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="133" selection-start="1458" selection-end="1458" vertical-scroll-proportion="0.0" vertical-offset="480" max-vertical-offset="1200">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="67" selection-start="696" selection-end="715" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="420">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="362" column="1" selection-start="5823" selection-end="5832" vertical-scroll-proportion="0.0" vertical-offset="4719" max-vertical-offset="5700">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/shared-notify.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="77" selection-start="2725" selection-end="2725" vertical-scroll-proportion="0.0" vertical-offset="840" max-vertical-offset="1005">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/notification.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="11" selection-start="2101" selection-end="2101" vertical-scroll-proportion="0.0" vertical-offset="735" max-vertical-offset="825">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/menu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="70" selection-start="2071" selection-end="2091" vertical-scroll-proportion="0.0" vertical-offset="585" max-vertical-offset="915">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="140" column="27" selection-start="3866" selection-end="3866" vertical-scroll-proportion="0.0" vertical-offset="1755" max-vertical-offset="4320">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="34" selection-start="1986" selection-end="2004" vertical-scroll-proportion="0.0" vertical-offset="975" max-vertical-offset="1245">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/dashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="133" selection-start="1458" selection-end="1458" vertical-scroll-proportion="0.0" vertical-offset="480" max-vertical-offset="1200">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="67" selection-start="696" selection-end="715" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="420">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="78" column="4" selection-start="1303" selection-end="1303" vertical-scroll-proportion="0.0" vertical-offset="1170" max-vertical-offset="5250">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/notification.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="47" selection-start="1551" selection-end="1551" vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="825">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/menu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="68" selection-start="1917" selection-end="1917" vertical-scroll-proportion="0.0" vertical-offset="540" max-vertical-offset="915">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="201" column="20" selection-start="5788" selection-end="5788" vertical-scroll-proportion="0.0" vertical-offset="1169" max-vertical-offset="3165">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
         <state line="326" column="12" selection-start="5177" selection-end="5177" vertical-scroll-proportion="0.0" vertical-offset="4890" max-vertical-offset="5310">
           <folding />
         </state>
@@ -323,45 +505,82 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="420" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/dashboard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="69" selection-start="727" selection-end="727" vertical-scroll-proportion="0.24012807" vertical-offset="0" max-vertical-offset="1200">
+        <state line="17" column="67" selection-start="696" selection-end="715" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="420">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/app.js">
+    <entry file="file://$PROJECT_DIR$/www/css/media-resolutions">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="41" selection-start="1934" selection-end="1934" vertical-scroll-proportion="0.78147763" vertical-offset="164" max-vertical-offset="1125" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="201" column="20" selection-start="5788" selection-end="5788" vertical-scroll-proportion="0.0" vertical-offset="1169" max-vertical-offset="3165">
-          <folding />
-        </state>
+        <state line="108" column="0" selection-start="3749" selection-end="3909" vertical-scroll-proportion="0.0" vertical-offset="794" max-vertical-offset="1755" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/menu.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="68" selection-start="1917" selection-end="1917" vertical-scroll-proportion="0.0" vertical-offset="540" max-vertical-offset="915">
+        <state line="9" column="69" selection-start="661" selection-end="661" vertical-scroll-proportion="-5.625" vertical-offset="0" max-vertical-offset="915">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/shared-achievement.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="70" selection-start="2171" selection-end="2171" vertical-scroll-proportion="-27.5" vertical-offset="0" max-vertical-offset="1020">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="9" selection-start="905" selection-end="905" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/notification.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="47" selection-start="1551" selection-end="1551" vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="825">
+        <state line="5" column="64" selection-start="0" selection-end="2114" vertical-scroll-proportion="-3.125" vertical-offset="0" max-vertical-offset="825">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/shared-notify.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="53" selection-start="1369" selection-end="1400" vertical-scroll-proportion="-4.6875" vertical-offset="0" max-vertical-offset="1005">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="103" column="28" selection-start="3573" selection-end="3581" vertical-scroll-proportion="0.0" vertical-offset="974" max-vertical-offset="1935">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/dashboard.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="129" selection-start="1749" selection-end="1749" vertical-scroll-proportion="-15.0" vertical-offset="180" max-vertical-offset="1200">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="4" selection-start="1277" selection-end="1277" vertical-scroll-proportion="0.33333334" vertical-offset="854" max-vertical-offset="5235">
+        <state line="504" column="1" selection-start="8434" selection-end="8446" vertical-scroll-proportion="0.0" vertical-offset="6803" max-vertical-offset="8055">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/homework-listing.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="38" selection-start="2078" selection-end="2078" vertical-scroll-proportion="-26.875" vertical-offset="0" max-vertical-offset="855">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="389" column="45" selection-start="11731" selection-end="11731" vertical-scroll-proportion="0.78147763" vertical-offset="5084" max-vertical-offset="6180">
           <folding />
         </state>
       </provider>

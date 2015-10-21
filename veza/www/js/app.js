@@ -51,6 +51,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             'menuContent': {
                 templateUrl: 'templates/dashboard.html',
                 controller: 'DashboardCtrl'
+            },'fabContent': {
+                template: ''
             }
         }
     })
@@ -60,10 +62,62 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
            'menuContent': {
                 templateUrl: 'templates/notification.html',
                 controller: 'NotificationCtrl'
-           }
+           },'fabContent': {
+                template: ''
+            }
         }
-    });
-
+    })
+    .state('app.sharedNotification', {
+        url: '/sharedNotification',
+        views: {
+           'menuContent': {
+                templateUrl: 'templates/shared-notify.html',
+                controller: 'SharedNotificationCtrl'
+           },
+            'fabContent': {
+                template: '<button id="fab-new-notification" class="button button-fab button-fab-bottom-right expanded fab-button-brown spin"><i class="icon ion-edit"></i></button>',
+                controller: function ($timeout) {
+                    $timeout(function () {
+                        document.getElementById('fab-new-notification').classList.toggle('on');
+                    }, 900);
+                }
+            }
+        }
+    })
+    .state('app.sharedAchievement', {
+         url: '/sharedAchievement',
+         views: {
+            'menuContent': {
+               templateUrl: 'templates/shared-achievement.html',
+               controller: 'SharedAchievementCtrl'
+            },
+             'fabContent': {
+                 template: '<button id="fab-new-achievement" class="button button-fab button-fab-bottom-right expanded fab-button-brown  spin"><i class="icon ion-edit"></i></button>',
+                 controller: function ($timeout) {
+                     $timeout(function () {
+                         document.getElementById('fab-new-achievement').classList.toggle('on');
+                     }, 900);
+                 }
+             }
+         }
+     })
+        .state('app.homework', {
+            url: '/homework',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/homework-listing.html',
+                    controller: 'HomeworkCtrl'
+                },
+                'fabContent': {
+                    template: '<button id="fab-new-homework" class="button button-fab button-fab-bottom-right expanded fab-button-brown  spin"><i class="icon ion-edit"></i></button>',
+                    controller: function ($timeout) {
+                        $timeout(function () {
+                            document.getElementById('fab-new-homework').classList.toggle('on');
+                        }, 900);
+                    }
+                }
+            }
+        });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/login');
 });
