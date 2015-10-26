@@ -29,11 +29,11 @@
             </a>
         </div>
     </div>
-    <div class="bar bar-dark bar-header align-delete-bar-divided">
+    <div class="bar header-bar align-delete-bar-divided">
         <div class="row">
             <div class="row">
                 <div class="col-25">
-                    <ion-checkbox class="checkbox-square checkboxList checkbox-assertive margin-left-16" ng-model="selectedAll" ng-click="checkAll()">
+                    <ion-checkbox class="checkbox-square checkboxList checkbox-assertive inner-main-checkbox" ng-model="selectedAll" ng-click="checkAll()">
                     </ion-checkbox>
                 </div>
                 <div class="col-25 col-offset-50">
@@ -46,7 +46,7 @@
         <ion-list>
             <ion-item class="notify-item-border" ng-repeat="nMsg in nMessages">
                 <div class="card">
-                    <img src="../img/{{nMsg.Picture}}">
+                    <img src="img/{{nMsg.Picture}}">
                 </div>
                 <div class="row">
                     <div class="col-25">
@@ -54,7 +54,8 @@
                         </ion-checkbox>
                     </div>
                     <div class="col-75 msg-{{nMsg.Status}}">
-                        <p><strong>{{nMsg.Message}}</strong><br>{{nMsg.Timestamp}}</p>
+                        <p><strong>{{nMsg.Message}}</strong><br><i class="font-italic">{{nMsg.Timestamp}}</i>
+                        </p>
                     </div>
                 </div>
             </ion-item>

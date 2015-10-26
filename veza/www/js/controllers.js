@@ -3,7 +3,7 @@
 
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope,$state, $ionicModal, $ionicPopover, $timeout, $ionicSideMenuDelegate) {
+.controller('AppCtrl', function($scope,$state, $ionicModal, $ionicPopover, $timeout, $ionicSideMenuDelegate, $ionicHistory) {
     // Form data for the login modal
     $scope.loginData = {};
     $scope.isExpanded = false;
@@ -99,8 +99,18 @@ angular.module('starter.controllers', [])
         };
 
     $scope.toggleLeftSideMenu = function() {
-    $ionicSideMenuDelegate.toggleLeft();
-  };
+         $ionicSideMenuDelegate.toggleLeft();
+         };
+
+        $scope.myGoBack = function() {
+            $ionicHistory.goBack();
+        };
+
+        $scope.composeHw = function() {
+
+            console.log("Into Compoese method");
+            $state.go('app.hwcompose');
+        };
 })
 
 .controller('LoginCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk) {
@@ -121,25 +131,28 @@ angular.module('starter.controllers', [])
 })
 
 .controller('DashboardCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
-  	
-// Set Header
-    $scope.$parent.hideHeader();
-    $ionicSideMenuDelegate.canDragContent(true);
+
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
-	
 
-    // Set Motion  
-   $timeout(function() {
-        ionicMaterialMotion.fadeSlideInRight({
-            startVelocity: 3000
-        });
-    }, 700);
+        // Set Header
+        $scope.$parent.hideHeader();
 
-    // Set Ink
-    ionicMaterialInk.displayEffect();
+        // Set Motion
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
 
         $scope.noticeBoard = function() {
             $state.go('app.sharedNotification');
@@ -148,24 +161,27 @@ angular.module('starter.controllers', [])
 
 .controller('NotificationCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
 
-// Set Header
-    $scope.$parent.hideHeader();
-    $ionicSideMenuDelegate.canDragContent(true);
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
 
+        // Set Header
+        $scope.$parent.hideHeader();
 
-    // Set Motion
-    $timeout(function() {
-        ionicMaterialMotion.fadeSlideInRight({
-            startVelocity: 3000
-        });
-    }, 700);
+        // Set Motion
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
 
-    // Set Ink
-    ionicMaterialInk.displayEffect();
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
 
         $scope.nMessages = [{
             Status: "unRead",
@@ -218,14 +234,13 @@ angular.module('starter.controllers', [])
 })
 .controller('SharedNotificationCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
 
-// Set Header
-        $scope.$parent.hideHeader();
-        $ionicSideMenuDelegate.canDragContent(true);
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
 
+        // Set Header
+        $scope.$parent.hideHeader();
 
         // Set Motion
         $timeout(function() {
@@ -236,6 +251,10 @@ angular.module('starter.controllers', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
 
         $scope.nMessages = [{
             Status: "unRead",
@@ -295,14 +314,13 @@ angular.module('starter.controllers', [])
  })
     .controller('SharedAchievementCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
 
-// Set Header
-        $scope.$parent.hideHeader();
-        $ionicSideMenuDelegate.canDragContent(true);
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
 
+        // Set Header
+        $scope.$parent.hideHeader();
 
         // Set Motion
         $timeout(function() {
@@ -313,6 +331,10 @@ angular.module('starter.controllers', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
 
         $scope.nMessages = [{
             Picture: "graduate.jpg",
@@ -350,14 +372,13 @@ angular.module('starter.controllers', [])
     })
     .controller('HomeworkCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
 
-// Set Header
-        $scope.$parent.hideHeader();
-        $ionicSideMenuDelegate.canDragContent(true);
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
 
+        // Set Header
+        $scope.$parent.hideHeader();
 
         // Set Motion
         $timeout(function() {
@@ -369,13 +390,18 @@ angular.module('starter.controllers', [])
         // Set Ink
         ionicMaterialInk.displayEffect();
 
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
+
         $scope.nMessages = [{
             Status: "unRead",
             Title: "Questions & Answers",
             Message: "Answer Questions from Textbook",
             Timestamp: "Date: 18 Oct 2015",
             Class: "5th B div",
-            Subject: "Science"
+            Subject: "Science",
+            Attach: "yes"
 
         }, {
             Status: "Read",
@@ -383,14 +409,16 @@ angular.module('starter.controllers', [])
             Message: "Still some answers are remaining",
             Timestamp: "Date: 17 Oct 2015",
             Class: "8th A div",
-            Subject: "Geography"
+            Subject: "Geography",
+            Attach: "no"
         }, {
             Status: "Read",
             Title: "Project Details",
             Message: "Sending project details",
             Timestamp: "Date: 15 Oct 2015",
             Class: "9th C div",
-            Subject: "Maths"
+            Subject: "Maths",
+            Attach: "yes"
         }];
 
         $scope.checkAll = function () {
@@ -402,6 +430,99 @@ angular.module('starter.controllers', [])
             angular.forEach($scope.nMessages, function (nmsg) {
                 nmsg.Selected = $scope.selectedAll;
             });
-
         };
+
+    })
+    .controller('HwComposeCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $ionicHistory) {
+
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Motion
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
+
+        $scope.contact = {
+            name: 'Mittens Cat',
+            info: 'Tap anywhere on the card to open the modal'
+        }
+
+        $ionicModal.fromTemplateUrl('studentlist.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.modal = modal;
+        })
+
+        $scope.openModal = function() {
+            $scope.modal.show();
+        }
+
+        $scope.closeModal = function() {
+            $scope.modal.hide();
+        };
+
+        $scope.$on('$destroy', function() {
+            $scope.modal.remove();
+        });
+
+        $scope.contactList = [{
+            Name: "Student 1"
+        }, {
+            Name: "Student 2"
+        }, {
+            Name: "Student 3"
+        },{
+            Name: "Student 4"
+        },{
+            Name: "Student 5"
+        }, {
+            Name: "Student 6"
+        }, {
+            Name: "Student 7"
+        },{
+            Name: "Student 8"
+        },{
+            Name: "Student 9"
+        }, {
+            Name: "Student 10"
+        }, {
+            Name: "Student 11"
+        },{
+            Name: "Student 12"
+        },{
+            Name: "Student 13"
+        }, {
+            Name: "Student 14"
+        }];
+
+        $scope.contactsAll = false;
+            $scope.checkAllcontacts = function () {
+
+            console.log("into check all");
+            if ($scope.contactsAll) {
+                $scope.contactsAll = true;
+            } else {
+                $scope.contactsAll = false;
+            }
+            angular.forEach($scope.contactList, function (contct) {
+                contct.Tick = $scope.contactsAll;
+            });
+        };
+
     });

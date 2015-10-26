@@ -109,12 +109,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                     controller: 'HomeworkCtrl'
                 },
                 'fabContent': {
-                    template: '<button id="fab-new-homework" class="button button-fab button-fab-bottom-right expanded fab-button-brown  spin"><i class="icon ion-edit"></i></button>',
+                    template: '<button id="fab-new-homework" ng-click="composeHw()" class="button button-fab button-fab-bottom-right expanded fab-button-brown  spin"><i class="icon ion-edit"></i></button>',
                     controller: function ($timeout) {
                         $timeout(function () {
                             document.getElementById('fab-new-homework').classList.toggle('on');
                         }, 900);
                     }
+                }
+            }
+        })
+        .state('app.hwcompose', {
+            url: '/hwcompose',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/hwcompose.html',
+                    controller: 'HwComposeCtrl'
+                },
+                'fabContent': {
+                    template: ''
                 }
             }
         });
