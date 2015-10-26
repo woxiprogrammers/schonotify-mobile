@@ -6,7 +6,7 @@
                     <i class="icon ion-android-menu slide-button" ng-click="toggleLeftSideMenu()"></i>
                 </a>
                 <a class="tab-item margin-top-10 active" ui-sref="app.notification">
-                    <i class="icon ion-notify"></i>
+                    <i class="icon ion-notify-select"></i>
                 </a>
                 <a class="tab-item margin-top-10" ui-sref="app.dashboard">
                     <i class="icon ion-homie"></i>
@@ -39,8 +39,8 @@
     					</ion-checkbox>
     				</div>
     				<div class="col-50 msg-{{nMsg.Status}}">
-  							<h2><strong>{{nMsg.Subject}}</strong></h2>
-  							<p>{{nMsg.Message}}<br><strong>{{nMsg.Timestamp}}</strong></p>
+  							<h2>{{nMsg.Subject}}</h2>
+  							<p>{{nMsg.Message}}<br><strong><i class="font-italic">{{nMsg.Timestamp}}</i></strong></p>
   					</div>
   					<div class="col-25">
                         <div class="avatar-notify profile-bg"></div>

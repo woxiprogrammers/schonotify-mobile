@@ -29,11 +29,11 @@
                 </a>
             </div>
     </div>
-    <div class="align-delete-bar-divided">
+    <div class="bar header-bar align-delete-bar-divided">
         <div class="row">
             <div class="row">
                 <div class="col-25">
-                    <ion-checkbox class="checkbox-square checkboxList checkbox-assertive inner-main-checkbox" ng-model="selectedAll" ng-click="checkAll()">
+                    <ion-checkbox class="checkbox-square checkboxList checkbox-assertive inner-notify-checkbox" ng-model="selectedAll" ng-click="checkAll()">
                     </ion-checkbox>
                 </div>
                 <div class="col-25 col-offset-50">
@@ -42,17 +42,17 @@
             </div>
         </div>
     </div>
-    <ion-content ng-class="{expanded:$scope.isExpanded}" class="top-22 padding-l-r-10">
+    <ion-content ng-class="{expanded:$scope.isExpanded}" class="top-22">
         <ion-list>
-            <ion-item class="notify-item-border" ng-repeat="nMsg in nMessages">
-                <div class="row">
+            <ion-item class="notify-item-border padding-0" ng-repeat="nMsg in nMessages">
+                <div class="row padding-r-0">
                     <div class="col-25">
                         <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="nMsg.Selected">
                         </ion-checkbox>
                     </div>
                     <div class="col-50 msg-{{nMsg.Status}}">
                         <h2><strong>{{nMsg.Subject}}</strong></h2>
-                        <p>{{nMsg.Message}}<br><strong>{{nMsg.Timestamp}}</strong></p>
+                        <p>{{nMsg.Message}}<br><strong><i class="font-italic">{{nMsg.Timestamp}}</i></strong></p>
                     </div>
                     <div class="col-5 col-offset-20 priority-{{nMsg.Priority}}"></div>
                 </div>
