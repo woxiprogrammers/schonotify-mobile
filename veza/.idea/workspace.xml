@@ -35,7 +35,7 @@
       <file leaf-file-name="menu.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/templates/menu.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="22" selection-start="765" selection-end="765" vertical-scroll-proportion="0.29042906" vertical-offset="0" max-vertical-offset="1342">
+            <state line="0" column="49" selection-start="49" selection-end="49" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1342">
               <folding />
             </state>
           </provider>
@@ -626,7 +626,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/menu.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="22" selection-start="765" selection-end="765" vertical-scroll-proportion="0.29042906" vertical-offset="0" max-vertical-offset="1342">
+        <state line="0" column="49" selection-start="49" selection-end="49" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1342">
           <folding />
         </state>
       </provider>
