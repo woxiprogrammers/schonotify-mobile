@@ -107,9 +107,11 @@ angular.module('starter.controllers', [])
         };
 
         $scope.composeHw = function() {
-
-            console.log("Into Compoese method");
             $state.go('app.hwcompose');
+        };
+
+        $scope.composeMsg = function() {
+            $state.go('app.msgcompose');
         };
 })
 
@@ -187,37 +189,44 @@ angular.module('starter.controllers', [])
             Status: "unRead",
             Subject: "Notification 1",
             Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 18 Oct 2015"
+            Timestamp: "Date: 18 Oct 2015",
+            Type: "notification_attendance"
         }, {
             Status: "unRead",
             Subject: "Notification 2",
             Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 17 Oct 2015"
+            Timestamp: "Date: 17 Oct 2015",
+            Type: "notification_event"
         }, {
             Status: "Read",
             Subject: "Notification 3",
             Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 15 Oct 2015"
+            Timestamp: "Date: 15 Oct 2015",
+            Type: "notification_fees"
         },{
             Status: "Read",
             Subject: "Notification 4",
             Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 14 Oct 2015"
+            Timestamp: "Date: 14 Oct 2015",
+            Type: "notification_homework"
         },{
             Status: "Read",
             Subject: "Notification 5",
             Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 14 Oct 2015"
+            Timestamp: "Date: 14 Oct 2015",
+            Type: "notification_result"
         },{
             Status: "Read",
             Subject: "Notification 6",
             Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 11 Oct 2015"
+            Timestamp: "Date: 11 Oct 2015",
+            Type: "notification_event"
         },{
             Status: "Read",
             Subject: "Notification 7",
             Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 08 Oct 2015"
+            Timestamp: "Date: 08 Oct 2015",
+            Type: "notification_attendance"
         }];
 
         $scope.checkAll = function () {
@@ -457,11 +466,6 @@ angular.module('starter.controllers', [])
 
         $ionicSideMenuDelegate.canDragContent(true);
 
-        $scope.contact = {
-            name: 'Mittens Cat',
-            info: 'Tap anywhere on the card to open the modal'
-        }
-
         $ionicModal.fromTemplateUrl('studentlist.html', {
             scope: $scope,
             animation: 'slide-in-up'
@@ -513,6 +517,157 @@ angular.module('starter.controllers', [])
 
         $scope.contactsAll = false;
             $scope.checkAllcontacts = function () {
+
+            console.log("into check all");
+            if ($scope.contactsAll) {
+                $scope.contactsAll = true;
+            } else {
+                $scope.contactsAll = false;
+            }
+            angular.forEach($scope.contactList, function (contct) {
+                contct.Tick = $scope.contactsAll;
+            });
+        };
+
+    })
+    .controller('MessageCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Motion
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
+
+        $scope.nMessages = [{
+            Status: "unRead",
+            Title: "Questions & Answers",
+            Message: "Answer Questions from Textbook",
+            Timestamp: "Date: 18 Oct 2015",
+            Class: "5th B div",
+            Subject: "Science",
+            Attach: "yes"
+
+        }, {
+            Status: "Read",
+            Title: "Remaining Answers",
+            Message: "Still some answers are remaining",
+            Timestamp: "Date: 17 Oct 2015",
+            Class: "8th A div",
+            Subject: "Geography",
+            Attach: "no"
+        }, {
+            Status: "Read",
+            Title: "Project Details",
+            Message: "Sending project details",
+            Timestamp: "Date: 15 Oct 2015",
+            Class: "9th C div",
+            Subject: "Maths",
+            Attach: "yes"
+        }];
+
+        $scope.checkAll = function () {
+            if ($scope.selectedAll) {
+                $scope.selectedAll = true;
+            } else {
+                $scope.selectedAll = false;
+            }
+            angular.forEach($scope.nMessages, function (nmsg) {
+                nmsg.Selected = $scope.selectedAll;
+            });
+        };
+
+    })
+    .controller('MsgComposeCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $ionicHistory) {
+
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Motion
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
+
+        $ionicModal.fromTemplateUrl('studentCntctlist.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.modal = modal;
+        })
+
+        $scope.openModal = function() {
+            $scope.modal.show();
+        }
+
+        $scope.closeModal = function() {
+            $scope.modal.hide();
+        };
+
+        $scope.$on('$destroy', function() {
+            $scope.modal.remove();
+        });
+
+        $scope.contactList = [{
+            Name: "Student 1"
+        }, {
+            Name: "Student 2"
+        }, {
+            Name: "Student 3"
+        },{
+            Name: "Student 4"
+        },{
+            Name: "Student 5"
+        }, {
+            Name: "Student 6"
+        }, {
+            Name: "Student 7"
+        },{
+            Name: "Student 8"
+        },{
+            Name: "Student 9"
+        }, {
+            Name: "Student 10"
+        }, {
+            Name: "Student 11"
+        },{
+            Name: "Student 12"
+        },{
+            Name: "Student 13"
+        }, {
+            Name: "Student 14"
+        }];
+
+        $scope.contactsAll = false;
+        $scope.checkAllcontacts = function () {
 
             console.log("into check all");
             if ($scope.contactsAll) {
