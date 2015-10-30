@@ -11,8 +11,8 @@
                 <a class="tab-item margin-top-10" ui-sref="app.dashboard">
                     <i class="icon ion-homie"></i>
                 </a>
-                <a class="tab-item margin-top-10">
-                    <i class="icon ion-message"><span class="badge badge-assertive">3</span></i>
+                <a class="tab-item margin-top-10" ui-sref="app.message">
+                    <i class="icon ion-message"><span class="badge badge-assertive">1</span></i>
                 </a>
             </div>
     	</div>
@@ -24,7 +24,10 @@
     						<ion-checkbox class="checkbox-square checkboxList checkbox-assertive master-checkbox-align" ng-model="selectedAll" ng-click="checkAll()">
       						</ion-checkbox>    					
     				</div>
-    				<div class="col-25 col-offset-50">
+                    <div class="col-50 margin-top-5">
+                        <span class="inner-header">Notification</span>
+                    </div>
+    				<div class="col-25">
     					<a><i class="icon ion-trash-b align-delete-bin"></i></a>
     				</div>
     			</div>
@@ -43,7 +46,7 @@
   							<p>{{nMsg.Message}}<br><strong><i class="font-italic">{{nMsg.Timestamp}}</i></strong></p>
   					</div>
   					<div class="col-25">
-                        <div class="avatar-notify profile-bg"></div>
+                        <div class="avatar-notify {{nMsg.Type}}"></div>
   					</div>
     			</div>
     		</ion-item>    		

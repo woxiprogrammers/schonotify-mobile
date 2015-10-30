@@ -1,4 +1,4 @@
-<ion-view view-title="Compose Homework" name="hwcompose" class="touch-effect">
+<ion-view view-title="Compose Message" name="msgcompose" class="touch-effect">
     <div class="row padding-0">
         <div class="tabs-striped tabs-color-positive tabs-top">
             <div class="tabs tab-align-inner">
@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    <div class="bar bar-pink bar-header align-delete-bar">
+    <div class="bar bar-calm bar-header align-delete-bar">
         <iion-item class="row">
             <div class="row">
                 <div class="col-10">
@@ -25,13 +25,10 @@
                         <i class="ion-arrow-left-c button-back-white"></i>
                     </button>
                 </div>
-                <div class="col-50 margin-top-5">
-                    <span class="inner-header">Compose Homework</span>
+                <div class="col-80 margin-top-5">
+                    <span class="inner-header">Compose Message</span>
                 </div>
-                <div class="col-20">
-                    <a><i class="icon ion-android-attach align-attach"></i></a>
-                </div>
-                <div class="col-20">
+                <div class="col-10">
                     <a><i class="icon ion-android-send align-delete-bin"></i></a>
                 </div>
             </div>
@@ -41,20 +38,20 @@
         <div class="list">
             <div class="row">
                 <div class="col-50 border-right">
-                        <select class="item item-input item-select border-bottom">
-                            <option selected class="padding-top-5">Class</option>
-                            <option class="padding-top-5">Class I</option>
-                            <option class="padding-top-5">Class II</option>
-                            <option class="padding-top-5">Class III</option>
-                        </select>
+                    <select class="item item-input item-select border-bottom">
+                        <option selected class="padding-top-5">Class</option>
+                        <option class="padding-top-5">Class I</option>
+                        <option class="padding-top-5">Class II</option>
+                        <option class="padding-top-5">Class III</option>
+                    </select>
                 </div>
                 <div class="col-50 border-bottom">
-                        <select class="item item-input item-select">
-                            <option selected class="padding-top-5">Div</option>
-                            <option class="padding-top-5">Div A</option>
-                            <option class="padding-top-5">Div B</option>
-                            <option class="padding-top-5">Div C</option>
-                        </select>
+                    <select class="item item-input item-select">
+                        <option selected class="padding-top-5">Div</option>
+                        <option class="padding-top-5">Div A</option>
+                        <option class="padding-top-5">Div B</option>
+                        <option class="padding-top-5">Div C</option>
+                    </select>
                 </div>
             </div>
             <label class="item item-input border-bottom">
@@ -72,10 +69,10 @@
 
 
 
-<script id="studentlist.html" type="text/ng-template">
+<script id="studentCntctlist.html" type="text/ng-template">
     <div class="modal">
         <div class="modal-view">
-            <ion-header-bar class="bar-pink">
+            <ion-header-bar class="bar-calm">
                 <div class="row">
                     <div class="col-50 col-offset-25 col-offset-r-25">
                         <h3 class="modal-title">Students List</h3>
@@ -111,10 +108,10 @@
             <div class="bar bar-footer modal-bottom no-border">
                 <div class="row">
                     <div class="col-25 col-offset-50 text-center">
-                        <label class="modal-bottom-text-pink" ng-click="closeModal()">CANCEL</label>
+                        <label class="modal-bottom-text" ng-click="closeModal()">CANCEL</label>
                     </div>
                     <div class="col-25  text-center">
-                        <label class="modal-bottom-text-pink" ng-click="closeModal()">OK</label>
+                        <label class="modal-bottom-text" ng-click="closeModal()">OK</label>
                     </div>
                 </div>
 

@@ -547,8 +547,9 @@ display: none;
 
 .inner-header{
     color: #ffffff;
-    font-size: 100%;
+    font-size: 94%;
     font-weight: bold;
+    margin-left: 7px;
 }
 
 .margin-top-5{
@@ -624,10 +625,16 @@ display: none;
     bottom: 0;
 }
 
-.modal-bottom-text{
+.modal-bottom-text-blue {
     font-size: 16px;
     font-weight: bold;
     color: #16BDBA;
+}
+
+.modal-bottom-text-pink {
+    font-size: 16px;
+    font-weight: bold;
+    color: #f747c2;
 }
 
 .text-center{
@@ -662,6 +669,38 @@ display: none;
 }
 .inner-hw-checkbox{
 
+}
+
+.bar-pink {
+    border-color: #f210aa;
+    background-color: #f747c2;
+    background-image: linear-gradient(0deg, #f210aa, #f210aa 50%, transparent 50%);
+    color: #fff;
+}
+
+.notification_attendance{
+    background: url('../img/notification_attendance.png') center;
+    clear: both;
+}
+
+.notification_fees{
+    background: url('../img/notification_fees.png') center;
+    clear: both;
+}
+
+.notification_event{
+    background: url('../img/notification_event.png') center;
+    clear: both;
+}
+
+.notification_homework{
+    background: url('../img/notification_homework.png') center;
+    clear: both;
+}
+
+.notification_result{
+    background: url('../img/notification_result.png') center;
+    clear: both;
 }
 
 /*********** MEDIA QUERIES ***********/
