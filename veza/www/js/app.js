@@ -158,6 +158,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                     template: ''
                 }
             }
+        })
+        .state('app.attendancelanding', {
+            url: '/attendancelanding',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/attendance-landing.html',
+                    controller: 'AttendLandingCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
         });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/login');
