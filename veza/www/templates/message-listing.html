@@ -36,7 +36,7 @@
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
         <ion-list>
             <ion-item class="notify-item-border" ng-repeat="nMsg in nMessages">
-                <a ui-sref="app.chatmsg">
+                <a ui-sref="app.chatmsg" class="text-decoration-none">
                     <div class="row">
                         <div class="col-25">
                             <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="nMsg.Selected">
