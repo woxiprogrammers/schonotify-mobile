@@ -1,0 +1,65 @@
+<ion-view view-title="Message Chat" name="msghistory" class="touch-effect">
+    <div class="row padding-0">
+        <div class="tabs-striped tabs-color-positive tabs-top">
+            <div class="tabs tab-align-inner">
+                <a class="tab-item margin-top-0">
+                    <i class="icon ion-android-menu slide-button" ng-click="toggleLeftSideMenu()"></i>
+                </a>
+                <a class="tab-item margin-top-10" ui-sref="app.notification">
+                    <i class="icon ion-notify"></i>
+                </a>
+                <a class="tab-item margin-top-10" ui-sref="app.dashboard">
+                    <i class="icon ion-homie"></i>
+                </a>
+                <a class="tab-item margin-top-10">
+                    <i class="icon ion-message"><span class="badge badge-assertive">1</span></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="bar bar-calm bar-header align-delete-bar">
+        <iion-item class="row">
+            <div class="row">
+                <div class="col-10">
+                    <button class="button-clear" ng-click="myGoBack()">
+                        <i class="ion-arrow-left-c button-back-white"></i>
+                    </button>
+                </div>
+                <div class="col-90">
+                    <div class="inner-header font-white margin-top-5"><span>Student 1 <small>Class 5th Div B</small></span></div>
+                </div>
+            </div>
+        </iion-item>
+    </div>
+    <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
+        <div class="message-list">
+            <div class="message-wrapper row">
+                <div class="message message-mine msg-sent col-33 col-offset-66 no-border">
+                    <div class="message-text"><span>Is he present<br><i class="msg-Read">Jul 9, 10:30</i></span></div>
+                </div>
+            </div>
+            <div class="message-wrapper row">
+                <div class="message message-other msg-recieved no-border">
+                    <div class="message-text"><span>No<br><i class="msg-Read">Jul 9, 10:40</i></span></div>
+                </div>
+            </div>
+            <div class="message-wrapper row">
+                <div class="message message-mine msg-sent col-33 col-offset-66 no-border">
+                    <div class="message-text"><span>Sorry for that<br><i class="msg-Read">Jul 9, 10:45</i></span></div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </ion-content>
+
+    <ion-footer-bar keyboard-attach class="bar-stable footer-chat item-input-inset">
+        <div class="row">
+            <div class="item item-input-inset">
+                <label class="item-input-wrapper">
+                    <input type="text" placeholder="Send Message">
+                </label>
+            </div>
+        </div>
+
+    </ion-footer-bar>
+</ion-view>

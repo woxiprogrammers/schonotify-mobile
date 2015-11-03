@@ -158,6 +158,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                     template: ''
                 }
             }
+        })
+        .state('app.chatmsg', {
+            url: '/chatmsg',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/message-chat.html',
+                    controller: 'MsgChatCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
         });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/login');
