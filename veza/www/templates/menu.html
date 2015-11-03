@@ -1,4 +1,4 @@
-<ion-side-menus enable-menu-with-back-views="false" class="touch-effect">
+<ion-side-menus enable-menu-with-back-views="true" class="touch-effect">
     <ion-side-menu-content>
         <ion-nav-bar ng-class="{expanded: isExpanded, 'has-header-fab-left': hasHeaderFabLeft, 'has-header-fab-right': hasHeaderFabRight}" align-title="left">
         </ion-nav-bar>
@@ -7,14 +7,14 @@
     </ion-side-menu-content>
     <ion-side-menu side="left" id="left-menu">
         <ion-header-bar class="side-menu-bg expanded">
-             <ul class="font-black col-90">
+             <ul class="font-black col-90" ng-click="toggleStudent()">
                  <li>
                      <div class="avatar profile-bg"></div>
                  </li>
                  <li>
                      <ul class="profile-uname">
                          <li>Salim Khan</li>
-                         <li ng-click="toggleStudent()">
+                         <li>
                             <span class="float-left">Sohail</span>
                             <i class="ion-chevron-down float-right" ng-show="studToggle"></i>
                             <i class="ion-chevron-up float-right" ng-hide="studToggle"></i>
@@ -25,24 +25,24 @@
         </ion-header-bar>
         <ion-content class="has-expanded-header">
             <ion-list ng-show="studToggle">
-                <ion-item nav-clear menu-close class="bottom-border" ui-sref="app.dashboard">
+                <ion-item nav-clear menu-close class="sm-item-border" ui-sref="app.dashboard">
                     Home
                 </ion-item> 
-                <ion-item nav-clear menu-close class="bottom-border" ui-sref="app.dashboard" >
+                <ion-item nav-clear menu-close class="sm-item-border" ui-sref="app.dashboard" >
                     Settings
                 </ion-item> 
-                <ion-item nav-clear menu-close class="bottom-border" ui-sref="app.dashboard">
+                <ion-item nav-clear menu-close class="sm-item-border" ui-sref="app.dashboard">
                     App Info
                 </ion-item> 
-                <ion-item nav-clear menu-close class="bottom-border" ui-sref="app.dashboard">
+                <ion-item nav-clear menu-close class="sm-item-border" ui-sref="app.dashboard">
                     Contact
                 </ion-item> 
-                <ion-item nav-clear menu-close class="bottom-border" ng-click="signOut()">
+                <ion-item nav-clear menu-close class="sm-item-border" ng-click="signOut()">
                     Logout
                 </ion-item>                              
             </ion-list>
             <ion-list ng-hide="studToggle">
-                <ion-item nav-clear menu-close class="bottom-border" ng-hide="studToggle">
+                <ion-item nav-clear menu-close class="sm-item-border" ng-hide="studToggle" ui-sref="app.dashboard">
                     Salman
                 </ion-item>
                 <ion-item nav-clear menu-close ng-show="studToggle">
@@ -51,4 +51,5 @@
             </ion-list>
         </ion-content>
     </ion-side-menu-content>
+   </ion-side-menu>
 </ion-side-menus>

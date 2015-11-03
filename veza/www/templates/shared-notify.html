@@ -1,0 +1,62 @@
+<ion-view view-title="Shared Notification" name="sharedNotify" class="touch-effect">
+    <div class="row padding-0">
+        <div class="tabs-striped tabs-color-positive tabs-top">
+            <div class="tabs tab-align-inner">
+                <a class="tab-item margin-top-0">
+                    <i class="icon ion-android-menu slide-button" ng-click="toggleLeftSideMenu()"></i>
+                </a>
+                <a class="tab-item margin-top-10" ui-sref="app.notification">
+                    <i class="icon ion-notify"></i>
+                </a>
+                <a class="tab-item margin-top-10" ui-sref="app.dashboard">
+                    <i class="icon ion-homie"></i>
+                </a>
+                <a class="tab-item margin-top-10" ui-sref="app.message">
+                    <i class="icon ion-message"><span class="badge badge-assertive">1</span></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row padding-0">
+            <div class="tabs tab-align-inner-inner tabs-striped tabs-light tabs-top tabs-icon-left">
+                <a class="tab-item active-inner-black padding-5 col-50" ui-sref="app.sharedNotification">
+                    <i class="icon ion-annoncement-active"></i>
+                    <span class="annoncement-text-active">Announcement</span>
+                </a>
+                <a class="tab-item padding-5 col-50" ui-sref="app.sharedAchievement">
+                    <i class="icon ion-achievement"></i>
+                    <span class="achievement-text">Achievements</span>
+                </a>
+            </div>
+    </div>
+    <div class="bar header-bar align-delete-bar-divided">
+        <div class="row">
+            <div class="row">
+                <div class="col-25">
+                    <ion-checkbox class="checkbox-square checkboxList checkbox-assertive inner-notify-checkbox" ng-model="selectedAll" ng-click="checkAll()">
+                    </ion-checkbox>
+                </div>
+                <div class="col-25 col-offset-50">
+                    <a><i class="icon ion-trash-b align-delete-bin"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ion-content ng-class="{expanded:$scope.isExpanded}" class="top-22">
+        <ion-list>
+            <ion-item class="notify-item-border padding-0" ng-repeat="nMsg in nMessages">
+                <div class="row padding-r-0">
+                    <div class="col-25">
+                        <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="nMsg.Selected">
+                        </ion-checkbox>
+                    </div>
+                    <div class="col-50 msg-{{nMsg.Status}}">
+                        <h2><strong>{{nMsg.Subject}}</strong></h2>
+                        <p>{{nMsg.Message}}<br><strong><i class="font-italic">{{nMsg.Timestamp}}</i></strong></p>
+                    </div>
+                    <div class="col-5 col-offset-20 priority-{{nMsg.Priority}}"></div>
+                </div>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
