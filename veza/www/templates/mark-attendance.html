@@ -1,0 +1,65 @@
+<ion-view view-title="Mark Attendance" name="markattendance" class="touch-effect">
+    <div class="row padding-0">
+        <div class="tabs-striped tabs-color-positive tabs-top">
+            <div class="tabs tab-align-inner">
+                <a class="tab-item margin-top-0">
+                    <i class="icon ion-android-menu slide-button" ng-click="toggleLeftSideMenu()"></i>
+                </a>
+                <a class="tab-item margin-top-10" ui-sref="app.notification">
+                    <i class="icon ion-notify"></i>
+                </a>
+                <a class="tab-item margin-top-10" ui-sref="app.dashboard">
+                    <i class="icon ion-homie"></i>
+                </a>
+                <a class="tab-item margin-top-10">
+                    <i class="icon ion-message"><span class="badge badge-assertive">1</span></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="bar bar-orange bar-header align-delete-bar">
+        <iion-item class="row">
+            <div class="row">
+                <div class="col-10">
+                    <button class="button-clear" ng-click="myGoBack()">
+                        <i class="ion-arrow-left-c button-back-white"></i>
+                    </button>
+                </div>
+                <div class="col-90 margin-top-5">
+                    <span class="inner-header">Mark Attendance</span>
+                </div>
+            </div>
+        </iion-item>
+    </div>
+    <div class="row no-border margin-top-100">
+        <div class="col-50 border-right">
+            <select class="item item-input item-select border-bottom">
+                <option selected class="padding-top-5">Class</option>
+                <option class="padding-top-5">Class I</option>
+                <option class="padding-top-5">Class II</option>
+                <option class="padding-top-5">Class III</option>
+            </select>
+        </div>
+        <div class="col-50 border-bottom">
+            <select class="item item-input item-select">
+                <option selected class="padding-top-5">Div</option>
+                <option class="padding-top-5">Div A</option>
+                <option class="padding-top-5">Div B</option>
+                <option class="padding-top-5">Div C</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="item margin-top-10 item-borderless col-66 col-offset-33">
+            <h2><strong>Student Names</strong></h2>
+        </div>
+    </div>
+    <ion-content ng-class="{expanded:$scope.isExpanded}" class="padding-l-r-5 margin-top-120">
+        <div class="list scroll">
+            <ion-item class="contact-list row">
+                    <div class="col-80 item"> <h2>Student Names</h2></div>
+                    <div class="col-20 item"></div>
+            </ion-item>
+        </div>
+    </ion-content>
+</ion-view>

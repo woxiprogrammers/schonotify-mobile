@@ -159,12 +159,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                 }
             }
         })
+
         .state('app.attendancelanding', {
             url: '/attendancelanding',
             views: {
                 'menuContent': {
                     templateUrl: 'templates/attendance-landing.html',
                     controller: 'AttendLandingCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+    .state('app.markattendance', {
+        url: '/markattendance',
+        views: {
+              'menuContent': {
+                    templateUrl: 'templates/mark-attendance.html',
+                    controller: 'MarkAttendanceCtrl'
                 },
                 'fabContent': {
                     template: ''
