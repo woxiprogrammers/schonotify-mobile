@@ -556,7 +556,7 @@ angular.module('starter.controllers', [])
 
         $scope.nMessages = [{
             Status: "unRead",
-            Title: "Questions & Answers",
+            Title: "Student 1",
             Message: "Answer Questions from Textbook",
             Timestamp: "Date: 18 Oct 2015",
             Class: "5th B div",
@@ -565,21 +565,48 @@ angular.module('starter.controllers', [])
 
         }, {
             Status: "Read",
-            Title: "Remaining Answers",
+            Title: "Student 2",
             Message: "Still some answers are remaining",
             Timestamp: "Date: 17 Oct 2015",
             Class: "8th A div",
             Subject: "Geography",
             Attach: "no"
         }, {
-            Status: "Read",
-            Title: "Project Details",
+            Status: "unRead",
+            Title: "Student 3",
             Message: "Sending project details",
             Timestamp: "Date: 15 Oct 2015",
             Class: "9th C div",
             Subject: "Maths",
             Attach: "yes"
-        }];
+        },
+            {
+                Status: "Read",
+                Title: "Student 4",
+                Message: "Sending project details",
+                Timestamp: "Date: 15 Oct 2015",
+                Class: "9th C div",
+                Subject: "Maths",
+                Attach: "yes"
+            },
+            {
+                Status: "Read",
+                Title: "Student 5",
+                Message: "Sending project details",
+                Timestamp: "Date: 15 Oct 2015",
+                Class: "9th C div",
+                Subject: "Maths",
+                Attach: "yes"
+            },
+            {
+                Status: "Read",
+                Title: "Student 6",
+                Message: "Sending project details",
+                Timestamp: "Date: 15 Oct 2015",
+                Class: "9th C div",
+                Subject: "Maths",
+                Attach: "yes"
+            }];
 
         $scope.checkAll = function () {
             if ($scope.selectedAll) {
