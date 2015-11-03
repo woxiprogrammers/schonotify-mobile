@@ -595,7 +595,7 @@ angular.module('starter.controllers', [])
                 Message: "Sending project details",
                 Timestamp: "Date: 15 Oct 2015",
                 Class: "9th C div",
-                Subject: "Maths",
+                Subject: "GK",
                 Attach: "yes"
             },
             {
