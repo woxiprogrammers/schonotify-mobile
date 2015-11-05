@@ -71,8 +71,8 @@ p {
 }
 
 
-/* Login
-==================================*/
+/* Login*/
+
 .app-icon {
     background-color: #fff;
     background: url('../img/') center;
@@ -371,6 +371,7 @@ display: none;
    // margin-left: 48px;
     float: right;
     margin-right: 28%;
+    margin-top: 0%;
 }
 
 .margin-left-16{
@@ -561,7 +562,7 @@ display: none;
 }
 
 .margin-top-5{
-    margin-top: 5px;
+    margin-top: 5px!important;
 }
 
 .attachment-yes {
@@ -686,6 +687,13 @@ display: none;
     color: #fff;
 }
 
+.bar-orange {
+    border-color: #fc9d2f;
+    background-color: #f8931d;
+    background-image: linear-gradient(0deg, #f8931d, #f8931d 50%, transparent 50%);
+    color: #fff;
+}
+
 .notification_attendance{
     background: url('../img/notification_attendance.png') center;
     clear: both;
@@ -710,7 +718,6 @@ display: none;
     background: url('../img/notification_result.png') center;
     clear: both;
 }
-
 .chat {
     background-color: #E0DAD6;
     background-repeat: no-repeat;
@@ -807,6 +814,17 @@ display: none;
 .fab-button-grey {
     color: #fff;
     background-color: #444444;
+}
+.margin-top-100{
+    margin-top: 100px;
+}
+
+.margin-top-10{
+    margin-top: 10px!important;
+}
+.margin-top-120 {
+   margin-top: 120px!important;
+>>>>>>> attendance-screen
 }
 
 /*********** MEDIA QUERIES ***********/
