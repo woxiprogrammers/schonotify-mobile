@@ -20,35 +20,26 @@
     <div class="bar bar-calm bar-header align-delete-bar">
         <iion-item class="row">
             <div class="row">
-                <div class="col-10">
-                    <button class="button-clear" ng-click="myGoBack()">
+                <div class="col-10" ng-click="myGoBack()">
+                    <button class="button-clear">
                         <i class="ion-arrow-left-c button-back-white"></i>
                     </button>
                 </div>
                 <div class="col-90">
-                    <div class="inner-header font-white margin-top-5"><span>Student 1 <small>Class 5th Div B</small></span></div>
+                    <div class="inner-header font-white margin-top-5"><span>Student Name 5th B</span></div>
                 </div>
             </div>
         </iion-item>
     </div>
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
-        <div class="message-list">
-            <div class="message-wrapper row">
-                <div class="message message-mine msg-sent col-33 col-offset-66 no-border">
-                    <div class="message-text"><span>Is he present<br><i class="msg-Read">Jul 9, 10:30</i></span></div>
-                </div>
-            </div>
-            <div class="message-wrapper row">
-                <div class="message message-other msg-recieved no-border">
-                    <div class="message-text"><span>No<br><i class="msg-Read">Jul 9, 10:40</i></span></div>
-                </div>
-            </div>
-            <div class="message-wrapper row">
-                <div class="message message-mine msg-sent col-33 col-offset-66 no-border">
-                    <div class="message-text"><span>Sorry for that<br><i class="msg-Read">Jul 9, 10:45</i></span></div>
-                </div>
-            </div>
+        <div class="bubbledRight no-border">
+            Error dicunt theophrastus cu qui. Ad eos simul possit option, adipisci principes sed at. Detracto adolescens pro ea, duo noLorem ipsum dolor sit amet, ea oblique constituam signiferumque eam. Pri adipisci maluisset te.Lorem ipsum dolor sit amet, ea oblique constituam signiferumque eam. Pri adipisci maluisset te.Lorem ipsum dolor sit amet, ea oblique constituam signiferumque eam. Pri adipisci maluisset te.<br><small class="msg-timestamp">Jun 11 10:48 am</small>
         </div>
+        <div class="bubbledLeft no-border">
+            Lorem ipsum dolor sit amet, ea oblique constituam signiferumque eam. Pri adipisci maluisset te.<br><small class="msg-timestamp">Jun 11 10:50 am</small>
+        </div>
+        <div class="bubbledRight no-border">
+            Error dicunt theophrastus cu qui.<br><small class="msg-timestamp">Jun 11 10:55 am</small>
         </div>
     </ion-content>
 
@@ -60,6 +51,5 @@
                 </label>
             </div>
         </div>
-
     </ion-footer-bar>
 </ion-view>

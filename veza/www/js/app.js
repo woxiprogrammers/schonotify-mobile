@@ -75,7 +75,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                 controller: 'SharedNotificationCtrl'
            },
             'fabContent': {
-                template: '<button id="fab-new-notification" class="button button-fab button-fab-bottom-right expanded fab-button-brown spin"><i class="icon ion-edit"></i></button>',
+                template: '<button id="fab-new-notification" class="button button-fab button-fab-bottom-right expanded fab-button-grey spin"><i class="icon ion-edit"></i></button>',
                 controller: function ($timeout) {
                     $timeout(function () {
                         document.getElementById('fab-new-notification').classList.toggle('on');
@@ -92,7 +92,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                controller: 'SharedAchievementCtrl'
             },
              'fabContent': {
-                 template: '<button id="fab-new-achievement" class="button button-fab button-fab-bottom-right expanded fab-button-brown  spin"><i class="icon ion-edit"></i></button>',
+                 template: '<button id="fab-new-achievement" class="button button-fab button-fab-bottom-right expanded fab-button-grey  spin"><i class="icon ion-edit"></i></button>',
                  controller: function ($timeout) {
                      $timeout(function () {
                          document.getElementById('fab-new-achievement').classList.toggle('on');
