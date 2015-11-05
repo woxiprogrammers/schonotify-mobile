@@ -75,7 +75,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                 controller: 'SharedNotificationCtrl'
            },
             'fabContent': {
-                template: '<button id="fab-new-notification" class="button button-fab button-fab-bottom-right expanded fab-button-brown spin"><i class="icon ion-edit"></i></button>',
+                template: '<button id="fab-new-notification" class="button button-fab button-fab-bottom-right expanded fab-button-grey spin"><i class="icon ion-edit"></i></button>',
                 controller: function ($timeout) {
                     $timeout(function () {
                         document.getElementById('fab-new-notification').classList.toggle('on');
@@ -92,7 +92,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                controller: 'SharedAchievementCtrl'
             },
              'fabContent': {
-                 template: '<button id="fab-new-achievement" class="button button-fab button-fab-bottom-right expanded fab-button-brown  spin"><i class="icon ion-edit"></i></button>',
+                 template: '<button id="fab-new-achievement" class="button button-fab button-fab-bottom-right expanded fab-button-grey  spin"><i class="icon ion-edit"></i></button>',
                  controller: function ($timeout) {
                      $timeout(function () {
                          document.getElementById('fab-new-achievement').classList.toggle('on');
@@ -153,6 +153,43 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
                 'menuContent': {
                     templateUrl: 'templates/msgcompose.html',
                     controller: 'MsgComposeCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.chatmsg', {
+            url: '/chatmsg',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/message-chat.html',
+                    controller: 'MsgChatCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+
+        .state('app.attendancelanding', {
+            url: '/attendancelanding',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/attendance-landing.html',
+                    controller: 'AttendLandingCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+    .state('app.markattendance', {
+        url: '/markattendance',
+        views: {
+              'menuContent': {
+                    templateUrl: 'templates/mark-attendance.html',
+                    controller: 'MarkAttendanceCtrl'
                 },
                 'fabContent': {
                     template: ''
