@@ -177,7 +177,9 @@ color: white;
     left: 0px!important;
     top: 44px!important;
 }
-
+.margin-top-40{
+    margin-top: 40px!important;
+}
 .display-no{
 display: none;
 }
@@ -824,7 +826,47 @@ display: none;
 }
 .margin-top-120 {
    margin-top: 120px!important;
->>>>>>> attendance-screen
+}
+
+.mark-check{
+    background: url('../img/attendance_true.png') center;
+    clear: both;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+.mark-uncheck{
+    background: url('../img/attendance_false.png') center;
+    clear: both;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+.margin-left-2{
+    margin-left: 2%!important;
+}
+
+.margin-top-140 {
+    margin-top: 140px!important;
+}
+
+
+.popup-body .datetimepicker {
+    min-height: 221px;
+}
+.popup-body .datetimepicker table {
+    width: 100%;
+}
+
+.date-bg{
+    background-color: #ffffff;
+}
+
+.display-no{
+    display: none!important;
+}
+.padding-top-10{
+    padding-top: 10px;
 }
 
 /*********** MEDIA QUERIES ***********/
