@@ -764,7 +764,7 @@ angular.module('starter.controllers', [])
             $state.go('app.sharedNotification');
         };
     })
-    .controller('MarkAttendanceCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('MarkAttendanceCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $log, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -791,4 +791,94 @@ angular.module('starter.controllers', [])
         $scope.noticeBoard = function() {
             $state.go('app.sharedNotification');
         };
-    });
+
+        $scope.contactList = [{
+            id: 1,
+            Name: "Student 1"
+        }, {
+            id: 2,
+            Name: "Student 2"
+        }, {
+            id: 3,
+            Name: "Student 3"
+        },{
+            id: 4,
+            Name: "Student 4"
+        },{
+            id: 5,
+            Name: "Student 5"
+        }, {
+            id: 6,
+            Name: "Student 6"
+        }, {
+            id: 7,
+            Name: "Student 7"
+        },{
+            id: 8,
+            Name: "Student 8"
+        },{
+            id: 9,
+            Name: "Student 9"
+        }, {
+            id: 10,
+            Name: "Student 10"
+        }, {
+            id: 11,
+            Name: "Student 11"
+        },{
+            id: 12,
+            Name: "Student 12"
+        },{
+            id: 13,
+            Name: "Student 13"
+        }, {
+            id: 14,
+            Name: "Student 14"
+        }];
+
+        $scope.toggleCheck = function(elementData) {
+
+            var changeClass = angular.element(document.querySelector('#'+ elementData.target.id));
+
+               if(elementData.target.classList[1] == "mark-check" ){
+                   console.log(elementData.target.id);
+                   changeClass.removeClass('mark-check');
+                   changeClass.addClass('mark-uncheck');
+                   console.log(elementData.target.id);
+            }
+            else{
+                   changeClass.removeClass('mark-uncheck');
+                   changeClass.addClass('mark-check');
+            }
+            //}
+        };
+
+//        //== Variables ==//
+//        $scope.data = {
+//            dt: new Date()
+//        };
+//
+//        $scope.opened = false;
+//
+//        //== Listeners ==//
+//        $scope.$watch('data.dt',function(val,old){
+//            $log.info('Date Changed: ' + val);
+//            $scope.opened = false;
+//        });
+//
+//        //== Methods ==//
+//        $scope.setDate = function(){
+//            if(!angular.isDefined($scope.data.dt))
+//                $scope.data.dt = new Date(); // today
+//        };
+//        $scope.setDate();
+//
+//        $scope.open = function($event){
+//            $event.preventDefault();
+//            $event.stopPropagation();
+//            $scope.opened = true;
+//        }; // end open
+
+           $scope.selectedDate = new Date();
+
+    }); // end of Ctrl

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="935d9a08-38a0-43b9-9f43-7213451cf984" name="Default" comment="" />
+    <list default="true" id="7194478a-bfb3-4a4e-9cad-06a8ea543a29" name="Default" comment="" />
     <ignored path="veza.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,19 +23,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/css/style.css">
+      <file leaf-file-name="mark-attendance.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="74" column="0" selection-start="1185" selection-end="1185" vertical-scroll-proportion="0.0" vertical-offset="20840" max-vertical-offset="21780">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/js/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="191" column="52" selection-start="6785" selection-end="6785" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4554">
+            <state line="56" column="38" selection-start="2774" selection-end="2774" vertical-scroll-proportion="0.50825083" vertical-offset="770" max-vertical-offset="1694">
               <folding />
             </state>
           </provider>
@@ -44,35 +35,56 @@
       <file leaf-file-name="controllers.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="735" column="10" selection-start="21045" selection-end="21045" vertical-scroll-proportion="0.0" vertical-offset="16638" max-vertical-offset="17578">
+            <state line="881" column="44" selection-start="24918" selection-end="24918" vertical-scroll-proportion="0.0" vertical-offset="18596" max-vertical-offset="19558">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".bower.json" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/lib/moment/.bower.json">
+      <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="49" selection-start="627" selection-end="627" vertical-scroll-proportion="-20.580645" vertical-offset="0" max-vertical-offset="792">
+            <state line="179" column="14" selection-start="3162" selection-end="3175" vertical-scroll-proportion="-18.9" vertical-offset="3371" max-vertical-offset="22704">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bower.json" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/www/lib/moment/bower.json">
+      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="922">
+            <state line="6" column="110" selection-start="427" selection-end="427" vertical-scroll-proportion="0.0" vertical-offset="3746" max-vertical-offset="4686">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="message-chat.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/templates/message-chat.html">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="20" selection-start="1470" selection-end="1470" vertical-scroll-proportion="-8.741936" vertical-offset="411" max-vertical-offset="1320">
+            <state line="29" column="44" selection-start="1702" selection-end="1702" vertical-scroll-proportion="-20.580645" vertical-offset="0" max-vertical-offset="858">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ui-bootstrap-tpls-0.14.3.min.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/lib/angular-bootstrap/ui-bootstrap-tpls-0.14.3.min.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="22925" selection-start="23047" selection-end="23047" vertical-scroll-proportion="0.0" vertical-offset="154" max-vertical-offset="374">
+              <folding>
+                <marker date="1447054489168" expanded="false" signature="116677:116688" placeholder="..." />
+                <marker date="1447054489168" expanded="false" signature="117470:117485" placeholder="..." />
+                <marker date="1447054489168" expanded="false" signature="118457:118468" placeholder="..." />
+                <marker date="1447054489168" expanded="false" signature="118938:118953" placeholder="..." />
+                <marker date="1447054489168" expanded="false" signature="120780:120791" placeholder="..." />
+                <marker date="1447054489168" expanded="false" signature="121261:121276" placeholder="..." />
+                <marker date="1447054489168" expanded="false" signature="126877:126890" placeholder="..." />
+                <marker date="1447054489168" expanded="false" signature="127593:127606" placeholder="..." />
+                <marker date="1447054489168" expanded="false" signature="129905:129916" placeholder="..." />
+                <marker date="1447054489168" expanded="false" signature="130205:130216" placeholder="..." />
+                <marker date="1447054489168" expanded="false" signature="131793:131808" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -87,27 +99,12 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/www/css/media-resolutions" />
-        <option value="$PROJECT_DIR$/config.xml" />
-        <option value="$PROJECT_DIR$/www/templates/compose-hw.html" />
-        <option value="$PROJECT_DIR$/www/templates/menu.html" />
-        <option value="$PROJECT_DIR$/www/templates/homework-listing.html" />
-        <option value="$PROJECT_DIR$/www/templates/shared-achievement.html" />
-        <option value="$PROJECT_DIR$/www/templates/notification.html" />
-        <option value="$PROJECT_DIR$/www/templates/attendence-landing.html" />
-        <option value="$PROJECT_DIR$/www/templates/dashboard.html" />
-        <option value="$PROJECT_DIR$/www/templates/attendance-landing.html" />
-        <option value="$PROJECT_DIR$/www/templates/mark-attendance.html" />
-        <option value="$PROJECT_DIR$/www/templates/message-listing.html" />
         <option value="$PROJECT_DIR$/www/index.html" />
-        <option value="$PROJECT_DIR$/www/templates/shared-notify.html" />
-        <option value="$PROJECT_DIR$/www/templates/hwcompose.html" />
-        <option value="$PROJECT_DIR$/www/templates/msgcompose.html" />
-        <option value="$PROJECT_DIR$/www/templates/message-chat.html" />
-        <option value="$PROJECT_DIR$/www/css/style.css" />
+        <option value="$PROJECT_DIR$/www/lib/angular-bootstrap/ui-bootstrap-tpls-0.14.3.min.js" />
         <option value="$PROJECT_DIR$/www/js/app.js" />
+        <option value="$PROJECT_DIR$/www/css/style.css" />
         <option value="$PROJECT_DIR$/www/js/controllers.js" />
-        <option value="$PROJECT_DIR$/www/lib/moment/.bower.json" />
+        <option value="$PROJECT_DIR$/www/templates/mark-attendance.html" />
       </list>
     </option>
   </component>
@@ -191,7 +188,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
+              <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -209,7 +206,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="angular-bootstrap" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -219,13 +220,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="SearchEverywhereHistory" value="" />
-    <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="FullScreen" value="false" />
-    <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.Font" />
-    <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -244,41 +239,24 @@
     <list size="0" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
-  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="all">
-    <option name="USER" value="" />
-    <option name="PASSWORD" value="" />
-    <option name="mySSHConnectionTimeout" value="30000" />
-    <option name="mySSHReadTimeout" value="30000" />
-    <option name="LAST_MERGED_REVISION" />
-    <option name="MERGE_DRY_RUN" value="false" />
-    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
-    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
-    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
-    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
-    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
-    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
-    <option name="FORCE_UPDATE" value="false" />
-    <option name="IGNORE_EXTERNALS" value="false" />
-    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="935d9a08-38a0-43b9-9f43-7213451cf984" name="Default" comment="" />
-      <created>1445320445590</created>
-      <updated>1445320445590</updated>
+      <changelist id="7194478a-bfb3-4a4e-9cad-06a8ea543a29" name="Default" comment="" />
+      <created>1446900812411</created>
+      <updated>1446900812411</updated>
     </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1855" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18867925" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959569" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24959569" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -287,7 +265,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3550356" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -310,281 +288,246 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/www/templates/shared-achievement.html">
+    <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="20" selection-start="1555" selection-end="1565" vertical-scroll-proportion="0.0" vertical-offset="59" max-vertical-offset="1020" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="648" column="5" selection-start="11021" selection-end="11040" vertical-scroll-proportion="0.0" vertical-offset="9054" max-vertical-offset="9975">
+        <state line="51" column="23" selection-start="2347" selection-end="2347" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1606">
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/homework-listing.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="108" selection-start="1172" selection-end="1172" vertical-scroll-proportion="0.0" vertical-offset="345" max-vertical-offset="885" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/shared-notify.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="16" selection-start="1597" selection-end="1621" vertical-scroll-proportion="0.0" vertical-offset="465" max-vertical-offset="1005" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/shared-achievement.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="40" selection-start="1575" selection-end="1575" vertical-scroll-proportion="0.0" vertical-offset="59" max-vertical-offset="1020" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="395" column="13" selection-start="6310" selection-end="6310" vertical-scroll-proportion="0.0" vertical-offset="5277" max-vertical-offset="6420">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/shared-notify.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="47" selection-start="973" selection-end="973" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="1005" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/notification.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="28" selection-start="916" selection-end="916" vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="825" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="70" selection-start="2071" selection-end="2091" vertical-scroll-proportion="0.0" vertical-offset="585" max-vertical-offset="915" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="140" column="27" selection-start="3866" selection-end="3866" vertical-scroll-proportion="0.0" vertical-offset="1620" max-vertical-offset="4320" />
+        <state line="871" column="33" selection-start="24592" selection-end="24592" vertical-scroll-proportion="0.0" vertical-offset="18508" max-vertical-offset="19514">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="886" column="1" selection-start="14984" selection-end="14994" vertical-scroll-proportion="0.0" vertical-offset="18618" max-vertical-offset="23100">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="34" selection-start="1986" selection-end="2004" vertical-scroll-proportion="0.0" vertical-offset="975" max-vertical-offset="1245" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/dashboard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="133" selection-start="1458" selection-end="1458" vertical-scroll-proportion="0.0" vertical-offset="480" max-vertical-offset="1200" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="67" selection-start="696" selection-end="715" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="420" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="362" column="1" selection-start="5823" selection-end="5832" vertical-scroll-proportion="0.0" vertical-offset="4719" max-vertical-offset="5700">
+        <state line="20" column="3" selection-start="920" selection-end="920" vertical-scroll-proportion="0.0" vertical-offset="440" max-vertical-offset="4686">
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/shared-notify.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="77" selection-start="2725" selection-end="2725" vertical-scroll-proportion="0.0" vertical-offset="840" max-vertical-offset="1005" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/notification.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="11" selection-start="2101" selection-end="2101" vertical-scroll-proportion="0.0" vertical-offset="735" max-vertical-offset="825" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="70" selection-start="2071" selection-end="2091" vertical-scroll-proportion="0.0" vertical-offset="585" max-vertical-offset="915" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="140" column="27" selection-start="3866" selection-end="3866" vertical-scroll-proportion="0.0" vertical-offset="1755" max-vertical-offset="4320" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="34" selection-start="1986" selection-end="2004" vertical-scroll-proportion="0.0" vertical-offset="975" max-vertical-offset="1245" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/dashboard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="133" selection-start="1458" selection-end="1458" vertical-scroll-proportion="0.0" vertical-offset="480" max-vertical-offset="1200" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="67" selection-start="696" selection-end="715" vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="420" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="4" selection-start="1303" selection-end="1303" vertical-scroll-proportion="0.0" vertical-offset="1170" max-vertical-offset="5250">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/notification.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="47" selection-start="1551" selection-end="1551" vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="825" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="68" selection-start="1917" selection-end="1917" vertical-scroll-proportion="0.0" vertical-offset="540" max-vertical-offset="915" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="201" column="20" selection-start="5788" selection-end="5788" vertical-scroll-proportion="0.0" vertical-offset="1169" max-vertical-offset="3165" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="326" column="12" selection-start="5177" selection-end="5177" vertical-scroll-proportion="0.0" vertical-offset="4890" max-vertical-offset="5310">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/notification.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="47" selection-start="1551" selection-end="1551" vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="825" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="68" selection-start="1917" selection-end="1917" vertical-scroll-proportion="0.0" vertical-offset="540" max-vertical-offset="915" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="201" column="20" selection-start="5788" selection-end="5788" vertical-scroll-proportion="0.0" vertical-offset="1169" max-vertical-offset="3165" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="136" column="11" selection-start="2280" selection-end="2280" vertical-scroll-proportion="0.0" vertical-offset="3369" max-vertical-offset="4290">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/notification.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="825" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2160" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/media-resolutions">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="0" selection-start="3749" selection-end="3909" vertical-scroll-proportion="0.0" vertical-offset="794" max-vertical-offset="1755" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="9" selection-start="905" selection-end="905" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="67" selection-start="696" selection-end="715" vertical-scroll-proportion="0.27214515" vertical-offset="0" max-vertical-offset="937" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="49" selection-start="49" selection-end="49" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1342" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/homework-listing.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="85" selection-start="843" selection-end="843" vertical-scroll-proportion="-9.935484" vertical-offset="0" max-vertical-offset="1298" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/shared-achievement.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="67" selection-start="2794" selection-end="2813" vertical-scroll-proportion="0.68536854" vertical-offset="609" max-vertical-offset="1518" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/dashboard.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="160" selection-start="2135" selection-end="2135" vertical-scroll-proportion="-26.967741" vertical-offset="0" max-vertical-offset="1716" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="3" selection-start="1048" selection-end="1376" vertical-scroll-proportion="0.0" vertical-offset="396" max-vertical-offset="836" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/shared-notify.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="51" selection-start="2930" selection-end="2930" vertical-scroll-proportion="1.3553355" vertical-offset="0" max-vertical-offset="1474" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/hwcompose.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="58" selection-start="1087" selection-end="1087" vertical-scroll-proportion="0.53245324" vertical-offset="0" max-vertical-offset="2838" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/notification.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="22" selection-start="2273" selection-end="2273" vertical-scroll-proportion="1.210121" vertical-offset="0" max-vertical-offset="1320" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/msgcompose.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="22" selection-start="1425" selection-end="1550" vertical-scroll-proportion="0.6292629" vertical-offset="132" max-vertical-offset="2772" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/message-listing.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="68" selection-start="1882" selection-end="1882" vertical-scroll-proportion="0.919692" vertical-offset="0" max-vertical-offset="1298" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/message-chat.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="20" selection-start="1470" selection-end="1470" vertical-scroll-proportion="-8.741936" vertical-offset="411" max-vertical-offset="1320">
+        <state line="29" column="44" selection-start="1702" selection-end="1702" vertical-scroll-proportion="0.0" vertical-offset="638" max-vertical-offset="858">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/style.css">
+    <entry file="file://$PROJECT_DIR$/www/lib/angular-bootstrap/ui-bootstrap-tpls-0.14.3.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="0" selection-start="1185" selection-end="1185" vertical-scroll-proportion="0.0" vertical-offset="20840" max-vertical-offset="21780">
-          <folding />
+        <state line="7" column="22925" selection-start="23047" selection-end="23047" vertical-scroll-proportion="0.0" vertical-offset="154" max-vertical-offset="374">
+          <folding>
+            <marker date="1447054489168" expanded="false" signature="116677:116688" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="117470:117485" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="118457:118468" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="118938:118953" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="120780:120791" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="121261:121276" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="126877:126890" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="127593:127606" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="129905:129916" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="130205:130216" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="131793:131808" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/app.js">
+    <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="191" column="52" selection-start="6785" selection-end="6785" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4554">
+        <state line="51" column="23" selection-start="2347" selection-end="2347" vertical-scroll-proportion="0.0" vertical-offset="572" max-vertical-offset="1606">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="735" column="10" selection-start="21045" selection-end="21045" vertical-scroll-proportion="0.0" vertical-offset="16638" max-vertical-offset="17578">
+        <state line="871" column="33" selection-start="24592" selection-end="24592" vertical-scroll-proportion="0.0" vertical-offset="18508" max-vertical-offset="19514">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/lib/moment/.bower.json">
+    <entry file="file://$PROJECT_DIR$/www/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="49" selection-start="627" selection-end="627" vertical-scroll-proportion="-20.580645" vertical-offset="0" max-vertical-offset="792">
+        <state line="887" column="1" selection-start="15044" selection-end="15044" vertical-scroll-proportion="0.0" vertical-offset="18618" max-vertical-offset="23078">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/lib/moment/bower.json">
+    <entry file="file://$PROJECT_DIR$/www/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="953">
+        <state line="20" column="3" selection-start="920" selection-end="920" vertical-scroll-proportion="0.0" vertical-offset="440" max-vertical-offset="4686">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="44" selection-start="1702" selection-end="1702" vertical-scroll-proportion="0.0" vertical-offset="638" max-vertical-offset="858">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/lib/angular-bootstrap/ui-bootstrap-tpls-0.14.3.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="1340" selection-start="1462" selection-end="1462" vertical-scroll-proportion="0.0" vertical-offset="154" max-vertical-offset="374">
+          <folding>
+            <marker date="1447054489168" expanded="false" signature="116677:116688" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="117470:117485" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="118457:118468" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="118938:118953" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="120780:120791" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="121261:121276" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="126877:126890" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="127593:127606" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="129905:129916" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="130205:130216" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="131793:131808" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="23" selection-start="2347" selection-end="2347" vertical-scroll-proportion="0.0" vertical-offset="572" max-vertical-offset="1606">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="871" column="33" selection-start="24592" selection-end="24592" vertical-scroll-proportion="0.0" vertical-offset="18508" max-vertical-offset="19514">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="887" column="1" selection-start="15044" selection-end="15044" vertical-scroll-proportion="0.0" vertical-offset="18618" max-vertical-offset="23078">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="3" selection-start="920" selection-end="920" vertical-scroll-proportion="0.0" vertical-offset="440" max-vertical-offset="4686">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="44" selection-start="1702" selection-end="1702" vertical-scroll-proportion="0.0" vertical-offset="638" max-vertical-offset="858">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/lib/angular-bootstrap/ui-bootstrap-tpls-0.14.3.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="20189" selection-start="116423" selection-end="116423" vertical-scroll-proportion="0.0" vertical-offset="220" max-vertical-offset="374">
+          <folding>
+            <marker date="1447054489168" expanded="false" signature="116677:116688" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="117470:117485" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="118457:118468" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="118938:118953" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="120780:120791" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="121261:121276" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="126877:126890" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="127593:127606" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="129905:129916" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="130205:130216" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="131793:131808" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="103" selection-start="2882" selection-end="2882" vertical-scroll-proportion="0.0" vertical-offset="618" max-vertical-offset="1540">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="840" column="71" selection-start="23630" selection-end="23630" vertical-scroll-proportion="0.0" vertical-offset="18480" max-vertical-offset="18942">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="103" selection-start="2882" selection-end="2882" vertical-scroll-proportion="0.0" vertical-offset="618" max-vertical-offset="1540">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="840" column="71" selection-start="23630" selection-end="23630" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="18942">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/lib/angular-bootstrap/ui-bootstrap-tpls-0.14.3.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="22925" selection-start="23047" selection-end="23047" vertical-scroll-proportion="0.0" vertical-offset="154" max-vertical-offset="374">
+          <folding>
+            <marker date="1447054489168" expanded="false" signature="116677:116688" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="117470:117485" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="118457:118468" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="118938:118953" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="120780:120791" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="121261:121276" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="126877:126890" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="127593:127606" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="129905:129916" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="130205:130216" placeholder="..." />
+            <marker date="1447054489168" expanded="false" signature="131793:131808" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="44" selection-start="1702" selection-end="1702" vertical-scroll-proportion="-20.580645" vertical-offset="0" max-vertical-offset="858">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="110" selection-start="427" selection-end="427" vertical-scroll-proportion="0.0" vertical-offset="3746" max-vertical-offset="4686">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="179" column="14" selection-start="3162" selection-end="3175" vertical-scroll-proportion="-18.9" vertical-offset="3371" max-vertical-offset="22704">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="881" column="44" selection-start="24918" selection-end="24918" vertical-scroll-proportion="0.0" vertical-offset="18596" max-vertical-offset="19558">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="38" selection-start="2774" selection-end="2774" vertical-scroll-proportion="0.50825083" vertical-offset="770" max-vertical-offset="1694">
           <folding />
         </state>
       </provider>

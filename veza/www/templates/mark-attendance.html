@@ -49,16 +49,23 @@
             </select>
         </div>
     </div>
-    <div class="row">
-        <div class="item margin-top-10 item-borderless col-66 col-offset-33">
-            <h2><strong>Student Names</strong></h2>
+    <!--<label class="item popup-bg">-->
+        <!--<input value="{{data.dt | date:'fullDate' }}" type="text" ng-click="open($event)" ng-model="data.dt" uib-datepicker-popup ="dd-MMMM-yyyy"  datepicker-mode="year" is-open="opened" show-button-bar="false"/>-->
+    <!--</label>-->
+    <div class="row no-border item">
+        <div class="col-20 padding-top-10 date-bg"><h2 class="margin-left-2">Date:</h2></div>
+        <input class="item-input col-90" type="date" ng-model="selectedDate">
+    </div>
+    <div class="row header bar">
+        <div class="margin-top-10 item-borderless margin-left-2">
+            <strong>Names</strong>
         </div>
     </div>
-    <ion-content ng-class="{expanded:$scope.isExpanded}" class="padding-l-r-5 margin-top-120">
-        <div class="list scroll">
-            <ion-item class="contact-list row">
-                    <div class="col-80 item"> <h2>Student Names</h2></div>
-                    <div class="col-20 item"></div>
+    <ion-content ng-class="{expanded:$scope.isExpanded}" class="padding-l-r-5 margin-top-140">
+        <div class="list scroll margin-top-40">
+            <ion-item class="contact-list row" ng-repeat="contct in contactList">
+                    <div class="col-90"><h2>{{contct.Name}}</h2></div>
+                    <div class="col-10 mark-check" id="check{{contct.id}}" ng-click="toggleCheck($event)"></div>
             </ion-item>
         </div>
     </ion-content>

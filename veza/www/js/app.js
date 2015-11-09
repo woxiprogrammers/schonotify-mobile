@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'ionMdInput'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'ui.bootstrap',    'dialogs.main'])
 
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -18,9 +18,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             StatusBar.styleDefault();
         }
     });
-})
+ })
 
-.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, dialogsProvider) {
 
     // Turn off caching for demo simplicity's sake
     $ionicConfigProvider.views.maxCache(0);
@@ -29,6 +29,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
     // Turn off back button text
     $ionicConfigProvider.backButton.previousTitleText(false);
     */
+
+        // this provider is only available in the 4.0.0+ versions of angular-dialog-service
+        dialogsProvider.useBackdrop(true);
+        dialogsProvider.useEscClose(true);
+        dialogsProvider.useCopy(false);
+        dialogsProvider.setSize('sm');
 
     $stateProvider
 
