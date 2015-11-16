@@ -11,7 +11,7 @@
                 <a class="tab-item margin-top-10" ui-sref="app.dashboard">
                     <i class="icon ion-homie"></i>
                 </a>
-                <a class="tab-item margin-top-10">
+                <a class="tab-item margin-top-10" ui-sref="app.message">
                     <i class="icon ion-message"><span class="badge badge-assertive">1</span></i>
                 </a>
             </div>
@@ -49,24 +49,35 @@
             </select>
         </div>
     </div>
-    <!--<label class="item popup-bg">-->
-        <!--<input value="{{data.dt | date:'fullDate' }}" type="text" ng-click="open($event)" ng-model="data.dt" uib-datepicker-popup ="dd-MMMM-yyyy"  datepicker-mode="year" is-open="opened" show-button-bar="false"/>-->
-    <!--</label>-->
     <div class="row no-border item">
         <div class="col-20 padding-top-10 date-bg"><h2 class="margin-left-2">Date:</h2></div>
         <input class="item-input col-90" type="date" ng-model="selectedDate">
     </div>
-    <div class="row header bar">
-        <div class="margin-top-10 item-borderless margin-left-2">
+    <div class="row header bar row">
+        <div class="col-10 item-borderless margin-top-10 margin-left-2">
+            <strong>No.</strong>
+        </div>
+        <div class="margin-top-10 item-borderless margin-left-2 col-90">
             <strong>Names</strong>
         </div>
     </div>
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="padding-l-r-5 margin-top-140">
         <div class="list scroll margin-top-40">
             <ion-item class="contact-list row" ng-repeat="contct in contactList">
-                    <div class="col-90"><h2>{{contct.Name}}</h2></div>
-                    <div class="col-10 mark-check" id="check{{contct.id}}" ng-click="toggleCheck($event)"></div>
+                    <div class="col-10 padding-5"><h2>{{contct.id}}</h2></div>
+                    <div class="col-80 padding-5"><h2>{{contct.Name}}</h2></div>
+                    <div class="col-10 mark-check padding-5" id="check{{contct.id}}" ng-click="toggleCheck($event)"></div>
             </ion-item>
         </div>
     </ion-content>
+    <div class="bar bar-footer modal-bottom no-border">
+        <div class="row">
+            <div class="col-25 col-offset-50 text-center">
+                <label class="modal-bottom-text-orange">CANCEL</label>
+            </div>
+            <div class="col-25  text-center">
+                <label class="modal-bottom-text-orange">OK</label>
+            </div>
+        </div>
+    </div>
 </ion-view>
