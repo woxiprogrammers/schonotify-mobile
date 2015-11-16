@@ -144,7 +144,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'ui
                     controller: 'MessageCtrl'
                 },
                 'fabContent': {
-                    template: '<button id="fab-new-message" ng-click="composeMsg()" class="button button-fab button-fab-bottom-right expanded bar-calm  spin"><i class="icon ion-edit"></i></button>',
+                    template: '<button id="fab-new-message" ng-click="composeMsg()" class="button button-fab button-fab-bottom-right expanded fab-button-cool  spin"><i class="icon ion-edit"></i></button>',
                     controller: function ($timeout) {
                         $timeout(function () {
                             document.getElementById('fab-new-message').classList.toggle('on');

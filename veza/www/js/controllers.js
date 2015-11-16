@@ -809,7 +809,7 @@ angular.module('starter.controllers', [])
             Name: "Student 5"
         }, {
             id: 6,
-            Name: "Student 6"
+            Name: "Student 6 (Leave Applied)"
         }, {
             id: 7,
             Name: "Student 7"
@@ -818,7 +818,7 @@ angular.module('starter.controllers', [])
             Name: "Student 8"
         },{
             id: 9,
-            Name: "Student 9"
+            Name: "Student 9 (Leave Applied)"
         }, {
             id: 10,
             Name: "Student 10"
@@ -840,45 +840,18 @@ angular.module('starter.controllers', [])
 
             var changeClass = angular.element(document.querySelector('#'+ elementData.target.id));
 
-               if(elementData.target.classList[1] == "mark-check" ){
-                   console.log(elementData.target.id);
+
+            console.log(elementData);
+
+               if(elementData.target.classList[2] == "mark-check" || elementData.target.classList[1] == "mark-check" ){
                    changeClass.removeClass('mark-check');
                    changeClass.addClass('mark-uncheck');
-                   console.log(elementData.target.id);
             }
             else{
                    changeClass.removeClass('mark-uncheck');
                    changeClass.addClass('mark-check');
             }
-            //}
         };
-
-//        //== Variables ==//
-//        $scope.data = {
-//            dt: new Date()
-//        };
-//
-//        $scope.opened = false;
-//
-//        //== Listeners ==//
-//        $scope.$watch('data.dt',function(val,old){
-//            $log.info('Date Changed: ' + val);
-//            $scope.opened = false;
-//        });
-//
-//        //== Methods ==//
-//        $scope.setDate = function(){
-//            if(!angular.isDefined($scope.data.dt))
-//                $scope.data.dt = new Date(); // today
-//        };
-//        $scope.setDate();
-//
-//        $scope.open = function($event){
-//            $event.preventDefault();
-//            $event.stopPropagation();
-//            $scope.opened = true;
-//        }; // end open
-
            $scope.selectedDate = new Date();
 
     }); // end of Ctrl

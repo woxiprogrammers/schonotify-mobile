@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    <div class="bar bar-calm bar-header align-delete-bar">
+    <div class="bar bar-cool bar-header align-delete-bar">
         <iion-item class="row">
             <div class="row">
                 <div class="col-25">
@@ -36,18 +36,18 @@
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
         <ion-list>
             <ion-item class="notify-item-border" ng-repeat="nMsg in nMessages">
-                <a ui-sref="app.chatmsg" class="text-decoration-none">
                     <div class="row">
                         <div class="col-25">
                             <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="nMsg.Selected">
                             </ion-checkbox>
                         </div>
                         <div class="col-75 msg-{{nMsg.Status}}">
+                            <a ui-sref="app.chatmsg" class="text-decoration-none">
                             <h2><strong>{{nMsg.Title}}</strong></h2>
                             <p>{{nMsg.Message}}<br><strong><i class="font-italic">{{nMsg.Class}} {{nMsg.Subject}} {{nMsg.Timestamp}}</i></strong></p>
+                            </a>
                         </div>
                     </div>
-                </a>
             </ion-item>
         </ion-list>
     </ion-content>
