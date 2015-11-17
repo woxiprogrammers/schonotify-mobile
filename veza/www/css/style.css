@@ -184,6 +184,10 @@ color: white;
 display: none;
 }
 
+.margin-top-100 {
+    margin-top: 100px!important;
+}
+
 .header-title{
     text-align: left!important;
     font-weight: 300!important;
@@ -894,6 +898,10 @@ display: none;
     font-size: 16px;
     font-weight: bold;
     color: #f8931d;
+}
+
+.notify-item-border-top {
+    border-top: 1px solid #CFCACA!important;
 }
 
 /*********** MEDIA QUERIES ***********/

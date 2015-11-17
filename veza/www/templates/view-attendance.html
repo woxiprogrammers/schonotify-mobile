@@ -49,7 +49,17 @@
             </select>
         </div>
     </div>
-    <flex-calendar options="options" events="events"></flex-calendar>
-    <ion-content ng-class="{expanded:$scope.isExpanded}" class="padding-l-r-5 margin-top-140">
+    <ion-content ng-class="{expanded:$scope.isExpanded}" class="padding-l-r-5 margin-top-100">
+        <flex-calendar options="options" events="events"></flex-calendar>
+        <ion-list>
+            <ion-item class="notify-item-border-top" ng-repeat="selectedEvent in selectedEvents">
+                <div class="row">
+                    <a class="text-decoration-none">
+                        <h2><strong>{{selectedEvent.Title}}</strong></h2>
+                        <p>{{selectedEvent.Subject}}</p>
+                    </a>
+                </div>
+            </ion-item>
+        </ion-list>
     </ion-content>
 </ion-view>

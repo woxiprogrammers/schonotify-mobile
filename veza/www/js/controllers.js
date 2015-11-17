@@ -885,7 +885,7 @@ angular.module('starter.controllers', [])
             $scope.options = {
                 defaultDate: new Date(),
                 minDate: "2015-01-01",
-                maxDate: "2015-12-31",
+                maxDate: "",
                 disabledDates: [
                     "2015-11-22",
                     "2015-11-27"
@@ -893,10 +893,28 @@ angular.module('starter.controllers', [])
                 dayNamesLength: 3, // 1 for "M", 2 for "Mo", 3 for "Mon"; 9 will show full day names. Default is 1.
                 mondayIsFirstDay: true,//set monday as first day of week. Default is false
                 eventClick: function(date) {
-                    console.log(date);
+                    console.log(date['event']);
+                    if (date['event'][0]) {
+                        // items have value
+                        $scope.selectedEvents = date['event'];
+                        console.log($scope.selectedEvents);
+                    } else {
+                        // items is still null
+                        $scope.selectedEvents = {0:{ Title: 'No event on selected date'}};
+                        console.log($scope.selectedEvents);
+                    }
                 },
                 dateClick: function(date) {
-                    console.log(date);
+                    console.log(date['event']);
+                    if (date['event'][0]) {
+                        // items have value
+                        $scope.selectedEvents = date['event'];
+                        console.log($scope.selectedEvents);
+                    } else {
+                        // items is still null
+                        $scope.selectedEvents = {0:{ Title: 'No event on selected date'}};
+                        console.log($scope.selectedEvents);
+                    }
                 },
                 changeMonth: function(month, year) {
                     console.log(month, year);
@@ -904,8 +922,13 @@ angular.module('starter.controllers', [])
             };
 
             $scope.events = [
-                {foo: 'bar', date: "2015-11-18"},
-                {foo: 'bar', date: "2015-11-20"}
+                {Title: 'Annual Function', Subject: 'Lorem ipsum dolor sit amet, ea oblique.', date: "2015-11-18"},
+                {Title: 'Drawing Competition', Subject: 'Lorem ipsum dolor sit amet, ea oblique.', date: "2015-11-18"},
+                {Title: 'Elocution Competition', Subject: 'Lorem ipsum dolor sit amet, ea oblique.', date: "2015-11-18"},
+                {Title: 'Singing Competition', Subject: 'Lorem ipsum dolor sit amet, ea oblique.', date: "2015-11-18"},
+                {Title: 'Drawing Competition', Subject: 'Lorem ipsum dolor sit amet, ea oblique.', date: "2015-11-20"},
+                {Title: 'Annual Function', Subject: 'Lorem ipsum dolor sit amet, ea oblique.', date: "2015-11-20"},
+                {Title: 'Elocution Competition', Subject: 'Lorem ipsum dolor sit amet, ea oblique.', date: "2015-11-20"}
             ];
 
     }); // end of Ctrl

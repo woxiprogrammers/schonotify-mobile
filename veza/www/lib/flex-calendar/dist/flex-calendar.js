@@ -17,10 +17,10 @@
           '<div class="day" ng-repeat="day in weekDays(options.dayNamesLength) track by $index">{{ day }}</div>'+
         '</div>'+
         '<div class="days" ng-repeat="week in weeks">'+
-          '<div class="day"'+
-            'ng-repeat="day in week track by $index"'+
-            'ng-class="{selected: isDefaultDate(day), event: day.event[0], disabled: day.disabled, out: !day}"'+
-            'ng-click="onClick(day, $index, $event)"'+
+          '<div class="day" '+
+            'ng-repeat="day in week track by $index" '+
+            'ng-class="{selected: isDefaultDate(day), event: day.event[0], disabled: day.disabled, out: !day}" '+
+            'ng-click="onDateClick(day, $index, $event)"'+
           '>'+
             '<div class="number">{{day.day}}</div>'+
           '</div>'+
@@ -51,7 +51,7 @@
       $scope.options.dayNamesLength = $scope.options.dayNamesLength || 1;
       $scope.options.mondayIsFirstDay = $scope.options.mondayIsFirstDay || false;
 
-      $scope.onClick = onClick;
+      $scope.onDateClick = onDateClick;
       $scope.allowedPrevMonth = allowedPrevMonth;
       $scope.allowedNextMonth = allowedNextMonth;
       $scope.weekDays = weekDays;
@@ -147,7 +147,7 @@
 
       /////////////////
 
-      function onClick(date, index, domEvent) {
+      function onDateClick(date, index, domEvent) {
         if (!date || date.disabled) { return; }
         $scope.options.defaultDate = date.date;
         if (date.event.length != 0) {
