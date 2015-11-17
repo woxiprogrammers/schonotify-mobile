@@ -853,5 +853,59 @@ angular.module('starter.controllers', [])
             }
         };
            $scope.selectedDate = new Date();
+    })
+
+    .controller('ViewAttendanceCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Motion
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
+
+        $scope.noticeBoard = function() {
+            $state.go('app.sharedNotification');
+        };
+            $scope.options = {
+                defaultDate: new Date(),
+                minDate: "2015-01-01",
+                maxDate: "2015-12-31",
+                disabledDates: [
+                    "2015-11-22",
+                    "2015-11-27"
+                ],
+                dayNamesLength: 3, // 1 for "M", 2 for "Mo", 3 for "Mon"; 9 will show full day names. Default is 1.
+                mondayIsFirstDay: true,//set monday as first day of week. Default is false
+                eventClick: function(date) {
+                    console.log(date);
+                },
+                dateClick: function(date) {
+                    console.log(date);
+                },
+                changeMonth: function(month, year) {
+                    console.log(month, year);
+                }
+            };
+
+            $scope.events = [
+                {foo: 'bar', date: "2015-11-18"},
+                {foo: 'bar', date: "2015-11-20"}
+            ];
 
     }); // end of Ctrl
