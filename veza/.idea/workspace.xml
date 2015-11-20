@@ -23,19 +23,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="mark-attendance.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="38" selection-start="2774" selection-end="2774" vertical-scroll-proportion="0.50825083" vertical-offset="770" max-vertical-offset="1694">
+            <state line="19" column="48" selection-start="1202" selection-end="1202" vertical-scroll-proportion="0.0" vertical-offset="418" max-vertical-offset="836">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="controllers.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
+      <file leaf-file-name="flex-calendar.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/www/lib/flex-calendar/dist/flex-calendar.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="881" column="44" selection-start="24918" selection-end="24918" vertical-scroll-proportion="0.0" vertical-offset="18596" max-vertical-offset="19558">
+            <state line="329" column="5" selection-start="11385" selection-end="11385" vertical-scroll-proportion="0.7836065" vertical-offset="6521" max-vertical-offset="7436">
               <folding />
             </state>
           </provider>
@@ -44,7 +44,34 @@
       <file leaf-file-name="style.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="179" column="14" selection-start="3162" selection-end="3175" vertical-scroll-proportion="-18.9" vertical-offset="3371" max-vertical-offset="22704">
+            <state line="277" column="23" selection-start="4551" selection-end="4551" vertical-scroll-proportion="0.0" vertical-offset="6072" max-vertical-offset="23606">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="flex-calendar.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/lib/flex-calendar/dist/flex-calendar.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="52" column="23" selection-start="1351" selection-end="1351" vertical-scroll-proportion="0.0" vertical-offset="507" max-vertical-offset="4488">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="controllers.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="923" column="17" selection-start="26847" selection-end="26847" vertical-scroll-proportion="0.0" vertical-offset="19809" max-vertical-offset="20724">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="view-attendance.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/templates/view-attendance.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="59" column="81" selection-start="2974" selection-end="2974" vertical-scroll-proportion="0.0" vertical-offset="1014" max-vertical-offset="1936">
               <folding />
             </state>
           </provider>
@@ -53,38 +80,17 @@
       <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="110" selection-start="427" selection-end="427" vertical-scroll-proportion="0.0" vertical-offset="3746" max-vertical-offset="4686">
+            <state line="198" column="0" selection-start="6998" selection-end="6998" vertical-scroll-proportion="0.0" vertical-offset="4453" max-vertical-offset="5368">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/index.html">
+      <file leaf-file-name="attendance-landing.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/www/templates/attendance-landing.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="44" selection-start="1702" selection-end="1702" vertical-scroll-proportion="-20.580645" vertical-offset="0" max-vertical-offset="858">
+            <state line="47" column="63" selection-start="2173" selection-end="2173" vertical-scroll-proportion="0.0" vertical-offset="1034" max-vertical-offset="1606">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ui-bootstrap-tpls-0.14.3.min.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/www/lib/angular-bootstrap/ui-bootstrap-tpls-0.14.3.min.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="22925" selection-start="23047" selection-end="23047" vertical-scroll-proportion="0.0" vertical-offset="154" max-vertical-offset="374">
-              <folding>
-                <marker date="1447054489168" expanded="false" signature="116677:116688" placeholder="..." />
-                <marker date="1447054489168" expanded="false" signature="117470:117485" placeholder="..." />
-                <marker date="1447054489168" expanded="false" signature="118457:118468" placeholder="..." />
-                <marker date="1447054489168" expanded="false" signature="118938:118953" placeholder="..." />
-                <marker date="1447054489168" expanded="false" signature="120780:120791" placeholder="..." />
-                <marker date="1447054489168" expanded="false" signature="121261:121276" placeholder="..." />
-                <marker date="1447054489168" expanded="false" signature="126877:126890" placeholder="..." />
-                <marker date="1447054489168" expanded="false" signature="127593:127606" placeholder="..." />
-                <marker date="1447054489168" expanded="false" signature="129905:129916" placeholder="..." />
-                <marker date="1447054489168" expanded="false" signature="130205:130216" placeholder="..." />
-                <marker date="1447054489168" expanded="false" signature="131793:131808" placeholder="..." />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -99,12 +105,16 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/www/index.html" />
         <option value="$PROJECT_DIR$/www/lib/angular-bootstrap/ui-bootstrap-tpls-0.14.3.min.js" />
-        <option value="$PROJECT_DIR$/www/js/app.js" />
-        <option value="$PROJECT_DIR$/www/css/style.css" />
-        <option value="$PROJECT_DIR$/www/js/controllers.js" />
         <option value="$PROJECT_DIR$/www/templates/mark-attendance.html" />
+        <option value="$PROJECT_DIR$/www/templates/attendance-landing.html" />
+        <option value="$PROJECT_DIR$/www/css/style.css" />
+        <option value="$PROJECT_DIR$/www/lib/flex-calendar/dist/flex-calendar.css" />
+        <option value="$PROJECT_DIR$/www/templates/view-attendance.html" />
+        <option value="$PROJECT_DIR$/www/js/controllers.js" />
+        <option value="$PROJECT_DIR$/www/js/app.js" />
+        <option value="$PROJECT_DIR$/www/index.html" />
+        <option value="$PROJECT_DIR$/www/lib/flex-calendar/dist/flex-calendar.js" />
       </list>
     </option>
   </component>
@@ -141,7 +151,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -210,17 +219,45 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="angular-bootstrap" />
+              <option name="myItemId" value="flex-calendar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="veza" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="veza" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="flex-calendar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dist" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FullScreen" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -264,11 +301,11 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3550356" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -285,14 +322,135 @@
     </option>
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
+    <entry file="file://$PROJECT_DIR$/www/templates/attendance-landing.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="23" selection-start="2347" selection-end="2347" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1606">
+        <state line="47" column="63" selection-start="2173" selection-end="2173" vertical-scroll-proportion="0.0" vertical-offset="1034" max-vertical-offset="1606">
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="38" selection-start="2641" selection-end="2641" vertical-scroll-proportion="0.0" vertical-offset="24" max-vertical-offset="1936" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="856" column="22" selection-start="24212" selection-end="24212" vertical-scroll-proportion="0.0" vertical-offset="18832" max-vertical-offset="18964">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="179" column="14" selection-start="3162" selection-end="3175" vertical-scroll-proportion="0.0" vertical-offset="3938" max-vertical-offset="23298">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="110" selection-start="427" selection-end="427" vertical-scroll-proportion="0.0" vertical-offset="3746" max-vertical-offset="4686">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="38" selection-start="1538" selection-end="1538" vertical-scroll-proportion="0.0" vertical-offset="528" max-vertical-offset="858">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/lib/angular-bootstrap/ui-bootstrap-tpls-0.14.3.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="22925" selection-start="23047" selection-end="23047" vertical-scroll-proportion="0.0" vertical-offset="154" max-vertical-offset="374" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="38" selection-start="2641" selection-end="2641" vertical-scroll-proportion="0.0" vertical-offset="1014" max-vertical-offset="1936" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="856" column="22" selection-start="24212" selection-end="24212" vertical-scroll-proportion="0.0" vertical-offset="18832" max-vertical-offset="18964">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="179" column="14" selection-start="3162" selection-end="3175" vertical-scroll-proportion="0.0" vertical-offset="3938" max-vertical-offset="23298">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="110" selection-start="427" selection-end="427" vertical-scroll-proportion="0.0" vertical-offset="3746" max-vertical-offset="4686">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="44" selection-start="1702" selection-end="1702" vertical-scroll-proportion="0.0" vertical-offset="638" max-vertical-offset="858">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/lib/angular-bootstrap/ui-bootstrap-tpls-0.14.3.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="22925" selection-start="23047" selection-end="23047" vertical-scroll-proportion="0.0" vertical-offset="154" max-vertical-offset="374" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="38" selection-start="2641" selection-end="2641" vertical-scroll-proportion="0.0" vertical-offset="1232" max-vertical-offset="1936" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="856" column="22" selection-start="24212" selection-end="24212" vertical-scroll-proportion="0.0" vertical-offset="18832" max-vertical-offset="18964">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="179" column="14" selection-start="3162" selection-end="3175" vertical-scroll-proportion="0.0" vertical-offset="3938" max-vertical-offset="23298">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="110" selection-start="427" selection-end="427" vertical-scroll-proportion="0.0" vertical-offset="3746" max-vertical-offset="4686">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="44" selection-start="1702" selection-end="1702" vertical-scroll-proportion="0.0" vertical-offset="638" max-vertical-offset="858">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/lib/angular-bootstrap/ui-bootstrap-tpls-0.14.3.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="22925" selection-start="23047" selection-end="23047" vertical-scroll-proportion="0.0" vertical-offset="154" max-vertical-offset="374" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="23" selection-start="2347" selection-end="2347" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1606" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
@@ -325,28 +483,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/lib/angular-bootstrap/ui-bootstrap-tpls-0.14.3.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="22925" selection-start="23047" selection-end="23047" vertical-scroll-proportion="0.0" vertical-offset="154" max-vertical-offset="374">
-          <folding>
-            <marker date="1447054489168" expanded="false" signature="116677:116688" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="117470:117485" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="118457:118468" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="118938:118953" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="120780:120791" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="121261:121276" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="126877:126890" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="127593:127606" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="129905:129916" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="130205:130216" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="131793:131808" placeholder="..." />
-          </folding>
-        </state>
+        <state line="7" column="22925" selection-start="23047" selection-end="23047" vertical-scroll-proportion="0.0" vertical-offset="154" max-vertical-offset="374" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="23" selection-start="2347" selection-end="2347" vertical-scroll-proportion="0.0" vertical-offset="572" max-vertical-offset="1606">
-          <folding />
-        </state>
+        <state line="51" column="23" selection-start="2347" selection-end="2347" vertical-scroll-proportion="0.0" vertical-offset="572" max-vertical-offset="1606" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
@@ -379,28 +521,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/lib/angular-bootstrap/ui-bootstrap-tpls-0.14.3.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="1340" selection-start="1462" selection-end="1462" vertical-scroll-proportion="0.0" vertical-offset="154" max-vertical-offset="374">
-          <folding>
-            <marker date="1447054489168" expanded="false" signature="116677:116688" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="117470:117485" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="118457:118468" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="118938:118953" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="120780:120791" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="121261:121276" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="126877:126890" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="127593:127606" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="129905:129916" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="130205:130216" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="131793:131808" placeholder="..." />
-          </folding>
-        </state>
+        <state line="7" column="1340" selection-start="1462" selection-end="1462" vertical-scroll-proportion="0.0" vertical-offset="154" max-vertical-offset="374" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="23" selection-start="2347" selection-end="2347" vertical-scroll-proportion="0.0" vertical-offset="572" max-vertical-offset="1606">
-          <folding />
-        </state>
+        <state line="51" column="23" selection-start="2347" selection-end="2347" vertical-scroll-proportion="0.0" vertical-offset="572" max-vertical-offset="1606" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
@@ -433,28 +559,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/lib/angular-bootstrap/ui-bootstrap-tpls-0.14.3.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="20189" selection-start="116423" selection-end="116423" vertical-scroll-proportion="0.0" vertical-offset="220" max-vertical-offset="374">
-          <folding>
-            <marker date="1447054489168" expanded="false" signature="116677:116688" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="117470:117485" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="118457:118468" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="118938:118953" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="120780:120791" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="121261:121276" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="126877:126890" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="127593:127606" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="129905:129916" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="130205:130216" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="131793:131808" placeholder="..." />
-          </folding>
-        </state>
+        <state line="10" column="20189" selection-start="116423" selection-end="116423" vertical-scroll-proportion="0.0" vertical-offset="220" max-vertical-offset="374" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="103" selection-start="2882" selection-end="2882" vertical-scroll-proportion="0.0" vertical-offset="618" max-vertical-offset="1540">
-          <folding />
-        </state>
+        <state line="60" column="103" selection-start="2882" selection-end="2882" vertical-scroll-proportion="0.0" vertical-offset="618" max-vertical-offset="1540" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
@@ -466,9 +576,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="103" selection-start="2882" selection-end="2882" vertical-scroll-proportion="0.0" vertical-offset="618" max-vertical-offset="1540">
-          <folding />
-        </state>
+        <state line="60" column="103" selection-start="2882" selection-end="2882" vertical-scroll-proportion="0.0" vertical-offset="618" max-vertical-offset="1540" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
@@ -480,54 +588,66 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/lib/angular-bootstrap/ui-bootstrap-tpls-0.14.3.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="22925" selection-start="23047" selection-end="23047" vertical-scroll-proportion="0.0" vertical-offset="154" max-vertical-offset="374">
-          <folding>
-            <marker date="1447054489168" expanded="false" signature="116677:116688" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="117470:117485" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="118457:118468" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="118938:118953" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="120780:120791" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="121261:121276" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="126877:126890" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="127593:127606" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="129905:129916" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="130205:130216" placeholder="..." />
-            <marker date="1447054489168" expanded="false" signature="131793:131808" placeholder="..." />
-          </folding>
+        <state line="7" column="22925" selection-start="23047" selection-end="23047" vertical-scroll-proportion="0.0" vertical-offset="154" max-vertical-offset="374" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="38" selection-start="2641" selection-end="2641" vertical-scroll-proportion="1.3289329" vertical-offset="24" max-vertical-offset="1936" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/attendance-landing.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="63" selection-start="2173" selection-end="2173" vertical-scroll-proportion="0.0" vertical-offset="1034" max-vertical-offset="1606">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/lib/flex-calendar/dist/flex-calendar.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="52" column="23" selection-start="1351" selection-end="1351" vertical-scroll-proportion="0.0" vertical-offset="507" max-vertical-offset="4488">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/templates/view-attendance.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="81" selection-start="2974" selection-end="2974" vertical-scroll-proportion="0.0" vertical-offset="1014" max-vertical-offset="1936">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="44" selection-start="1702" selection-end="1702" vertical-scroll-proportion="-20.580645" vertical-offset="0" max-vertical-offset="858">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="110" selection-start="427" selection-end="427" vertical-scroll-proportion="0.0" vertical-offset="3746" max-vertical-offset="4686">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="179" column="14" selection-start="3162" selection-end="3175" vertical-scroll-proportion="-18.9" vertical-offset="3371" max-vertical-offset="22704">
+        <state line="19" column="48" selection-start="1202" selection-end="1202" vertical-scroll-proportion="0.0" vertical-offset="418" max-vertical-offset="836">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="881" column="44" selection-start="24918" selection-end="24918" vertical-scroll-proportion="0.0" vertical-offset="18596" max-vertical-offset="19558">
+        <state line="923" column="17" selection-start="26847" selection-end="26847" vertical-scroll-proportion="0.0" vertical-offset="19809" max-vertical-offset="20724">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/www/templates/mark-attendance.html">
+    <entry file="file://$PROJECT_DIR$/www/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="38" selection-start="2774" selection-end="2774" vertical-scroll-proportion="0.50825083" vertical-offset="770" max-vertical-offset="1694">
+        <state line="277" column="23" selection-start="4551" selection-end="4551" vertical-scroll-proportion="0.0" vertical-offset="6072" max-vertical-offset="23606">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="198" column="0" selection-start="6998" selection-end="6998" vertical-scroll-proportion="0.0" vertical-offset="4453" max-vertical-offset="5368">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/lib/flex-calendar/dist/flex-calendar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="329" column="5" selection-start="11385" selection-end="11385" vertical-scroll-proportion="0.7836065" vertical-offset="6521" max-vertical-offset="7436">
           <folding />
         </state>
       </provider>

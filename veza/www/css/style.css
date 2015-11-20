@@ -102,6 +102,8 @@ p {
     margin-top: 5px!important;
 }
 
+.margin-left-50 {margin-left: 50%;}
+
 .ion-notify-select {
     background: url('../img/notification_select.png') center;
     background-repeat: no-repeat;
@@ -182,6 +184,10 @@ color: white;
 }
 .display-no{
 display: none;
+}
+
+.margin-top-100 {
+    margin-top: 100px!important;
 }
 
 .header-title{
@@ -286,6 +292,9 @@ display: none;
     top: 50%;
     transform: translateY(-50%);
     margin: 5px;
+}
+.align-center{
+    font-weight: bold;
 }
 
 .hero.no-header {
@@ -894,6 +903,10 @@ display: none;
     font-size: 16px;
     font-weight: bold;
     color: #f8931d;
+}
+
+.notify-item-border-top {
+    border-top: 1px solid #CFCACA!important;
 }
 
 /*********** MEDIA QUERIES ***********/

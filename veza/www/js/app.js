@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'ui.bootstrap',    'dialogs.main'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'flexcalendar', 'pascalprecht.translate', 'ngTouch'])
 
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -20,7 +20,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'ui
     });
  })
 
-.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, dialogsProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $translateProvider) {
 
     // Turn off caching for demo simplicity's sake
     $ionicConfigProvider.views.maxCache(0);
@@ -29,12 +29,31 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'ui
     // Turn off back button text
     $ionicConfigProvider.backButton.previousTitleText(false);
     */
+        $translateProvider.translations('en', {
+            JANUARY: 'January',
+            FEBRUARY: 'February',
+            MARCH: 'March',
+            APRIL: 'April',
+            MAI: 'May',
+            JUNE: 'June',
+            JULY: 'July',
+            AUGUST: 'August',
+            SEPTEMBER: 'September',
+            OCTOBER: 'October',
+            NOVEMBER: 'November',
+            DECEMBER: 'December',
 
-        // this provider is only available in the 4.0.0+ versions of angular-dialog-service
-        dialogsProvider.useBackdrop(true);
-        dialogsProvider.useEscClose(true);
-        dialogsProvider.useCopy(false);
-        dialogsProvider.setSize('sm');
+            SUNDAY: 'Sunday',
+            MONDAY: 'Monday',
+            TUESDAY: 'Tuesday',
+            WEDNESDAY: 'Wednesday',
+            THURSDAY: 'Thurday',
+            FRIDAY: 'Friday',
+            SATURDAY: 'Saturday'
+        });
+
+        $translateProvider.preferredLanguage('en');
+        $translateProvider.useSanitizeValueStrategy('escape');
 
     $stateProvider
 
@@ -196,6 +215,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'ui
               'menuContent': {
                     templateUrl: 'templates/mark-attendance.html',
                     controller: 'MarkAttendanceCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.viewattendance', {
+            url: '/viewattendance',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/view-attendance.html',
+                    controller: 'ViewAttendanceCtrl'
                 },
                 'fabContent': {
                     template: ''

@@ -853,5 +853,85 @@ angular.module('starter.controllers', [])
             }
         };
            $scope.selectedDate = new Date();
+    })
+
+    .controller('ViewAttendanceCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Motion
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
+
+        $scope.noticeBoard = function() {
+            $state.go('app.sharedNotification');
+        };
+            $scope.options = {
+                defaultDate: new Date(),
+                minDate: "2015-01-01",
+                maxDate: "",
+                disabledDates: [
+                    "2015-11-22",
+                    "2015-11-27"
+                ],
+                dayNamesLength: 3, // 1 for "M", 2 for "Mo", 3 for "Mon"; 9 will show full day names. Default is 1.
+                mondayIsFirstDay: true,//set monday as first day of week. Default is false
+                eventClick: function(date) {
+                    console.log(date['event']);
+                    if (date['event'][0]) {
+                        // items have value
+                        $scope.selectedEvents = date['event'];
+                        console.log("Click "+ $scope.selectedEvents);
+                    } else {
+                        // items is still null
+                        $scope.selectedEvents = {0:{ Title: 'Nothing on selected date'}};
+                        console.log($scope.selectedEvents);
+                    }
+                },
+                dateClick: function(date) {
+                    console.log(date['event']);
+                    if (date['event'][0]) {
+                        // items have value
+                        $scope.selectedEvents = date['event'];
+                        console.log("DateClick "+ $scope.selectedEvents);
+                    } else {
+                        // items is still null
+                        $scope.selectedEvents = {0:{ Title: 'Nothing on selected date'}};
+                        console.log($scope.selectedEvents);
+                    }
+                },
+                changeMonth: function(month, year) {
+                    console.log(month, year);
+                },
+                filteredEventsChange: function(filteredEvents) {
+                    console.log(filteredEvents);
+                }
+            };
+
+            $scope.events = [
+                {Title: '13-', Subject: ' Priyanshi Prajapati', date: "2015-11-18"},
+                {Title: '44-', Subject: ' Nimish Jagtap', date: "2015-11-26"},
+                {Title: '51-', Subject: ' Komal Jagtap', date: "2015-11-26"},
+                {Title: '02-', Subject: ' Pranav Athale', date: "2015-11-18"},
+                {Title: '11-', Subject: ' Rekha Mathani', date: "2015-11-10"},
+                {Title: '44-', Subject: ' Abhi Kadam', date: "2015-11-20"},
+                {Title: '65-', Subject: ' Ram Shukla', date: "2015-11-20"}
+            ];
 
     }); // end of Ctrl
