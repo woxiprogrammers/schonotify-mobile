@@ -18,9 +18,9 @@
         '</div>'+
         '<div class="days" ng-repeat="week in weeks">'+
           '<div class="day" '+
-            'ng-repeat="day in week track by $index" '+
-            'ng-class="{selected: isDefaultDate(day), event: day.event[0], disabled: day.disabled, out: !day}" '+
-            'ng-click="onDateClick(day, $index, $event)"'+
+          'ng-repeat="day in week track by $index" '+
+          'ng-click="onDateClick(day, $index, $event)"'+
+          'ng-class="{selected: isDefaultDate(day), event: day.event[0], disabled: day.disabled, out: !day}" '+
           '>'+
             '<div class="number">{{day.day}}</div>'+
           '</div>'+
@@ -64,7 +64,7 @@
 
       var $translate = $filter('translate');
 
-      var MONTHS = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+      var MONTHS = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAI', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
       var WEEKDAYS = ['SUNDAY' , 'MONDAY' , 'TUESDAY' , 'WEDNESDAY' , 'THURSDAY' , 'FRIDAY' , 'SATURDAY'];
 
       if($scope.options.mondayIsFirstDay)
@@ -144,8 +144,6 @@
       $scope.$watch('selectedMonth', function(month, previousMonth) {
         if(month !== previousMonth) calculateWeeks();
       });
-
-      /////////////////
 
       function onDateClick(date, index, domEvent) {
         if (!date || date.disabled) { return; }
@@ -294,10 +292,11 @@
       }
 
       function isDefaultDate(date) {
-        if (!date) { return; }
+       if (!date) { return; }
         var result = date.year === $scope.options._defaultDate.getFullYear() &&
           date.month === $scope.options._defaultDate.getMonth() &&
           date.day === $scope.options._defaultDate.getDate();
+         // console.log(result);
         return result;
       }
 

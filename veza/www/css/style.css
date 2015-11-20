@@ -102,6 +102,8 @@ p {
     margin-top: 5px!important;
 }
 
+.margin-left-50 {margin-left: 50%;}
+
 .ion-notify-select {
     background: url('../img/notification_select.png') center;
     background-repeat: no-repeat;
@@ -290,6 +292,9 @@ display: none;
     top: 50%;
     transform: translateY(-50%);
     margin: 5px;
+}
+.align-center{
+    font-weight: bold;
 }
 
 .hero.no-header {

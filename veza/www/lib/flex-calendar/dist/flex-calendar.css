@@ -36,29 +36,25 @@
 
 .flex-calendar .month .arrow,
 .flex-calendar .month .label{
-  height: 60px;
-
-  -webkit-box-ordinal-group: 1;
-
-  -webkit-order: 0;
-
-      -ms-flex-order: 0;
-
-          order: 0;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 1 auto;
-      -ms-flex: 0 1 auto;
-          flex: 0 1 auto;
-  -webkit-align-self: auto;
-      -ms-flex-item-align: auto;
-          align-self: auto;
-  line-height: 60px;
-
-  font-size:20px;
+    height: 60px;
+    /* -webkit-box-ordinal-group: 1; */
+    /* -webkit-order: 0; */
+    -ms-flex-order: 0;
+    /* order: 0; */
+    /* -webkit-box-flex: 0; */
+    /* -webkit-flex: 0 1 auto; */
+    -ms-flex: 0 1 auto;
+    /* flex: 0 1 auto; */
+    /* -webkit-align-self: auto; */
+    -ms-flex-item-align: auto;
+    /* align-self: auto; */
+    line-height: 60px;
+    font-size: 24px;
+    text-align: center;
 }
 
 .flex-calendar .month .arrow {
-  width: 50px;
+  width: 40px;
   box-sizing: border-box;
   background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABqUlEQVR4Xt3b0U3EMBCE4XEFUAolHB0clUFHUAJ0cldBkKUgnRDh7PWsd9Z5Tpz8nyxFspOCJMe2bU8AXgG8lFIurMcurIE8x9nj3wE8AvgE8MxCkAf4Ff/jTEOQBjiIpyLIAtyJpyFIAjTGUxDkADrjhxGkAIzxQwgyAIPxZgQJAFJ8RbgCOJVS6muy6QgHiIyvQqEA0fGhAArxYQAq8SEASvHTAdTipwIoxk8DUI2fAqAc7w6gHu8KkCHeDSBLvAtApng6QLZ4KkDGeBpA1ngKQOb4YYDs8UMAK8SbAVaJNwGsFN8NsFq8FeADwEPTmvPxSXV/v25xNy9fD97v8PLuVeF9FiyD0A1QKVdCMAGshGAGWAVhCGAFhGGA7AgUgMwINICsCFSAjAh0gGwILgCZENwAsiC4AmRAcAdQR5gCoIwwDUAVYSqAIsJ0ADWEEAAlhDAAFYRQAAWEcIBoBAkAIsLX/rV48291MgAEhO747o0Rr82J23GNS+6meEkAw0wwx8sCdCAMxUsDNCAMx8sD/INAiU8B8AcCLT4NwA3CG4Az68/xOu43keZ+UGLOkN4AAAAASUVORK5CYII=') no-repeat;
   background-size: contain;
@@ -88,7 +84,7 @@
 }
 .flex-calendar .week,
 .flex-calendar .days {
-  line-height: 25px;
+  line-height: 20px;
   font-size: 16px;
   display: -webkit-box;
   display: -webkit-flex;
@@ -133,7 +129,7 @@
 }
 
 .flex-calendar .days .day.out {
-  background-color: #EEEDED;
+  background-color: #fff;
 }
 
 .flex-calendar .days .day.today,

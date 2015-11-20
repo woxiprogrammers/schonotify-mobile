@@ -52,11 +52,28 @@
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="padding-l-r-5 margin-top-100">
         <flex-calendar options="options" events="events"></flex-calendar>
         <ion-list>
-            <ion-item class="notify-item-border-top" ng-repeat="selectedEvent in selectedEvents">
+	    <div class="row col-offset-33 col-33"><i class="icon ion-chevron-down margin-left-50"></i></div
+            <div class="notify-item-border-top"><span><h4 class="align-center">Absent</h4></span></div>
+            <ion-item ng-repeat="selectedEvent in selectedEvents">
                 <div class="row">
                     <a class="text-decoration-none">
-                        <h2><strong>{{selectedEvent.Title}}</strong></h2>
-                        <p>{{selectedEvent.Subject}}</p>
+                        <h2>{{selectedEvent.Title}}{{selectedEvent.Subject}}</h2>
+                    </a>
+                </div>
+            </ion-item>
+            <div><span class="align-center"><h4 class="align-center">Leave Applied</h4></span></div>
+            <ion-item ng-repeat="selectedEvent in selectedEvents">
+                <div class="row">
+                    <a class="text-decoration-none">
+                        <h2>{{selectedEvent.Title}}{{selectedEvent.Subject}}</h2>
+                    </a>
+                </div>
+            </ion-item>
+            <div><span class="align-center"><h4 class="align-center">Leave Approved</h4></span></div>
+            <ion-item ng-repeat="selectedEvent in selectedEvents">
+                <div class="row">
+                    <a class="text-decoration-none">
+                        <h2>{{selectedEvent.Title}}{{selectedEvent.Subject}}</h2>
                     </a>
                 </div>
             </ion-item>

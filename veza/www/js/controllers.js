@@ -897,10 +897,10 @@ angular.module('starter.controllers', [])
                     if (date['event'][0]) {
                         // items have value
                         $scope.selectedEvents = date['event'];
-                        console.log($scope.selectedEvents);
+                        console.log("Click "+ $scope.selectedEvents);
                     } else {
                         // items is still null
-                        $scope.selectedEvents = {0:{ Title: 'No event on selected date'}};
+                        $scope.selectedEvents = {0:{ Title: 'Nothing on selected date'}};
                         console.log($scope.selectedEvents);
                     }
                 },
@@ -909,26 +909,29 @@ angular.module('starter.controllers', [])
                     if (date['event'][0]) {
                         // items have value
                         $scope.selectedEvents = date['event'];
-                        console.log($scope.selectedEvents);
+                        console.log("DateClick "+ $scope.selectedEvents);
                     } else {
                         // items is still null
-                        $scope.selectedEvents = {0:{ Title: 'No event on selected date'}};
+                        $scope.selectedEvents = {0:{ Title: 'Nothing on selected date'}};
                         console.log($scope.selectedEvents);
                     }
                 },
                 changeMonth: function(month, year) {
                     console.log(month, year);
+                },
+                filteredEventsChange: function(filteredEvents) {
+                    console.log(filteredEvents);
                 }
             };
 
             $scope.events = [
-                {Title: 'Annual Function', Subject: 'Lorem ipsum dolor sit amet, ea oblique.', date: "2015-11-18"},
-                {Title: 'Drawing Competition', Subject: 'Lorem ipsum dolor sit amet, ea oblique.', date: "2015-11-18"},
-                {Title: 'Elocution Competition', Subject: 'Lorem ipsum dolor sit amet, ea oblique.', date: "2015-11-18"},
-                {Title: 'Singing Competition', Subject: 'Lorem ipsum dolor sit amet, ea oblique.', date: "2015-11-18"},
-                {Title: 'Drawing Competition', Subject: 'Lorem ipsum dolor sit amet, ea oblique.', date: "2015-11-20"},
-                {Title: 'Annual Function', Subject: 'Lorem ipsum dolor sit amet, ea oblique.', date: "2015-11-20"},
-                {Title: 'Elocution Competition', Subject: 'Lorem ipsum dolor sit amet, ea oblique.', date: "2015-11-20"}
+                {Title: '13-', Subject: ' Priyanshi Prajapati', date: "2015-11-18"},
+                {Title: '44-', Subject: ' Nimish Jagtap', date: "2015-11-26"},
+                {Title: '51-', Subject: ' Komal Jagtap', date: "2015-11-26"},
+                {Title: '02-', Subject: ' Pranav Athale', date: "2015-11-18"},
+                {Title: '11-', Subject: ' Rekha Mathani', date: "2015-11-10"},
+                {Title: '44-', Subject: ' Abhi Kadam', date: "2015-11-20"},
+                {Title: '65-', Subject: ' Ram Shukla', date: "2015-11-20"}
             ];
 
     }); // end of Ctrl
