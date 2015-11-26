@@ -100,14 +100,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'fl
                 controller: 'SharedNotificationCtrl'
            },
             'fabContent': {
-                template: '<button id="fab-new-notification" class="button button-fab button-fab-bottom-right expanded fab-button-grey spin"><i class="icon ion-edit"></i></button>',
+                template: '<button id="fab-new-announcement" ng-click="createAnnouncement()" class="button button-fab button-fab-bottom-right expanded fab-button-grey spin"><i class="icon ion-edit"></i></button>',
                 controller: function ($timeout) {
                     $timeout(function () {
-                        document.getElementById('fab-new-notification').classList.toggle('on');
+                        document.getElementById('fab-new-announcement').classList.toggle('on');
                     }, 900);
                 }
             }
         }
+    })
+    .state('app.createannouncement', {
+        url: '/createannouncement',
+        views: {
+          'menuContent': {
+               templateUrl: 'templates/create-announcement.html',
+               controller: 'CreateAnnouncementCtrl'
+          },
+           'fabContent': {
+               template: ''
+               }
+           }
     })
     .state('app.sharedAchievement', {
          url: '/sharedAchievement',
@@ -117,7 +129,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'fl
                controller: 'SharedAchievementCtrl'
             },
              'fabContent': {
-                 template: '<button id="fab-new-achievement" class="button button-fab button-fab-bottom-right expanded fab-button-grey  spin"><i class="icon ion-edit"></i></button>',
+                 template: '<button id="fab-new-achievement" ng-click="createAchievement()" class="button button-fab button-fab-bottom-right expanded fab-button-grey  spin"><i class="icon ion-edit"></i></button>',
                  controller: function ($timeout) {
                      $timeout(function () {
                          document.getElementById('fab-new-achievement').classList.toggle('on');
@@ -126,24 +138,36 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'fl
              }
          }
      })
-        .state('app.homework', {
-            url: '/homework',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/homework-listing.html',
-                    controller: 'HomeworkCtrl'
-                },
-                'fabContent': {
-                    template: '<button id="fab-new-homework" ng-click="composeHw()" class="button button-fab button-fab-bottom-right expanded bar-pink  spin"><i class="icon ion-edit"></i></button>',
-                    controller: function ($timeout) {
-                        $timeout(function () {
-                            document.getElementById('fab-new-homework').classList.toggle('on');
-                        }, 900);
-                    }
-                }
-            }
-        })
-        .state('app.hwcompose', {
+     .state('app.createachievement', {
+          url: '/createachievement',
+          views: {
+             'menuContent': {
+                templateUrl: 'templates/create-achievement.html',
+                controller: 'CreateAchievementCtrl'
+             },
+              'fabContent': {
+                  template: ''
+              }
+          }
+     })
+     .state('app.homework', {
+          url: '/homework',
+          views: {
+             'menuContent': {
+                templateUrl: 'templates/homework-listing.html',
+                controller: 'HomeworkCtrl'
+             },
+              'fabContent': {
+                  template: '<button id="fab-new-homework" ng-click="composeHw()" class="button button-fab button-fab-bottom-right expanded bar-pink  spin"><i class="icon ion-edit"></i></button>',
+                      controller: function ($timeout) {
+                         $timeout(function () {
+                         document.getElementById('fab-new-homework').classList.toggle('on');
+                      }, 900);
+                  }
+              }
+          }
+     })
+     .state('app.hwcompose', {
             url: '/hwcompose',
             views: {
                 'menuContent': {
@@ -227,6 +251,143 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'fl
                 'menuContent': {
                     templateUrl: 'templates/view-attendance.html',
                     controller: 'ViewAttendanceCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.eventlanding', {
+            url: '/eventlanding',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/event-landing.html',
+                    controller: 'LandingEventCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.editevent', {
+            url: '/editevent',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/edit-event.html',
+                    controller: 'EditEventCtrl'
+                },
+                'fabContent': {
+                    template: '<button id="fab-new-message" ui-sref="app.createevent" class="button button-fab button-fab-bottom-right expanded fab-button-event  spin"><i class="icon ion-edit"></i></button>',
+                    controller: function ($timeout) {
+                        $timeout(function () {
+                            document.getElementById('fab-new-message').classList.toggle('on');
+                        }, 900);
+                    }
+                }
+            }
+        })
+        .state('app.createevent', {
+            url: '/createevent',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/create-event.html',
+                    controller: 'CreateEventCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.viewevents', {
+            url: '/viewevents',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/view-event.html',
+                    controller: 'ViewEventsCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.leaveapproval', {
+            url: '/leaveapproval',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/leave-listing.html',
+                    controller: 'ViewLeaveApprovalCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.detailspage', {
+            url: '/detailspage',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/detail-description.html',
+                    controller: 'DetailPageCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.announcedetails', {
+            url: '/announcedetails',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/announce-description.html',
+                    controller: 'DetailPageCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.achievementdetails', {
+            url: '/achievementdetails',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/achievement-description.html',
+                    controller: 'DetailPageCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.notificationdetails', {
+            url: '/notificationdetails',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/notification-details.html',
+                    controller: 'DetailPageCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.homeworkdetails', {
+            url: '/homeworkdetails',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/homework-details.html',
+                    controller: 'DetailPageCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.leavedetails', {
+            url: '/leavedetails',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/leave-details.html',
+                    controller: 'DetailPageCtrl'
                 },
                 'fabContent': {
                     template: ''

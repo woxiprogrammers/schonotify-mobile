@@ -35,7 +35,7 @@
     </div>
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
     	<ion-list>
-    		<ion-item class="notify-item-border" ng-repeat="nMsg in nMessages">
+    		<ion-item class="notify-item-border" ng-repeat="nMsg in nMessages" ngclick="notifyDetail()">
     			<div class="row">
     				<div class="col-25">
     					<ion-checkbox class="checkbox-square checkbox-assertive" ng-model="nMsg.Selected">

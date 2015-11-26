@@ -113,6 +113,38 @@ angular.module('starter.controllers', [])
         $scope.composeMsg = function() {
             $state.go('app.msgcompose');
         };
+
+        $scope.createAnnouncement = function() {
+            $state.go('app.createannouncement');
+        };
+
+        $scope.createAchievement = function() {
+            $state.go('app.createachievement');
+        };
+
+        $scope.announceDetails = function() {
+            $state.go('app.announcedetails');
+        };
+
+        $scope.achievementDetail = function() {
+            // console.log("Details view");
+            $state.go('app.achievementdetails');
+        };
+
+        $scope.notifyDetail = function() {
+            // console.log("Details view");
+            $state.go('app.notificationdetails');
+        };
+
+        $scope.homeworkDetails = function() {
+            // console.log("Details view");
+            $state.go('app.homeworkdetails');
+        };
+
+        $scope.leaveDetails = function() {
+            // console.log("Details view");
+            $state.go('app.leavedetails');
+        };
 })
 
 .controller('LoginCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk) {
@@ -321,6 +353,30 @@ angular.module('starter.controllers', [])
 
         };
  })
+    .controller('CreateAnnouncementCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Motion
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
+
+    })
     .controller('SharedAchievementCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
@@ -378,6 +434,30 @@ angular.module('starter.controllers', [])
             });
 
         };
+    })
+    .controller('CreateAchievementCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Motion
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
+
     })
     .controller('HomeworkCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
 
@@ -933,5 +1013,341 @@ angular.module('starter.controllers', [])
                 {Title: '44-', Subject: ' Abhi Kadam', date: "2015-11-20"},
                 {Title: '65-', Subject: ' Ram Shukla', date: "2015-11-20"}
             ];
+
+    })
+    .controller('LandingEventCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Motion
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
+
+        $scope.noticeBoard = function() {
+            $state.go('app.sharedNotification');
+        };
+    })
+    .controller('EditEventCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Motion
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
+
+        $scope.noticeBoard = function() {
+            $state.go('app.sharedNotification');
+        };
+
+        $scope.nMessages = [{
+            Picture: "graduate.jpg",
+            Status: "unRead",
+            Subject: "Notification 1",
+            Message: "School has won Math Olympaid Exam",
+            Timestamp: "Date: 18 Oct 2015",
+            Priority: "high"
+        }, {
+            Status: "Read",
+            Subject: "Notification 2",
+            Message: "School has participated Math Olympaid Exam",
+            Timestamp: "Date: 17 Oct 2015",
+            Priority: "medium"
+        }, {
+            Picture: "education-bg.jpg",
+            Status: "Read",
+            Subject: "Notification 3",
+            Message: "The Attendance is Compulsary",
+            Timestamp: "Date: 15 Oct 2015",
+            Priority: "high"
+        },{
+            Picture: "graduate.jpg",
+            Status: "unRead",
+            Subject: "Notification 1",
+            Message: "School has won Math Olympaid Exam",
+            Timestamp: "Date: 18 Oct 2015",
+            Priority: "high"
+        }, {
+            Status: "Read",
+            Subject: "Notification 2",
+            Message: "School has participated Math Olympaid Exam",
+            Timestamp: "Date: 17 Oct 2015",
+            Priority: "medium"
+        }, {
+            Picture: "education-bg.jpg",
+            Status: "Read",
+            Subject: "Notification 3",
+            Message: "The Attendance is Compulsary",
+            Timestamp: "Date: 15 Oct 2015",
+            Priority: "high"
+        },{
+            Picture: "graduate.jpg",
+            Status: "unRead",
+            Subject: "Notification 1",
+            Message: "School has won Math Olympaid Exam",
+            Timestamp: "Date: 18 Oct 2015",
+            Priority: "high"
+        }, {
+            Status: "Read",
+            Subject: "Notification 2",
+            Message: "School has participated Math Olympaid Exam",
+            Timestamp: "Date: 17 Oct 2015",
+            Priority: "medium"
+        }, {
+            Picture: "education-bg.jpg",
+            Status: "Read",
+            Subject: "Notification 3",
+            Message: "The Attendance is Compulsary",
+            Timestamp: "Date: 15 Oct 2015",
+            Priority: "high"
+        }];
+    })
+    .controller('CreateEventCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Motion
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
+
+        $scope.noticeBoard = function() {
+            $state.go('app.sharedNotification');
+        };
+        $scope.selectedDate = new Date();
+
+    })
+    .controller('ViewEventsCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Motion
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
+
+        $scope.noticeBoard = function() {
+            $state.go('app.sharedNotification');
+        };
+        $scope.options = {
+            defaultDate: new Date(),
+            minDate: "2015-01-01",
+            maxDate: "",
+            disabledDates: [
+                "2015-11-22",
+                "2015-11-27"
+            ],
+            dayNamesLength: 3, // 1 for "M", 2 for "Mo", 3 for "Mon"; 9 will show full day names. Default is 1.
+            mondayIsFirstDay: true,//set monday as first day of week. Default is false
+            eventClick: function(date) {
+                console.log(date['event']);
+                if (date['event'][0]) {
+                    // items have value
+                    $scope.selectedEvents = date['event'];
+                    console.log("Click "+ $scope.selectedEvents);
+                } else {
+                    // items is still null
+                    $scope.selectedEvents = {0:{ Title: 'Nothing on selected date'}};
+                    console.log($scope.selectedEvents);
+                }
+            },
+            dateClick: function(date) {
+                console.log(date['event']);
+                if (date['event'][0]) {
+                    // items have value
+                    $scope.selectedEvents = date['event'];
+                    console.log("DateClick "+ $scope.selectedEvents);
+                } else {
+                    // items is still null
+                    $scope.selectedEvents = {0:{ Title: 'Nothing on selected date'}};
+                    console.log($scope.selectedEvents);
+                }
+            },
+            changeMonth: function(month, year) {
+                console.log(month, year);
+            },
+            filteredEventsChange: function(filteredEvents) {
+                console.log(filteredEvents);
+            }
+        };
+
+        $scope.events = [
+            {Title: '13-', Subject: ' Priyanshi Prajapati', date: "2015-11-18"},
+            {Title: '44-', Subject: ' Nimish Jagtap', date: "2015-11-26"},
+            {Title: '51-', Subject: ' Komal Jagtap', date: "2015-11-26"},
+            {Title: '02-', Subject: ' Pranav Athale', date: "2015-11-18"},
+            {Title: '11-', Subject: ' Rekha Mathani', date: "2015-11-10"},
+            {Title: '44-', Subject: ' Abhi Kadam', date: "2015-11-20"},
+            {Title: '65-', Subject: ' Ram Shukla', date: "2015-11-20"}
+        ];
+
+    })
+    .controller('ViewLeaveApprovalCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Motion
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
+
+        $scope.noticeBoard = function() {
+            $state.go('app.sharedNotification');
+        };
+        $scope.selectedDate = new Date();
+
+        $scope.nMessages = [{
+            Button: "display-true",
+            Label: "display-false",
+            Title: "Ashish Sawant",
+            Message: "Fever, Cough and Cold",
+            Timestamp: "Applied On: 18 Oct 2015",
+            Class: "5th B div"
+        }, {
+            Button: "display-true",
+            Label: "display-false",
+            Title: "Tushar Kadam",
+            Message: "Typhoid",
+            Timestamp: "Applied On: 17 Oct 2015",
+            Class: "8th A div"
+        }, {
+            Button: "display-false",
+            Label: "display-true",
+            Title: "Rahul Bhosale",
+            Message: "Brothers Marriage",
+            Timestamp: "Applied On: 15 Oct 2015",
+            Class: "9th C div"
+        }, {
+            Button: "display-false",
+            Label: "display-true",
+            Title: "Ashish Sawant",
+            Message: "Cough n Cold",
+            Timestamp: "Applied On: 13 Oct 2015",
+            Class: "5th B div"
+        }, {
+            Button: "display-false",
+            Label: "display-true",
+            Title: "Rahul Bhosale",
+            Message: "Brothers Marriage",
+            Timestamp: "Applied On: 15 Oct 2015",
+            Class: "9th C div"
+        }, {
+            Button: "display-false",
+            Label: "display-true",
+            Title: "Ashish Sawant",
+            Message: "Cough n Cold",
+            Timestamp: "Applied On: 13 Oct 2015",
+            Class: "5th B div"
+        },{
+            Button: "display-false",
+            Label: "display-true",
+            Title: "Tushar Kadam",
+            Message: "Cough n Cold",
+            Timestamp: "Applied On: 11 Oct 2015",
+            Class: "8th A div"
+        }];
+
+    })
+    .controller('DetailPageCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Motion
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
+
+        $scope.noticeBoard = function() {
+            $state.go('app.sharedNotification');
+        };
+        $scope.selectedDate = new Date();
 
     }); // end of Ctrl
