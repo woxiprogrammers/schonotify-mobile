@@ -196,3 +196,24 @@
   bottom:10px;
   margin-left:-3px;
 }
+
+.calEvent .flex-calendar .days .day.event:before {
+    background-color: #f2241d;
+}
+
+.calEvent .flex-calendar .days .day.selected .number {
+    background-color: #f2241d;
+}
+
+.calEvent .flex-calendar .days .day.today,
+.flex-calendar .calEvent .days .day.disabled.today{
+    color: #f2241d;
+}
+
+.calEvent .flex-calendar .week {
+    background-color: #f2241d;
+}
+
+.calEvent .flex-calendar .month {
+    background-color: #f2241d;
+}

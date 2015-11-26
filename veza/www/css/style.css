@@ -133,7 +133,6 @@ p {
     background-size:contain;
     margin-top: 5px!important;
 }
-
 .ion-message {
     background: url('../img/messages.png') center;  
     background-repeat: no-repeat;
@@ -184,6 +183,25 @@ color: white;
 }
 .display-no{
 display: none;
+}
+
+.is-approved{
+    width: 80px;
+    margin-top: 20px;
+    height: 20px;
+}
+.bar-grey{
+    background-color: #444444;
+    color: #ffffff;
+}
+.approve-button{
+    font-size: 14px;
+    height: 25px;
+    padding: 0 12px;
+    line-height: 0;
+    min-height: 25px;
+    margin-top: 20px;
+    text-transform: none;
 }
 
 .margin-top-100 {
@@ -389,6 +407,10 @@ display: none;
     margin-left: 16%;
 }
 
+.margin-left-15{
+    margin-left: 15%;
+}
+
 .notify-item-border{
     border-bottom: 1px solid #636360!important;
 }
@@ -468,7 +490,7 @@ display: none;
 }
 
 .top-22 {
-    top: 22%;
+    top: 24%;
 }
 
 .padding-5{
@@ -577,15 +599,43 @@ display: none;
     color: #fff;
 }
 
+.bar-event{
+    border-color: #ef362f;
+    background-color: #f2241d;
+    background-image: linear-gradient(0deg, #ef362f, #ef362f 50%, transparent 50%);
+    color: #fff;
+}
+
 .inner-header{
     color: #ffffff;
     font-size: 95%;
     font-weight: bold;
     margin-left: 7px;
 }
+.col-70{
+    -moz-box-flex: 0;
+    flex: 0 0 70%;
+    max-width: 70%;
+}
 
 .margin-top-5{
     margin-top: 5px!important;
+}
+
+.header-approve{
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+    display: inline-block;
+    height: 24px;
+    padding: 0px 1rem;
+    border-radius: 2px;
+    background-clip: padding-box;
+    /* text-transform: uppercase; */
+    border: none;
+    outline: 0;
+    -webkit-tap-highlight-color: transparent;
+    /* width: 86px; */
+    /* margin-right: 56px; */
+    /* padding-right: 0px; */
 }
 
 .attachment-yes {
@@ -594,6 +644,11 @@ display: none;
     background-position: 50%;
     background-size:contain;
     margin-top: 5px!important;
+}
+
+.fab-button-event {
+    background-color: #f2241d;
+    color: #fff;
 }
 
 .attachment-no {
@@ -907,6 +962,15 @@ display: none;
 
 .notify-item-border-top {
     border-top: 1px solid #CFCACA!important;
+}
+
+
+.display-true{
+    display: block;
+}
+
+.display-false{
+    display : none;
 }
 
 /*********** MEDIA QUERIES ***********/

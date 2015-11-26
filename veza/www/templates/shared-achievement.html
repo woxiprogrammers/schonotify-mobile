@@ -53,7 +53,7 @@
                         <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="nMsg.Selected">
                         </ion-checkbox>
                     </div>
-                    <div class="col-75 msg-{{nMsg.Status}}">
+                    <div class="col-75 msg-{{nMsg.Status}}" ng-click="achievementDetail()">
                         <p><strong>{{nMsg.Message}}</strong><br><i class="font-italic">{{nMsg.Timestamp}}</i>
                         </p>
                     </div>
