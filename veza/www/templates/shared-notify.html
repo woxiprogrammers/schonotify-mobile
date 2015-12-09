@@ -46,13 +46,13 @@
         <ion-list>
             <ion-item class="notify-item-border padding-0" ng-repeat="nMsg in nMessages">
                 <div class="row padding-r-0">
-                    <div class="col-25">
+                    <div class="col-15">
                         <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="nMsg.Selected">
                         </ion-checkbox>
                     </div>
-                    <div class="col-50 msg-{{nMsg.Status}}"  ng-click="announceDetails()">
+                    <div class="col-66 msg-{{nMsg.Status}}"  ng-click="announceDetails()">
                         <h2><strong>{{nMsg.Subject}}</strong></h2>
-                        <p>{{nMsg.Message}}<br><strong><i class="font-italic">{{nMsg.Timestamp}}</i></strong></p>
+                        <p>{{nMsg.Message}}<br><strong><i class="font-italic ">{{nMsg.Timestamp}}</i></strong></p>
                     </div>
                     <div class="col-5 col-offset-22 priority-{{nMsg.Priority}}"></div>
                 </div>

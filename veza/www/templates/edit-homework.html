@@ -25,7 +25,7 @@
                     </ion-checkbox>
                 </div>
                 <div class="col-50 margin-top-5">
-                    <span class="inner-header">Homework</span>
+                    <span class="inner-header">Edit Homework</span>
                 </div>
                 <div class="col-25">
                     <a><i class="icon ion-trash-b align-delete-bin"></i></a>
@@ -41,12 +41,17 @@
                         <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="nMsg.Selected">
                         </ion-checkbox>
                     </div>
-                    <div class="col-80 msg-{{nMsg.Status}}" ng-click="homeworkDetails()">
+                    <div class="col-80 msg-{{nMsg.Status}}" ng-click="homeworkEdit()">
                         <h2><strong>{{nMsg.Title}}</strong></h2>
                         <p>{{nMsg.Message}}<br><strong>{{nMsg.Class}} {{nMsg.Subject}}</strong></p>
                         <div class="row padding-0 margin-top-5">
-                            <div class="col-10 col-offset-75 attachment-{{nMsg.Attach}}"></div>
-                            <div class="col-15">{{nMsg.Timestamp}}</div>
+                            <div class="col-70">
+                                <button class="button button-positive publish-button">
+                                    Publish
+                                </button>
+                            </div>
+                            <div class="col-10 attachment-{{nMsg.Attach}}"></div>
+                            <div class="col-20">{{nMsg.Timestamp}}</div>
                         </div>
                     </div>
                 </div>
