@@ -33,7 +33,7 @@
     </div>
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="padding-l-r-5 margin-top-48">
         <ion-list>
-            <ion-item class="notify-item-border" ng-repeat="nMsg in nMessages">
+            <ion-item class="notify-item-border" ng-repeat="nMsg in nMessages" ng-click="eventEdit()">
                 <div class="card">
                     <img src="img/{{nMsg.Picture}}">
                 </div>

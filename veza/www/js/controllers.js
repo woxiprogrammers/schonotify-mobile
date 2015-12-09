@@ -127,30 +127,41 @@ angular.module('starter.controllers', [])
         };
 
         $scope.achievementDetail = function() {
-            // console.log("Details view");
             $state.go('app.achievementdetails');
         };
 
         $scope.notifyDetail = function() {
-            // console.log("Details view");
             $state.go('app.notificationdetails');
         };
 
         $scope.homeworkDetails = function() {
-            // console.log("Details view");
             $state.go('app.homeworkdetails');
         };
 
         $scope.leaveDetails = function() {
-            // console.log("Details view");
             $state.go('app.leavedetails');
+        };
+
+        $scope.homeworkEdit = function() {
+            $state.go('app.homeworkedit');
+        };
+
+        $scope.detailEvent = function() {
+            $state.go('app.eventsLanding');
+        };
+
+        $scope.eventDetails = function() {
+            $state.go('app.eventdetails');
+        };
+
+        $scope.eventEdit = function() {
+            $state.go('app.eventedit');
         };
 })
 
 .controller('LoginCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk) {
 
     $scope.signIn = function() {
-        console.log("into signin");
             $state.go('app.dashboard');
         };
 
@@ -219,45 +230,45 @@ angular.module('starter.controllers', [])
 
         $scope.nMessages = [{
             Status: "unRead",
-            Subject: "Notification 1",
-            Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 18 Oct 2015",
+            Subject: "Rohit Shetty",
+            Message: " has created homework for 5th Std Div B.",
+            Timestamp: "4 mins ago",
             Type: "notification_attendance"
         }, {
             Status: "unRead",
-            Subject: "Notification 2",
-            Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 17 Oct 2015",
+            Subject: "Rohit Shetty",
+            Message: " has created homework for 5th Std Div B.",
+            Timestamp: "40 mins ago",
             Type: "notification_event"
         }, {
             Status: "Read",
-            Subject: "Notification 3",
-            Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 15 Oct 2015",
+            Subject: "Rohit Shetty",
+            Message: " has created homework for 5th Std Div B.",
+            Timestamp: "40 mins ago",
             Type: "notification_fees"
         },{
             Status: "Read",
-            Subject: "Notification 4",
-            Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 14 Oct 2015",
+            Subject: "Rohit Shetty",
+            Message: " has created homework for 5th Std Div B.",
+            Timestamp: "40 mins ago",
             Type: "notification_homework"
         },{
             Status: "Read",
-            Subject: "Notification 5",
-            Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 14 Oct 2015",
+            Subject: "Rohit Shetty",
+            Message: " has created homework for 5th Std Div B.",
+            Timestamp: "40 mins ago",
             Type: "notification_result"
         },{
             Status: "Read",
-            Subject: "Notification 6",
-            Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 11 Oct 2015",
+            Subject: "Rohit Shetty",
+            Message: " has created homework for 5th Std Div B.",
+            Timestamp: "40 mins ago",
             Type: "notification_event"
         },{
             Status: "Read",
-            Subject: "Notification 7",
-            Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 08 Oct 2015",
+            Subject: "Rohit Shetty",
+            Message: " has created homework for 5th Std Div B.",
+            Timestamp: "40 mins ago",
             Type: "notification_attendance"
         }];
 
@@ -299,45 +310,45 @@ angular.module('starter.controllers', [])
 
         $scope.nMessages = [{
             Status: "unRead",
-            Subject: "Notification 1",
+            Subject: "Class Test for Std 5 on this thursday",
             Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 18 Oct 2015",
+            Timestamp: "4 mins ago",
             Priority: "high"
         }, {
             Status: "unRead",
             Subject: "Notification 2",
             Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 17 Oct 2015",
+            Timestamp: "40 mins ago",
             Priority: "medium"
         }, {
             Status: "Read",
             Subject: "Notification 3",
             Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 15 Oct 2015",
+            Timestamp: "4 hours ago",
             Priority: "high"
         },{
             Status: "Read",
             Subject: "Notification 4",
             Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 14 Oct 2015",
+            Timestamp: "4 days ago",
             Priority: "low"
         },{
             Status: "Read",
             Subject: "Notification 5",
             Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 14 Oct 2015",
+            Timestamp: "4 weeks ago",
             Priority: "medium"
         },{
             Status: "Read",
             Subject: "Notification 6",
             Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 11 Oct 2015",
+            Timestamp: "4 months ago",
             Priority: "low"
         },{
             Status: "Read",
             Subject: "Notification 7",
             Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 08 Oct 2015",
+            Timestamp: "5 months ago",
             Priority: "high"
         }];
 
@@ -405,21 +416,21 @@ angular.module('starter.controllers', [])
             Picture: "graduate.jpg",
             Status: "unRead",
             Subject: "Notification 1",
-            Message: "School has won Math Olympaid Exam",
-            Timestamp: "Date: 18 Oct 2015",
+            Message: "D.A.V wins Inter School Basketball Tournament 2015",
+            Timestamp: "Date: 04 Dec 2015",
             Priority: "high"
         }, {
             Status: "Read",
             Subject: "Notification 2",
             Message: "School has participated Math Olympaid Exam",
-            Timestamp: "Date: 17 Oct 2015",
+            Timestamp: "Date: 04 Dec 2015",
             Priority: "medium"
         }, {
             Picture: "education-bg.jpg",
             Status: "Read",
             Subject: "Notification 3",
             Message: "The Attendance is Compulsary",
-            Timestamp: "Date: 15 Oct 2015",
+            Timestamp: "Date: 04 Dec 2015",
             Priority: "high"
         }];
 
@@ -487,7 +498,7 @@ angular.module('starter.controllers', [])
             Status: "unRead",
             Title: "Questions & Answers",
             Message: "Answer Questions from Textbook",
-            Timestamp: "Date: 18 Oct 2015",
+            Timestamp: "18 Oct",
             Class: "5th B div",
             Subject: "Science",
             Attach: "yes"
@@ -496,7 +507,7 @@ angular.module('starter.controllers', [])
             Status: "Read",
             Title: "Remaining Answers",
             Message: "Still some answers are remaining",
-            Timestamp: "Date: 17 Oct 2015",
+            Timestamp: "17 Oct",
             Class: "8th A div",
             Subject: "Geography",
             Attach: "no"
@@ -504,7 +515,7 @@ angular.module('starter.controllers', [])
             Status: "Read",
             Title: "Project Details",
             Message: "Sending project details",
-            Timestamp: "Date: 15 Oct 2015",
+            Timestamp: "15 Oct",
             Class: "9th C div",
             Subject: "Maths",
             Attach: "yes"
@@ -605,9 +616,12 @@ angular.module('starter.controllers', [])
                 $scope.contactsAll = false;
             }
             angular.forEach($scope.contactList, function (contct) {
+                //console.log("contct : "+contct);
                 contct.Tick = $scope.contactsAll;
             });
         };
+
+        $scope.selectedDate = new Date();
 
     })
     .controller('MessageCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
@@ -1005,10 +1019,10 @@ angular.module('starter.controllers', [])
             };
 
             $scope.events = [
-                {Title: '13-', Subject: ' Priyanshi Prajapati', date: "2015-11-18"},
-                {Title: '44-', Subject: ' Nimish Jagtap', date: "2015-11-26"},
-                {Title: '51-', Subject: ' Komal Jagtap', date: "2015-11-26"},
-                {Title: '02-', Subject: ' Pranav Athale', date: "2015-11-18"},
+                {Title: '13-', Subject: ' Priyanshi Prajapati', date: "2015-12-03"},
+                {Title: '44-', Subject: ' Nimish Jagtap', date: "2015-12-03"},
+                {Title: '51-', Subject: ' Komal Jagtap', date: "2015-12-03"},
+                {Title: '02-', Subject: ' Pranav Athale', date: "2015-12-03"},
                 {Title: '11-', Subject: ' Rekha Mathani', date: "2015-11-10"},
                 {Title: '44-', Subject: ' Abhi Kadam', date: "2015-11-20"},
                 {Title: '65-', Subject: ' Ram Shukla', date: "2015-11-20"}
@@ -1186,9 +1200,7 @@ angular.module('starter.controllers', [])
 
         $ionicSideMenuDelegate.canDragContent(true);
 
-        $scope.noticeBoard = function() {
-            $state.go('app.sharedNotification');
-        };
+
         $scope.options = {
             defaultDate: new Date(),
             minDate: "2015-01-01",
@@ -1217,10 +1229,12 @@ angular.module('starter.controllers', [])
                     // items have value
                     $scope.selectedEvents = date['event'];
                     console.log("DateClick "+ $scope.selectedEvents);
+                    $scope.detailEvent();
                 } else {
                     // items is still null
                     $scope.selectedEvents = {0:{ Title: 'Nothing on selected date'}};
                     console.log($scope.selectedEvents);
+                    $scope.detailEvent();
                 }
             },
             changeMonth: function(month, year) {
@@ -1322,7 +1336,7 @@ angular.module('starter.controllers', [])
         }];
 
     })
-    .controller('DetailPageCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('DetailPageCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -1342,8 +1356,56 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
 
         //Side-Menu
-
         $ionicSideMenuDelegate.canDragContent(true);
+
+        $ionicModal.fromTemplateUrl('studentlist.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.modal = modal;
+        })
+
+        $scope.openModal = function() {
+            $scope.modal.show();
+        }
+
+        $scope.closeModal = function() {
+            $scope.modal.hide();
+        };
+
+        $scope.$on('$destroy', function() {
+           // $scope.modal.remove();
+        });
+
+        $scope.contactList = [{
+            Name: "Student 1"
+        }, {
+            Name: "Student 2"
+        }, {
+            Name: "Student 3"
+        },{
+            Name: "Student 4"
+        },{
+            Name: "Student 5"
+        }, {
+            Name: "Student 6"
+        }, {
+            Name: "Student 7"
+        },{
+            Name: "Student 8"
+        },{
+            Name: "Student 9"
+        }, {
+            Name: "Student 10"
+        }, {
+            Name: "Student 11"
+        },{
+            Name: "Student 12"
+        },{
+            Name: "Student 13"
+        }, {
+            Name: "Student 14"
+        }];
 
         $scope.noticeBoard = function() {
             $state.go('app.sharedNotification');

@@ -31,17 +31,25 @@
             </div>
         </iion-item>
     </div>
-    <div class="row no-border margin-top-100">
-        <div class="col-50 border-right">
-            <select class="item item-input item-select border-bottom">
+    <div class="row margin-top-100 no-border">
+        <div class="col-33">
+            <select class="item item-input item-select border-none">
+                <option selected class="padding-top-5">Batch</option>
+                <option class="padding-top-5">Morning</option>
+                <option class="padding-top-5">Afternoon</option>
+                <option class="padding-top-5">Evening</option>
+            </select>
+        </div>
+        <div class="col-33">
+            <select class="item item-input item-select border-none">
                 <option selected class="padding-top-5">Class</option>
                 <option class="padding-top-5">Class I</option>
                 <option class="padding-top-5">Class II</option>
                 <option class="padding-top-5">Class III</option>
             </select>
         </div>
-        <div class="col-50 border-bottom">
-            <select class="item item-input item-select">
+        <div class="col-33">
+            <select class="item item-input item-select border-none">
                 <option selected class="padding-top-5">Div</option>
                 <option class="padding-top-5">Div A</option>
                 <option class="padding-top-5">Div B</option>
@@ -49,7 +57,7 @@
             </select>
         </div>
     </div>
-    <div class="row no-border item">
+    <div class="row no-border item margin-top-5">
         <div class="col-20 padding-top-10 date-bg"><h2 class="margin-left-2">Date:</h2></div>
         <input class="item-input col-90" type="date" ng-model="selectedDate">
     </div>
@@ -62,7 +70,7 @@
         </div>
     </div>
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="padding-l-r-5 margin-top-140">
-        <div class="list scroll margin-top-40">
+        <div class="list scroll margin-top-70">
             <ion-item class="contact-list row" ng-repeat="contct in contactList">
                     <div class="col-10 padding-5"><h2>{{contct.id}}</h2></div>
                     <div class="col-80 padding-5"><h2>{{contct.Name}}</h2></div>

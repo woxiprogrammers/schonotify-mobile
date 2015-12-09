@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'flexcalendar', 'pascalprecht.translate', 'ngTouch'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate'])
 
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -158,12 +158,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'fl
                 controller: 'HomeworkCtrl'
              },
               'fabContent': {
-                  template: '<button id="fab-new-homework" ng-click="composeHw()" class="button button-fab button-fab-bottom-right expanded bar-pink  spin"><i class="icon ion-edit"></i></button>',
-                      controller: function ($timeout) {
-                         $timeout(function () {
-                         document.getElementById('fab-new-homework').classList.toggle('on');
-                      }, 900);
-                  }
+                  template: ''
               }
           }
      })
@@ -393,7 +388,84 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'fl
                     template: ''
                 }
             }
+        })
+        .state('app.eventdetails', {
+            url: '/eventdetails',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/event-description.html',
+                    controller: 'DetailPageCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.homeworklanding', {
+            url: '/homeworklanding',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/homework-landing.html',
+                    controller: 'DetailPageCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.eventedit', {
+            url: '/eventedit',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/event-edit.html',
+                    controller: 'DetailPageCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.edithomeworklisting', {
+            url: '/edithomeworklisting',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/edit-homework.html',
+                    controller: 'HomeworkCtrl'
+                },
+                'fabContent': {
+                    template: '<button id="fab-new-homework" ng-click="composeHw()" class="button button-fab button-fab-bottom-right expanded bar-pink  spin"><i class="icon ion-edit"></i></button>',
+                    controller: function ($timeout) {
+                        $timeout(function () {
+                            document.getElementById('fab-new-homework').classList.toggle('on');
+                        }, 900);
+                    }
+                }
+            }
+        })
+        .state('app.homeworkedit', {
+            url: '/homeworkedit',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/homework-edit.html',
+                    controller: 'DetailPageCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.eventsLanding', {
+            url: '/eventsLanding',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/events-landing.html',
+                    controller: 'SharedAchievementCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
         });
-    // if none of the above states are matched, use this as the fallback
+   // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/login');
 });

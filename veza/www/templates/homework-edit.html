@@ -1,5 +1,5 @@
 <ion-view view-title="Compose Homework" name="hwcompose" class="touch-effect">
-    <div class="row padding-5">
+    <div class="row padding-0">
         <div class="tabs-striped tabs-color-positive tabs-top">
             <div class="tabs tab-align-inner">
                 <a class="tab-item margin-top-0">
@@ -25,74 +25,73 @@
                         <i class="ion-arrow-left-c button-back-white"></i>
                     </button>
                 </div>
-                <div class="col-70 margin-top-5">
-                    <span class="inner-header">Compose Homework</span>
+                <div class="col-50 margin-top-5">
+                    <span class="inner-header">Edit Homework</span>
                 </div>
-                <div class="col-10">
+                <div class="col-20">
                     <a><i class="icon ion-android-attach align-attach"></i></a>
                 </div>
-                <div class="col-10">
+                <div class="col-20">
                     <a><i class="icon ion-android-send align-delete-bin"></i></a>
                 </div>
             </div>
         </iion-item>
     </div>
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
-        <div class="list padding-l-r-10">
-            <label class="item item-input border-bottom">
-                <input type="text" placeholder="Homework Title">
-            </label>
+        <div class="list">
             <div class="row">
-                    <select class="item item-input item-select padding-5">
-                        <option selected class="padding-top-5">Homework Type</option>
-                        <option class="padding-top-5">Assignment</option>
+                <div class="col-50 border-bottom border-right">
+                    <select class="item item-input item-select">
+                        <option selected class="padding-top-5">H/W Type</option>
+                        <option class="padding-top-5" selected>Assignment</option>
                         <option class="padding-top-5">Quiz</option>
                         <option class="padding-top-5">Test</option>
                         <option class="padding-top-5">Other</option>
                     </select>
                 </div>
-            <div class="row">
-                <div class="col-33">
-                    <select class="item item-input item-select padding-5">
+                <div class="col-50 border-bottom">
+                    <select class="item item-input item-select border-bottom">
                         <option selected class="padding-top-5">Batch</option>
-                        <option class="padding-top-5">Morning</option>
+                        <option class="padding-top-5" selected>Morning</option>
                         <option class="padding-top-5">Afternoon</option>
                         <option class="padding-top-5">Evening</option>
                     </select>
                 </div>
-                <div class="col-33">
-                        <select class="item item-input item-select padding-5">
-                            <option selected class="padding-top-5">Class</option>
-                            <option class="padding-top-5">Class I</option>
-                            <option class="padding-top-5">Class II</option>
-                            <option class="padding-top-5">Class III</option>
-                        </select>
+
+            </div>
+            <div class="row">
+                <div class="col-50 border-right">
+                    <select class="item item-input item-select border-bottom">
+                        <option selected class="padding-top-5">Class</option>
+                        <option class="padding-top-5">Class I</option>
+                        <option class="padding-top-5" selected>Class II</option>
+                        <option class="padding-top-5">Class III</option>
+                    </select>
                 </div>
-                <div class="col-33">
-                        <select class="item item-input item-select padding-5">
-                            <option selected class="padding-top-5">Div</option>
-                            <option class="padding-top-5">Div A</option>
-                            <option class="padding-top-5">Div B</option>
-                            <option class="padding-top-5">Div C</option>
-                        </select>
+                <div class="col-50 border-bottom">
+                    <select class="item item-input item-select">
+                        <option selected class="padding-top-5">Div</option>
+                        <option class="padding-top-5">Div A</option>
+                        <option class="padding-top-5" selected>Div B</option>
+                        <option class="padding-top-5">Div C</option>
+                    </select>
                 </div>
             </div>
-                <label class="item item-input">Due Date:
-                    <input class="item-input border-bottom padding-5" type="date" ng-model="selectedDate">
-                </label>
+            <div class="row item">
+                <div class="col-25 padding-top-10 date-bg"><h2 class="margin-left-2">Due Date:</h2></div>
+                <input class="item-input col-75" type="date" ng-model="selectedDate">
+            </div>
+            <label class="item item-input border-bottom">
+                <input type="text" placeholder="Title" value="Homework Title">
+            </label>
             <label class="item item-input border-bottom">
                 <input type="text" placeholder="+ Select Student" ng-click="openModal()">
             </label>
             <label class="item item-input border-bottom">
-                <select class="item item-input item-select padding-5">
-                    <option selected class="padding-top-5">Subject</option>
-                    <option class="padding-top-5">Maths</option>
-                    <option class="padding-top-5">English</option>
-                    <option class="padding-top-5">Science</option>
-                </select>
+                <input type="text" placeholder="Subject" value="History">
             </label>
             <label class="item item-input">
-                <textarea placeholder="Description"></textarea>
+                <input type="text" placeholder="Description" value="Error dicunt theophrastus cu qui.">
             </label>
         </div>
     </ion-content>

@@ -296,7 +296,6 @@
         var result = date.year === $scope.options._defaultDate.getFullYear() &&
           date.month === $scope.options._defaultDate.getMonth() &&
           date.day === $scope.options._defaultDate.getDate();
-         // console.log(result);
         return result;
       }
 

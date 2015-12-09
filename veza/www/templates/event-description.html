@@ -1,4 +1,4 @@
-<ion-view view-title="Create Achievement" name="createachievement" class="touch-effect">
+<ion-view view-title="Detail View" name="detailspage" class="touch-effect">
     <div class="row padding-0">
         <div class="tabs-striped tabs-color-positive tabs-top">
             <div class="tabs tab-align-inner">
@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    <div class="bar bar-grey bar-header align-delete-bar">
+    <div class="bar bar-event bar-header align-delete-bar">
         <iion-item class="row">
             <div class="row">
                 <div class="col-10"  ng-click="myGoBack()">
@@ -25,27 +25,28 @@
                         <i class="ion-arrow-left-c button-back-white"></i>
                     </button>
                 </div>
-                <div class="col-70 margin-top-5">
-                    <span class="inner-header">Create Achievement</span>
-                </div>
-                <div class="col-20">
-                    <a><i class="icon ion-android-send align-delete-bin"></i></a>
+                <div class="col-90 margin-top-5">
+                    <span class="inner-header"></span>
                 </div>
             </div>
         </iion-item>
     </div>
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
-        <div class="list">
-            <label class="item item-input border-bottom">
-                <input type="text" placeholder="Title">
-            </label>
-            <div class="row item">
-                <div class="col-33 padding-top-10 date-bg"><h2 class="margin-left-2">Upload Image:</h2></div>
-                <input class="item-input col-67" type="file">
+        <div class="list padding-0">
+            <div class="card padding-0">
+                <img src="img/graduate.jpg">
             </div>
-            <label class="item item-input">
-                <textarea placeholder="Description"></textarea>
-            </label>
+            <div class="row bold description-title-font">2013-14 Graduation Ceremony</div>
+            <div class="row margin-top-5"><c class="bold creator-font">Starts on: 18 December</c></div>
+            <div class="row">
+                <p class="margin-top-36 description-font no-border padding-10">Error dicunt theophrastus cu qui.
+                    Ad eos simul possit option, adipisci principes sed at.
+                    Detracto adolescens pro ea, duo noLorem ipsum dolor sit amet, ea oblique constituam signiferumque eam.
+                    Pri adipisci maluisset te.Lorem ipsum dolor sit amet, ea oblique constituam signiferumque eam.
+                    Pri adipisci maluisset te.Lorem ipsum dolor sit amet, ea oblique constituam signiferumque eam.
+                    Pri adipisci maluisset te.
+                </p>
+            </div>
         </div>
     </ion-content>
 </ion-view>

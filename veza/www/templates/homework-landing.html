@@ -1,4 +1,4 @@
-<ion-view view-title="Edit Event" name="editevent" class="touch-effect">
+<ion-view view-title="Event" name="event" class="touch-effect">
     <div class="row padding-0">
         <div class="tabs-striped tabs-color-positive tabs-top">
             <div class="tabs tab-align-inner">
@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    <div class="bar bar-orange bar-header align-delete-bar">
+    <div class="bar bar-pink bar-header align-delete-bar">
         <iion-item class="row">
             <div class="row">
                 <div class="col-10">
@@ -26,31 +26,29 @@
                     </button>
                 </div>
                 <div class="col-90 margin-top-5">
-                    <span class="inner-header">Leave Approvals</span>
+                    <span class="inner-header">Homework</span>
                 </div>
             </div>
         </iion-item>
     </div>
-    <ion-content ng-class="{expanded:$scope.isExpanded}" class="padding-l-r-5 margin-top-48">
+    <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
         <ion-list>
-            <ion-item class="notify-item-border no-border margin-bottom-10" ng-repeat="nMsg in nMessages">
-                <div class="row">
-                <div class="col-80" ng-click="leaveDetails()">
-                    <a class="text-decoration-none">
-                        <h2><strong>{{nMsg.Title}}</strong><i class="font-italic"> {{nMsg.Class}}</i></h2>
-                        <p>{{nMsg.Message}}<br><strong><i class="font-italic"> {{nMsg.Subject}} {{nMsg.Timestamp}}</i></strong></p>
-                    </a>
-                </div>
-                <div class="col-20 ">
-                    <button class="button button-balanced approve-button {{nMsg.Button}}">
-                        Approve
-                    </button>
-                    <img src="img/leave-approved.png" class="{{nMsg.Label}} is-approved">
-                </div>
-
-                </div>
+            <ion-item class="notify-item-border">
+                <a class="item" ui-sref="app.edithomeworklisting">
+                    <div class="col-90 col-offset-10">
+                        <h2><strong>Create / Edit Homework</strong></h2><br>
+                        <p>Create, Edit and Publish Homework</p>
+                    </div>
+                </a>
+            </ion-item>
+            <ion-item class="notify-item-border">
+                <a class="item" ui-sref="app.homework">
+                    <div class="col-90 col-offset-10">
+                        <h2><strong>View Homeworks</strong></h2><br>
+                        <p>View Published Homeworks</p>
+                    </div>
+                </a>
             </ion-item>
         </ion-list>
     </ion-content>
-
 </ion-view>
