@@ -189,6 +189,9 @@ color: white;
 .margin-top-40{
     margin-top: 40px!important;
 }
+.margin-top-44{
+    margin-top: 44px!important;
+}
 .display-no{
 display: none;
 }
@@ -200,6 +203,11 @@ display: none;
 }
 .bar-grey{
     background-color: #444444;
+    color: #ffffff;
+}
+
+.bar-yellow{
+    background-color: #ffe502;
     color: #ffffff;
 }
 .approve-button{
@@ -423,9 +431,22 @@ display: none;
     border-bottom: 1px solid #636360!important;
 }
 
-.margin-top-48{
+.margin-top-52{
     margin-top: 52px;
 }
+
+.top-50{
+    top: 50px;
+}
+
+.margin-top-8{
+    margin-top: 8px;
+}
+
+.margin-top-96{
+    margin-top: 96px;
+}
+
 .padding-l-r-10{
     padding-left: 10px;
     padding-right: 10px;
@@ -461,7 +482,10 @@ display: none;
     color: black;
     font-weight: bold;
 }
-
+.tab-bottom{
+    bottom: 0px!important;
+    top: inherit!important;
+}
 .avatar-notify{
     background-position: center;
     background-size: cover;
@@ -624,6 +648,19 @@ display: none;
     color: #fff;
 }
 
+.bar-time-table{
+    border-color: #06d8c0;
+    background-color: #00f8df;
+    background-image: linear-gradient(0deg, #00f8df, #00f8df 50%, transparent 50%);
+    color: #fff;
+}
+.top-0{
+    top: 0px!important;
+}
+.time-table-tab, .tabs-top > .tabs, .tabs.tabs-top {
+    top: 0px;
+}
+
 .inner-header{
     color: #ffffff;
     font-size: 95%;
@@ -636,14 +673,42 @@ display: none;
     max-width: 70%;
 }
 
+.dialog-modal, .modal-backdrop, .modal-backdrop-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50!important;
+    width: 100%;
+    height: 100%;
+}
+
+.popup-container .popup {
+    width: 320px;
+}
+
+.button.button-yellow {
+    border-color: #f7dc0e;
+    background-color: #f4d90e;
+    color: #fff;
+}
+
+.button.button-timetable {
+    border-color:#06d8c0;
+    background-color: #00f8df;
+    color: #fff;
+}
 .margin-top-5{
     margin-top: 5px!important;
 }
-
+.font-16{
+    font-size: 16px;
+}
 .margin-top-20{
     margin-top: 20px;
 }
-
+.margin-top-48{
+    margin-top: 48px;
+}
 .margin-0{
     margin: 0;
 }
@@ -664,6 +729,16 @@ display: none;
     /* width: 86px; */
     /* margin-right: 56px; */
     /* padding-right: 0px; */
+}
+
+.pre-nxt-button{
+    font-size: 28px;
+    color: black;
+}
+
+.graph-size{
+    height: 450px;
+    width: 100%;
 }
 
 .border-none{
