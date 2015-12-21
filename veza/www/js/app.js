@@ -4,18 +4,18 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate'])
+angular.module('starter', ['ionic', 'starter.controllers', 'highcharts-ng', 'ionic-material', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate'])
 
 .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
-        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+        // Hide the accessory bar by changeView (remove this to show the accessory bar above the keyboard
         // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
         }
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
-            StatusBar.styleDefault();
+            StatusBar.stylechangeView();
         }
     });
  })
@@ -317,6 +317,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'fl
                 }
             }
         })
+        .state('app.approvedleaves', {
+            url: '/approvedleaves',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/approved-leaves.html',
+                    controller: 'ViewLeaveApprovalCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
         .state('app.detailspage', {
             url: '/detailspage',
             views: {
@@ -383,6 +395,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'fl
                 'menuContent': {
                     templateUrl: 'templates/leave-details.html',
                     controller: 'DetailPageCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.approvedleavedetails', {
+            url: '/approvedleavedetails',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/leave-approved-details.html',
+                    controller: 'ViewLeaveApprovalCtrl'
                 },
                 'fabContent': {
                     template: ''
@@ -460,6 +484,102 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'fl
                 'menuContent': {
                     templateUrl: 'templates/events-landing.html',
                     controller: 'SharedAchievementCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.timetable', {
+            url: '/timetable',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/time-table.html',
+                    controller: 'TimeTableCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.timetable.defaulttimetable', {
+            url: "/defaulttimetable",
+            views: {
+                'default-tab': {
+                    templateUrl: "templates/default-timetable.html",
+                    controller: 'TimeTableCtrl'
+                }
+            }
+        })
+        .state('app.timetable.mondaytimetable', {
+            url: "/mondaytimetable",
+            views: {
+                'changeView-tab': {
+                    templateUrl: "templates/monday-timetable.html",
+                    controller: 'TimeTableCtrl'
+                }
+            }
+        })
+        .state('app.timetable.tuesdaytimetable', {
+            url: "/tuesdaytimetable",
+            views: {
+                'changeView-tab': {
+                    templateUrl: "templates/tuesday-timetable.html",
+                    controller: 'TimeTableCtrl'
+                }
+            }
+        })
+        .state('app.timetable.wednesdaytimetable', {
+            url: "/wednesdaytimetable",
+            views: {
+                'changeView-tab': {
+                    templateUrl: "templates/wednesday-timetable.html",
+                    controller: 'TimeTableCtrl'
+                }
+            }
+        })
+        .state('app.timetable.thursdaytimetable', {
+            url: "/thursdaytimetable",
+            views: {
+                'changeView-tab': {
+                    templateUrl: "templates/thursday-timetable.html",
+                    controller: 'TimeTableCtrl'
+                }
+            }
+        })
+        .state('app.timetable.fridaytimetable', {
+            url: "/fridaytimetable",
+            views: {
+                'changeView-tab': {
+                    templateUrl: "templates/friday-timetable.html",
+                    controller: 'TimeTableCtrl'
+                }
+            }
+        })
+        .state('app.timetable.saturdaytimetable', {
+            url: "/saturdaytimetable",
+            views: {
+                'changeView-tab': {
+                    templateUrl: "templates/saturday-timetable.html",
+                    controller: 'TimeTableCtrl'
+                }
+            }
+        })
+        .state('app.timetable.sundaytimetable', {
+            url: "/sundaytimetable",
+            views: {
+                'changeView-tab': {
+                    templateUrl: "templates/sunday-timetable.html",
+                    controller: 'TimeTableCtrl'
+                }
+            }
+        })
+        .state('app.resultview', {
+            url: '/resultview',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/result-view.html',
+                    controller: 'ResultViewCntrl'
                 },
                 'fabContent': {
                     template: ''

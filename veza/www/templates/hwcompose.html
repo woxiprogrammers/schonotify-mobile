@@ -1,5 +1,5 @@
 <ion-view view-title="Compose Homework" name="hwcompose" class="touch-effect">
-    <div class="row padding-5">
+    <div class="row padding-0">
         <div class="tabs-striped tabs-color-positive tabs-top">
             <div class="tabs tab-align-inner">
                 <a class="tab-item margin-top-0">
@@ -98,9 +98,7 @@
     </ion-content>
 </ion-view>
 
-
-
-<script id="studentlist.html" type="text/ng-template">
+<script id="studentHwCntctlist.html" type="text/ng-template">
     <div class="modal">
         <div class="modal-view">
             <ion-header-bar class="bar-pink">
@@ -112,25 +110,10 @@
             </ion-header-bar>
             <ion-content has-bouncing="true">
                 <div class="list">
-                    <ion-item class="contact-list border-bottom">
-                        <div class="row">
-                            <div class="col-75">
-                                <h2><strong>Select All</strong></h2>
-                            </div>
-                            <div class="col-25">
-                                <ion-checkbox class="checkbox-square checkboxList checkbox-assertive modal-checkbox contact-list" ng-model="contactsAll" ng-click="checkAllcontacts()">
-                                </ion-checkbox>
-                            </div>
-                        </div>
-                    </ion-item>
                     <ion-item class="contact-list" ng-repeat="contct in contactList">
                         <div class="row">
                             <div class="col-75">
                                 <h2><strong>{{contct.Name}}</strong></h2>
-                            </div>
-                            <div class="col-25">
-                                <ion-checkbox class="checkbox-square checkbox-assertive contact-list modal-checkbox" ng-model="contct.Tick">
-                                </ion-checkbox>
                             </div>
                         </div>
                     </ion-item>
@@ -139,12 +122,13 @@
             <div class="bar bar-footer modal-bottom no-border">
                 <div class="row">
                     <div class="col-25 col-offset-50 text-center">
-                        <label class="modal-bottom-text-pink" ng-click="closeModal()">CANCEL</label>
+                        <label class="modal-bottom-text" ng-click="closeModal()">CANCEL</label>
                     </div>
                     <div class="col-25  text-center">
-                        <label class="modal-bottom-text-pink" ng-click="closeModal()">OK</label>
+                        <label class="modal-bottom-text" ng-click="closeModal()">OK</label>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

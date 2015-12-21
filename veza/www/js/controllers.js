@@ -106,6 +106,10 @@ angular.module('starter.controllers', [])
             $ionicHistory.goBack();
         };
 
+        $scope.dashBoard = function() {
+            $state.go('app.dashboard');
+        };
+
         $scope.composeHw = function() {
             $state.go('app.hwcompose');
         };
@@ -141,6 +145,9 @@ angular.module('starter.controllers', [])
         $scope.leaveDetails = function() {
             $state.go('app.leavedetails');
         };
+        $scope.approveLeaveDetails = function() {
+            $state.go('app.approvedleavedetails');
+        };
 
         $scope.homeworkEdit = function() {
             $state.go('app.homeworkedit');
@@ -156,6 +163,10 @@ angular.module('starter.controllers', [])
 
         $scope.eventEdit = function() {
             $state.go('app.eventedit');
+        };
+
+        $scope.resultView = function() {
+            $state.go('app.resultview');
         };
 })
 
@@ -533,7 +544,7 @@ angular.module('starter.controllers', [])
         };
 
     })
-    .controller('HwComposeCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $ionicHistory) {
+    .controller('HwComposeCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -557,7 +568,7 @@ angular.module('starter.controllers', [])
 
         $ionicSideMenuDelegate.canDragContent(true);
 
-        $ionicModal.fromTemplateUrl('studentlist.html', {
+        $ionicModal.fromTemplateUrl('studentHwCntctlist.html', {
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function(modal) {
@@ -620,10 +631,8 @@ angular.module('starter.controllers', [])
                 contct.Tick = $scope.contactsAll;
             });
         };
-
-        $scope.selectedDate = new Date();
-
     })
+
     .controller('MessageCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
@@ -1411,5 +1420,390 @@ angular.module('starter.controllers', [])
             $state.go('app.sharedNotification');
         };
         $scope.selectedDate = new Date();
+
+    })
+    .controller('TimeTableCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup) {
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();//
+        // Set Motion
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+        $ionicSideMenuDelegate.canDragContent(true);
+
+        // Triggered on a button click, or some other target
+        $scope.showPopup = function() {
+            $scope.data = {}
+
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div class="list">'+
+                    '<div class="row">'+
+                    '<div class="col-33 border-bottom">'+
+                    '<select class="item item-input item-select">'+
+                    '<option selected class="padding-top-5">Batch</option>'+
+                    '<option class="padding-top-5">Morning</option>'+
+                    '<option class="padding-top-5">Afternoon</option>'+
+                    '<option class="padding-top-5">Evening</option>'+
+                    '</select>'+
+                    '</div>'+
+                    '<div class="col-33 border-bottom">'+
+                    '<select class="item item-input item-select">'+
+                    '<option selected class="padding-top-5">Class</option>'+
+                    '<option class="padding-top-5">Class I</option>'+
+                    '<option class="padding-top-5">Class II</option>'+
+                    '<option class="padding-top-5">Class III</option>'+
+                    '</select>'+
+                    '</div>'+
+                    '<div class="col-33 border-bottom">'+
+                    '<select class="item item-input item-select">'+
+                    '<option selected class="padding-top-5">Div</option>'+
+                    '<option class="padding-top-5">Div A</option>'+
+                    '<option class="padding-top-5">Div B</option>'+
+                    '<option class="padding-top-5">Div C</option>'+
+                    '</select>'+
+                    '</div>'+
+                    '</div>'+
+                    '</div>',
+                title: 'Select Details',
+                subTitle: '',
+                scope: $scope,
+                buttons: [
+                    { text: 'Cancel' },
+                    {
+                        text: '<b>Save</b>',
+                        type: 'button-timetable',
+                        onTap: function(e) {
+                            if (!$scope.data.studName) {
+                                myPopup.close();
+                            } else {
+                                //return $scope.data.studName;
+                                myPopup.close();
+                            }
+                        }
+                    }
+                ]
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); //close the popup after 8 seconds for some reason
+            }, 40000);
+        };
+
+        $scope.timeTableList = [
+            {
+                Subject: 'Science',
+                Teacher: 'Mr. S.Sonawane.',
+                Time: '11:00 am - 11:40 am'
+            },
+            {
+                Subject: 'Maths',
+                Teacher: 'Mr. A.Adkar.',
+                Time: '11:45 am - 12:25 pm'
+            },
+            {
+                Subject: 'English',
+                Teacher: 'Mrs. P.Dsouza.',
+                Time: '12:30 pm - 01:10 pm'
+            },
+            {
+                Subject: 'Marathi',
+                Teacher: 'Mr. C.Agarkar',
+                Time: '01:15 pm - 01:55 pm'
+            },
+            {
+                Subject: 'Geography',
+                Teacher: 'Mr. V.M.Das',
+                Time: '02:00 pm - 02:40 pm'
+            },
+            {
+                Subject: 'History',
+                Teacher: 'Mrs. A.Rao.',
+                Time: '02:45 pm - 03:25 pm'
+            },
+            {
+                Subject: 'Recess',
+                Teacher: '',
+                Time: '03:30 pm - 4:10 pm'
+
+            },
+            {
+                Subject: 'Hindi',
+                Teacher: 'Mrs. D.Saxena.',
+                Time: '04:15 pm - 04:55 pm'
+            },
+            {
+                Subject: 'Drawing',
+                Teacher: 'Mr. Vijay.Kulkarni',
+                Time: '05:00 pm - 05:55 pm'
+            }
+        ];
+
+    })
+    .controller('ResultViewCntrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $ionicPopup) {
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Motion
+        $timeout(function() {
+            ionicMaterialMotion.fadeSlideInRight({
+                startVelocity: 3000
+            });
+        }, 700);
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+        $ionicSideMenuDelegate.canDragContent(true);
+
+        // Triggered on a button click, or some other target
+        $scope.showPopup = function() {
+            $scope.data = {}
+
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div class="list">'+
+                    '<div class="row">'+
+                    '<div class="col-33 border-bottom">'+
+                    '<select class="item item-input item-select">'+
+                    '<option selected class="padding-top-5">Batch</option>'+
+                    '<option class="padding-top-5">Morning</option>'+
+                    '<option class="padding-top-5">Afternoon</option>'+
+                    '<option class="padding-top-5">Evening</option>'+
+                    '</select>'+
+                    '</div>'+
+                    '<div class="col-33 border-bottom">'+
+                    '<select class="item item-input item-select">'+
+                    '<option selected class="padding-top-5">Class</option>'+
+                    '<option class="padding-top-5">Class I</option>'+
+                    '<option class="padding-top-5">Class II</option>'+
+                    '<option class="padding-top-5">Class III</option>'+
+                    '</select>'+
+                    '</div>'+
+                    '<div class="col-33 border-bottom">'+
+                    '<select class="item item-input item-select">'+
+                    '<option selected class="padding-top-5">Div</option>'+
+                    '<option class="padding-top-5">Div A</option>'+
+                    '<option class="padding-top-5">Div B</option>'+
+                    '<option class="padding-top-5">Div C</option>'+
+                    '</select>'+
+                    '</div>'+
+                    '</div>'+
+                    '<div class="row">'+
+                    '<label class="item item-input border-bottom">'+
+                    '<input type="text" placeholder="+ Select Student" ng-click="openModal()" ng-model="data.studName">'+
+                    '</label>'+
+                    '</div>'+
+                    '</div>',
+                title: 'Select Details',
+                subTitle: '',
+                scope: $scope,
+                buttons: [
+                    { text: 'Cancel' },
+                    {
+                        text: '<b>Save</b>',
+                        type: 'button-yellow',
+                        onTap: function(e) {
+                            if (!$scope.data.studName) {
+                                myPopup.close();
+                            } else {
+                                //return $scope.data.studName;
+                                myPopup.close();
+                            }
+                        }
+                    }
+                ]
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); //close the popup after 8 seconds for some reason
+            }, 40000);
+        };
+
+        $scope.subGraphPopup = function() { //
+            $scope.data = {}
+
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div class="card">'+
+                    '<highchart id="chart1" config="chartSubConfig"></highchart>'+
+                    '</div>',
+                title: 'Subject Graph',
+                subTitle: '',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: '<b>Close</b>',
+                        type: 'button-assertive',
+                        onTap: function(e) {
+                            if (!$scope.data.studName) {
+                                myPopup.close();
+                            } else {
+                                //return $scope.data.studName;
+                                myPopup.close();
+                            }
+                        }
+                    }
+                ]
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+//            $timeout(function() {
+//                myPopup.close(); //close the popup after 8 seconds for some reason
+//            }, 40000);
+        };
+
+        $scope.testGraphPopup = function() {
+            $scope.data = {}
+
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div class="card">'+
+                    '<highchart id="chart1" config="chartTestConfig"></highchart>'+
+                    '</div>',
+                title: 'Test Graph',
+                subTitle: '',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: '<b>Close</b>',
+                        type: 'button-assertive',
+                        onTap: function(e) {
+                            if (!$scope.data.studName) {
+                                myPopup.close();
+                            } else {
+                                //return $scope.data.studName;
+                                myPopup.close();
+                            }
+                        }
+                    }
+                ]
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); //close the popup after 8 seconds for some reason
+            }, 40000);
+        };
+
+        $ionicModal.fromTemplateUrl('studentCntctlist.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.modal = modal;
+        })
+
+        $scope.openModal = function() {
+            $scope.modal.show();
+        }
+
+        $scope.closeModal = function() {
+            $scope.modal.hide();
+        };
+
+        $scope.$on('$destroy', function() {
+            // $scope.modal.remove();
+        });
+
+        $scope.contactList = [{
+            Name: "Student 1"
+        }, {
+            Name: "Student 2"
+        }, {
+            Name: "Student 3"
+        },{
+            Name: "Student 4"
+        },{
+            Name: "Student 5"
+        }, {
+            Name: "Student 6"
+        }, {
+            Name: "Student 7"
+        },{
+            Name: "Student 8"
+        },{
+            Name: "Student 9"
+        }, {
+            Name: "Student 10"
+        }, {
+            Name: "Student 11"
+        },{
+            Name: "Student 12"
+        },{
+            Name: "Student 13"
+        }, {
+            Name: "Student 14"
+        }];
+
+        $scope.chartSubConfig = {
+            options: {
+                chart: {
+                    type: 'bar'
+                }
+            },
+            series: [{
+                data: [45, 78, 69, 82, 71]
+            }],
+            title: {
+                text: 'English'
+            },
+
+            loading: false,
+            size: {
+                height: 400
+            },
+            yAxis: {
+
+                title: {text: 'Marks'}
+            }
+
+        };
+        $scope.chartTestConfig = {
+            options: {
+                chart: {
+                    type: 'bar'
+                }
+            },
+            series: [{
+                data: [45, 78, 69, 82, 71]
+            }],
+            title: {
+                text: 'Test Graph'
+            },
+
+            loading: false,
+            size: {
+                height: 400
+            },
+            yAxis: {
+
+                title: {text: 'Marks'}
+            }
+
+        };
 
     }); // end of Ctrl

@@ -37,7 +37,25 @@
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
         <div class="list">
             <div class="row">
-                <div class="col-50 border-right">
+                <div class="col-50 border-bottom border-right">
+                    <select class="item item-input item-select">
+                        <option selected class="padding-top-5">User</option>
+                        <option class="padding-top-5">Teacher</option>
+                        <option class="padding-top-5">Student</option>
+                        <option class="padding-top-5">Admin</option>
+                    </select>
+                </div>
+                <div class="col-50 border-bottom">
+                    <select class="item item-input item-select border-bottom">
+                        <option selected class="padding-top-5">Batch</option>
+                        <option class="padding-top-5">Morning</option>
+                        <option class="padding-top-5">Afternoon</option>
+                        <option class="padding-top-5">Evening</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-50 border-right border-bottom">
                     <select class="item item-input item-select border-bottom">
                         <option selected class="padding-top-5">Class</option>
                         <option class="padding-top-5">Class I</option>
@@ -56,9 +74,6 @@
             </div>
             <label class="item item-input border-bottom">
                 <input type="text" placeholder="+ Select Student" ng-click="openModal()">
-            </label>
-            <label class="item item-input border-bottom">
-                <input type="text" placeholder="Subject">
             </label>
             <label class="item item-input">
                 <textarea placeholder="Compose"></textarea>
@@ -81,25 +96,10 @@
             </ion-header-bar>
             <ion-content has-bouncing="true">
                 <div class="list">
-                    <ion-item class="contact-list border-bottom">
-                        <div class="row">
-                            <div class="col-75">
-                                <h2><strong>Select All</strong></h2>
-                            </div>
-                            <div class="col-25">
-                                <ion-checkbox class="checkbox-square checkboxList checkbox-assertive modal-checkbox contact-list" ng-model="contactsAll" ng-click="checkAllcontacts()">
-                                </ion-checkbox>
-                            </div>
-                        </div>
-                    </ion-item>
-                    <ion-item class="contact-list" ng-repeat="contct in contactList">
-                        <div class="row">
+                    <ion-item class="contact-list no-border" ng-repeat="contct in contactList">
+                        <div class="row" ng-click="closeModal()">
                             <div class="col-75">
                                 <h2><strong>{{contct.Name}}</strong></h2>
-                            </div>
-                            <div class="col-25">
-                                <ion-checkbox class="checkbox-square checkbox-assertive contact-list modal-checkbox" ng-model="contct.Tick">
-                                </ion-checkbox>
                             </div>
                         </div>
                     </ion-item>

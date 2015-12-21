@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "angular-datepicker": "~1.0.20",
-    "flex-calendar": "*"
+    "flex-calendar": "*",
+    "Chart.js": "~1.0.2"
   }
 }
