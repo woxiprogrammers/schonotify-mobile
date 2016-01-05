@@ -4,9 +4,12 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'highcharts-ng', 'ionic-material', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate'])
 
-.run(function($ionicPlatform) {
+var db = null;
+
+angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'highcharts-ng', 'ionic-material', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate'])
+
+.run(function($ionicPlatform, $cordovaSQLite) {
     $ionicPlatform.ready(function() {
         // Hide the accessory bar by changeView (remove this to show the accessory bar above the keyboard
         // for form inputs)
@@ -15,8 +18,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'highcharts-ng', 'ion
         }
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
-            StatusBar.stylechangeView();
+            StatusBar.styleDefault();
         }
+        db = $cordovaSQLite.openDB("veza.db");
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS users (id integer primary key autoincrement, user_id integer, username text, password text, role_type text, email text, avatar text, token varchar default null)");
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS acl_modules (id integer primary key autoincrement, user_id integer, acl_module text)");
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS parent_students (id integer primary key autoincrement, parent_id integer,student_id integer, student_name text, div_id integer)");
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS badge_counts (id integer primary key autoincrement, user_id integer,message_count integer, auto_notification_count integer)");
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS messages (id integer primary key autoincrement, from_id integer, to_id integer, description text, timestamp text, status integer)");
     });
  })
 
