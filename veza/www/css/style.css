@@ -323,9 +323,8 @@ display: none;
 .children{
     background: #FFFEFE;
     position: relative;
-    top: 45%;
-    transform: translateY(-50%);
-    margin: 5px;
+    top: 0%;
+    margin: 10px;
 }
 .align-center{
     font-weight: bold;
@@ -334,12 +333,6 @@ display: none;
 .hero.no-header {
     height: 0px!important;    
 }
-
-/*.select-dropdown{*/
-    /*width: 170%;*/
-    /*background-color: #FF7600;*/
-    /*border: #FF7600;    */
-/*}*/
 
 .login-bg-col {
     background: #2D2C22;    
@@ -739,6 +732,12 @@ display: none;
 .graph-size{
     height: 450px;
     width: 100%;
+}
+
+.logo-align{
+    width: 100%;
+    margin-top: 20%;
+    z-index: 1;
 }
 
 .border-none{

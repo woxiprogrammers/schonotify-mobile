@@ -1,8 +1,23 @@
 /* global angular, document, window */
 'use strict';
+var db = null;
+angular.module('starter.controllers', []).constant('GLOBALS',{
+   baseUrl:'http://school_mit.woxiapps.com/api/v1/'
+})
+    .service('userSessions', function(){
 
-angular.module('starter.controllers', [])
+        var userSession = {userId:'', userToken: ''};
 
+        this.setSession = function(id, token){
+            this.userSession.userId = id;
+            this.userSession.userToken = token;
+        };
+
+        this.getSession = function(){
+            return this.userSession;
+        };
+
+})
 .controller('AppCtrl', function($scope,$state, $ionicModal, $ionicPopover, $timeout, $ionicSideMenuDelegate, $ionicHistory) {
     // Form data for the login modal
     $scope.loginData = {};
@@ -170,23 +185,130 @@ angular.module('starter.controllers', [])
         };
 })
 
-.controller('LoginCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk) {
+.controller('LoginCtrl', function($scope, $state, $timeout,  ionicMaterialInk, $cordovaSQLite, $http, GLOBALS, $ionicPopup, userSessions) {
 
     $scope.signIn = function() {
             $state.go('app.dashboard');
         };
 
-        // Set Motion
-    $timeout(function() {
-        ionicMaterialMotion.slideUp({
-            selector: '.slide-up'
-        });
-    }, 300);
-
     ionicMaterialInk.displayEffect();
+
+        $scope.email = '';
+        $scope.password = '';
+        $scope.data = [];
+        var url= GLOBALS.baseUrl+"user/auth";
+        console.log(url);
+        $scope.submit = function(email,password){
+            var query = "SELECT user_id, token FROM users WHERE email = ?";
+            $cordovaSQLite.execute(db, query, [email]).then(function(res) {
+                if(res.rows.length > 0 && res.rows.item(0).token != null) {
+                    userSessions.setSession(res.rows.item(0).user_id, res.rows.item(0).token);
+                    $scope.signIn();
+                } else {
+                    console.log("No results found");
+                    var url= GLOBALS.baseUrl+"user/auth";
+                    console.log(url);
+                    $http.post(url, { email: email, password: password })
+                        .success(function(response) {
+                            console.log(response);
+                            $scope.data.message = response['message'];
+                            $scope.data.status = response['status'];
+                            if(response['status'] != 200){
+                                $scope.showPopup();
+                            }
+                            else{
+                                $scope.data.users = response['data']['users'];
+                                $scope.data.aclModule = response['data']['Acl_Modules'];
+                                $scope.data.badgeCount = response['data']['Badge_count'];
+                                $scope.roleType = response['data']['users']['role_type'];
+                                if($scope.roleType == "parent"){
+                                    $scope.data.ParentStudentRelation = response['data']['Parent_student_relation'];
+                                    angular.forEach($scope.data.ParentStudentRelation['Students'], function(student){
+                                        var updateStudent = "UPDATE parent_students SET student_id = ?, student_name= ?, div_id = ? WHERE parent_id = ?";
+                                        $cordovaSQLite.execute(db, updateStudent, [student.student_id, student.student_name, student.student_div, $scope.data.ParentStudentRelation['parent_id']]).then(function(result) {
+                                            if(result.rows.length <= 0) {
+                                                var insertStudent = "INSERT INTO parent_students (parent_id, student_id, student_name, div_id) VALUES (?,?,?,?)";
+                                                $cordovaSQLite.execute(db, insertStudent, [ $scope.data.ParentStudentRelation['parent_id'], student.student_id, student.student_name, student.student_div]).then(function(res) {
+                                                    console.log("insertId: " + res.insertId);
+                                                }, function (err) {
+                                                    console.error(err);
+                                                });
+                                            }
+                                        }, function (err) {
+                                            console.error(err);
+                                        });
+                                    });
+                                }
+                                var updateUser = "UPDATE users SET username = ?, role_type = ?, email = ?, password=?, avatar = ?, token = ? WHERE user_id = ?";
+                                $cordovaSQLite.execute(db, updateUser, [$scope.data.users['username'], $scope.data.users['role_type'], $scope.data.users['email'], $scope.data.users['password'], $scope.data.users['avatar'], $scope.data.users['token'], $scope.data.users['user_id']]).then(function(result) {
+                                    if(result.rows.length <= 0) {
+                                        var insertUser = "INSERT INTO users (user_id, role_type, username, password, email, avatar, token) VALUES (?,?,?,?,?,?)";
+                                        $cordovaSQLite.execute(db, insertUser, [$scope.data.users['user_id'], $scope.data.users['role_type'], $scope.data.users['username'], $scope.data.users['password'], $scope.data.users['email'], $scope.data.users['avatar'], $scope.data.users['token']]).then(function(res) {
+                                            console.log("insertId: " + res.insertId);
+                                        }, function (err) {
+                                            console.error(err);
+                                        });
+                                    }
+                                }, function (err) {
+                                    console.error(err);
+                                });
+
+                                angular.forEach($scope.data.aclModule['acl_module'], function(acl){
+                                            var insertAcl = "INSERT OR IGNORE INTO acl_modules (user_id, acl_module) VALUES (?,?)";
+                                            $cordovaSQLite.execute(db, insertAcl, [ $scope.data.aclModule['user_id'], acl]).then(function(res) {
+                                                console.log("insertId: " + res.insertId);
+                                            }, function (err) {
+                                                console.error(err);
+                                            });
+                                });
+
+                                var updateBadgeCount = "UPDATE badge_counts SET message_count = ?, auto_notification_count = ? WHERE user_id = ?";
+                                $cordovaSQLite.execute(db, updateBadgeCount, [$scope.data.badgeCount['message_count'], $scope.data.badgeCount['auto_notification_count'], $scope.data.badgeCount['user_id']]).then(function(result) {
+                                    if(result.rows.length <= 0) {
+                                        var insertBadgeCount = "INSERT INTO badge_counts (user_id, message_count, auto_notification_count) VALUES (?,?,?)";
+                                        $cordovaSQLite.execute(db, insertBadgeCount, [$scope.data.badgeCount['user_id'], $scope.data.badgeCount['message_count'], $scope.data.badgeCount['auto_notification_count']]).then(function(res) {
+                                            console.log("insertId: " + res.insertId);
+                                        }, function (err) {
+                                            console.error(err);
+                                        });
+                                    }
+                                }, function (err) {
+                                    console.error(err);
+                                });
+                                userSessions.setSession(res.rows.item(0).user_id, res.rows.item(0).token);
+                                $scope.signIn();
+                            }
+                        })
+                        .error(function(response) {
+                            $scope.data = "Unsuccessfull";
+                            $scope.showPopup();
+                        });
+                }
+            }, function (err) {
+                console.error(err);
+                $scope.showPopup();
+            });
+        };
+
+        $scope.showPopup = function() {
+
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div>'+$scope.data.message+'</div>',
+                title: '',
+                subTitle: '',
+                scope: $scope
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); //close the popup after 8 seconds for some reason
+            }, 10000);
+        };
 })
 
-.controller('DashboardCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+.controller('DashboardCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, userSessions) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -195,27 +317,29 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
 
         //Side-Menu
-
         $ionicSideMenuDelegate.canDragContent(true);
 
-        $scope.noticeBoard = function() {
-            $state.go('app.sharedNotification');
-        };
+        $scope.msgCount = '';
+        $scope.userSession = userSessions.getSession();
+        var selectCount = "SELECT message_count FROM badge_counts WHERE user_id = ?";
+        $cordovaSQLite.execute(db, selectCount, [$scope.userSession.userId]).then(function(res) {
+            if(res.rows.length > 0) {
+                $scope.msgCount = res.rows.item(0).message_count;
+            } else {
+                console.log("No results found");
+            }
+        }, function (err) {
+            console.error(err);
+        });
+
 })
 
-.controller('NotificationCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+.controller('NotificationCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -224,13 +348,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -295,7 +412,7 @@ angular.module('starter.controllers', [])
 
         };
 })
-.controller('SharedNotificationCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+.controller('SharedNotificationCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -304,13 +421,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -375,7 +485,7 @@ angular.module('starter.controllers', [])
 
         };
  })
-    .controller('CreateAnnouncementCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('CreateAnnouncementCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -383,13 +493,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -399,7 +502,7 @@ angular.module('starter.controllers', [])
         $ionicSideMenuDelegate.canDragContent(true);
 
     })
-    .controller('SharedAchievementCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('SharedAchievementCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -408,13 +511,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -457,7 +553,7 @@ angular.module('starter.controllers', [])
 
         };
     })
-    .controller('CreateAchievementCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('CreateAchievementCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -465,13 +561,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -481,7 +570,7 @@ angular.module('starter.controllers', [])
         $ionicSideMenuDelegate.canDragContent(true);
 
     })
-    .controller('HomeworkCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('HomeworkCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -490,13 +579,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -544,7 +626,7 @@ angular.module('starter.controllers', [])
         };
 
     })
-    .controller('HwComposeCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
+    .controller('HwComposeCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -553,13 +635,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -633,7 +708,7 @@ angular.module('starter.controllers', [])
         };
     })
 
-    .controller('MessageCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('MessageCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -642,13 +717,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -723,7 +791,7 @@ angular.module('starter.controllers', [])
         };
 
     })
-    .controller('MsgComposeCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $ionicHistory) {
+    .controller('MsgComposeCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $ionicHistory) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -732,13 +800,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -811,7 +872,7 @@ angular.module('starter.controllers', [])
         };
 
     })
-    .controller('MsgChatCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('MsgChatCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -819,13 +880,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -839,7 +893,7 @@ angular.module('starter.controllers', [])
         };
     })
 
-    .controller('AttendLandingCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('AttendLandingCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -848,13 +902,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -867,7 +914,7 @@ angular.module('starter.controllers', [])
             $state.go('app.sharedNotification');
         };
     })
-    .controller('MarkAttendanceCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $log, $ionicSideMenuDelegate) {
+    .controller('MarkAttendanceCtrl', function($scope, $state, $timeout, ionicMaterialInk, $log, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -876,13 +923,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -958,7 +998,7 @@ angular.module('starter.controllers', [])
            $scope.selectedDate = new Date();
     })
 
-    .controller('ViewAttendanceCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('ViewAttendanceCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -967,13 +1007,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -1038,7 +1071,7 @@ angular.module('starter.controllers', [])
             ];
 
     })
-    .controller('LandingEventCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('LandingEventCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -1047,13 +1080,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -1066,7 +1092,7 @@ angular.module('starter.controllers', [])
             $state.go('app.sharedNotification');
         };
     })
-    .controller('EditEventCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('EditEventCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -1075,13 +1101,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -1156,7 +1175,7 @@ angular.module('starter.controllers', [])
             Priority: "high"
         }];
     })
-    .controller('CreateEventCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('CreateEventCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -1164,13 +1183,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -1185,7 +1197,7 @@ angular.module('starter.controllers', [])
         $scope.selectedDate = new Date();
 
     })
-    .controller('ViewEventsCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('ViewEventsCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -1194,13 +1206,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -1265,7 +1270,7 @@ angular.module('starter.controllers', [])
         ];
 
     })
-    .controller('ViewLeaveApprovalCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('ViewLeaveApprovalCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -1274,14 +1279,7 @@ angular.module('starter.controllers', [])
         // Set Header
         $scope.$parent.hideHeader();
 
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
-
-        // Set Ink
+         // Set Ink
         ionicMaterialInk.displayEffect();
 
         //Side-Menu
@@ -1345,7 +1343,7 @@ angular.module('starter.controllers', [])
         }];
 
     })
-    .controller('DetailPageCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
+    .controller('DetailPageCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -1353,13 +1351,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -1422,7 +1413,7 @@ angular.module('starter.controllers', [])
         $scope.selectedDate = new Date();
 
     })
-    .controller('TimeTableCtrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup) {
+    .controller('TimeTableCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -1430,12 +1421,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();//
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
@@ -1554,7 +1539,7 @@ angular.module('starter.controllers', [])
         ];
 
     })
-    .controller('ResultViewCntrl', function($scope, $state, $timeout, ionicMaterialMotion, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $ionicPopup) {
+    .controller('ResultViewCntrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $ionicPopup) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -1562,13 +1547,6 @@ angular.module('starter.controllers', [])
 
         // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Motion
-        $timeout(function() {
-            ionicMaterialMotion.fadeSlideInRight({
-                startVelocity: 3000
-            });
-        }, 700);
 
         // Set Ink
         ionicMaterialInk.displayEffect();
