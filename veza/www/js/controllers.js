@@ -4,7 +4,23 @@ var db = null;
 angular.module('starter.controllers', []).constant('GLOBALS',{
    baseUrl:'http://school_mit.woxiapps.com/api/v1/'
 })
-    .service('userSessions', function(){
+.service('userSessions', function(){
+
+        var userSession = {userId:'', userToken: '', userRole: '', studentId: ''};
+
+        this.setSession = function(id, token, role, student){
+            this.userSession.userId = id;
+            this.userSession.userToken = token;
+            this.userSession.userRole = role;
+            this.userSession.studentId = student;
+        };
+
+        this.getSession = function(){
+            return this.userSession;
+        };
+
+})
+.service('userSessions', function(){
 
         var userSession = {userId:'', userToken: '', userRole: '', studentId: ''};
 
@@ -197,6 +213,10 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
 
         $scope.email = '';
         $scope.password = '';
+        $scope.sessionId = '';
+        $scope.sessionToken = '';
+        $scope.sessionStudentId = '';
+        $scope.sessionUserRole = '';
         $scope.data = [];
         var url= GLOBALS.baseUrl+"user/auth";
         console.log(url);
@@ -220,6 +240,9 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
                             }
                             else{
                                 $scope.data.users = response['data']['users'];
+                                $scope.sessionId = response['data']['users']['user_id'];
+                                $scope.sessionToken = response['data']['users']['token'];
+                                $scope.sessionUserRole = response['data']['users']['role_type'];
                                 $scope.data.aclModule = response['data']['Acl_Modules'];
                                 $scope.data.badgeCount = response['data']['Badge_count'];
                                 $scope.roleType = response['data']['users']['role_type'];
@@ -239,6 +262,15 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
                                         }, function (err) {
                                             console.error(err);
                                         });
+                                    });
+
+                                    var selectDefaultStudent = "SELECT student_id FROM parent_students WHERE parent_id = ? ORDER BY ROWID ASC LIMIT 1";
+                                    $cordovaSQLite.execute(db, selectDefaultStudent, [$scope.data.ParentStudentRelation['parent_id']]).then(function(result) {
+                                        if(result.rows.length > 0) {
+                                            $scope.sessionStudentId = result.rows.item(0).student_id;
+                                        }
+                                    }, function (err) {
+                                        console.error(err);
                                     });
                                 }
                                 var updateUser = "UPDATE users SET username = ?, role_type = ?, email = ?, password=?, avatar = ?, token = ? WHERE user_id = ?";
@@ -279,7 +311,7 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
                                         console.error(err);
                                     });
                                 });
-                                userSessions.setSession(res.rows.item(0).user_id, res.rows.item(0).token);
+                                userSessions.setSession($scope.sessionId, $scope.sessionToken, $scope.sessionUserRole, $scope.sessionStudentId);
                                 $scope.signIn();
                             }
                         })
