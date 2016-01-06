@@ -6,11 +6,13 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
 })
     .service('userSessions', function(){
 
-        var userSession = {userId:'', userToken: ''};
+        var userSession = {userId:'', userToken: '', userRole: '', studentId: ''};
 
-        this.setSession = function(id, token){
+        this.setSession = function(id, token, role, student){
             this.userSession.userId = id;
             this.userSession.userToken = token;
+            this.userSession.userRole = role;
+            this.userSession.studentId = student;
         };
 
         this.getSession = function(){
@@ -262,18 +264,20 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
                                             });
                                 });
 
-                                var updateBadgeCount = "UPDATE badge_counts SET message_count = ?, auto_notification_count = ? WHERE user_id = ?";
-                                $cordovaSQLite.execute(db, updateBadgeCount, [$scope.data.badgeCount['message_count'], $scope.data.badgeCount['auto_notification_count'], $scope.data.badgeCount['user_id']]).then(function(result) {
-                                    if(result.rows.length <= 0) {
-                                        var insertBadgeCount = "INSERT INTO badge_counts (user_id, message_count, auto_notification_count) VALUES (?,?,?)";
-                                        $cordovaSQLite.execute(db, insertBadgeCount, [$scope.data.badgeCount['user_id'], $scope.data.badgeCount['message_count'], $scope.data.badgeCount['auto_notification_count']]).then(function(res) {
-                                            console.log("insertId: " + res.insertId);
-                                        }, function (err) {
-                                            console.error(err);
-                                        });
-                                    }
-                                }, function (err) {
-                                    console.error(err);
+                                angular.forEach($scope.data.badgeCount, function(badgeCount){
+                                    var updateBadgeCount = "UPDATE badge_counts SET message_count = ?, auto_notification_count = ? WHERE user_id = ?";
+                                    $cordovaSQLite.execute(db, updateBadgeCount, [badgeCount.message_count, badgeCount.auto_notification_count, badgeCount.user_id]).then(function(result) {
+                                        if(result.rows.length <= 0) {
+                                            var insertBadgeCount = "INSERT INTO badge_counts (user_id, message_count, auto_notification_count) VALUES (?,?,?)";
+                                            $cordovaSQLite.execute(db, insertBadgeCount, [badgeCount.user_id, badgeCount.message_count, badgeCount.auto_notification_count]).then(function(res) {
+                                                console.log("insertId: " + res.insertId);
+                                            }, function (err) {
+                                                console.error(err);
+                                            });
+                                        }
+                                    }, function (err) {
+                                        console.error(err);
+                                    });
                                 });
                                 userSessions.setSession(res.rows.item(0).user_id, res.rows.item(0).token);
                                 $scope.signIn();
@@ -708,7 +712,7 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         };
     })
 
-    .controller('MessageCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('MessageCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, GLOBALS, userSessions, $http) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -724,6 +728,24 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         //Side-Menu
 
         $ionicSideMenuDelegate.canDragContent(true);
+
+        $scope.getMessages();
+        $scope.getMessages = function() {
+            var url= GLOBALS.baseUrl+"user/getMessageList";
+            if(userSessions.userRole == "parent"){
+                $scope.params = { "token": userSessions.userToken, "student_id": userSessions.studentId};
+            }
+            else{
+                $scope.params = { "token": userSessions.userToken};
+            }
+            $http.get(url, $scope.params)
+                .success(function(response) {
+
+                })
+                .error(function(response) {
+                    alert("ERROR");
+                });
+        }
 
         $scope.nMessages = [{
             Status: "unRead",
