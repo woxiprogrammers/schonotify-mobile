@@ -212,8 +212,6 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
                 $scope.myGoBack();
                 alert("Access Denied !");
             }
-
-
         };
 
         $scope.createAnnouncement = function() {
@@ -283,14 +281,14 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         $scope.sessionStudentId = '';
         $scope.sessionUserRole = '';
         $scope.data = [];
-        var current = this;
+        var currentContext = this;
         var url= GLOBALS.baseUrl+"user/auth";
         console.log(url);
         $scope.submit = function(email,password){
             var query = "SELECT user_id, token FROM users WHERE email = ?";
             $cordovaSQLite.execute(db, query, [email]).then(function(res) {
                 if(res.rows.length > 0 && res.rows.item(0).token != null) {
-                    current.userSessions.setSession(res.rows.item(0).user_id, res.rows.item(0).token);
+                    currentContext.userSessions.setSession(res.rows.item(0).user_id, res.rows.item(0).token);
                     $scope.signIn();
                 } else {
                     console.log("No results found");
@@ -315,21 +313,13 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
                                 if($scope.roleType == "parent"){
                                     $scope.data.ParentStudentRelation = response['data']['Parent_student_relation'];
                                     angular.forEach($scope.data.ParentStudentRelation['Students'], function(student){
-                                        var updateStudent = "UPDATE parent_students SET student_name= ?, div_id = ? WHERE parent_id = ? AND student_id = ?";
-                                        $cordovaSQLite.execute(db, updateStudent, [student.student_name, student.student_div, $scope.data.ParentStudentRelation['parent_id'], student.student_id ]).then(function(result) {
-                                            if(result.rows.length <= 0) {
-                                                var insertStudent = "INSERT INTO parent_students (parent_id, student_id, student_name, div_id) VALUES (?,?,?,?)";
+                                                var insertStudent = "INSERT OR IGNORE INTO parent_students (parent_id, student_id, student_name, div_id) VALUES (?,?,?,?)";
                                                 $cordovaSQLite.execute(db, insertStudent, [ $scope.data.ParentStudentRelation['parent_id'], student.student_id, student.student_name, student.student_div]).then(function(res) {
                                                     console.log("insertId: " + res.insertId);
                                                 }, function (err) {
                                                     console.error(err);
                                                 });
-                                            }
-                                        }, function (err) {
-                                            console.error(err);
-                                        });
                                     });
-
                                     var selectDefaultStudent = "SELECT student_id FROM parent_students WHERE parent_id = ? ORDER BY ROWID ASC LIMIT 1";
                                     $cordovaSQLite.execute(db, selectDefaultStudent, [$scope.data.ParentStudentRelation['parent_id']]).then(function(result) {
                                         if(result.rows.length > 0) {
@@ -338,30 +328,36 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
                                     }, function (err) {
                                         console.error(err);
                                     });
-
                                 }
-
-                                var updateUser = "UPDATE users SET username = ?, role_type = ?, email = ?, password=?, avatar = ?, token = ? WHERE user_id = ?";
-                                $cordovaSQLite.execute(db, updateUser, [$scope.data.users['username'], $scope.data.users['role_type'], $scope.data.users['email'], $scope.data.users['password'], $scope.data.users['avatar'], $scope.data.users['token'], $scope.data.users['user_id']]).then(function(result) {
+                                var updateUser = "UPDATE users SET username = ?, email = ?, password=?, avatar = ?, token = ? WHERE user_id = ?";
+                                $cordovaSQLite.execute(db, updateUser, [$scope.data.users['username'], $scope.data.users['email'], $scope.data.users['password'], $scope.data.users['avatar'], $scope.data.users['token'], $scope.data.users['user_id']]).then(function(result) {
                                     if(result.rows.length <= 0) {
-                                        var insertUser = "INSERT INTO users (user_id, role_type, username, password, email, avatar, token) VALUES (?,?,?,?,?,?)";
+                                        var insertUser = "INSERT OR IGNORE INTO users (user_id, role_type, username, password, email, avatar, token) VALUES (?,?,?,?,?,?)";
                                         $cordovaSQLite.execute(db, insertUser, [$scope.data.users['user_id'], $scope.data.users['role_type'], $scope.data.users['username'], $scope.data.users['password'], $scope.data.users['email'], $scope.data.users['avatar'], $scope.data.users['token']]).then(function(res) {
                                             console.log("insertId: " + res.insertId);
-                                        }, function (err) {
-                                            console.error(err);
-                                        });
-                                    }
-                                }, function (err) {
-                                    console.error(err);
-                                });
-
-                                angular.forEach($scope.data.aclModule['acl_module'], function(acl){
+                                            angular.forEach($scope.data.aclModule['acl_module'], function(acl){
                                     var insertAcl = "INSERT OR IGNORE INTO acl_modules (user_id, acl_module) VALUES (?,?)";
                                     $cordovaSQLite.execute(db, insertAcl, [ $scope.data.aclModule['user_id'], acl]).then(function(res) {
                                         console.log("insertId: " + res.insertId);
                                     }, function (err) {
                                         console.error(err);
                                     });
+                                });
+                                        }, function (err) {
+                                            console.error(err);
+                                        });
+                                    }else{
+                                        angular.forEach($scope.data.aclModule['acl_module'], function(acl){
+                                            var insertAcl = "INSERT OR IGNORE INTO acl_modules (user_id, acl_module) VALUES (?,?)";
+                                            $cordovaSQLite.execute(db, insertAcl, [ $scope.data.aclModule['user_id'], acl]).then(function(res) {
+                                            console.log("insertId: " + res.insertId);
+                                    }, function (err) {
+                                        console.error(err);
+                                    });
+                                });
+                                    }
+                                }, function (err) {
+                                    console.error(err);
                                 });
 
                                 $scope.aclModules = $scope.data.aclModule['acl_module'];
