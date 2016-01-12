@@ -212,6 +212,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'highcha
                 }
             }
         })
+        .state('app.parentMsgcompose', {
+            url: '/parentMsgcompose',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/parentmsgcompose.html',
+                    controller: 'ParentMsgComposeCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
         .state('app.chatmsg', {
             url: '/chatmsg',
             views: {
