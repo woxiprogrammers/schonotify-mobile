@@ -273,7 +273,6 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
 .controller('LoginCtrl', function($scope, $state, $timeout,  ionicMaterialInk, $cordovaSQLite, $http, GLOBALS, $ionicPopup, userSessions) {
 
     ionicMaterialInk.displayEffect();
-
         $scope.email = '';
         $scope.password = '';
         $scope.sessionId = '';
@@ -361,7 +360,6 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
                                 });
 
                                 $scope.aclModules = $scope.data.aclModule['acl_module'];
-
                                 angular.forEach($scope.data.badgeCount, function(badgeCount){
                                     var updateBadgeCount = "UPDATE badge_counts SET message_count = ?, auto_notification_count = ? WHERE user_id = ?";
                                     $cordovaSQLite.execute(db, updateBadgeCount, [badgeCount.message_count, badgeCount.auto_notification_count, badgeCount.user_id]).then(function(result) {
