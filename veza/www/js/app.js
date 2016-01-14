@@ -20,7 +20,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'highcha
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
-        db = $cordovaSQLite.openDB("veza.db");
+        db = $cordovaSQLite.openDB({name: 'veza.db'});
         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS users (id integer primary key autoincrement, user_id integer, username text, password text, role_type text, email text, avatar text, token varchar default null)");
         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS acl_modules (id integer primary key autoincrement, user_id integer, acl_module text)");
         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS parent_students (id integer primary key autoincrement, parent_id integer,student_id integer, student_name text, div_id integer)");
