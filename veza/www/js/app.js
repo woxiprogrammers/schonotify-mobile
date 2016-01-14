@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 
-var db = null;
+var db= null;
 
 angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'highcharts-ng', 'ionic-material', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate'])
 
@@ -20,13 +20,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'highcha
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
-        db = $cordovaSQLite.openDB("veza.db");
+        db = $cordovaSQLite.openDB({name: 'veza.db'});
         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS users (id integer primary key autoincrement, user_id integer, username text, password text, role_type text, email text, avatar text, token varchar default null)");
         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS acl_modules (id integer primary key autoincrement, user_id integer, acl_module text)");
         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS parent_students (id integer primary key autoincrement, parent_id integer,student_id integer, student_name text, div_id integer)");
         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS badge_counts (id integer primary key autoincrement, user_id integer,message_count integer, auto_notification_count integer)");
         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS messages (id integer primary key autoincrement, message_id integer, from_id integer, to_id integer, description text, recipient_name text, timestamp text, status integer)");
-    });
+     });
  })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $translateProvider) {

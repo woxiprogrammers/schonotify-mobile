@@ -270,7 +270,7 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         };
 })
 
-.controller('LoginCtrl', function($scope, $state, $timeout,  ionicMaterialInk, $cordovaSQLite, $http, GLOBALS, $ionicPopup, userSessions) {
+.controller('LoginCtrl', function($scope, $state, $timeout,  ionicMaterialInk, $cordovaSQLite, $http, GLOBALS, $ionicPopup, userSessions, $ionicPlatform) {
 
     ionicMaterialInk.displayEffect();
         $scope.email = '';
@@ -283,19 +283,24 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         var currentContext = this;
         var url= GLOBALS.baseUrl+"user/auth";
         console.log(url);
-        $scope.submit = function(email,password){
+        $scope.submit = function(email, password){
+            alert("Submit Clicked");
             var query = "SELECT user_id, token FROM users WHERE email = ?";
+            $ionicPlatform.ready(function () {
+                alert("device ready "+db);
+                
             $cordovaSQLite.execute(db, query, [email]).then(function(res) {
                 if(res.rows.length > 0 && res.rows.item(0).token != null) {
                     currentContext.userSessions.setSession(res.rows.item(0).user_id, res.rows.item(0).token);
                     $scope.signIn();
                 } else {
+                    alert("Working...");
                     console.log("No results found");
                     var url= GLOBALS.baseUrl+"user/auth";
                     console.log(url);
                     $http.post(url, { email: email, password: password })
                         .success(function(response) {
-                            console.log(response);
+                            console.log("Response: "+response);
                             $scope.data.message = response['message'];
                             $scope.data.status = response['status'];
                             if(response['status'] != 200){
@@ -379,19 +384,20 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
                                 $scope.signIn();
                             }
                         })
-                        .error(function(response) {
+                        .error(function(error) {
                             $scope.data = "Unsuccessfull";
-                            $scope.showPopup();
+                            console.log("error: "+error);
                         });
                 }
             }, function (err) {
                 console.error(err);
+                $scope.data.message = err;
+                alert(""+err[0]);
                 $scope.showPopup();
             });
-        };
-
+       });       
+      }  
         $scope.showPopup = function() {
-
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
                 template: '<div>'+$scope.data.message+'</div>',
@@ -404,8 +410,9 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
             });
             $timeout(function() {
                 myPopup.close(); //close the popup after 8 seconds for some reason
-            }, 10000);
+            }, 20000);
         };
+      
 })
 
 .controller('DashboardCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, userSessions, filterUserRoles, filterBatches) {
