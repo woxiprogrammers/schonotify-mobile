@@ -406,7 +406,7 @@ display: none;
 
 .align-delete-bin {
     font-size: 160%;
-   // margin-left: 48px;
+    /*margin-left: 48px;*/
     float: right;
     margin-right: 28%;
     margin-top: 0%;
@@ -1082,6 +1082,10 @@ display: none;
 
 .margin-top-36{
     margin-top: 36px;
+}
+
+.text-center-align{
+    text-align: center;
 }
 
 .red-font{
