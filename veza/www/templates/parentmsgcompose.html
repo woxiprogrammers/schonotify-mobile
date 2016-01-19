@@ -1,4 +1,4 @@
-<ion-view view-title="Compose Message" name="msgcompose" class="touch-effect">
+<ion-view view-title="Compose Message" name="parentmsgcompose" class="touch-effect">
     <div class="row padding-0">
         <div class="tabs-striped tabs-color-positive tabs-top">
             <div class="tabs tab-align-inner">
@@ -29,42 +29,18 @@
                     <span class="inner-header">Compose Message</span>
                 </div>
                 <div class="col-10">
-                    <a><i class="icon ion-android-send align-delete-bin" ng-click="sendMessage()"></i></a>
+                    <a><i class="icon ion-android-send align-delete-bin"></i></a>
                 </div>
             </div>
         </iion-item>
     </div>
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
         <div class="list">
-            <div class="row">
-                <div class="col-50 border-bottom border-right">
-                    <select class="item item-input item-select">
-                        <option selected class="padding-top-5" ng-repeat="role as filterUserRoles" value= "{{role.id}}" ng-click="getContactList(role.id, role.name)">{{role.name}}</option>
-                    </select>
-                </div>
-                <div class="col-50 border-bottom">
-                    <select class="item item-input item-select border-bottom">
-                        <option selected class="padding-top-5" ngrepeat="batch as batches" value={{batch.id}} ng-click="getClass(batch.id)">{{batch.name}}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-50 border-right border-bottom">
-                    <select class="item item-input item-select border-bottom">
-                        <option selected class="padding-top-5" ngrepeat="class as classes" value={{class.id}} ng-click="getDivision(class.id)">{{class.name}}</option>
-                    </select>
-                </div>
-                <div class="col-50 border-bottom">
-                    <select class="item item-input item-select">
-                        <option selected class="padding-top-5" ngrepeat="division as divisions" value={{division.id}} ng-click="getDivision(class.id)">{{division.name}}</option>
-                    </select>
-                </div>
-            </div>
             <label class="item item-input border-bottom">
-                <input type="text" ng-model="recipient" placeholder="Add Recipient+ " value="{{recipient}}" ng-click="openModal()">
+                <input type="text" ng-model="recipient" placeholder="+ Select Teacher" value="{{recipient}}" ng-click="openModal()" value="{{recipient}}">
             </label>
             <label class="item item-input">
-                <textarea placeholder="Compose" ng-model="message"></textarea>
+                <textarea ng-model="message" placeholder="Compose"></textarea>
             </label>
         </div>
     </ion-content>
@@ -72,13 +48,13 @@
 
 
 
-<script id="studentCntctlist.html" type="text/ng-template">
+<script id="teacherCntctlist.html" type="text/ng-template">
     <div class="modal">
         <div class="modal-view">
             <ion-header-bar class="bar-calm">
                 <div class="row">
                     <div class="col-80">
-                        <h3 class="modal-title">Select Recipient</h3>
+                        <h3 class="modal-title">Select Teacher</h3>
                     </div>
                     <div class="col-20">
                         <a><i class="icon ion-close align-delete-bin" ng-click="closeModal()"></i></a>
