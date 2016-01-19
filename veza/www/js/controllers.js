@@ -233,21 +233,20 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         };
 
         $scope.composeMsg = function() {
-            var checkAcl = userSessions.userSession.userAcl.indexOf("Create_message");
-            if(checkAcl !== -1){
-                if(userSessions.userSession.userRole = "parent"){
-                    $state.go('app.parentMsgcompose');
-                }
-                else{
-                    $state.go('app.msgcompose');
-                }
-            }
-            else{
-                $scope.myGoBack();
-                alert("Access Denied !");
-            }
-
-
+            // var checkAcl = userSessions.userSession.userAcl.indexOf("Create_message");
+            // if(checkAcl !== -1){
+            //     if(userSessions.userSession.userRole = "parent"){
+            //         $state.go('app.parentMsgcompose');
+            //     }
+            //     else{
+            //         $state.go('app.msgcompose');
+            //     }
+            // }
+            // else{
+            //     $scope.myGoBack();
+            //     alert("Access Denied !");
+            // }
+            $state.go('app.msgcompose');
         };
 
         $scope.createAnnouncement = function() {
@@ -311,48 +310,49 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
     $scope.data = [];
     ionicMaterialInk.displayEffect();                
         $scope.submit = function(email,password){
-            $scope.sessionId = '';
-            $scope.sessionToken = '';
-            $scope.sessionUserRole = '';
-                    var url= GLOBALS.baseUrl+"user/auth";
-                    console.log(url);
-                    $http.post(url, { email: email, password: password }).success(function(res) {
-                        $scope.data.message = res['message'];
-                        console.log("Status: "+res['status']);
-                        if(res['status'] == 200){
-                            $scope.userDataArray = userData.setUserData(res['data']['users']);                            
-                            $scope.sessionToken = res['data']['users']['token'];
-                            $scope.sessionUserRole = res['data']['users']['role_type'];
-                            $scope.userAcls = res['data']['Acl_Modules']['acl_module'];
-                            $scope.data.badgeCount = res['data']['Badge_count'];                            
-                            $scope.data.ParentStudentRelation = res['data']['Parent_student_relation'];
-                            if($scope.sessionUserRole == 'parent'){
-                                $scope.messageCount = res['data']['Badge_count'][0]['message_count'];
-                                $scope.sessionId = res['data']['Badge_count'][0]['user_id'];
-                            }
-                            else{
-                                $scope.sessionId = res['data']['users']['user_id'];
-                                $scope.messageCount = res['data']['Badge_count']['message_count'];
-                            }
-                            var  userSet = false;
-                            var idSet = false;                      
-                            userSet = userSessions.setSession($scope.sessionToken, $scope.sessionUserRole, $scope.userAcls, $scope.messageCount);
-                            idSet = userSessions.setUserId($scope.sessionId);
-                                if(userSet == true && idSet == true){
-                                            $state.go('app.dashboard');
-                                    }                                   
-                        }
-            })
-            .error(function(err) {
-                console.log("Error: "+err);                
-                if(err.hasOwnProperty('status')){
-                    $scope.data.message = err.message;
-                }
-                else{
-                    $scope.data.message = "Sorry!! Incorrect email or password";
-                }
-                $scope.showPopup();            
-            });
+            // $scope.sessionId = '';
+            // $scope.sessionToken = '';
+            // $scope.sessionUserRole = '';
+            //         var url= GLOBALS.baseUrl+"user/auth";
+            //         console.log(url);
+            //         $http.post(url, { email: email, password: password }).success(function(res) {
+            //             $scope.data.message = res['message'];
+            //             console.log("Status: "+res['status']);
+            //             if(res['status'] == 200){
+            //                 $scope.userDataArray = userData.setUserData(res['data']['users']);                            
+            //                 $scope.sessionToken = res['data']['users']['token'];
+            //                 $scope.sessionUserRole = res['data']['users']['role_type'];
+            //                 $scope.userAcls = res['data']['Acl_Modules']['acl_module'];
+            //                 $scope.data.badgeCount = res['data']['Badge_count'];                            
+            //                 $scope.data.ParentStudentRelation = res['data']['Parent_student_relation'];
+            //                 if($scope.sessionUserRole == 'parent'){
+            //                     $scope.messageCount = res['data']['Badge_count'][0]['message_count'];
+            //                     $scope.sessionId = res['data']['Badge_count'][0]['user_id'];
+            //                 }
+            //                 else{
+            //                     $scope.sessionId = res['data']['users']['user_id'];
+            //                     $scope.messageCount = res['data']['Badge_count']['message_count'];
+            //                 }
+            //                 var  userSet = false;
+            //                 var idSet = false;                      
+            //                 userSet = userSessions.setSession($scope.sessionToken, $scope.sessionUserRole, $scope.userAcls, $scope.messageCount);
+            //                 idSet = userSessions.setUserId($scope.sessionId);
+            //                     if(userSet == true && idSet == true){
+            //                                 $state.go('app.dashboard');
+            //                         }                                   
+            //             }
+            // })
+            // .error(function(err) {
+            //     console.log("Error: "+err);                
+            //     if(err.hasOwnProperty('status')){
+            //         $scope.data.message = err.message;
+            //     }
+            //     else{
+            //         $scope.data.message = "Sorry!! Incorrect email or password";
+            //     }
+            //     $scope.showPopup();            
+            // });
+            $state.go('app.dashboard');
         }
 
         $scope.showPopup = function() {
@@ -386,11 +386,12 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         ionicMaterialInk.displayEffect();
 
         //Side-Menu
-        $ionicSideMenuDelegate.canDragContent(true);        
-        $scope.msgCount = '';
-        if(userSessions.userSession.msgcount > 0){
-            $scope.msgCount = userSessions.userSession.msgcount;
-        }      
+        $ionicSideMenuDelegate.canDragContent(true);
+        $scope.msgCount = 1;        
+        // $scope.msgCount = '';
+        // if(userSessions.userSession.msgcount > 0){
+        //     $scope.msgCount = userSessions.userSession.msgcount;
+        // }      
 })
 .controller('NotificationCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
@@ -853,51 +854,13 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
 
         // Set Header
         $scope.$parent.hideHeader();
-
+        
         // Set Ink
         ionicMaterialInk.displayEffect();
 
         //Side-Menu
 
         $ionicSideMenuDelegate.canDragContent(true);
-        $scope.recipient = "";
-        $scope.message = "";
-        $scope.contactList = [];
-        $scope.userRoles = filterUserRoles.getRoles;
-        $scope.batches = filterBatches.getBatches;
-        $scope.getClass = function(batch){
-               $scope.classes = filterClasses.getClasses(userSessions.userSession.userToken, batch);
-        };
-
-        $scope.getDivision = function(std){
-            $scope.divisions = filterDivisions.getDivisions(userSessions.userSession.userToken, std);
-        };
-
-        $scope.getStudentList = function(id){
-                var url= GLOBALS.baseUrl+"user/get-students-list";
-                $http.get(url, { params: { "token": userSessions.userSession.userToken, "division": id } })
-                    .success(function(response) {
-                        $scope.contactList = response['studentsList'];
-                        $scope.contactList = angular.toJson($scope.contactList);
-                    })
-                    .error(function(response) {
-                        console.log("Error in Response: " +response);
-                    });
-        };
-
-        $scope.getTeacherList = function(name){
-            if(name == userSessions.userSession.userRole){
-                var url= GLOBALS.baseUrl+"user/getteachers";
-                $http.get(url, { params: { "token": userSessions.userSession.userToken } })
-                    .success(function(response) {
-                        $scope.contactList = response['teachers'];
-                        $scope.contactList = angular.toJson($scope.contactList);
-                    })
-                    .error(function(response) {
-                        console.log("Error in Response: " +response);
-                    });
-            }
-        };
 
         $ionicModal.fromTemplateUrl('studentCntctlist.html', {
             scope: $scope,
@@ -918,53 +881,49 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
             $scope.modal.remove();
         });
 
-        $scope.selectRecipient = function(rname, id){
-            $scope.recipient = rname;
-            $scope.recipientId = id;
-            $scope.closeModal();
-        };
+        $scope.contactList = [{
+            Name: "Student 1"
+        }, {
+            Name: "Student 2"
+        }, {
+            Name: "Student 3"
+        },{
+            Name: "Student 4"
+        },{
+            Name: "Student 5"
+        }, {
+            Name: "Student 6"
+        }, {
+            Name: "Student 7"
+        },{
+            Name: "Student 8"
+        },{
+            Name: "Student 9"
+        }, {
+            Name: "Student 10"
+        }, {
+            Name: "Student 11"
+        },{
+            Name: "Student 12"
+        },{
+            Name: "Student 13"
+        }, {
+            Name: "Student 14"
+        }];
 
-        $scope.sendMessage= function(){
-          if($scope.recipient == ""){
-              $scope.msg = "Please Add Recipient";
-              $scope.showPopup();
-          }
-          else{
-              var url= GLOBALS.baseUrl+"user/sendmessage";
-              $http.post(url, { params: { "token": userSessions.userSession.userToken, "to_id": $scope.recipientId, "description": $scope.message } })
-                  .success(function(response) {
-                      if(response['status'] == 200){
-                          $scope.msg = response['message'];
-                          $scope.showPopup();
-                      }
-                      else{
-                          $scope.msg = response['message'];
-                          $scope.showPopup();
-                      }
-                  })
-                  .error(function(response) {
-                      console.log("Error in Response: " +response);
-                  });
-          }
-        };
+        $scope.contactsAll = false;
+        $scope.checkAllcontacts = function () {
 
-        $scope.showPopup = function() {
-            // An elaborate, custom popup
-            var myPopup = $ionicPopup.show({
-                template: '<div>'+$scope.msg+'</div>',
-                title: '',
-                subTitle: '',
-                scope: $scope
+            console.log("into check all");
+            if ($scope.contactsAll) {
+                $scope.contactsAll = true;
+            } else {
+                $scope.contactsAll = false;
+            }
+            angular.forEach($scope.contactList, function (contct) {
+                contct.Tick = $scope.contactsAll;
             });
-            myPopup.then(function(res) {
-                console.log('Tapped!', res);
-            });
-            $timeout(function() {
-                myPopup.close(); //close the popup after 8 seconds for some reason
-                $scope.myGoBack();
-            }, 10000);
         };
-
     })
     .controller('ParentMsgComposeCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $ionicHistory, $http, GLOBALS, userSessions) {
 
