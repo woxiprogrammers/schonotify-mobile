@@ -10,9 +10,46 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
 
         userSessions.userSession = [];
 
-        userSessions.setSession = function(id, token, role, student, acl){
-            userSessions.userSession.push({ userId: id, userToken: token, userRole: role, studentId: student, userAclModules: acl });
+        userSessions.setSession = function(token, role, acl, msgcount){
+            userSessions.userSession.userToken = token;
+            userSessions.userSession.userRole = role;
+            userSessions.userSession.userAcl = acl;
+            userSessions.userSession.msgcount = msgcount;
+            return true;
         };
+        
+        userSessions.setUserId = function(id){
+            userSessions.userSession.userId = id;
+            return true;
+        };      
+})
+.service('userData', function uData(){
+
+        var userData = this;
+
+        userData.data = [];
+
+        userData.setUserData = function(dataArray){
+            userData.data = dataArray;
+            return true;
+        };
+        userData.getUserData = function(){            
+            return userData.data;
+        };      
+})
+.service('studentToggle', function studentToggle(){
+
+        var studentToggle = this;
+
+        studentToggle.data = [];
+
+        studentToggle.setUserData = function(dataArray){
+            studentToggle.data = dataArray;
+            return true;
+        };
+        studentToggle.getUserData = function(){            
+            return studentToggle.data;
+        };      
 })
 .service('filterBatches', function FilterBatch($http, GLOBALS){
 
@@ -85,7 +122,7 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
                 });
         };
 })
-.controller('AppCtrl', function($scope,$state, $ionicModal, $ionicPopover, $timeout, $ionicSideMenuDelegate, $ionicHistory, userSessions) {
+.controller('AppCtrl', function($scope, $state, $http, $ionicModal, $ionicPopover, $timeout, $ionicSideMenuDelegate, $ionicHistory, userSessions) {
     // Form data for the login modal
     $scope.loginData = {};
     $scope.isExpanded = false;
@@ -172,9 +209,6 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         console.log("User Logged out");
         $state.go('login');
     };
-        $scope.currentUserSession = this;
-        $scope.currentUserSession = userSessions.userSession;
-
     $scope.studToggle = true;
 
     $scope.toggleStudent = function() {
@@ -199,10 +233,10 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         };
 
         $scope.composeMsg = function() {
-            var checkAcl = $scope.currentUserSession.userAclModules.indexOf("Create_message");
+            var checkAcl = userSessions.userSession.userAcl.indexOf("Create_message");
             if(checkAcl !== -1){
-                if($scope.currentUserSession.userRole = "parent"){
-                    $state.go('app.msgcompose');
+                if(userSessions.userSession.userRole = "parent"){
+                    $state.go('app.parentMsgcompose');
                 }
                 else{
                     $state.go('app.msgcompose');
@@ -272,135 +306,59 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         };
 })
 
-.controller('LoginCtrl', function($scope, $state, $timeout,  ionicMaterialInk, $cordovaSQLite, $http, GLOBALS, $ionicPopup, userSessions) {
+.controller('LoginCtrl', function($scope, $state, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
 
-    ionicMaterialInk.displayEffect();
-
-        $scope.email = '';
-        $scope.password = '';
-        $scope.sessionId = '';
-        $scope.sessionToken = '';
-        $scope.sessionStudentId = '';
-        $scope.sessionUserRole = '';
-        $scope.data = [];
-        var current = this;
-        var url= GLOBALS.baseUrl+"user/auth";
-        console.log(url);
+    $scope.data = [];
+    ionicMaterialInk.displayEffect();                
         $scope.submit = function(email,password){
-            var query = "SELECT user_id, token FROM users WHERE email = ?";
-            $cordovaSQLite.execute(db, query, [email]).then(function(res) {
-                if(res.rows.length > 0 && res.rows.item(0).token != null) {
-                    current.userSessions.setSession(res.rows.item(0).user_id, res.rows.item(0).token);
-                    $scope.signIn();
-                } else {
-                    console.log("No results found");
+            $scope.sessionId = '';
+            $scope.sessionToken = '';
+            $scope.sessionUserRole = '';
                     var url= GLOBALS.baseUrl+"user/auth";
                     console.log(url);
-                    $http.post(url, { email: email, password: password })
-                        .success(function(response) {
-                            console.log(response);
-                            $scope.data.message = response['message'];
-                            $scope.data.status = response['status'];
-                            if(response['status'] != 200){
-                                $scope.showPopup();
+                    $http.post(url, { email: email, password: password }).success(function(res) {
+                        $scope.data.message = res['message'];
+                        console.log("Status: "+res['status']);
+                        if(res['status'] == 200){
+                            $scope.userDataArray = userData.setUserData(res['data']['users']);                            
+                            $scope.sessionToken = res['data']['users']['token'];
+                            $scope.sessionUserRole = res['data']['users']['role_type'];
+                            $scope.userAcls = res['data']['Acl_Modules']['acl_module'];
+                            $scope.data.badgeCount = res['data']['Badge_count'];                            
+                            $scope.data.ParentStudentRelation = res['data']['Parent_student_relation'];
+                            if($scope.sessionUserRole == 'parent'){
+                                $scope.messageCount = res['data']['Badge_count'][0]['message_count'];
+                                $scope.sessionId = res['data']['Badge_count'][0]['user_id'];
                             }
                             else{
-                                $scope.data.users = response['data']['users'];
-                                $scope.sessionId = response['data']['users']['user_id'];
-                                $scope.sessionToken = response['data']['users']['token'];
-                                $scope.sessionUserRole = response['data']['users']['role_type'];
-                                $scope.data.aclModule = response['data']['Acl_Modules'];
-                                $scope.data.badgeCount = response['data']['Badge_count'];
-                                $scope.roleType = response['data']['users']['role_type'];
-                                if($scope.roleType == "parent"){
-                                    $scope.data.ParentStudentRelation = response['data']['Parent_student_relation'];
-                                    angular.forEach($scope.data.ParentStudentRelation['Students'], function(student){
-                                        var updateStudent = "UPDATE parent_students SET student_name= ?, div_id = ? WHERE parent_id = ? AND student_id = ?";
-                                        $cordovaSQLite.execute(db, updateStudent, [student.student_name, student.student_div, $scope.data.ParentStudentRelation['parent_id'], student.student_id ]).then(function(result) {
-                                            if(result.rows.length <= 0) {
-                                                var insertStudent = "INSERT INTO parent_students (parent_id, student_id, student_name, div_id) VALUES (?,?,?,?)";
-                                                $cordovaSQLite.execute(db, insertStudent, [ $scope.data.ParentStudentRelation['parent_id'], student.student_id, student.student_name, student.student_div]).then(function(res) {
-                                                    console.log("insertId: " + res.insertId);
-                                                }, function (err) {
-                                                    console.error(err);
-                                                });
-                                            }
-                                        }, function (err) {
-                                            console.error(err);
-                                        });
-                                    });
-
-                                    var selectDefaultStudent = "SELECT student_id FROM parent_students WHERE parent_id = ? ORDER BY ROWID ASC LIMIT 1";
-                                    $cordovaSQLite.execute(db, selectDefaultStudent, [$scope.data.ParentStudentRelation['parent_id']]).then(function(result) {
-                                        if(result.rows.length > 0) {
-                                            $scope.sessionStudentId = result.rows.item(0).student_id;
-                                        }
-                                    }, function (err) {
-                                        console.error(err);
-                                    });
-
-                                }
-
-                                var updateUser = "UPDATE users SET username = ?, role_type = ?, email = ?, password=?, avatar = ?, token = ? WHERE user_id = ?";
-                                $cordovaSQLite.execute(db, updateUser, [$scope.data.users['username'], $scope.data.users['role_type'], $scope.data.users['email'], $scope.data.users['password'], $scope.data.users['avatar'], $scope.data.users['token'], $scope.data.users['user_id']]).then(function(result) {
-                                    if(result.rows.length <= 0) {
-                                        var insertUser = "INSERT INTO users (user_id, role_type, username, password, email, avatar, token) VALUES (?,?,?,?,?,?)";
-                                        $cordovaSQLite.execute(db, insertUser, [$scope.data.users['user_id'], $scope.data.users['role_type'], $scope.data.users['username'], $scope.data.users['password'], $scope.data.users['email'], $scope.data.users['avatar'], $scope.data.users['token']]).then(function(res) {
-                                            console.log("insertId: " + res.insertId);
-                                        }, function (err) {
-                                            console.error(err);
-                                        });
-                                    }
-                                }, function (err) {
-                                    console.error(err);
-                                });
-
-                                angular.forEach($scope.data.aclModule['acl_module'], function(acl){
-                                    var insertAcl = "INSERT OR IGNORE INTO acl_modules (user_id, acl_module) VALUES (?,?)";
-                                    $cordovaSQLite.execute(db, insertAcl, [ $scope.data.aclModule['user_id'], acl]).then(function(res) {
-                                        console.log("insertId: " + res.insertId);
-                                    }, function (err) {
-                                        console.error(err);
-                                    });
-                                });
-
-                                $scope.aclModules = $scope.data.aclModule['acl_module'];
-
-                                angular.forEach($scope.data.badgeCount, function(badgeCount){
-                                    var updateBadgeCount = "UPDATE badge_counts SET message_count = ?, auto_notification_count = ? WHERE user_id = ?";
-                                    $cordovaSQLite.execute(db, updateBadgeCount, [badgeCount.message_count, badgeCount.auto_notification_count, badgeCount.user_id]).then(function(result) {
-                                        if(result.rows.length <= 0) {
-                                            var insertBadgeCount = "INSERT INTO badge_counts (user_id, message_count, auto_notification_count) VALUES (?,?,?)";
-                                            $cordovaSQLite.execute(db, insertBadgeCount, [badgeCount.user_id, badgeCount.message_count, badgeCount.auto_notification_count]).then(function(res) {
-                                                console.log("insertId: " + res.insertId);
-                                            }, function (err) {
-                                                console.error(err);
-                                            });
-                                        }
-                                    }, function (err) {
-                                        console.error(err);
-                                    });
-                                });
-                                userSessions.setSession($scope.sessionId, $scope.sessionToken, $scope.sessionUserRole, $scope.sessionStudentId, $scope.aclModules);
-                                $scope.signIn();
+                                $scope.sessionId = res['data']['users']['user_id'];
+                                $scope.messageCount = res['data']['Badge_count']['message_count'];
                             }
-                        })
-                        .error(function(response) {
-                            $scope.data = "Unsuccessfull";
-                            $scope.showPopup();
-                        });
+                            var  userSet = false;
+                            var idSet = false;                      
+                            userSet = userSessions.setSession($scope.sessionToken, $scope.sessionUserRole, $scope.userAcls, $scope.messageCount);
+                            idSet = userSessions.setUserId($scope.sessionId);
+                                if(userSet == true && idSet == true){
+                                            $state.go('app.dashboard');
+                                    }                                   
+                        }
+            })
+            .error(function(err) {
+                console.log("Error: "+err);                
+                if(err.hasOwnProperty('status')){
+                    $scope.data.message = err.message;
                 }
-            }, function (err) {
-                console.error(err);
-                $scope.showPopup();
+                else{
+                    $scope.data.message = "Sorry!! Incorrect email or password";
+                }
+                $scope.showPopup();            
             });
-        };
+        }
 
         $scope.showPopup = function() {
-
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
-                template: '<div>'+$scope.data.message+'</div>',
+                template: '<div class = "row"><span class = "align-center red-font text-center-align">'+$scope.data.message+'</span></div>',
                 title: '',
                 subTitle: '',
                 scope: $scope
@@ -409,12 +367,12 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
                 console.log('Tapped!', res);
             });
             $timeout(function() {
-                myPopup.close(); //close the popup after 8 seconds for some reason
-            }, 10000);
+                myPopup.close(); //close the popup after 3 seconds for some reason
+            }, 3000);
         };
 })
 
-.controller('DashboardCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, userSessions, filterUserRoles, filterBatches) {
+.controller('DashboardCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData, filterUserRoles, filterBatches) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -428,26 +386,12 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         ionicMaterialInk.displayEffect();
 
         //Side-Menu
-        $ionicSideMenuDelegate.canDragContent(true);
-
+        $ionicSideMenuDelegate.canDragContent(true);        
         $scope.msgCount = '';
-        $scope.userSession = userSessions.getSession();
-        var selectCount = "SELECT message_count FROM badge_counts WHERE user_id = ?";
-        $cordovaSQLite.execute(db, selectCount, [$scope.userSession.userId]).then(function(res) {
-            if(res.rows.length > 0) {
-                $scope.msgCount = res.rows.item(0).message_count;
-            } else {
-                console.log("No results found");
-            }
-        }, function (err) {
-            console.error(err);
-        });
-
-        $scope.getRoles = filterUserRoles.setRoles(userSessions.userSession.userToken);
-        $scope.getBatches = filterBatches.setBatches(userSessions.userSession.userToken);
-
+        if(userSessions.userSession.msgcount > 0){
+            $scope.msgCount = userSessions.userSession.msgcount;
+        }      
 })
-
 .controller('NotificationCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
@@ -833,24 +777,6 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         //Side-Menu
 
         $ionicSideMenuDelegate.canDragContent(true);
-
-        $scope.getMessages();
-        $scope.getMessages = function() {
-            var url= GLOBALS.baseUrl+"user/getdetailmessage";
-            if(userSessions.userSession.userRole == "parent"){
-                $scope.params = { "token": userSessions.userToken, "student_id": userSessions.userSession.studentId};
-            }
-            else{
-                $scope.params = { "token": userSessions.userSession.userToken};
-            }
-            $http.get(url, $scope.params)
-                .success(function(response) {
-
-                })
-                .error(function(response) {
-                    alert("ERROR");
-                });
-        }
 
         $scope.nMessages = [{
             Status: "unRead",
