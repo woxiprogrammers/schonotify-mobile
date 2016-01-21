@@ -42,9 +42,9 @@
                             </ion-checkbox>
                         </div>
                         <div class="col-75 msg-{{nMsg.Status}}">
-                            <a ui-sref="app.chatmsg" class="text-decoration-none">
-                            <h2><strong>{{nMsg.Title}}</strong></h2>
-                            <p>{{nMsg.Message}}<br><strong><i class="font-italic">{{nMsg.Class}} {{nMsg.Subject}} {{nMsg.Timestamp}}</i></strong></p>
+                            <a ng-click="msgDetails(nMsg.from_id, nMsg.to_id, nMsg.title)" class="text-decoration-none">
+                            <h2><strong>{{nMsg.title}}</strong></h2>
+                            <p>{{nMsg.description}}<br><strong><i class="font-italic">{{nMsg.timestamp}}</i></strong></p>
                             </a>
                         </div>
                     </div>

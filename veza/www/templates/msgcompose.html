@@ -37,9 +37,9 @@
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
         <div class="list">
             <div class="row">
-                <div class="col-50 border-bottom border-right">
+                <div class="row border-bottom border-right">
                     <select class="item item-input item-select">
-                        <option selected class="padding-top-5" ng-repeat="role as filterUserRoles" value= "{{role.id}}" ng-click="getContactList(role.id, role.name)">{{role.name}}</option>
+                        <option selected class="padding-top-5" ng-repeat="role as filterUserRoles" value= "{{role.id}}" ng-click="getRole(role.name)">{{role.name}}</option>
                     </select>
                 </div>
                 <div class="col-50 border-bottom">
@@ -56,7 +56,7 @@
                 </div>
                 <div class="col-50 border-bottom">
                     <select class="item item-input item-select">
-                        <option selected class="padding-top-5" ngrepeat="division as divisions" value={{division.id}} ng-click="getDivision(class.id)">{{division.name}}</option>
+                        <option selected class="padding-top-5" ngrepeat="division as divisions" value={{division.id}} ng-click="getStudentList(division.id)">{{division.name}}</option>
                     </select>
                 </div>
             </div>
