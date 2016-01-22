@@ -39,29 +39,29 @@
             <div class="row">
                 <div class="row border-bottom">
                     <select class="item item-input item-select" ng-model="selectedRole.role" ng-options="role.name for role in userRoles track by role.id" ng-change="getSelectedRole(selectedRole.role)">
-                        <option value="">-------Select User Role-------</option>
+                        <option value="" ng-disabled="true">--Select User Role--</option>
                     </select>
                 </div>                
             </div>
             <div class="row">
                 <div class="col-33 border-bottom">
                     <select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batches track by batch.id" ng-change="getClass(selectedBatch.batch)" ng-disabled="checkRole">
-                        <option value="">-Batch-</option>
+                        <option value="" ng-disabled="true">-Batch-</option>
                     </select>
                 </div>
                 <div class="col-33 border-right border-bottom">
                     <select class="item item-input item-select" ng-model="selectedClass.class" ng-options="class.class_name for class in classes track by class.id" ng-change="getDivision(selectedClass.class)" ng-disabled="checkRole">
-                        <option value="">-Class-</option>
+                        <option value="" ng-disabled="true">-Class-</option>
                     </select>
                 </div>
                 <div class="col-33 border-bottom">
                     <select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.division_name for division in divisions track by division.id" ng-change="getStudentList(selectedDivision.division)" ng-disabled="checkRole">
-                        <option value="">-Div-</option>
+                        <option value="" ng-disabled="true">-Div-</option>
                     </select>
                 </div>
             </div>
             <label class="item item-input border-bottom">
-                <input type="text" ng-model="recipient" placeholder="Add Recipient+ " value="{{recipient}}" ng-click="openModal()">
+                <input type="text" ng-model="recipient" placeholder="Add Recipient+ " value="{{recipient}}" ng-click="openModal()" ng-disabled="checkRecipient">
             </label>
              <label class="item item-input">
                 <textarea ng-model="message" placeholder = "Write {{recipient}} a message..." rows = "10" ng-change="setMessage(message)"></textarea>
