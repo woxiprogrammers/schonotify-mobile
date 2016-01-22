@@ -10,7 +10,7 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         var userSessions = this;
 
         userSessions.userSession = [];
-
+        userSessions.userSession.userToken = 0;
         userSessions.setSession = function(token, role, acl, msgcount){
             userSessions.userSession.userToken = token;
             userSessions.userSession.userRole = role;
@@ -21,6 +21,11 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         
         userSessions.setUserId = function(id){
             userSessions.userSession.userId = id;
+            return true;
+        };
+        
+        userSessions.setToken = function(id){
+            userSessions.userSession.userToken = id;
             return true;
         };
         
@@ -48,7 +53,6 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         var chatHist = this;
 
         chatHist.data = [];
-
         chatHist.setChatHist = function(from, to, title){
             chatHist.data.from_id = from;
             chatHist.data.to_id = to;
@@ -114,7 +118,6 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         var filterClasses = this;
 
             filterClasses.classes = [];
-
         filterClasses.getClasses = function(token, batch){
             var url= GLOBALS.baseUrl+"user/getclasses/"+batch+"?token="+token;
             $http.get(url)
@@ -151,6 +154,7 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
     $scope.hasHeaderFabLeft = false;
     $scope.hasHeaderFabRight = false;
 
+   // userSessions.setToken(0);
     var navIcons = document.getElementsByClassName('ion-navicon');
     for (var i = 0; i < navIcons.length; i++) {
         navIcons.addEventListener('click', function() {
@@ -229,6 +233,7 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
 
     $scope.signOut = function() {
         console.log("User Logged out");
+        userSessions.setToken (0);
         $state.go('login');
     };
     $scope.studToggle = true;
@@ -405,6 +410,9 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);        
         $scope.msgCount = '';
+        if(userSessions.userSession.userToken == 0){
+            $state.go('login');
+        }
         if(userSessions.userSession.msgcount > 0){
             $scope.msgCount = userSessions.userSession.msgcount;
         }      
@@ -792,6 +800,9 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         ionicMaterialInk.displayEffect();
 
         //Side-Menu
+        if(userSessions.userSession.userToken == 0){
+            $state.go('login');
+        }
         $ionicSideMenuDelegate.canDragContent(true);
         userSessions.setMsgCount_0();
         $scope.msgCount = '';
@@ -883,6 +894,9 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         ionicMaterialInk.displayEffect();
 
         //Side-Menu
+        if(userSessions.userSession.userToken == 0){
+            $state.go('login');
+        }
         $ionicSideMenuDelegate.canDragContent(true);        
         $scope.checkRole = true;
         $scope.checkRecipient = true;
@@ -1056,7 +1070,9 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         $scope.recipient = "";
         $scope.message = "";
         $scope.contactList = [];
-
+        if(userSessions.userSession.userToken == 0){
+            $state.go('login');
+        }
         var url= GLOBALS.baseUrl+"user/get-teachers-list/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
         $http.get(url)
             .success(function(response) {
@@ -1143,7 +1159,9 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
 
         // Set Ink
         ionicMaterialInk.displayEffect();
-
+        if(userSessions.userSession.userToken == 0){
+            $state.go('login');
+        }
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.message = "";
