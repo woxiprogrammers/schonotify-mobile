@@ -260,6 +260,16 @@ display: none;
 .margin-bottom-10{
     margin-bottom: 10px;
 }
+.height-bottom-10{
+    height: 10px;
+}
+.delete-msg{
+    font-size: 175%;
+    float: right;
+    margin-right: 10%;
+    margin-top: 10%;
+    color: #11c1f3;
+}
 
 .col-offset-17{
     margin-left: 16.66%;
@@ -406,10 +416,10 @@ display: none;
 
 .align-delete-bin {
     font-size: 160%;
-    /*margin-left: 48px;*/
     float: right;
     margin-right: 28%;
     margin-top: 0%;
+    color: white;
 }
 
 .margin-left-16{

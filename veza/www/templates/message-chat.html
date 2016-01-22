@@ -12,7 +12,7 @@
                     <i class="icon ion-homie"></i>
                 </a>
                 <a class="tab-item margin-top-10" ui-sref="app.message">
-                    <i class="icon ion-message"><span class="badge badge-assertive">1</span></i>
+                    <i class="icon ion-message"><span class="badge badge-assertive"></span></i>
                 </a>
             </div>
         </div>
@@ -31,18 +31,20 @@
             </div>
         </iion-item>
     </div>
-    <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
+    <ion-content has-bouncing="true" class="has-header has-footer margin-top-48 padding-l-r-5" 
+              delegate-handle="userMessageScroll">
         <div ng-repeat = "message in messageList">
-            <div class="bubbledRight no-border" ng-if="message.type == 'Sent' ">
-                    {{message.description}}
-                <br>
-                <small class="msg-timestamp">{{message.timestamp}}</small>
-            </div>
-            <div class="bubbledLeft no-border" ng-if="message.type == 'Recieve' ">
+            <div class="bubbledLeft no-border" ng-if="message.type == 'Receive'">
                     {{message.description}}
                 <br><small class="msg-timestamp">{{message.timestamp}}</small>
             </div>
-        </div>        
+            <div class="bubbledRight no-border" ng-if="message.type == 'Sent'">
+                    {{message.description}}
+                <br>
+                <small class="msg-timestamp">{{message.timestamp}}</small>
+            </div>            
+        </div>
+        <div class = "height-bottom-10 row"></div>       
     </ion-content>
     <ion-footer-bar keyboard-attach class="bar-stable footer-chat item-input-inset">
         <div class="row">
