@@ -260,6 +260,16 @@ display: none;
 .margin-bottom-10{
     margin-bottom: 10px;
 }
+.height-bottom-10{
+    height: 10px;
+}
+.delete-msg{
+    font-size: 175%;
+    float: right;
+    margin-right: 10%;
+    margin-top: 10%;
+    color: #11c1f3;
+}
 
 .col-offset-17{
     margin-left: 16.66%;
@@ -406,10 +416,10 @@ display: none;
 
 .align-delete-bin {
     font-size: 160%;
-    /*margin-left: 48px;*/
     float: right;
     margin-right: 28%;
     margin-top: 0%;
+    color: white;
 }
 
 .margin-left-16{
@@ -450,28 +460,28 @@ display: none;
     padding-right: 5px;
 }
 
-.msg-Read p{
+.msg-1 p{
     color: #adabab;
 }
 
-.msg-Read i{
+.msg-1 i{
     color: #adabab;
 }
 
-.msg-Read small{
+.msg-1 small{
     color: #a8a4a4;
 }
 
-.msg-Read strong{
+.msg-1 strong{
     color: black;
     font-weight: 100!important;
 }
 
-.msg-unRead p{
+.msg-0 p{
     color: black;
 }
 
-.msg-unRead strong{
+.msg-0 strong{
     color: black;
     font-weight: bold;
 }

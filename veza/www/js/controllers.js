@@ -3,6 +3,7 @@
 var db = null;
 angular.module('starter.controllers', []).constant('GLOBALS',{
    baseUrl:'http://school_mit.woxiapps.com/api/v1/'
+   //baseUrl:'http://school_mit.schnotify.com/api/v1/'
 })
 .service('userSessions', function Usersession(){
 
@@ -21,7 +22,12 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         userSessions.setUserId = function(id){
             userSessions.userSession.userId = id;
             return true;
-        };      
+        };
+        
+        userSessions.setMsgCount_0 = function(){
+            userSessions.userSession.msgcount = '';
+            return true;
+        };    
 })
 .service('userData', function uData(){
 
@@ -35,6 +41,22 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         };
         userData.getUserData = function(){            
             return userData.data;
+        };      
+})
+.service('chatHist', function chatDetail(){
+
+        var chatHist = this;
+
+        chatHist.data = [];
+
+        chatHist.setChatHist = function(from, to, title){
+            chatHist.data.from_id = from;
+            chatHist.data.to_id = to;
+            chatHist.data.title = title;
+            return true;
+        };
+        chatHist.getChatHist = function(){            
+            return chatHist.data;
         };      
 })
 .service('studentToggle', function studentToggle(){
@@ -57,16 +79,15 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
 
         filterBatches.batches = [];
 
-        filterBatches.setBatches = function(token){
-            var url= GLOBALS.baseUrl+"user/getbatches";
-            $http.get(url, { params: { "token": token } })
-                .success(function(response) {
-                    var batchlist = response['batchList'];
-                    filterBatches.batches.push = angular.toJson(batchlist);
+        filterBatches.getBatches = function(token){
+            var url= GLOBALS.baseUrl+"user/get-batches-teacher?token="+token;
+            $http.get(url).success(function(response) {
+                    filterBatches.batches = response['data'];                    
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
+            return filterBatches.batches;
         };
 })
 .service('filterUserRoles', function FilterRole($http, GLOBALS){
@@ -75,16 +96,17 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
 
         filterUserRoles.roles = [];
 
-        filterUserRoles.setRoles = function(token){
-            var url= GLOBALS.baseUrl+"user/userroles";
-            $http.get(url, { params: { "token": token } })
+        filterUserRoles.getRoles = function(token){
+            var url= GLOBALS.baseUrl+"user/userroles?token="+token;
+            $http.get(url)
                 .success(function(response) {
-                    var userRoles = response['userRoles'];
-                    filterUserRoles.roles.push = angular.toJson(userRoles);
+                    filterUserRoles.roles = response['data']['userRoles'];
+                    
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
-                });
+                });                
+            return filterUserRoles.roles;
         };
 })
 .service('filterClasses', function filterClass($http, GLOBALS){
@@ -94,15 +116,15 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
             filterClasses.classes = [];
 
         filterClasses.getClasses = function(token, batch){
-            var url= GLOBALS.baseUrl+"user/getclasses";
-            $http.get(url, { params: { "token": token, "batch": batch } })
+            var url= GLOBALS.baseUrl+"user/getclasses/"+batch+"?token="+token;
+            $http.get(url)
                 .success(function(response) {
-                    var classList = response['classList'];
-                    filterClasses.classes = angular.toJson(classList);
+                    filterClasses.classes = response['data']['classList'];
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
+            return filterClasses.classes;
         };
 })
 .service('filterDivisions', function FilterDivision($http, GLOBALS){
@@ -111,15 +133,15 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         filterDivisions.divisions = [];
 
         filterDivisions.getDivisions = function(token, std){
-            var url= GLOBALS.baseUrl+"user/getdivisions";
-            $http.get(url, { params: { "token": token, "class": std } })
+            var url= GLOBALS.baseUrl+"user/getdivisions/"+std+"?token="+token;
+            $http.get(url)
                 .success(function(response) {
-                   var divisionList = response['divisionList'];
-                    filterDivisions.divisions = angular.toJson(divisionList);
+                   filterDivisions.divisions = response['data']['divisionList'];
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
+            return filterDivisions.divisions;
         };
 })
 .controller('AppCtrl', function($scope, $state, $http, $ionicModal, $ionicPopover, $timeout, $ionicSideMenuDelegate, $ionicHistory, userSessions) {
@@ -233,21 +255,12 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         };
 
         $scope.composeMsg = function() {
-            var checkAcl = userSessions.userSession.userAcl.indexOf("Create_message");
-            if(checkAcl !== -1){
-                if(userSessions.userSession.userRole = "parent"){
+                if(userSessions.userSession.userRole == "parent"){
                     $state.go('app.parentMsgcompose');
                 }
                 else{
                     $state.go('app.msgcompose');
                 }
-            }
-            else{
-                $scope.myGoBack();
-                alert("Access Denied !");
-            }
-
-
         };
 
         $scope.createAnnouncement = function() {
@@ -303,6 +316,10 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
 
         $scope.signIn = function() {
             $state.go('app.dashboard');
+        };
+        
+        $scope.msgDetail = function() {
+            $state.go('app.chatmsg');
         };
 })
 
@@ -479,9 +496,9 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         ionicMaterialInk.displayEffect();
 
         //Side-Menu
-
         $ionicSideMenuDelegate.canDragContent(true);
-
+       
+    
         $scope.nMessages = [{
             Status: "unRead",
             Subject: "Class Test for Std 5 on this thursday",
@@ -761,7 +778,7 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         };
     })
 
-    .controller('MessageCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, GLOBALS, userSessions, $http) {
+    .controller('MessageCtrl', function($scope, $state, $timeout, $ionicPopup, ionicMaterialInk, $ionicSideMenuDelegate, GLOBALS, userSessions, $http, chatHist) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -775,76 +792,84 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         ionicMaterialInk.displayEffect();
 
         //Side-Menu
-
         $ionicSideMenuDelegate.canDragContent(true);
-
-        $scope.nMessages = [{
-            Status: "unRead",
-            Title: "Student 1",
-            Message: "Answer Questions from Textbook",
-            Timestamp: "Date: 18 Oct 2015",
-            Class: "5th B div",
-            Subject: "Science",
-            Attach: "yes"
-
-        }, {
-            Status: "Read",
-            Title: "Student 2",
-            Message: "Still some answers are remaining",
-            Timestamp: "Date: 17 Oct 2015",
-            Class: "8th A div",
-            Subject: "Geography",
-            Attach: "no"
-        }, {
-            Status: "unRead",
-            Title: "Student 3",
-            Message: "Sending project details",
-            Timestamp: "Date: 15 Oct 2015",
-            Class: "9th C div",
-            Subject: "Maths",
-            Attach: "yes"
-        },
-            {
-                Status: "Read",
-                Title: "Student 4",
-                Message: "Sending project details",
-                Timestamp: "Date: 15 Oct 2015",
-                Class: "9th C div",
-                Subject: "Maths",
-                Attach: "yes"
-            },
-            {
-                Status: "Read",
-                Title: "Student 5",
-                Message: "Sending project details",
-                Timestamp: "Date: 15 Oct 2015",
-                Class: "9th C div",
-                Subject: "GK",
-                Attach: "yes"
-            },
-            {
-                Status: "Read",
-                Title: "Student 6",
-                Message: "Sending project details",
-                Timestamp: "Date: 15 Oct 2015",
-                Class: "9th C div",
-                Subject: "Maths",
-                Attach: "yes"
-            }];
-
-        $scope.checkAll = function () {
-            if ($scope.selectedAll) {
-                $scope.selectedAll = true;
-            } else {
-                $scope.selectedAll = false;
-            }
-            angular.forEach($scope.nMessages, function (nmsg) {
-                nmsg.Selected = $scope.selectedAll;
+        userSessions.setMsgCount_0();
+        $scope.msgCount = '';
+        $scope.fromId = '';
+        $scope.tooId = '';
+        $scope.nMessages = [];
+        $scope.loadMessages = function(){
+            if (userSessions.userSession.userRole == "parent"){
+            var url1 = GLOBALS.baseUrl+"user/get-messages-parent/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
+            $http.get(url1).success(function(response){
+                $scope.nMessages = response['MessageList'];
+            }).error(function(err) {
+                console.log(err);
             });
+        }
+        else{
+            var url2 = GLOBALS.baseUrl+"user/get-messages?token="+userSessions.userSession.userToken;
+            $http.get(url2).success(function(response){
+                $scope.nMessages = response['MessageList'];
+            }).error(function(err) {
+                console.log(err);
+            });
+        }
         };
+        $scope.loadMessages();
+        $scope.confirmDelete = function(from, to){
+            $scope.fromId = from;
+            $scope.tooId = to;
+            $scope.showConfimBox();
+        };     
+
+        $scope.deleteMessage = function(){
+            var url = GLOBALS.baseUrl+"user/delete-messages?token="+userSessions.userSession.userToken;
+            $http.post(url, {_method: 'PUT', from_id: $scope.fromId, to_id: $scope.tooId}).success(function(response){
+            }).error(function(err) {
+                console.log(err);
+            });
+            $scope.loadMessages();
+        };
+        $scope.msgDetails = function(from, to, title){
+            var flag = chatHist.setChatHist(from, to, title);
+            if(flag == true){
+                $state.go('app.chatmsg');
+            }
+        };
+        $scope.showConfimBox = function() {
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div class = "row"><span class = "align-center red-font text-center-align">This will delete entire conversation</span></div>',
+                title: 'Confirm to Delete',
+                subTitle: '',
+                scope: $scope,
+                buttons: [
+                    {
+                        text: '<b>Close</b>',
+                        type: 'button-calm',
+                        onTap: function(e) {                            
+                                myPopup.close();                           
+                        }
+                    },
+                    {
+                        text: '<b>Delete</b>',
+                        type: 'button-assertive',
+                        onTap: function(e) {                            
+                                $scope.deleteMessage();                           
+                        }
+                    }
+                ]
+                
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+        };        
+        
 
     })
-    .controller('MsgComposeCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, GLOBALS, filterUserRoles, filterBatches, filterDivisions, filterClasses, userSessions, $http) {
+    .controller('MsgComposeCtrl', function($scope, $state, $timeout, $ionicPopup, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, GLOBALS, filterUserRoles, filterBatches, filterDivisions, filterClasses, userSessions, $http) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -858,45 +883,82 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         ionicMaterialInk.displayEffect();
 
         //Side-Menu
-
-        $ionicSideMenuDelegate.canDragContent(true);
-        $scope.recipient = "";
-        $scope.message = "";
+        $ionicSideMenuDelegate.canDragContent(true);        
+        $scope.checkRole = false;
+        $scope.recipient = "";        
         $scope.contactList = [];
-        $scope.userRoles = filterUserRoles.getRoles;
-        $scope.batches = filterBatches.getBatches;
-        $scope.getClass = function(batch){
-               $scope.classes = filterClasses.getClasses(userSessions.userSession.userToken, batch);
-        };
-
-        $scope.getDivision = function(std){
-            $scope.divisions = filterDivisions.getDivisions(userSessions.userSession.userToken, std);
-        };
-
-        $scope.getStudentList = function(id){
-                var url= GLOBALS.baseUrl+"user/get-students-list";
-                $http.get(url, { params: { "token": userSessions.userSession.userToken, "division": id } })
-                    .success(function(response) {
-                        $scope.contactList = response['studentsList'];
-                        $scope.contactList = angular.toJson($scope.contactList);
-                    })
-                    .error(function(response) {
-                        console.log("Error in Response: " +response);
-                    });
-        };
-
-        $scope.getTeacherList = function(name){
-            if(name == userSessions.userSession.userRole){
-                var url= GLOBALS.baseUrl+"user/getteachers";
-                $http.get(url, { params: { "token": userSessions.userSession.userToken } })
-                    .success(function(response) {
-                        $scope.contactList = response['teachers'];
-                        $scope.contactList = angular.toJson($scope.contactList);
-                    })
-                    .error(function(response) {
-                        console.log("Error in Response: " +response);
-                    });
+        $scope.message = "";
+        var url= GLOBALS.baseUrl+"user/userroles?token="+userSessions.userSession.userToken;
+            $http.get(url)
+                .success(function(response) {
+                    $scope.userRoles = response['data']['userRoles'];                    
+                })
+                .error(function(response) {
+                    console.log("Error in Response: " +response);
+                }); 
+        $scope.getSelectedRole = function(roleType){          
+            if(roleType['name'] == "Student"){                
+                $scope.checkRole = false;
+                $scope.recipient = "";
+                $scope.contactList.length = 0;
+                //$scope.batches = filterBatches.getBatches(userSessions.userSession.userToken);
+                var url= GLOBALS.baseUrl+"user/get-batches-teacher?token="+userSessions.userSession.userToken;
+                $http.get(url).success(function(response) {
+                    $scope.batches = response['data'];                    
+                })
+                .error(function(response) {
+                    console.log("Error in Response: " +response);
+                });
             }
+            else{
+                $scope.checkRole = true;
+                $scope.recipient = "";
+                $scope.contactList.length = 0;
+                $scope.getTeacherList();
+            }
+        }
+        $scope.getClass = function(batchType){
+               //$scope.classes = filterClasses.getClasses(userSessions.userSession.userToken, batchType['id']);
+               var url= GLOBALS.baseUrl+"user/getclasses/"+batchType['id']+"?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response) {
+                    $scope.classes = response['data']['classList'];
+                })
+                .error(function(response) {
+                    console.log("Error in Response: " +response);
+                });
+        };
+
+        $scope.getDivision = function(classType){
+            //$scope.divisions = filterDivisions.getDivisions(userSessions.userSession.userToken, classType['id']);
+            var url= GLOBALS.baseUrl+"user/getdivisions/"+classType['id']+"?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response) {
+                   $scope.divisions = response['data']['divisionList'];
+                })
+                .error(function(response) {
+                    console.log("Error in Response: " +response);
+                });
+        };
+
+        $scope.getStudentList = function(divType){
+                var url= GLOBALS.baseUrl+"user/get-students-list/"+divType['id']+"?token="+userSessions.userSession.userToken;
+                $http.get(url)
+                    .success(function(response) {
+                        $scope.contactList = response['data']['studentList'];
+                    })
+                    .error(function(response) {
+                        console.log("Error in Response: " +response);
+                    });
+        };
+        //$scope.userRoles = filterUserRoles.getRoles(userSessions.userSession.userToken);
+        $scope.getTeacherList = function(){
+                var url= GLOBALS.baseUrl+"user/getteachers/?token="+userSessions.userSession.userToken;
+                $http.get(url)
+                    .success(function(response) {
+                        $scope.contactList = response['data']['teachers'];                        
+                    })
+                    .error(function(response) {
+                        console.log("Error in Response: " +response);
+                    });
         };
 
         $ionicModal.fromTemplateUrl('studentCntctlist.html', {
@@ -923,19 +985,24 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
             $scope.recipientId = id;
             $scope.closeModal();
         };
-
+                
+        $scope.setMessage = function(message){
+          $scope.message = message;  
+        };
+        
         $scope.sendMessage= function(){
           if($scope.recipient == ""){
               $scope.msg = "Please Add Recipient";
               $scope.showPopup();
           }
           else{
-              var url= GLOBALS.baseUrl+"user/sendmessage";
-              $http.post(url, { params: { "token": userSessions.userSession.userToken, "to_id": $scope.recipientId, "description": $scope.message } })
+              var url= GLOBALS.baseUrl+"user/send-message?token="+userSessions.userSession.userToken;
+              $http.post(url, { from_id: userSessions.userSession.userId, to_id: $scope.recipientId, description: $scope.message})
                   .success(function(response) {
                       if(response['status'] == 200){
                           $scope.msg = response['message'];
                           $scope.showPopup();
+                          $state.go('app.message');                          
                       }
                       else{
                           $scope.msg = response['message'];
@@ -960,13 +1027,12 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
                 console.log('Tapped!', res);
             });
             $timeout(function() {
-                myPopup.close(); //close the popup after 8 seconds for some reason
-                $scope.myGoBack();
-            }, 10000);
+                myPopup.close(); //close the popup after 8 seconds for some reason                
+            }, 3000);
         };
 
     })
-    .controller('ParentMsgComposeCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $ionicHistory, $http, GLOBALS, userSessions) {
+    .controller('ParentMsgComposeCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $ionicHistory, $http, GLOBALS, userSessions, $ionicPopup) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -987,11 +1053,10 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         $scope.message = "";
         $scope.contactList = [];
 
-        var url= GLOBALS.baseUrl+"user/get-teachers-list";
-        $http.get(url, { params: { "token": userSessions.userSession.userToken, "student_id": userSessions.userSession.studentId } })
+        var url= GLOBALS.baseUrl+"user/get-teachers-list/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
+        $http.get(url)
             .success(function(response) {
-                $scope.contactList = response['teachersList'];
-                $scope.contactList = angular.toJson($scope.contactList);
+                $scope.contactList = response['data']['teachersList'];
             })
             .error(function(response) {
                 console.log("Error in Response: " +response);
@@ -1028,12 +1093,13 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
                 $scope.showPopup();
             }
             else{
-                var url= GLOBALS.baseUrl+"user/sendmessage";
-                $http.post(url, { params: { "token": userSessions.userSession.userToken, "to_id": $scope.recipientId, "description": $scope.message } })
+                var url= GLOBALS.baseUrl+"user/send-message?token="+userSessions.userSession.userToken;
+                $http.post(url, { from_id: userSessions.userSession.userId, to_id: $scope.recipientId, description: $scope.message })
                     .success(function(response) {
                         if(response['status'] == 200){
                             $scope.msg = response['message'];
                             $scope.showPopup();
+                            $state.go('app.message');
                         }
                         else{
                             $scope.msg = response['message'];
@@ -1059,11 +1125,10 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
             });
             $timeout(function() {
                 myPopup.close(); //close the popup after 8 seconds for some reason
-                $scope.myGoBack();
-            }, 10000);
+            }, 3000);
         };
     })
-    .controller('MsgChatCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('MsgChatCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicScrollDelegate, $ionicPopup, $ionicSideMenuDelegate, GLOBALS, chatHist, $http, userSessions) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -1076,14 +1141,59 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         ionicMaterialInk.displayEffect();
 
         //Side-Menu
-
         $ionicSideMenuDelegate.canDragContent(true);
-
-        $scope.noticeBoard = function() {
-            $state.go('app.sharedNotification');
+        $scope.message = "";
+        $scope.envelop = chatHist.getChatHist();
+        $scope.messageList = [];
+        $scope.loadChat = function(){
+            var url= GLOBALS.baseUrl+"user/get-detail-message?token="+userSessions.userSession.userToken;
+        $http.post(url, {from_id: $scope.envelop.from_id, to_id: $scope.envelop.to_id}).success(function(response) {
+            $scope.messageList = response['data'];
+            $ionicScrollDelegate.scrollBottom();
+        }).error(function(err) {
+            console.log(err);
+        });
         };
+        $scope.loadChat();
+        $scope.title = $scope.envelop.title;
+        $scope.sendMessage = function(){
+            var url= GLOBALS.baseUrl+"user/send-message?token="+userSessions.userSession.userToken;
+                $http.post(url, {from_id: $scope.envelop.from_id, to_id: $scope.envelop.to_id, description: $scope.message })
+                    .success(function(response) {
+                        if(response['status'] == 200){
+                            $scope.msg = response['message'];
+                            //$scope.showPopup();
+                            //$state.go('app.message');
+                            $scope.loadChat();
+                            $scope.message = "";
+                        }
+                        else{
+                            $scope.msg = response['message'];
+                            $scope.showPopup();
+                        }
+                    })
+                    .error(function(response) {
+                        $scope.msg = "You are Offline Message Sending Failed";
+                        console.log("Error in Response: " +response);
+                        $scope.showPopup();
+                    });
+        }; 
+        $scope.showPopup = function() {
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div>'+$scope.msg+'</div>',
+                title: '',
+                subTitle: '',
+                scope: $scope
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); //close the popup after 8 seconds for some reason
+            }, 3000);
+        };       
     })
-
     .controller('AttendLandingCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
