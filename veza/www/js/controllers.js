@@ -884,7 +884,8 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
 
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);        
-        $scope.checkRole = false;
+        $scope.checkRole = true;
+        $scope.checkRecipient = true;
         $scope.recipient = "";        
         $scope.contactList = [];
         $scope.message = "";
@@ -900,6 +901,7 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
             if(roleType['name'] == "Student"){                
                 $scope.checkRole = false;
                 $scope.recipient = "";
+                $scope.checkRecipient = true;
                 $scope.contactList.length = 0;
                 //$scope.batches = filterBatches.getBatches(userSessions.userSession.userToken);
                 var url= GLOBALS.baseUrl+"user/get-batches-teacher?token="+userSessions.userSession.userToken;
@@ -911,6 +913,7 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
                 });
             }
             else{
+                $scope.checkRecipient = false;
                 $scope.checkRole = true;
                 $scope.recipient = "";
                 $scope.contactList.length = 0;
@@ -948,6 +951,7 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
                     .error(function(response) {
                         console.log("Error in Response: " +response);
                     });
+                    $scope.checkRecipient = false;
         };
         //$scope.userRoles = filterUserRoles.getRoles(userSessions.userSession.userToken);
         $scope.getTeacherList = function(){
