@@ -1277,7 +1277,7 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         $scope.messageList = [];
         $scope.loadChat = function(){
             var url= GLOBALS.baseUrl+"user/get-detail-message?token="+userSessions.userSession.userToken;
-        $http.post(url, {from_id: $scope.envelop.from_id, to_id: $scope.envelop.to_id}).success(function(response) {
+        $http.post(url, {user_id: userSessions.userSession.userId,from_id: $scope.envelop.from_id, to_id: $scope.envelop.to_id}).success(function(response) {
             $scope.messageList = response['data'];
             $ionicScrollDelegate.scrollBottom();
         }).error(function(err) {
