@@ -158,6 +158,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
               }
           }
      })
+     .state('app.parenthomework', {
+          url: '/parenthomework',
+          views: {
+             'menuContent': {
+                templateUrl: 'templates/parent-hw-list.html',
+                controller: 'ParentHomeworkCtrl'
+             },
+              'fabContent': {
+                  template: ''
+              }
+          }
+     })
      .state('app.hwcompose', {
             url: '/hwcompose',
             views: {
@@ -390,7 +402,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
             views: {
                 'menuContent': {
                     templateUrl: 'templates/homework-details.html',
-                    controller: 'DetailPageCtrl'
+                    controller: 'HWdetailCtrl'
                 },
                 'fabContent': {
                     template: ''
@@ -441,7 +453,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                     controller: 'DetailPageCtrl'
                 },
                 'fabContent': {
-                    template: ''
+                    template: '<button id="fab-new-homework" ng-click="composeHw()" class="button button-fab button-fab-bottom-right expanded bar-pink  spin"><i class="icon ion-edit"></i></button>',
+                    controller: function ($timeout) {
+                        $timeout(function () {
+                            document.getElementById('fab-new-homework').classList.toggle('on');
+                        }, 900);
+                    }
                 }
             }
         })

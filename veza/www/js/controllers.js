@@ -63,6 +63,19 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
             return chatHist.data;
         };      
 })
+.service('hwDetails', function hmwDetail(){
+
+        var hwDetails = this;
+
+        hwDetails.data = [];
+        hwDetails.setHwView = function(data){
+            hwDetails.data = data;
+            return true;
+        };
+        hwDetails.getHwView = function(){            
+            return hwDetails.data;
+        };      
+})
 .service('studentToggle', function studentToggle(){
 
         var studentToggle = this;
@@ -147,6 +160,34 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
             return filterDivisions.divisions;
         };
 })
+ .directive("checkboxGroup", function() {
+        return {
+            restrict: "A",
+            link: function(scope, elem, attrs) {
+                // Determine initial checked boxes
+                if (scope.array.indexOf(scope.item.id) !== -1) {
+                    elem[0].checked = true;
+                }
+
+                // Update array on click
+                elem.bind('click', function() {
+                    var index = scope.array.indexOf(scope.item.id);
+                    // Add if checked
+                    if (elem[0].checked) {
+                        if (index === -1) scope.array.push(scope.item.id);
+                    }
+                    // Remove if unchecked
+                    else {
+                        if (index !== -1) scope.array.splice(index, 1);
+                    }
+                    // Sort and update DOM display
+                    scope.$apply(scope.array.sort(function(a, b) {
+                        return a - b
+                    }));
+                });
+            }
+        }
+    })
 .controller('AppCtrl', function($scope, $state, $http, $ionicModal, $ionicPopover, $timeout, $ionicSideMenuDelegate, $ionicHistory, userSessions) {
     // Form data for the login modal
     $scope.loginData = {};
@@ -287,6 +328,15 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         $scope.notifyDetail = function() {
             $state.go('app.notificationdetails');
         };
+        
+        $scope.homeworkView = function (){
+            if(userSessions.userSession.userRole == "parent"){
+                    $state.go('app.parenthomework');
+                }
+                else{
+                    $state.go('app.homeworklanding');
+                }
+        };        
 
         $scope.homeworkDetails = function() {
             $state.go('app.homeworkdetails');
@@ -648,7 +698,7 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         $ionicSideMenuDelegate.canDragContent(true);
 
     })
-    .controller('HomeworkCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('HomeworkCtrl', function($scope, $state, hwDetails, userSessions, $http, GLOBALS, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -662,49 +712,77 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         ionicMaterialInk.displayEffect();
 
         //Side-Menu
-
         $ionicSideMenuDelegate.canDragContent(true);
-
-        $scope.nMessages = [{
-            Status: "unRead",
-            Title: "Questions & Answers",
-            Message: "Answer Questions from Textbook",
-            Timestamp: "18 Oct",
-            Class: "5th B div",
-            Subject: "Science",
-            Attach: "yes"
-
-        }, {
-            Status: "Read",
-            Title: "Remaining Answers",
-            Message: "Still some answers are remaining",
-            Timestamp: "17 Oct",
-            Class: "8th A div",
-            Subject: "Geography",
-            Attach: "no"
-        }, {
-            Status: "Read",
-            Title: "Project Details",
-            Message: "Sending project details",
-            Timestamp: "15 Oct",
-            Class: "9th C div",
-            Subject: "Maths",
-            Attach: "yes"
-        }];
-
-        $scope.checkAll = function () {
-            if ($scope.selectedAll) {
-                $scope.selectedAll = true;
-            } else {
-                $scope.selectedAll = false;
-            }
-            angular.forEach($scope.nMessages, function (nmsg) {
-                nmsg.Selected = $scope.selectedAll;
-            });
+        if(userSessions.userSession.userToken == 0){
+            $state.go('login');
+        }
+        var url= GLOBALS.baseUrl+"user/view-homework?token="+userSessions.userSession.userToken;
+            $http.get(url)
+                .success(function(response) {
+                    $scope.homeworksListing = response['data'];                    
+                })
+                .error(function(response) {
+                    console.log("Error in Response: " +response);
+                }); 
+                
+        $scope.hwDetail= function(hwd){
+            $scope.checkHid = hwDetails.setHwView(hwd);
+            if($scope.checkHid == true){
+                $state.go('app.homeworkdetails');
+            };
         };
-
     })
-    .controller('HwComposeCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
+    .controller('ParentHomeworkCtrl', function($scope, $state, $timeout, $http, hwDetails, GLOBALS, userSessions, ionicMaterialInk, $ionicSideMenuDelegate) {
+
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+        $ionicSideMenuDelegate.canDragContent(true);
+        if(userSessions.userSession.userToken == 0){
+            $state.go('login');
+        }
+        var url= GLOBALS.baseUrl+"user/view-homework-parent/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
+            $http.get(url)
+                .success(function(response) {
+                    $scope.homeworksListing = response['data'];                    
+                })
+                .error(function(response) {
+                    console.log("Error in Response: " +response);
+                }); 
+                
+        $scope.hwDetail= function(hwd){
+            $scope.checkHid = hwDetails.setHwView(hwd);
+            if($scope.checkHid == true){
+                $state.go('app.homeworkdetails');
+            };
+        };
+    })
+    .controller('HWdetailCtrl', function($scope, $state, hwDetails, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+        $ionicSideMenuDelegate.canDragContent(true);
+        $scope.hwrkDetail = hwDetails.getHwView();        
+    })
+    .controller('HwComposeCtrl', function($scope, $state, $timeout, checkboxGroup, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -720,6 +798,66 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         //Side-Menu
 
         $ionicSideMenuDelegate.canDragContent(true);
+        $scope.recipient = "";
+        $scope.checkRecipient = true;
+        $scope.SubjectId = '';
+        $scope.BatchId = '';
+        $scope.array = [];
+        var url= GLOBALS.baseUrl+"user/get-teachers-subjects?token="+userSessions.userSession.userToken;
+            $http.get(url)
+                .success(function(response) {
+                    $scope.subjectsList = response['data'];                    
+                })
+                .error(function(response) {
+                    console.log("Error in Response: " +response);
+                });
+        $scope.getSelectedSub = function(subject){
+            $scope.recipient = "";
+            $scope.checkRecipient = true;
+            $scope.contactList.length = 0;            
+            var url= GLOBALS.baseUrl+"user/get-subjects-batches/"+subject['id']+"?token="+userSessions.userSession.userToken;
+            $http.get(url)
+                .success(function(response) {
+                    $scope.batchList = response['data'];
+                    $scope.SubjectId = subject['id'];                
+                })
+                .error(function(response) {
+                    console.log("Error in Response: " +response);
+                });
+        };
+        
+        $scope.getClass= function(batch){                
+                var url= GLOBALS.baseUrl+"user/get-batches-classes/"+$scope.SubjectId+"/"+batch['id']+"?token="+userSessions.userSession.userToken;
+                $http.get(url).success(function(response) {
+                    $scope.classList = response['data'];
+                    $scope.BatchId = batch['id'];                   
+                })
+                .error(function(response) {
+                    console.log("Error in Response: " +response);
+                });
+        };
+        
+        $scope.getDivision = function(classType){
+            var url= GLOBALS.baseUrl+"user/get-classes-division/"+$scope.SubjectId+"/"+$scope.BatchId+"/"+classType['id']+"?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response) {
+                   $scope.divisions = response['data'];
+                })
+                .error(function(response) {
+                    console.log("Error in Response: " +response);
+                });
+        };
+        
+        $scope.getStudentList = function(divType){
+                var url= GLOBALS.baseUrl+"user/get-students-list/"+divType['id']+"?token="+userSessions.userSession.userToken;
+                $http.get(url)
+                    .success(function(response) {
+                        $scope.contactList = response['data']['studentList'];
+                        $scope.checkRecipient = false;
+                    })
+                    .error(function(response) {
+                        console.log("Error in Response: " +response);
+                    });                    
+        };
 
         $ionicModal.fromTemplateUrl('studentHwCntctlist.html', {
             scope: $scope,
@@ -739,53 +877,25 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         $scope.$on('$destroy', function() {
             $scope.modal.remove();
         });
-
-        $scope.contactList = [{
-            Name: "Student 1"
-        }, {
-            Name: "Student 2"
-        }, {
-            Name: "Student 3"
-        },{
-            Name: "Student 4"
-        },{
-            Name: "Student 5"
-        }, {
-            Name: "Student 6"
-        }, {
-            Name: "Student 7"
-        },{
-            Name: "Student 8"
-        },{
-            Name: "Student 9"
-        }, {
-            Name: "Student 10"
-        }, {
-            Name: "Student 11"
-        },{
-            Name: "Student 12"
-        },{
-            Name: "Student 13"
-        }, {
-            Name: "Student 14"
-        }];
-
+        
         $scope.contactsAll = false;
             $scope.checkAllcontacts = function () {
-
             console.log("into check all");
             if ($scope.contactsAll) {
                 $scope.contactsAll = true;
             } else {
                 $scope.contactsAll = false;
             }
-            angular.forEach($scope.contactList, function (contct) {
-                //console.log("contct : "+contct);
-                contct.Tick = $scope.contactsAll;
+            angular.forEach($scope.contactList, function (item) {
+                item.Tick = $scope.contactsAll;
             });
         };
+        
+        $scope.sendTo = function(){
+            $scope.recipient = $scope.array.length -1+" Student selected";
+            $scope.closeModal();
+        };
     })
-
     .controller('MessageCtrl', function($scope, $state, $timeout, $ionicPopup, ionicMaterialInk, $ionicSideMenuDelegate, GLOBALS, userSessions, $http, chatHist) {
 
         $scope.$parent.clearFabs();
@@ -837,13 +947,13 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         $scope.deleteMessage = function(){
             var url = GLOBALS.baseUrl+"user/delete-messages?token="+userSessions.userSession.userToken;
             $http.post(url, {_method: 'PUT', from_id: $scope.fromId, to_id: $scope.tooId}).success(function(response){
+                $scope.loadMessages();
             }).error(function(err) {
                 console.log(err);
-            });
-            $scope.loadMessages();
+            });            
         };
-        $scope.msgDetails = function(from, to, title){
-            var flag = chatHist.setChatHist(from, to, title);
+        $scope.msgDetails = function(to, title){
+            var flag = chatHist.setChatHist(userSessions.userSession.userId, to, title);
             if(flag == true){
                 $state.go('app.chatmsg');
             }
@@ -916,8 +1026,7 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
                 $scope.checkRole = false;
                 $scope.recipient = "";
                 $scope.checkRecipient = true;
-                $scope.contactList.length = 0;
-                //$scope.batches = filterBatches.getBatches(userSessions.userSession.userToken);
+                $scope.contactList.length = 0;                
                 var url= GLOBALS.baseUrl+"user/get-batches-teacher?token="+userSessions.userSession.userToken;
                 $http.get(url).success(function(response) {
                     $scope.batches = response['data'];                    
@@ -967,7 +1076,6 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
                     });
                     $scope.checkRecipient = false;
         };
-        //$scope.userRoles = filterUserRoles.getRoles(userSessions.userSession.userToken);
         $scope.getTeacherList = function(){
                 var url= GLOBALS.baseUrl+"user/getteachers/?token="+userSessions.userSession.userToken;
                 $http.get(url)
@@ -1735,7 +1843,7 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         };
         $scope.selectedDate = new Date();
 
-    })
+    })    
     .controller('TimeTableCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
