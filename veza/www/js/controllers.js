@@ -728,7 +728,7 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
         $scope.hwDetail= function(hwd){
             $scope.checkHid = hwDetails.setHwView(hwd);
             if($scope.checkHid == true){
-                $state.go('app.homeworkdetails');
+                $state.go('app.teacherhwdetail');
             };
         };
     })
@@ -765,6 +765,22 @@ angular.module('starter.controllers', []).constant('GLOBALS',{
                 $state.go('app.homeworkdetails');
             };
         };
+    })
+    .controller('THWdetailCtrl', function($scope, $state, hwDetails, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+        $ionicSideMenuDelegate.canDragContent(true);
+        $scope.hwrkDetail = hwDetails.getHwView();        
     })
     .controller('HWdetailCtrl', function($scope, $state, hwDetails, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
         $scope.$parent.clearFabs();

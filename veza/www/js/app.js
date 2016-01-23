@@ -409,6 +409,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                 }
             }
         })
+        .state('app.teacherhwdetail', {
+            url: '/teacherhwdetail',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/teacher-hw-detail.html',
+                    controller: 'THWdetailCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
         .state('app.leavedetails', {
             url: '/leavedetails',
             views: {
@@ -451,15 +463,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                 'menuContent': {
                     templateUrl: 'templates/homework-landing.html',
                     controller: 'DetailPageCtrl'
-                },
-                'fabContent': {
-                    template: '<button id="fab-new-homework" ng-click="composeHw()" class="button button-fab button-fab-bottom-right expanded bar-pink  spin"><i class="icon ion-edit"></i></button>',
-                    controller: function ($timeout) {
-                        $timeout(function () {
-                            document.getElementById('fab-new-homework').classList.toggle('on');
-                        }, 900);
-                    }
                 }
+                // ,
+                // 'fabContent': {
+                //     template: '<button id="fab-new-homework" ng-click="composeHw()" class="button button-fab button-fab-bottom-right expanded bar-pink  spin"><i class="icon ion-edit"></i></button>',
+                //     controller: function ($timeout) {
+                //         $timeout(function () {
+                //             document.getElementById('fab-new-homework').classList.toggle('on');
+                //         }, 900);
+                //     }
+                // }
             }
         })
         .state('app.eventedit', {
@@ -480,15 +493,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                 'menuContent': {
                     templateUrl: 'templates/edit-homework.html',
                     controller: 'HomeworkCtrl'
-                },
-                'fabContent': {
-                    template: '<button id="fab-new-homework" ng-click="composeHw()" class="button button-fab button-fab-bottom-right expanded bar-pink  spin"><i class="icon ion-edit"></i></button>',
-                    controller: function ($timeout) {
-                        $timeout(function () {
-                            document.getElementById('fab-new-homework').classList.toggle('on');
-                        }, 900);
-                    }
-                }
+                }                
+                // 'fabContent': {
+                //     template: '<button id="fab-new-homework" ng-click="composeHw()" class="button button-fab button-fab-bottom-right expanded bar-pink  spin"><i class="icon ion-edit"></i></button>',
+                //     controller: function ($timeout) {
+                //         $timeout(function () {
+                //             document.getElementById('fab-new-homework').classList.toggle('on');
+                //         }, 900);
+                //     }
+                // }
             }
         })
         .state('app.homeworkedit', {
