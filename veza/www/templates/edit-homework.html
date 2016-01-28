@@ -20,38 +20,30 @@
     <div class="bar bar-pink bar-header align-delete-bar">
         <iion-item class="row">
             <div class="row">
-                <div class="col-25">
-                    <ion-checkbox class="checkbox-square checkboxList checkbox-assertive inner-hw-checkbox" ng-model="selectedAll" ng-click="checkAll()">
-                    </ion-checkbox>
-                </div>
-                <div class="col-50 margin-top-5">
+                <div class="margin-top-5">
                     <span class="inner-header">Edit Homework</span>
-                </div>
-                <div class="col-25">
-                    <a><i class="icon ion-trash-b align-delete-bin"></i></a>
                 </div>
             </div>
         </iion-item>
     </div>
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
         <ion-list>
-            <ion-item class="notify-item-border no-border margin-bottom-10" ng-repeat="nMsg in nMessages">
+            <ion-item class="notify-item-border no-border margin-bottom-10" ng-repeat="hwrk in homeworksListing">
                 <div class="row">
                     <div class="col-20">
-                        <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="nMsg.Selected">
-                        </ion-checkbox>
+                        <a><i class="icon ion-trash-b font-white"></i></a>
                     </div>
-                    <div class="col-80 msg-{{nMsg.Status}}" ng-click="homeworkEdit()">
-                        <h2><strong>{{nMsg.Title}}</strong></h2>
-                        <p>{{nMsg.Message}}<br><strong>{{nMsg.Class}} {{nMsg.Subject}}</strong></p>
+                    <div class="col-80" ng-click="homeworkEdit()">
+                        <h2><strong>{{hwrk.homeworkTitle}}</strong></h2>
+                        <p>{{hwrk.description}}<br><strong>{{hwrk.class_name}} {{hwrk.subjectName}}</strong></p>
                         <div class="row padding-0 margin-top-5">
-                            <div class="col-70">
+                            <div class="col-70" ng-click="publishHw(hwrk.homework_id)">
                                 <button class="button button-positive publish-button">
                                     Publish
                                 </button>
                             </div>
-                            <div class="col-10 attachment-{{nMsg.Attach}}"></div>
-                            <div class="col-20">{{nMsg.Timestamp}}</div>
+                            <div class="col-10 attachment-{{hwrk.Attach}}"></div>
+                            <div class="col-20">{{hwrk.created_at}}</div>
                         </div>
                     </div>
                 </div>

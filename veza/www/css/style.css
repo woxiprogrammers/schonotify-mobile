@@ -414,6 +414,10 @@ display: none;
     color: #444444;
 }
 
+.font-white{
+  color: white;  
+}
+
 .align-delete-bin {
     font-size: 160%;
     float: right;
@@ -870,9 +874,6 @@ display: none;
 
 .width-5{
     width: 5%;
-}
-.inner-hw-checkbox{
-
 }
 
 .bar-pink {

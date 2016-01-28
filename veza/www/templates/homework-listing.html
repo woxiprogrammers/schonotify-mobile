@@ -20,16 +20,16 @@
     <div class="bar bar-pink bar-header align-delete-bar">
         <iion-item class="row">
             <div class="row">
-                <div class="col-25">
+                <!--<div class="col-25">
                     <ion-checkbox class="checkbox-square checkboxList checkbox-assertive inner-hw-checkbox" ng-model="selectedAll" ng-click="checkAll()">
                     </ion-checkbox>
-                </div>
-                <div class="col-50 margin-top-5">
+                </div>-->
+                <div class="margin-top-5">
                     <span class="inner-header">Homework</span>
                 </div>
-                <div class="col-25">
+                <!--<div class="col-25">
                     <a><i class="icon ion-trash-b align-delete-bin"></i></a>
-                </div>
+                </div>-->
             </div>
         </iion-item>
     </div>
@@ -38,11 +38,11 @@
             <ion-item class="notify-item-border no-border margin-bottom-10" ng-repeat="hw in homeworksListing">
                 <div class="row">
                     <div class="col-80" ng-click="hwDetail(hw)">
-                        <h2><strong>{{hw.title}}</strong></h2>
-                        <p>{{hw.description}}<br><strong>{{hw.class_name}} {{hw.division_name}} Div {{hw.subject_name}}</strong></p>
+                        <h2><strong>{{hw.homeworkTitle}}</strong></h2>
+                        <p>{{hw.description}}<br><strong>{{hw.class_name}} {{hw.division_name}} Div {{hw.subjectName}}</strong></p>
                         <div class="row padding-0 margin-top-5">
                             <div class="col-10 col-offset-75 attachment-no"></div>
-                            <div class="col-15">{{hw.created_At}}</div>
+                            <div class="col-15">{{hw.created_at}}</div>
                         </div>
                     </div>
                 </div>

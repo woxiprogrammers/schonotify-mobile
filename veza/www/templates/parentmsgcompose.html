@@ -37,11 +37,11 @@
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
         <div class="list">
             <label class="item item-input border-bottom">
-                <input type="text" ng-model="recipient" placeholder="+ Select Teacher" value="{{recipient}}" ng-click="openModal()" value="{{recipient}}">
+                <input type="text" ng-model="recipient" placeholder="Select Teacher + " value="{{recipient}}" ng-click="openModal()" ng-disabled="checkRecipient">
             </label>
-            <label class="item item-input">
-                <textarea ng-model="message" placeholder="Compose"></textarea>
-            </label>
+             <label class="item item-input">
+                <textarea ng-model="message" placeholder = "Write {{recipient}} a message..." rows = "10" ng-change="setMessage(message)"></textarea>
+             </label>
         </div>
     </ion-content>
 </ion-view>
