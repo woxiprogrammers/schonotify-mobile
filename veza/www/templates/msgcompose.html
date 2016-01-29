@@ -43,19 +43,19 @@
                     </select>
                 </div>                
             </div>
-            <div class="row">
+            <div class="row {{checkRole}}">
                 <div class="col-33 border-bottom">
-                    <select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batches track by batch.id" ng-change="getClass(selectedBatch.batch)" ng-disabled="checkRole">
+                    <select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batches track by batch.id" ng-change="getClass(selectedBatch.batch)">
                         <option value="" ng-disabled="true">-Batch-</option>
                     </select>
                 </div>
                 <div class="col-33 border-right border-bottom">
-                    <select class="item item-input item-select" ng-model="selectedClass.class" ng-options="class.class_name for class in classes track by class.id" ng-change="getDivision(selectedClass.class)" ng-disabled="checkRole">
+                    <select class="item item-input item-select" ng-model="selectedClass.class" ng-options="class.class_name for class in classes track by class.id" ng-change="getDivision(selectedClass.class)">
                         <option value="" ng-disabled="true">-Class-</option>
                     </select>
                 </div>
                 <div class="col-33 border-bottom">
-                    <select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.division_name for division in divisions track by division.id" ng-change="getStudentList(selectedDivision.division)" ng-disabled="checkRole">
+                    <select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.division_name for division in divisions track by division.id" ng-change="getStudentList(selectedDivision.division)">
                         <option value="" ng-disabled="true">-Div-</option>
                     </select>
                 </div>

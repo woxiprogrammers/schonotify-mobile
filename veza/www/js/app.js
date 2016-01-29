@@ -9,6 +9,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
         // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            cordova.plugins.Keyboard.disableScroll(true);
         }
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
@@ -152,6 +153,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
              'menuContent': {
                 templateUrl: 'templates/homework-listing.html',
                 controller: 'HomeworkCtrl'
+             },
+              'fabContent': {
+                  template: ''
+              }
+          }
+     })
+     .state('app.parenthomework', {
+          url: '/parenthomework',
+          views: {
+             'menuContent': {
+                templateUrl: 'templates/parent-hw-list.html',
+                controller: 'ParentHomeworkCtrl'
              },
               'fabContent': {
                   template: ''
@@ -390,7 +403,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
             views: {
                 'menuContent': {
                     templateUrl: 'templates/homework-details.html',
-                    controller: 'DetailPageCtrl'
+                    controller: 'HWdetailCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.teacherhwdetail', {
+            url: '/teacherhwdetail',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/teacher-hw-detail.html',
+                    controller: 'THWdetailCtrl'
                 },
                 'fabContent': {
                     template: ''
@@ -438,10 +463,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
             views: {
                 'menuContent': {
                     templateUrl: 'templates/homework-landing.html',
-                    controller: 'DetailPageCtrl'
+                    controller: ''
                 },
                 'fabContent': {
-                    template: ''
+                    template: '<button id="fab-new-homework" ng-click="composeHw()" class="button button-fab button-fab-bottom-right expanded bar-pink  spin"><i class="icon ion-edit"></i></button>',
+                    controller: function ($timeout) {
+                        $timeout(function () {
+                            document.getElementById('fab-new-homework').classList.toggle('on');
+                        }, 900);
+                    }
                 }
             }
         })
@@ -462,8 +492,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
             views: {
                 'menuContent': {
                     templateUrl: 'templates/edit-homework.html',
-                    controller: 'HomeworkCtrl'
-                },
+                    controller: 'UnpubHwListCtrl'
+                },               
                 'fabContent': {
                     template: '<button id="fab-new-homework" ng-click="composeHw()" class="button button-fab button-fab-bottom-right expanded bar-pink  spin"><i class="icon ion-edit"></i></button>',
                     controller: function ($timeout) {
@@ -479,7 +509,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
             views: {
                 'menuContent': {
                     templateUrl: 'templates/homework-edit.html',
-                    controller: 'DetailPageCtrl'
+                    controller: 'EditHomeworkCtrl'
                 },
                 'fabContent': {
                     template: ''

@@ -34,7 +34,7 @@
             <ion-item class="notify-item-border" ng-repeat="nMsg in nMessages">
                     <div class="row">                        
                         <div class="col-75 msg-{{nMsg.read_status}}">
-                            <a ng-click="msgDetails(nMsg.from_id, nMsg.title_id, nMsg.title)" class="text-decoration-none">
+                            <a ng-click="msgDetails(nMsg.title_id, nMsg.title)" class="text-decoration-none">
                             <h2><strong>{{nMsg.title}}</strong></h2>
                             <p>{{nMsg.description}}<br><strong><i class="font-italic">{{nMsg.timestamp}}</i></strong></p>
                             </a>

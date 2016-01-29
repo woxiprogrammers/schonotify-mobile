@@ -263,6 +263,12 @@ display: none;
 .height-bottom-10{
     height: 10px;
 }
+.delete-hw{
+    font-size: 175%;
+    float: left;
+    margin-left: 10%;
+    margin-top: 10%;
+}
 .delete-msg{
     font-size: 175%;
     float: right;
@@ -412,6 +418,10 @@ display: none;
 .slide-button {
     padding: 5px;
     color: #444444;
+}
+
+.font-white{
+  color: white;  
 }
 
 .align-delete-bin {
@@ -870,9 +880,6 @@ display: none;
 
 .width-5{
     width: 5%;
-}
-.inner-hw-checkbox{
-
 }
 
 .bar-pink {
