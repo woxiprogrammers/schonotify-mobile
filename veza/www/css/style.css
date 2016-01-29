@@ -263,6 +263,12 @@ display: none;
 .height-bottom-10{
     height: 10px;
 }
+.delete-hw{
+    font-size: 175%;
+    float: left;
+    margin-left: 10%;
+    margin-top: 10%;
+}
 .delete-msg{
     font-size: 175%;
     float: right;

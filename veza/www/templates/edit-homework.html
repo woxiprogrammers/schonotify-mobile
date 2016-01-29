@@ -12,7 +12,7 @@
                     <i class="icon ion-homie"></i>
                 </a>
                 <a class="tab-item margin-top-10" ui-sref="app.message">
-                    <i class="icon ion-message"><span class="badge badge-assertive">1</span></i>
+                    <i class="icon ion-message"><span class="badge badge-assertive"></span></i>
                 </a>
             </div>
         </div>
@@ -30,20 +30,24 @@
         <ion-list>
             <ion-item class="notify-item-border no-border margin-bottom-10" ng-repeat="hwrk in homeworksListing">
                 <div class="row">
-                    <div class="col-20">
-                        <a><i class="icon ion-trash-b font-white"></i></a>
+                    <div class="col-20" ng-click="confirmDelete(hwrk.homework_id)">
+                        <a><i class="icon ion-trash-b red-font delete-hw"></i></a>
                     </div>
-                    <div class="col-80" ng-click="homeworkEdit()">
+                    <div class="col-80" ng-click="hwDetail(hwrk)">
                         <h2><strong>{{hwrk.homeworkTitle}}</strong></h2>
                         <p>{{hwrk.description}}<br><strong>{{hwrk.class_name}} {{hwrk.subjectName}}</strong></p>
                         <div class="row padding-0 margin-top-5">
-                            <div class="col-70" ng-click="publishHw(hwrk.homework_id)">
+                            <div class="row" ng-click="publishHw(hwrk.homework_id)">
                                 <button class="button button-positive publish-button">
                                     Publish
                                 </button>
                             </div>
-                            <div class="col-10 attachment-{{hwrk.Attach}}"></div>
-                            <div class="col-20">{{hwrk.created_at}}</div>
+                            <!--<div class="col-10 attachment-{{hwrk.Attach}}"></div>
+                            <div class="col-20">{{hwrk.created_at}}</div>-->
+                        </div>
+                        <div class="row padding-0 margin-top-5">
+                            <div class="col-10 col-offset-75 attachment-no"></div>
+                            <div class="col-15">{{hwrk.created_at}}</div>
                         </div>
                     </div>
                 </div>
