@@ -43,7 +43,7 @@
             </label>
             <div class="row">
                 <div class="row border-bottom">
-                    <select class="item item-input item-select" ng-model="selectedSubj.sub" ng-options="sub.subject for sub in subjectsList track by sub.subject_id" ng-change="getSelectedSub(selectedSubj.sub)">
+                    <select class="item item-input item-select" ng-model="selectedSubj.sub" ng-options="sub.name for sub in subjectsList track by sub.id" ng-change="getSelectedSub(selectedSubj.sub)">
                         <option value="" ng-disabled="true">--Select Subject--</option>
                     </select>
                 </div>
@@ -97,25 +97,25 @@
             </ion-header-bar>
             <ion-content has-bouncing="true">
                 <div class="list">
-                    <ion-item class="contact-list">
-                        <!--<div class="row">
+                    <!--<ion-item class="contact-list">
+                        <div class="row" ng-click="checkAll()">
                             <div class="col-25">
-                                <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="selectedAll" ng-click="checkAllcontacts()">
+                                <ion-checkbox class="checkbox checkbox-assertive" ng-model="selectedAll">
                                 </ion-checkbox>
                             </div>
                             <div class="col-75">
                                 <h2><strong>Select All</strong></h2>
                             </div>
-                        </div>-->
-                    </ion-item>
-                    <ion-item class="contact-list" ng-repeat="student in contactList">
-                        <div class="row">
+                        </div>
+                    </ion-item>-->
+                    <ion-item class="contact-list" ng-repeat="item in contactList">
+                        <div class="row" ng-click="toggleSelection(item.id)">
                             <div class="col-25">
-                                <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="student.selectedBox" id="{{student.name}}" value="{{student.id}}" ng-checked="selection.indexOf(student.id) > -1" ng-click="toggleSelection(student.id)">
+                                <ion-checkbox class="checkbox checkbox-assertive" ng-model="item.Selected" id="{{item.name}}" value="{{item.id}}" ng-checked="selection.indexOf(item.id) > -1">
                                 </ion-checkbox>
                             </div>
                             <div class="col-75">
-                                <h2><strong>{{student.name}}</strong></h2>
+                                <h2 class = "margin-top-10"><strong>{{item.name}}</strong></h2>
                             </div>
                         </div>
                     </ion-item>

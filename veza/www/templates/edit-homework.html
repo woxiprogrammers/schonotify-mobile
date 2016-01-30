@@ -33,9 +33,11 @@
                     <div class="col-20" ng-click="confirmDelete(hwrk.homework_id)">
                         <a><i class="icon ion-trash-b red-font delete-hw"></i></a>
                     </div>
-                    <div class="col-80" ng-click="hwDetail(hwrk)">
-                        <h2><strong>{{hwrk.homeworkTitle}}</strong></h2>
-                        <p>{{hwrk.description}}<br><strong>{{hwrk.class_name}} {{hwrk.subjectName}}</strong></p>
+                    <div class="col-80">
+                        <div ng-click="hwDetail(hwrk)">
+                            <h2><strong>{{hwrk.homeworkTitle}}</strong></h2>
+                            <p>{{hwrk.description}}<br><strong>{{hwrk.class_name}} {{hwrk.subjectName}}</strong></p>
+                        </div>
                         <div class="row padding-0 margin-top-5">
                             <div class="row" ng-click="publishHw(hwrk.homework_id)">
                                 <button class="button button-positive publish-button">
@@ -46,8 +48,8 @@
                             <div class="col-20">{{hwrk.created_at}}</div>-->
                         </div>
                         <div class="row padding-0 margin-top-5">
-                            <div class="col-10 col-offset-75 attachment-no"></div>
                             <div class="col-15">{{hwrk.created_at}}</div>
+                            <div class="col-10 col-offset-75 attachment-no"></div>                            
                         </div>
                     </div>
                 </div>
