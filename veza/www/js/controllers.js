@@ -776,6 +776,8 @@ angular.module('starter.controllers', [])
         $scope.publishHw = function(hwId){
             var url = GLOBALS.baseUrl+"user/publish-homework?token="+userSessions.userSession.userToken;
             $http.post(url, {_method: 'PUT', homework_id: hwId}).success(function(response){
+                $scope.errorMessage = response['message'];
+                $scope.showPopup();
                 $scope.loadUnpHw();
             }).error(function(err) {
                 console.log(err);
