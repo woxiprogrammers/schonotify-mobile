@@ -44,31 +44,31 @@
             <div class="row">
                 <div class="row border-bottom">
                     <select class="item item-input item-select" ng-model="selectedSubj.sub" ng-options="sub.subject for sub in subjectsList track by sub.subject_id" ng-change="getSelectedSub(selectedSubj.sub)">
-                        <option value="{{SubjectId}}" ng-disabled="true">{{SubjectName}}</option>
+                        <option value="{{SubjectId}}" ng-disabled="true" ng-model = "SubjectName">{{SubjectName}}</option>
                     </select>
                 </div>
             </div>                             
                 <div class="row">
                     <div class="col-33 border-bottom">
                         <select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batchList track by batch.id" ng-change="getClass(selectedBatch.batch)" ng-disabled="checkRole">
-                            <option value="{{BatchId}}" ng-disabled="true">{{BatchName}}</option>
+                            <option value="{{BatchId}}" ng-disabled = "true" ng-model = "BatchName">{{BatchName}}</option>
                         </select>
                     </div>
                     <div class="col-33 border-right border-bottom">
                         <select class="item item-input item-select" ng-model="selectedClass.class" ng-options="class.name for class in classList track by class.id" ng-change="getDivision(selectedClass.class)" ng-disabled="checkRole">
-                            <option value="{{classId}}" ng-disabled="true">{{className}}</option>
+                            <option value="{{classId}}" ng-disabled="true" ng-model = "className">{{className}}</option>
                         </select>
                     </div>
                     <div class="col-33 border-bottom">
                         <select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.name for division in divisionsList track by division.id" ng-change="getStudentList(selectedDivision.division)" ng-disabled="checkRole">
-                            <option value="{{divId}}" ng-disabled="true">{{divName}}</option>
+                            <option value="{{divId}}" ng-disabled="true" ng-model = "divName">{{divName}}</option>
                         </select>
                     </div>
               </div>
               <div class="row">
                  <div class="row border-bottom">
                     <select class="item item-input item-select" ng-model="selectedHw.hwtype" ng-options="hwtype.title for hwtype in hwTypeList track by hwtype.id" ng-change="getSelectedHwType(selectedHw.hwtype)">
-                        <option value="{{hwId}}" ng-disabled="true">{{hwrkType}}</option>
+                        <option value="{{hwId}}" ng-disabled="true" ng-model = "hwrkType">{{hwrkType}}</option>
                     </select>
                 </div>
               </div>         
@@ -97,25 +97,25 @@
             </ion-header-bar>
             <ion-content has-bouncing="true">
                 <div class="list">
-                    <ion-item class="contact-list">
-                        <!--<div class="row">
+                    <!--<ion-item class="contact-list">
+                        <div class="row">
                             <div class="col-25">
-                                <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="selectedAll" ng-click="checkAllcontacts()">
+                                <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="selectedAll" ng-click="checkAll()">
                                 </ion-checkbox>
                             </div>
                             <div class="col-75">
                                 <h2><strong>Select All</strong></h2>
                             </div>
-                        </div>-->
-                    </ion-item>
-                    <ion-item class="contact-list" ng-repeat="student in contactList">
+                        </div>
+                    </ion-item>-->
+                    <ion-item class="contact-list" ng-repeat="item in contactList">
                         <div class="row">
                             <div class="col-25">
-                                <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="student.selectedBox" id="{{student.name}}" value="{{student.id}}" ng-checked="selection.indexOf(student.id) > -1" ng-click="toggleSelection(student.id)">
+                                <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="item.Selected" id="{{item.name}}" value="{{item.id}}" ng-checked="selection.indexOf(item.id) > -1" ng-click="toggleSelection(item.id)">
                                 </ion-checkbox>
                             </div>
                             <div class="col-75">
-                                <h2><strong>{{student.name}}</strong></h2>
+                                <h2><strong>{{item.name}}</strong></h2>
                             </div>
                         </div>
                     </ion-item>

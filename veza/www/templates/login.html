@@ -13,14 +13,12 @@
                         <label class="item item-input">
                             <input type="email" name="email" ng-model="email" ng-minlength="5" required placeholder="Username">
                         </label>
-                        <p class="red-font" ng-show="myForm.email.$error.required">* Username is required</p>
                         <p class="red-font" ng-show="myForm.email.$invalid && !myForm.email.$pristine">* Username must be an email address</p>
                         <label class="item item-input">
                             <input type="password" name="password" ng-model="password" ng-minlength="6" required placeholder="Password">
                         </label>
                     </div>
-                        <p class="red-font" ng-show="myForm.password.$error.required">* Password is required</p>
-                        <p class="red-font" ng-show="myForm.password.$error.minlength">* Password must be longer than 6 characters</p>
+                        <p class="red-font" ng-show="myForm.password.$error.minlength">* Password must be atleast 6 characters</p>
                     <button class="button button-full button-balanced ink" ng-disabled="myForm.$invalid" ng-click="submit(email, password)" tabindex="3">Login</button>
                 </div>
             </form>

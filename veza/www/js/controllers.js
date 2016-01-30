@@ -3,8 +3,8 @@
 var db = null;
 angular.module('starter.controllers', [])
 .constant('GLOBALS',{
-//    baseUrl:'http://school_mit.woxiapps.com/api/v1/',
-   baseUrl:'http://192.168.2.6/api/v1/'  
+   baseUrl:'http://school_mit.woxiapps.com/api/v1/',
+   //baseUrl:'http://192.168.2.10/api/v1/'  
 })
 .service('userSessions', function Usersession(){
 
@@ -19,7 +19,7 @@ angular.module('starter.controllers', [])
             return true;
         };
         
-        userSessions.setUserId = function(id){
+        userSessions.setUserId = function(id){            
             userSessions.userSession.userId = id;
             return true;
         };
@@ -58,10 +58,12 @@ angular.module('starter.controllers', [])
         var chatHist = this;
 
         chatHist.data = [];
-        chatHist.setChatHist = function(from, to, title){
+        chatHist.setChatHist = function(userId,from, to, title, title_id){
+            chatHist.data.user_id = userId;
             chatHist.data.from_id = from;
             chatHist.data.to_id = to;
             chatHist.data.title = title;
+            chatHist.data.title_id = title_id;
             return true;
         };
         chatHist.getChatHist = function(){            
@@ -381,18 +383,12 @@ angular.module('starter.controllers', [])
                             $scope.userDataArray = userData.setUserData(res['data']['users']);                            
                             $scope.sessionToken = res['data']['users']['token'];
                             $scope.sessionUserRole = res['data']['users']['role_type'];
-                            $scope.data.badgeCount = res['data']['Badge_count'];
-                            if($scope.sessionUserRole == 'parent'){
-                                $scope.sessionId = res['data']['Badge_count']['user_id'];
-                            }
-                            else{
-                                $scope.sessionId = res['data']['users']['user_id'];
-                                $scope.messageCount = res['data']['Badge_count']['message_count'];
-                            }
+                            $scope.sessionId = res['data']['Badge_count']['user_id'];
+                            $scope.messageCount = res['data']['Badge_count']['message_count'];
                             var  userSet = false;
                             var idSet = false;                      
                             userSet = userSessions.setSession($scope.sessionToken, $scope.sessionUserRole, $scope.messageCount);
-                            idSet = userSessions.setUserId($scope.sessionId);
+                            idSet = userSessions.setUserId($scope.sessionId);                           
                                 if(userSet == true && idSet == true){
                                    $state.go('app.dashboard');
                                 }                                   
@@ -450,12 +446,16 @@ angular.module('starter.controllers', [])
         
         var url= GLOBALS.baseUrl+"user/get-message-count/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
+                if(response['data']['Badge_count']['message_count'] > 0){
                     userSessions.setMsgCount(response['data']['Badge_count']['message_count']);
+                    $scope.msgCount = response['data']['Badge_count']['message_count'];
+                }else{
+                    $scope.msgCount = '';
+                }                   
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
-                });
-        
+                });        
         if(userSessions.userSession.msgcount > 0){
             $scope.msgCount = userSessions.userSession.msgcount;
         }    
@@ -955,7 +955,35 @@ angular.module('starter.controllers', [])
 
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
-        $scope.hwrkDetail = hwDetails.getHwView();        
+        $scope.hwrkDetail = hwDetails.getHwView();
+        $scope.hwId = $scope.hwrkDetail.homework_id;
+        
+        var url= GLOBALS.baseUrl+"user/view-detail-homework/"+$scope.hwId+"?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response) {
+                 $scope.contactList = response['data']['studentList'];                    
+            })
+            .error(function(response) {
+                    console.log("Error in Response: " +response);
+            });
+               
+       $ionicModal.fromTemplateUrl('studentlist.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.modal = modal;
+        })
+
+        $scope.openModal = function() {
+            $scope.modal.show();
+        }
+
+        $scope.closeModal = function() {
+            $scope.modal.hide();
+        };
+
+        $scope.$on('$destroy', function() {
+            $scope.modal.remove();
+        });
     })
     .controller('HWdetailCtrl', function($scope, $state, hwDetails, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
         $scope.$parent.clearFabs();
@@ -989,27 +1017,27 @@ angular.module('starter.controllers', [])
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.editHwData = hwDetails.getHwView();
-        $scope.hwId = $scope.editHwData['homework_id'];
-        $scope.recipient = $scope.editHwData['studentList'].length+" Student Selected";
-        $scope.contactList = $scope.editHwData['studentList'];
+        $scope.hwId = $scope.editHwData.homework_id;
+        $scope.recipient = $scope.editHwData.studentList.length+" Student Selected";
+        $scope.contactList = $scope.editHwData.studentList;
         $scope.checkRecipient = true;
-        $scope.SubjectId = $scope.editHwData['subject_id'];
-        $scope.SubjectName = $scope.editHwData['subjectName'];
-        $scope.BatchId = $scope.editHwData['batch_id'];
-        $scope.BatchName = $scope.editHwData['batch_name'];
+        $scope.SubjectId = $scope.editHwData.subject_id;
+        $scope.SubjectName = $scope.editHwData.subjectName;
+        $scope.BatchId = $scope.editHwData.batch_id;
+        $scope.BatchName = $scope.editHwData.batch_name;
         $scope.selectedList=[];
         for(var i=0; i < $scope.recipient; i++){
-           $scope.selectedList[i] = $scope.editHwData['studentList'][i]['id'];
+           $scope.selectedList[i] = $scope.editHwData.studentList[i]['id'];
         }       
-        $scope.hwTitle = $scope.editHwData['homeworkTitle'];
-        $scope.classId = $scope.editHwData['class_id'];
-        $scope.divId = $scope.editHwData['division_id'];
-        $scope.className = $scope.editHwData['class_name'];
-        $scope.divName = $scope.editHwData['division_name'];
-        $scope.dueDate = $scope.editHwData['due_date'];
-        $scope.description = $scope.editHwData['description'];
-        $scope.hwTypeId = $scope.editHwData['homeworkTypeId'];
-        $scope.hwrkType = $scope.editHwData['homeworkType'];
+        $scope.hwTitle = $scope.editHwData.homeworkTitle;
+        $scope.classId = $scope.editHwData.class_id;
+        $scope.divId = $scope.editHwData.division_id;
+        $scope.className = $scope.editHwData.class_name;
+        $scope.divName = $scope.editHwData.division_name;
+        $scope.dueDate = $scope.editHwData.due_date;
+        $scope.description = $scope.editHwData.description;
+        $scope.hwTypeId = $scope.editHwData.homeworkTypeId;
+        $scope.hwrkType = $scope.editHwData.homeworkType;
         $scope.setTitle = function(title){
           $scope.hwTitle = title;  
         };
@@ -1019,16 +1047,20 @@ angular.module('starter.controllers', [])
         };
         // toggle selection for a given student by name
         $scope.toggleSelection = function toggleSelection(studentId) {
-        var idx = $scope.selectedList.indexOf(studentId);
-        if (idx > -1) {
-        $scope.selectedList.splice(idx, 1);
-        }
-        // is newly selected
-        else {
-        $scope.selectedList.push(studentId);
-        }
-    };        
-    var url = GLOBALS.baseUrl+"user/get-teachers-subjects?token="+userSessions.userSession.userToken;
+			$scope.selectedAll = false;
+            var idx = $scope.selectedList.indexOf(studentId);
+            if (idx > -1) {
+            $scope.selectedList.splice(idx, 1);
+            }
+            // is newly selected
+            else {
+            $scope.selectedList.push(studentId);
+            if($scope.selectedList.length == $scope.contactList.length){
+              	$scope.selectedAll = true;
+            }
+            }
+        };        
+        var url = GLOBALS.baseUrl+"user/get-teachers-subjects?token="+userSessions.userSession.userToken;
             $http.get(url)
                 .success(function(response) {
                     $scope.subjectsList = response['data'];                    
@@ -1079,7 +1111,7 @@ angular.module('starter.controllers', [])
         $scope.getDivision = function(classType){
             var url= GLOBALS.baseUrl+"user/get-classes-division/"+$scope.SubjectId+"/"+$scope.BatchId+"/"+classType['id']+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
-                   $scope.divisions = response['data'];
+                   $scope.divisionsList = response['data'];
                    $scope.classId = classType['id'];
                    $scope.contactList.length = 0;
                 })
@@ -1120,19 +1152,22 @@ angular.module('starter.controllers', [])
             $scope.modal.remove();
         });
         
-        $scope.contactsAll = false;
-            $scope.checkAllcontacts = function () {
-            console.log("into check all");
-            if ($scope.contactsAll) {
-                $scope.contactsAll = true;
+        $scope.checkAll = function () {
+            if ($scope.selectedAll) {
+                $scope.selectedAll = true;
             } else {
-                $scope.contactsAll = false;
+                $scope.selectedAll = false;
             }
-            $scope.selectedList.length = 0;
-            $scope.selectedList = [];
-            angular.forEach($scope.contactList, function (student) {
-                student.Selected = $scope.contactsAll;
-                $scope.selectedList.push(student.id);
+            $scope.selectedList.length =0;
+            angular.forEach($scope.contactList, function (item) {
+            if($scope.selectedAll == true){
+                item.Selected = $scope.selectedAll;
+                $scope.selectedList.push(item.id);
+            }
+            else{
+                item.Selected = $scope.selectedAll;
+                $scope.selectedList.pop(item.id);
+            }            
             });
         };
         
@@ -1226,17 +1261,22 @@ angular.module('starter.controllers', [])
         };
         
         // toggle selection for a given employee by name
-     $scope.toggleSelection = function toggleSelection(studentId) {
-     var idx = $scope.selectedList.indexOf(studentId);
-     if (idx > -1) {
-       $scope.selectedList.splice(idx, 1);
-     }
-     // is newly selected
-     else {
-       $scope.selectedList.push(studentId);
-     }
-   };        
-       var url = GLOBALS.baseUrl+"user/get-teachers-subjects?token="+userSessions.userSession.userToken;
+        $scope.toggleSelection = function toggleSelection(studentId) {
+			$scope.selectedAll = false;
+            var idx = $scope.selectedList.indexOf(studentId);
+            if (idx > -1) {
+            $scope.selectedList.splice(idx, 1);
+            }
+            // is newly selected
+            else {
+            $scope.selectedList.push(studentId);
+            if($scope.selectedList.length == $scope.contactList.length){
+              	$scope.selectedAll = true;
+            }
+            }
+        };
+             
+        var url = GLOBALS.baseUrl+"user/get-teachers-subjects?token="+userSessions.userSession.userToken;
             $http.get(url)
                 .success(function(response) {
                     $scope.subjectsList = response['data'];                    
@@ -1259,20 +1299,21 @@ angular.module('starter.controllers', [])
         };
          
         $scope.getSelectedSub = function(subject){
-            $scope.recipient = "";
+            $scope.recipient = "Select Student";
             $scope.checkRecipient = true;
             $scope.contactList.length = 0;         
-            var url= GLOBALS.baseUrl+"user/get-subjects-batches/"+subject['subject_id']+"?token="+userSessions.userSession.userToken;
+            var url= GLOBALS.baseUrl+"user/get-subjects-batches/"+subject['id']+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
                     $scope.batchList = response['data'];
-                    $scope.SubjectId = subject['subject_id'];                
+                    $scope.SubjectId = subject['id'];                
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
         };
         
-        $scope.getClass= function(batch){                
+        $scope.getClass= function(batch){
+            $scope.recipient = "Select Student";                
                 var url= GLOBALS.baseUrl+"user/get-batches-classes/"+$scope.SubjectId+"/"+batch['id']+"?token="+userSessions.userSession.userToken;
                 $http.get(url).success(function(response) {
                     $scope.classList = response['data'];
@@ -1285,6 +1326,7 @@ angular.module('starter.controllers', [])
         };
         
         $scope.getDivision = function(classType){
+            $scope.recipient = "Select Student";
             var url= GLOBALS.baseUrl+"user/get-classes-division/"+$scope.SubjectId+"/"+$scope.BatchId+"/"+classType['id']+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
                    $scope.divisionsList = response['data'];
@@ -1340,7 +1382,7 @@ angular.module('starter.controllers', [])
                 $scope.showPopup();
             }
             else{
-                var url = GLOBALS.baseUrl+"user/Homeworkcreate?token="+userSessions.userSession.userToken;
+                var url = GLOBALS.baseUrl+"user/homework-create?token="+userSessions.userSession.userToken;
                     $http.post(url, {subject_id: $scope.SubjectId, title: $scope.hwTitle, batch_id: $scope.BatchId, class_id: $scope.classId, division_id: $scope.divId, due_date: $scope.dueDate, description: $scope.description, homework_type: $scope.hwTypeId, student_id: $scope.selectedList} ).success(function(response){
                     if(response['status'] == 200){
                         $scope.msg = response['message'];
@@ -1354,7 +1396,7 @@ angular.module('starter.controllers', [])
                 }).error(function(err) {
                     console.log(err);
                     if(err['status'] == 500){
-                     $scope.msg = err['message'];
+                        $scope.msg = err['message'];
                     }
                     else{
                         $scope.msg = "Access Denied";
@@ -1363,29 +1405,24 @@ angular.module('starter.controllers', [])
                 });
             } 
         };
-        
-        $scope.selectedAll = false;        
-        $scope.checkAllcontacts = function () {
-            console.log("into check all");
+        $scope.selectedAll = false;
+        $scope.checkAll = function () {
             if ($scope.selectedAll) {
                 $scope.selectedAll = true;
             } else {
                 $scope.selectedAll = false;
             }
             $scope.selectedList.length = 0;
-            if($scope.selectedAll == true){
-                angular.forEach($scope.contactList, function (student) {                
-                    student.selectedBox = $scope.selectedAll;
-                    $scope.selectedList.push(student.id);
-                });
-            }
-            else{
-                 angular.forEach($scope.contactList, function (student) {                
-                    $scope.selectedBox = $scope.selectedAll;
-                });
-                $scope.selectedList.length = 0;
-            }   
-            
+            angular.forEach($scope.contactList, function (item) {
+                if($scope.selectedAll == true){
+                    item.Selected = true;
+                    $scope.selectedList.push(item.id);
+                }
+                else{
+                    item.Selected = false;
+                    $scope.selectedList.pop(item.id);
+                }            
+            });
         };
         
         $scope.showPopup = function() {
@@ -1430,9 +1467,9 @@ angular.module('starter.controllers', [])
         $scope.nMessages = [];
         $scope.aclMessage = "Access Denied";
         $scope.loadMessages = function(){
-            if (userSessions.userSession.userRole == "parent"){
+          if (userSessions.userSession.userRole == "parent"){
             var url1 = GLOBALS.baseUrl+"user/get-messages-parent/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
-            $http.get(url1).success(function(response){                
+            $http.get(url1).success(function(response){   
                 if(response['status'] == 200){
                        $scope.nMessages = response['MessageList'];
                        if($scope.nMessages == ''){
@@ -1491,8 +1528,8 @@ angular.module('starter.controllers', [])
                 $scope.showPopup();
             });            
         };
-        $scope.msgDetails = function(to, title){
-            var flag = chatHist.setChatHist(userSessions.userSession.userId, to, title);
+        $scope.msgDetails = function(from, to, title, title_id){
+            var flag = chatHist.setChatHist(userSessions.userSession.userId, from, to, title, title_id);
             if(flag == true){
                 $state.go('app.chatmsg');
             }
@@ -1516,7 +1553,7 @@ angular.module('starter.controllers', [])
                         text: '<b>Delete</b>',
                         type: 'button-assertive',
                         onTap: function(e) {                            
-                                $scope.deleteMessage();                           
+                               $scope.deleteMessage();                           
                         }
                     }
                 ]
@@ -1601,7 +1638,7 @@ angular.module('starter.controllers', [])
         $scope.getClass = function(batchType){
                //$scope.classes = filterClasses.getClasses(userSessions.userSession.userToken, batchType['id']);
                var url= GLOBALS.baseUrl+"user/getclasses/"+batchType['id']+"?token="+userSessions.userSession.userToken;
-            $http.get(url).success(function(response) {
+               $http.get(url).success(function(response) {
                     $scope.classes = response['data']['classList'];
                 })
                 .error(function(response) {
@@ -1858,7 +1895,7 @@ angular.module('starter.controllers', [])
         $scope.messageList = [];
         $scope.loadChat = function(){
             var url= GLOBALS.baseUrl+"user/get-detail-message?token="+userSessions.userSession.userToken;
-        $http.post(url, {user_id: userSessions.userSession.userId, from_id: $scope.envelop.from_id, to_id: $scope.envelop.to_id}).success(function(response) {
+        $http.post(url, {user_id: $scope.envelop.user_id, from_id: $scope.envelop.from_id, to_id: $scope.envelop.to_id}).success(function(response) {
             $scope.messageList = response['data'];
             $ionicScrollDelegate.scrollBottom();
         }).error(function(err) {
@@ -1875,7 +1912,7 @@ angular.module('starter.controllers', [])
                         }
                         else{
                             var url= GLOBALS.baseUrl+"user/send-message?token="+userSessions.userSession.userToken;
-                            $http.post(url, {from_id: $scope.envelop.from_id, to_id: $scope.envelop.to_id, description: $scope.message })
+                            $http.post(url, {from_id: $scope.envelop.user_id, to_id: $scope.envelop.title_id, description: $scope.message })
                             .success(function(response) {
                             if(response['status'] == 200){
                                     $scope.msg = response['message'];
