@@ -43,43 +43,43 @@
             </label>
             <div class="row">
                 <div class="row border-bottom">
-                    <select class="item item-input item-select" ng-model="selectedSubj.sub" ng-options="sub.subject for sub in subjectsList track by sub.subject_id" ng-change="getSelectedSub(selectedSubj.sub)">
-                        <option value="{{SubjectId}}" ng-disabled="true" ng-model = "SubjectName">{{SubjectName}}</option>
+                    <select class="item item-input item-select" ng-model="selectedSubj.sub" ng-options="sub.name for sub in subjectsList track by sub.id" ng-change="getSelectedSub(selectedSubj.sub)">
+                        <option value="" ng-disabled="true" ng-model = "SubjectName">{{SubjectName}}</option>
                     </select>
                 </div>
             </div>                             
                 <div class="row">
                     <div class="col-33 border-bottom">
-                        <select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batchList track by batch.id" ng-change="getClass(selectedBatch.batch)" ng-disabled="checkRole">
-                            <option value="{{BatchId}}" ng-disabled = "true" ng-model = "BatchName">{{BatchName}}</option>
+                        <select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batchList track by batch.id" ng-change="getClass(selectedBatch.batch)">
+                            <option value="" ng-disabled = "true" ng-model = "BatchName">{{BatchName}}</option>
                         </select>
                     </div>
                     <div class="col-33 border-right border-bottom">
-                        <select class="item item-input item-select" ng-model="selectedClass.class" ng-options="class.name for class in classList track by class.id" ng-change="getDivision(selectedClass.class)" ng-disabled="checkRole">
-                            <option value="{{classId}}" ng-disabled="true" ng-model = "className">{{className}}</option>
+                        <select class="item item-input item-select" ng-model="selectedClass.class" ng-options="class.name for class in classList track by class.id" ng-change="getDivision(selectedClass.class)">
+                            <option value="" ng-disabled="true" ng-model = "className">{{className}}</option>
                         </select>
                     </div>
                     <div class="col-33 border-bottom">
-                        <select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.name for division in divisionsList track by division.id" ng-change="getStudentList(selectedDivision.division)" ng-disabled="checkRole">
-                            <option value="{{divId}}" ng-disabled="true" ng-model = "divName">{{divName}}</option>
+                        <select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.name for division in divisionsList track by division.id" ng-change="getStudentList(selectedDivision.division)">
+                            <option value="" ng-disabled="true" ng-model = "divName">{{divName}}</option>
                         </select>
                     </div>
               </div>
               <div class="row">
                  <div class="row border-bottom">
                     <select class="item item-input item-select" ng-model="selectedHw.hwtype" ng-options="hwtype.title for hwtype in hwTypeList track by hwtype.id" ng-change="getSelectedHwType(selectedHw.hwtype)">
-                        <option value="{{hwId}}" ng-disabled="true" ng-model = "hwrkType">{{hwrkType}}</option>
+                        <option value="" ng-disabled="true" ng-model = "hwrkType">{{hwrkType}}</option>
                     </select>
                 </div>
               </div>         
             <label class="item item-input">Due Date:
-                 <input class="item-input border-bottom padding-5" ng-model ="dueDate" type="date" value= {{dueDate}}>
+                 <input class="item-input border-bottom padding-5" ng-model ="dueDate" type="date" value ="{{dueDate}}">
             </label>
             <label class="item item-input border-bottom" ng-click="openModal()" ng-model="recipient">
                 {{recipient}}
             </label>            
             <label class="item item-input">
-                <textarea ng-model="description" placeholder = "Homework Description" rows = "10" ng-change="setDescription(description)" value ="{{description}}></textarea>
+                <textarea ng-model="description" placeholder = "Homework Description" rows = "10" ng-change="setDescription(description)" value ="{{description}}"></textarea>
              </label>
         </div>
     </ion-content>
@@ -111,7 +111,7 @@
                     <ion-item class="contact-list" ng-repeat="item in contactList">
                         <div class="row">
                             <div class="col-25">
-                                <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="item.Selected" id="{{item.name}}" value="{{item.id}}" ng-checked="selection.indexOf(item.id) > -1" ng-click="toggleSelection(item.id)">
+                                <ion-checkbox class="checkbox-square checkbox-assertive" id="{{item.name}}" value="{{item.id}}" ng-checked="selectedList.indexOf(item.id) > -1" ng-click="toggleSelection(item.id)">
                                 </ion-checkbox>
                             </div>
                             <div class="col-75">

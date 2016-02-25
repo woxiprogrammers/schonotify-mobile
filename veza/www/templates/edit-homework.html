@@ -30,17 +30,17 @@
         <ion-list>
             <ion-item class="notify-item-border no-border margin-bottom-10" ng-repeat="hwrk in homeworksListing">
                 <div class="row">
-                    <div class="col-20" ng-click="confirmDelete(hwrk.homework_id)">
-                        <a><i class="icon ion-trash-b red-font delete-hw"></i></a>
+                    <div class="col-20" ng-click="clickStatus || confirmDelete(hwrk.homework_id)">
+                        <a><i class="icon ion-trash-b red-font delete-hw" ng-class='{ display-no: clickStatus}'></i></a>
                     </div>
                     <div class="col-80">
-                        <div ng-click="hwDetail(hwrk)">
+                        <div ng-class='{ disabled: clickStatus}' ng-click="clickStatus || hwDetail(hwrk)">
                             <h2><strong>{{hwrk.homeworkTitle}}</strong></h2>
-                            <p>{{hwrk.description}}<br><strong>{{hwrk.class_name}} {{hwrk.subjectName}}</strong></p>
+                            <p>{{hwrk.description}}<br><strong>{{hw.batch_name}} {{hw.class_name}} {{hw.division_name}} {{hw.subjectName}}</strong></p>
                         </div>
                         <div class="row padding-0 margin-top-5">
-                            <div class="row" ng-click="publishHw(hwrk.homework_id)">
-                                <button class="button button-positive publish-button">
+                            <div class="row">
+                                <button ng-class='{ display-no: clickStatus}' class="button button-positive publish-button" ng-disabled="clickStatus" ng-click="publishHw(hwrk.homework_id)">
                                     Publish
                                 </button>
                             </div>

@@ -19,25 +19,25 @@
     </div>
     <div class="margin-top-48">
         <div class="tabs tabs-dark">
-            <a class="tab-item" ng-click="changeDefaultView()"  ui-sref="app.timetable.mondaytimetable">
+            <a class="tab-item" ng-click="getTimetable(1)">
                 Mon
             </a>
-            <a class="tab-item" ui-sref="app.timetable.tuesdaytimetable" ng-click="changeDefaultView()">
+            <a class="tab-item" ng-click="getTimetable(2)">
                 Tue
             </a>
-            <a class="tab-item" ui-sref="app.timetable.wednesdaytimetable">
+            <a class="tab-item" ng-click="getTimetable(3)">
                 Wed
             </a>
-            <a class="tab-item"  ui-sref="app.timetable.thursdaytimetable">
+            <a class="tab-item" ng-click="getTimetable(4)">
                 Thu
             </a>
-            <a class="tab-item"  ui-sref="app.timetable.fridaytimetable">
+            <a class="tab-item" ng-click="getTimetable(5)">
                 Fri
             </a>
-            <a class="tab-item"  ui-sref="app.timetable.saturdaytimetable">
+            <a class="tab-item" ng-click="getTimetable(6)">
                 Sat
             </a>
-            <a class="tab-item"  ui-sref="app.timetable.sundaytimetable">
+            <a class="tab-item" ng-click="getTimetable(7)">
                 Sun
             </a>
         </div>
@@ -60,15 +60,21 @@
                     </iion-item>
                 </div>
                 <ion-view>
-                    <div class="bar bar-header bar-dark margin-top-44"><div class="col-offset-25 col-50 text-center padding-10">Monday</div></div>
+                    <div class="bar bar-header bar-dark margin-top-44"><div class="col-offset-25 col-50 text-center padding-10">{{setDay}}</div></div>
                     <ion-content >
                         <ion-list>
                             <div class="margin-top-52">
                                 <ion-item class="notify-item-border no-border margin-bottom-10" ng-repeat="period in timeTableList">
-                                    <div class="row">
+                                    <div class="row" ng-if="period.is_break == 0">
                                         <div class="col-50 col-offset-25 text-center">
-                                            <h2 class="bold">{{period.Subject}}</h2>
-                                            <p>{{period.Teacher}}<br>{{period.Time}}</p>
+                                            <h2 class="bold">{{period.subject}}</h2>
+                                            <p>{{period.teacher}}<br>{{period.start_time}}-{{period.end_time}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row background-break" ng-if="period.is_break == 1">
+                                        <div class="col-50 col-offset-25 text-center">
+                                            <h2 class="bold">{{period.subject}}</h2>
+                                            <p>{{period.teacher}}<br>{{period.start_time}}-{{period.end_time}}</p>
                                         </div>
                                     </div>
                                 </ion-item>

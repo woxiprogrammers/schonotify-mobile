@@ -34,13 +34,13 @@
             <ion-item class="notify-item-border" ng-repeat="nMsg in nMessages">
                     <div class="row">                        
                         <div class="col-75 msg-{{nMsg.read_status}}">
-                            <a ng-click="msgDetails(nMsg.from_id, nMsg.to_id, nMsg.title, nMsg.title_id)" class="text-decoration-none">
+                            <a ng-class='{ disabled: clickStatus}' ng-click="clickStatus || msgDetails(nMsg.from_id, nMsg.to_id, nMsg.title, nMsg.title_id)" class="text-decoration-none">
                             <h2><strong>{{nMsg.title}}</strong></h2>
                             <p>{{nMsg.description}}<br><strong><i class="font-italic">{{nMsg.timestamp}}</i></strong></p>
                             </a>
                         </div>
-                        <div class="col-25" ng-click="confirmDelete(nMsg.from_id, nMsg.to_id)">
-                            <a><i class="icon ion-trash-b delete-msg"></i></a>
+                        <div class="col-25"  ng-click="clickStatus || confirmDelete(nMsg.from_id, nMsg.to_id)">
+                            <a><i class="icon ion-trash-b delete-msg" ng-class='{ display-no: clickStatus}'></i></a>
                         </div>
                     </div>
             </ion-item>

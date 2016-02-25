@@ -207,8 +207,11 @@ display: none;
 }
 
 .bar-yellow{
-    background-color: #ffe502;
+    background-color: #44C9D2;
     color: #ffffff;
+}
+.background-break{
+    background-color: #F5A9BC;
 }
 .approve-button{
     font-size: 14px;
@@ -346,6 +349,9 @@ display: none;
     font-weight: bold;
 }
 
+.disabled {
+  color: gray;  
+}
 .hero.no-header {
     height: 0px!important;    
 }
@@ -883,9 +889,9 @@ display: none;
 }
 
 .bar-pink {
-    border-color: #f210aa;
-    background-color: #f747c2;
-    background-image: linear-gradient(0deg, #f210aa, #f210aa 50%, transparent 50%);
+    border-color: #FF7182;
+    background-color: #FF7182;
+    background-image: linear-gradient(0deg, #FF7182, #FF7182 50%, transparent 50%);
     color: #fff;
 }
 
@@ -1065,6 +1071,10 @@ display: none;
 .display-no{
     display: none!important;
 }
+.visible-no{
+visibility: hidden;    
+}
+
 .padding-top-10{
     padding-top: 10px;
 }

@@ -60,8 +60,8 @@
                     </select>
                 </div>
             </div>
-            <label class="item item-input border-bottom">
-                <input type="text" ng-model="recipient" placeholder="Add Recipient+ " value="{{recipient}}" ng-click="openModal()" ng-disabled="checkRecipient">
+            <label class="item item-input border-bottom" ng-click="openModal()" ng-model="recipient" ng-disabled="checkRecipient">
+                {{recipient}}
             </label>
              <label class="item item-input">
                 <textarea ng-model="message" placeholder = "Write {{recipient}} a message..." rows = "10" ng-change="setMessage(message)"></textarea>

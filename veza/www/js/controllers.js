@@ -4,7 +4,7 @@ var db = null;
 angular.module('starter.controllers', [])
 .constant('GLOBALS',{
    baseUrl:'http://school_mit.woxiapps.com/api/v1/',
-   //baseUrl:'http://192.168.2.10/api/v1/'  
+  // baseUrl:'http://192.168.2.8/api/v1/'  
 })
 .service('userSessions', function Usersession(){
 
@@ -97,76 +97,6 @@ angular.module('starter.controllers', [])
             return studentToggle.data;
         };      
 })
-.service('filterBatches', function FilterBatch($http, GLOBALS){
-
-        var filterBatches = this;
-
-        filterBatches.batches = [];
-
-        filterBatches.getBatches = function(token){
-            var url= GLOBALS.baseUrl+"user/get-batches-teacher?token="+token;
-            $http.get(url).success(function(response) {
-                    filterBatches.batches = response['data'];                    
-                })
-                .error(function(response) {
-                    console.log("Error in Response: " +response);
-                });
-            return filterBatches.batches;
-        };
-})
-.service('filterUserRoles', function FilterRole($http, GLOBALS){
-
-        var filterUserRoles = this;
-
-        filterUserRoles.roles = [];
-
-        filterUserRoles.getRoles = function(token){
-            var url= GLOBALS.baseUrl+"user/userroles?token="+token;
-            $http.get(url)
-                .success(function(response) {
-                    filterUserRoles.roles = response['data']['userRoles'];
-                    
-                })
-                .error(function(response) {
-                    console.log("Error in Response: " +response);
-                });                
-            return filterUserRoles.roles;
-        };
-})
-.service('filterClasses', function filterClass($http, GLOBALS){
-
-        var filterClasses = this;
-
-            filterClasses.classes = [];
-        filterClasses.getClasses = function(token, batch){
-            var url= GLOBALS.baseUrl+"user/getclasses/"+batch+"?token="+token;
-            $http.get(url)
-                .success(function(response) {
-                    filterClasses.classes = response['data']['classList'];
-                })
-                .error(function(response) {
-                    console.log("Error in Response: " +response);
-                });
-            return filterClasses.classes;
-        };
-})
-.service('filterDivisions', function FilterDivision($http, GLOBALS){
-
-        var filterDivisions = this;
-        filterDivisions.divisions = [];
-
-        filterDivisions.getDivisions = function(token, std){
-            var url= GLOBALS.baseUrl+"user/getdivisions/"+std+"?token="+token;
-            $http.get(url)
-                .success(function(response) {
-                   filterDivisions.divisions = response['data']['divisionList'];
-                })
-                .error(function(response) {
-                    console.log("Error in Response: " +response);
-                });
-            return filterDivisions.divisions;
-        };
-})
 .controller('AppCtrl', function($scope, $state, $ionicPopup, $http, $ionicModal, $ionicPopover, $timeout, $ionicSideMenuDelegate, $ionicHistory, userSessions) {
     // Form data for the login modal
     $scope.loginData = {};
@@ -174,7 +104,6 @@ angular.module('starter.controllers', [])
     $scope.hasHeaderFabLeft = false;
     $scope.hasHeaderFabRight = false;
     $scope.aclMessage = "Access Denied";
-   // userSessions.setToken(0);
     var navIcons = document.getElementsByClassName('ion-navicon');
     for (var i = 0; i < navIcons.length; i++) {
         navIcons.addEventListener('click', function() {
@@ -360,12 +289,11 @@ angular.module('starter.controllers', [])
             $state.go('app.chatmsg');
         };
         
-        $scope.viewMessagesList = function(){
+        $scope.viewmessagesList = function(){
                $state.go('app.message');            
         };
         
 })
-
 .controller('LoginCtrl', function($scope, $state, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
 
     $scope.data = [];
@@ -423,7 +351,7 @@ angular.module('starter.controllers', [])
         };
 })
 
-.controller('DashboardCtrl', function($scope, $state, $timeout, GLOBALS, $http, ionicMaterialInk, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData, filterUserRoles, filterBatches) {
+.controller('DashboardCtrl', function($scope, $state, $timeout, GLOBALS, $http, ionicMaterialInk, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -441,8 +369,7 @@ angular.module('starter.controllers', [])
         $scope.msgCount = '';
         if(userSessions.userSession.userToken == 0){
             $state.go('login');
-        }
-       
+        }       
         
         var url= GLOBALS.baseUrl+"user/get-message-count/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
@@ -477,46 +404,46 @@ angular.module('starter.controllers', [])
 
         $ionicSideMenuDelegate.canDragContent(true);
 
-        $scope.nMessages = [{
+        $scope.nmessages = [{
             Status: "unRead",
             Subject: "Rohit Shetty",
-            Message: " has created homework for 5th Std Div B.",
+            message: " has created homework for 5th Std Div B.",
             Timestamp: "4 mins ago",
             Type: "notification_attendance"
         }, {
             Status: "unRead",
             Subject: "Rohit Shetty",
-            Message: " has created homework for 5th Std Div B.",
+            message: " has created homework for 5th Std Div B.",
             Timestamp: "40 mins ago",
             Type: "notification_event"
         }, {
             Status: "Read",
             Subject: "Rohit Shetty",
-            Message: " has created homework for 5th Std Div B.",
+            message: " has created homework for 5th Std Div B.",
             Timestamp: "40 mins ago",
             Type: "notification_fees"
         },{
             Status: "Read",
             Subject: "Rohit Shetty",
-            Message: " has created homework for 5th Std Div B.",
+            message: " has created homework for 5th Std Div B.",
             Timestamp: "40 mins ago",
             Type: "notification_homework"
         },{
             Status: "Read",
             Subject: "Rohit Shetty",
-            Message: " has created homework for 5th Std Div B.",
+            message: " has created homework for 5th Std Div B.",
             Timestamp: "40 mins ago",
             Type: "notification_result"
         },{
             Status: "Read",
             Subject: "Rohit Shetty",
-            Message: " has created homework for 5th Std Div B.",
+            message: " has created homework for 5th Std Div B.",
             Timestamp: "40 mins ago",
             Type: "notification_event"
         },{
             Status: "Read",
             Subject: "Rohit Shetty",
-            Message: " has created homework for 5th Std Div B.",
+            message: " has created homework for 5th Std Div B.",
             Timestamp: "40 mins ago",
             Type: "notification_attendance"
         }];
@@ -527,7 +454,7 @@ angular.module('starter.controllers', [])
             } else {
                 $scope.selectedAll = false;
             }
-            angular.forEach($scope.nMessages, function (nmsg) {
+            angular.forEach($scope.nmessages, function (nmsg) {
                 nmsg.Selected = $scope.selectedAll;
             });
 
@@ -548,48 +475,47 @@ angular.module('starter.controllers', [])
 
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
-       
-    
-        $scope.nMessages = [{
+           
+        $scope.nmessages = [{
             Status: "unRead",
             Subject: "Class Test for Std 5 on this thursday",
-            Message: "The Attendance is Compulsary",
+            message: "The Attendance is Compulsary",
             Timestamp: "4 mins ago",
             Priority: "high"
         }, {
             Status: "unRead",
             Subject: "Notification 2",
-            Message: "The Attendance is Compulsary",
+            message: "The Attendance is Compulsary",
             Timestamp: "40 mins ago",
             Priority: "medium"
         }, {
             Status: "Read",
             Subject: "Notification 3",
-            Message: "The Attendance is Compulsary",
+            message: "The Attendance is Compulsary",
             Timestamp: "4 hours ago",
             Priority: "high"
         },{
             Status: "Read",
             Subject: "Notification 4",
-            Message: "The Attendance is Compulsary",
+            message: "The Attendance is Compulsary",
             Timestamp: "4 days ago",
             Priority: "low"
         },{
             Status: "Read",
             Subject: "Notification 5",
-            Message: "The Attendance is Compulsary",
+            message: "The Attendance is Compulsary",
             Timestamp: "4 weeks ago",
             Priority: "medium"
         },{
             Status: "Read",
             Subject: "Notification 6",
-            Message: "The Attendance is Compulsary",
+            message: "The Attendance is Compulsary",
             Timestamp: "4 months ago",
             Priority: "low"
         },{
             Status: "Read",
             Subject: "Notification 7",
-            Message: "The Attendance is Compulsary",
+            message: "The Attendance is Compulsary",
             Timestamp: "5 months ago",
             Priority: "high"
         }];
@@ -600,7 +526,7 @@ angular.module('starter.controllers', [])
             } else {
                 $scope.selectedAll = false;
             }
-            angular.forEach($scope.nMessages, function (nmsg) {
+            angular.forEach($scope.nmessages, function (nmsg) {
                 nmsg.Selected = $scope.selectedAll;
             });
 
@@ -640,24 +566,24 @@ angular.module('starter.controllers', [])
 
         $ionicSideMenuDelegate.canDragContent(true);
 
-        $scope.nMessages = [{
+        $scope.nmessages = [{
             Picture: "graduate.jpg",
             Status: "unRead",
             Subject: "Notification 1",
-            Message: "D.A.V wins Inter School Basketball Tournament 2015",
+            message: "D.A.V wins Inter School Basketball Tournament 2015",
             Timestamp: "Date: 04 Dec 2015",
             Priority: "high"
         }, {
             Status: "Read",
             Subject: "Notification 2",
-            Message: "School has participated Math Olympaid Exam",
+            message: "School has participated Math Olympaid Exam",
             Timestamp: "Date: 04 Dec 2015",
             Priority: "medium"
         }, {
             Picture: "education-bg.jpg",
             Status: "Read",
             Subject: "Notification 3",
-            Message: "The Attendance is Compulsary",
+            message: "The Attendance is Compulsary",
             Timestamp: "Date: 04 Dec 2015",
             Priority: "high"
         }];
@@ -668,7 +594,7 @@ angular.module('starter.controllers', [])
             } else {
                 $scope.selectedAll = false;
             }
-            angular.forEach($scope.nMessages, function (nmsg) {
+            angular.forEach($scope.nmessages, function (nmsg) {
                 nmsg.Selected = $scope.selectedAll;
             });
 
@@ -687,7 +613,6 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
 
         //Side-Menu
-
         $ionicSideMenuDelegate.canDragContent(true);
 
     })
@@ -709,15 +634,15 @@ angular.module('starter.controllers', [])
         if(userSessions.userSession.userToken == 0){
             $state.go('login');
         }
+        $scope.clickStatus = false;
         var url= GLOBALS.baseUrl+"user/view-homework?token="+userSessions.userSession.userToken;
             $http.get(url)
                 .success(function(response) {
                     if(response['status'] == 200){
                        $scope.homeworksListing = response['data'];
                        if($scope.homeworksListing == ''){
-                            $scope.homeworksListing = [{
-                                "description" : "No homeworks found"
-                            }];
+                            $scope.errorMessage = response['message'];
+                            $scope.showPopup();
                        } 
                     }
                     else{
@@ -772,6 +697,7 @@ angular.module('starter.controllers', [])
         if(userSessions.userSession.userToken == 0){
             $state.go('login');
         }
+        $scope.clickStatus = false;
         
         $scope.publishHw = function(hwId){
             var url = GLOBALS.baseUrl+"user/publish-homework?token="+userSessions.userSession.userToken;
@@ -792,9 +718,8 @@ angular.module('starter.controllers', [])
                     if(response['status'] == 200){
                        $scope.homeworksListing = response['data'];
                        if($scope.homeworksListing == ''){
-                            $scope.homeworksListing = [{
-                                "description" : "No homeworks found"
-                            }];
+                            $scope.errorMessage = response['message'];
+                            $scope.showPopup();
                        } 
                     }
                     else{
@@ -809,8 +734,7 @@ angular.module('starter.controllers', [])
                 });
          };
           
-        $scope.loadUnpHw();
-                
+        $scope.loadUnpHw();                
         $scope.hwDetail = function(hwd){
             $scope.checkHid = hwDetails.setHwView(hwd);
             if($scope.checkHid == true){
@@ -898,16 +822,20 @@ angular.module('starter.controllers', [])
         if(userSessions.userSession.userToken == 0){
             $state.go('login');
         }
+        $scope.clickStatus = false;
         var url= GLOBALS.baseUrl+"user/view-homework-parent/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
             $http.get(url)
                 .success(function(response) {
                     if(response['status'] == 200){
                        $scope.homeworksListing = response['data'];
                        if($scope.homeworksListing == ''){
-                            $scope.homeworksListing = [{
-                                "description" : "No homeworks found"
-                            }];
+                            $scope.errorMessage = response['message'];
+                            $scope.showPopup();
                        } 
+                    }
+                    else if(response['status'] == 202){
+                            $scope.errorMessage = response['message'];
+                            $scope.showPopup();
                     }
                     else{
                         $scope.errorMessage = response['message'];
@@ -1019,31 +947,31 @@ angular.module('starter.controllers', [])
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.editHwData = hwDetails.getHwView();
-        $scope.hwId = $scope.editHwData.homework_id;
-        $scope.recipient = $scope.editHwData.studentList.length+" Student Selected";
+        $scope.hwId = $scope.editHwData.homework_id;        
         $scope.contactList = $scope.editHwData.studentList;
-        $scope.checkRecipient = true;
+        $scope.recipient = $scope.contactList.length+" Student Selected";
         $scope.SubjectId = $scope.editHwData.subject_id;
         $scope.SubjectName = $scope.editHwData.subjectName;
         $scope.BatchId = $scope.editHwData.batch_id;
         $scope.BatchName = $scope.editHwData.batch_name;
         $scope.selectedList=[];
-        for(var i=0; i < $scope.recipient; i++){
-           $scope.selectedList[i] = $scope.editHwData.studentList[i]['id'];
-        }       
+        angular.forEach($scope.contactList, function (item) {
+            $scope.selectedList.push(item.id);
+        });               
         $scope.hwTitle = $scope.editHwData.homeworkTitle;
         $scope.classId = $scope.editHwData.class_id;
         $scope.divId = $scope.editHwData.division_id;
         $scope.className = $scope.editHwData.class_name;
         $scope.divName = $scope.editHwData.division_name;
-        $scope.dueDate = $scope.editHwData.due_date;
+        $scope.minDate = new Date();
+        $scope.dueDate = new Date();
         $scope.description = $scope.editHwData.description;
         $scope.hwTypeId = $scope.editHwData.homeworkTypeId;
         $scope.hwrkType = $scope.editHwData.homeworkType;
         $scope.setTitle = function(title){
           $scope.hwTitle = title;  
-        };
-        
+        };       
+               
         $scope.setDescription = function(message){
           $scope.description = message;  
         };
@@ -1085,13 +1013,11 @@ angular.module('starter.controllers', [])
         };
          
         $scope.getSelectedSub = function(subject){
-            $scope.recipient = "";
-            $scope.checkRecipient = true;
-            $scope.contactList.length = 0;         
-            var url= GLOBALS.baseUrl+"user/get-subjects-batches/"+subject['subject_id']+"?token="+userSessions.userSession.userToken;
+            $scope.recipient = $scope.editHwData.studentList.length+" Student Selected";                    
+            var url= GLOBALS.baseUrl+"user/get-subjects-batches/"+subject['id']+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
                     $scope.batchList = response['data'];
-                    $scope.SubjectId = subject['subject_id'];                
+                    $scope.SubjectId = subject['id'];                
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
@@ -1103,6 +1029,7 @@ angular.module('starter.controllers', [])
                 $http.get(url).success(function(response) {
                     $scope.classList = response['data'];
                     $scope.BatchId = batch['id'];
+                    $scope.contactList.length = 0;
                     $scope.contactList.length = 0;                  
                 })
                 .error(function(response) {
@@ -1127,14 +1054,14 @@ angular.module('starter.controllers', [])
                 $http.get(url)
                     .success(function(response) {
                         $scope.contactList = response['data']['studentList'];
+                        $scope.selectedList.length = 0;
                         $scope.checkRecipient = false;
                         $scope.divId = divType['id'];
                     })
                     .error(function(response) {
                         console.log("Error in Response: " +response);
                     });                    
-        };
-
+        }; 
         $ionicModal.fromTemplateUrl('studentHwCntctlist.html', {
             scope: $scope,
             animation: 'slide-in-up'
@@ -1184,8 +1111,8 @@ angular.module('starter.controllers', [])
                 $scope.showPopup();
             }
             else{
-                var url = GLOBALS.baseUrl+"user/createHomework?token="+userSessions.userSession.userToken;
-                $http.post(url, {_method:'PUT', homework_id: $scope.hwId, subject_id: $scope.SubjectId, title: $scope.hwTitle, batch_id: $scope.BatchId, class_id: $scope.classId, division_id: $scope.divId, due_date: $scope.dueDate, student_id: $scope.selectedList, description: $scope.description, homework_type: $scope.hwTypeId, attachment_file: ''}).success(function(response){ 
+                var url = GLOBALS.baseUrl+"user/update-homework?token="+userSessions.userSession.userToken;
+                $http.post(url, {_method:'PUT', homework_id: $scope.hwId, subject_id: $scope.SubjectId, title: $scope.hwTitle, batch_id: $scope.BatchId, class_id: $scope.classId, division_id: $scope.divId, due_date: $scope.dueDate, student: $scope.selectedList, description: $scope.description, homework_type: $scope.hwTypeId, attachment_file: ''}).success(function(response){ 
                     if(response['status'] == 200){
                         $scope.msg = response['message'];
                           $scope.showPopup();
@@ -1239,7 +1166,6 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
 
         //Side-Menu
-
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.recipient = "Select Student";
         $scope.checkRecipient = true;
@@ -1253,6 +1179,7 @@ angular.module('starter.controllers', [])
         $scope.description = '';
         $scope.hwTypeId = '';
         $scope.contactList = [];
+        $scope.minDate = new Date();
         
         $scope.setTitle = function(title){
           $scope.hwTitle = title;  
@@ -1444,7 +1371,7 @@ angular.module('starter.controllers', [])
         };
         
     })
-    .controller('MessageCtrl', function($scope, $state, $timeout, $ionicPopup, ionicMaterialInk, $ionicSideMenuDelegate, GLOBALS, userSessions, $http, chatHist) {
+    .controller('messageCtrl', function($scope, $state, $timeout, $ionicPopup, ionicMaterialInk, $ionicSideMenuDelegate, GLOBALS, userSessions, $http, chatHist) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -1468,16 +1395,16 @@ angular.module('starter.controllers', [])
         $scope.tooId = '';
         $scope.nMessages = [];
         $scope.aclMessage = "Access Denied";
-        $scope.loadMessages = function(){
+        $scope.clickStatus = false;
+        $scope.loadmessages = function(){
           if (userSessions.userSession.userRole == "parent"){
             var url1 = GLOBALS.baseUrl+"user/get-messages-parent/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
             $http.get(url1).success(function(response){   
                 if(response['status'] == 200){
                        $scope.nMessages = response['MessageList'];
                        if($scope.nMessages == ''){
-                            $scope.nMessages = [{
-                                "description" : "No messages found"
-                            }];
+                           $scope.aclMessage = response['message'];
+                           $scope.showPopup();
                        }
                     }
                     else{
@@ -1496,9 +1423,8 @@ angular.module('starter.controllers', [])
                 if(response['status'] == 200){
                        $scope.nMessages = response['MessageList'];
                        if($scope.nMessages == ''){
-                            $scope.nMessages = [{
-                                "description" : "No messages found"
-                            }];
+                           $scope.aclMessage = response['message'];
+                           $scope.showPopup();
                        } 
                     }
                     else{
@@ -1512,8 +1438,7 @@ angular.module('starter.controllers', [])
             });
         }
         };
-        $scope.loadMessages();
-        
+        $scope.loadmessages();        
         $scope.confirmDelete = function(from, to){
             $scope.fromId = from;
             $scope.tooId = to;
@@ -1523,7 +1448,7 @@ angular.module('starter.controllers', [])
         $scope.deleteMessage = function(){
             var url = GLOBALS.baseUrl+"user/delete-messages?token="+userSessions.userSession.userToken;
             $http.post(url, {_method: 'PUT', from_id: $scope.fromId, to_id: $scope.tooId}).success(function(response){
-                $scope.loadMessages();
+                $scope.loadmessages();
             }).error(function(err) {
                 console.log(err);
                 $scope.aclMessage = "Access Denied";
@@ -1580,11 +1505,9 @@ angular.module('starter.controllers', [])
             $timeout(function() {
                 msgPopup.close(); //close the popup after 8 seconds for some reason                
             }, 3000);
-        };        
-        
-
+        };
     })
-    .controller('MsgComposeCtrl', function($scope, $state, $timeout, $ionicPopup, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, GLOBALS, filterUserRoles, filterBatches, filterDivisions, filterClasses, userSessions, $http) {
+    .controller('MsgComposeCtrl', function($scope, $state, $timeout, $ionicPopup, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, GLOBALS, userSessions, $http) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -1604,7 +1527,7 @@ angular.module('starter.controllers', [])
         $ionicSideMenuDelegate.canDragContent(true);        
         $scope.checkRole = "display-no";
         $scope.checkRecipient = true;
-        $scope.recipient = "";        
+        $scope.recipient = "Add Recipient+ ";        
         $scope.contactList = [];
         $scope.message = "";
         var url= GLOBALS.baseUrl+"user/userroles?token="+userSessions.userSession.userToken;
@@ -1618,7 +1541,7 @@ angular.module('starter.controllers', [])
         $scope.getSelectedRole = function(roleType){          
             if(roleType['name'] == "Student"){                
                 $scope.checkRole = "";
-                $scope.recipient = "";
+                $scope.recipient = "Add Recipient+ ";
                 $scope.checkRecipient = true;
                 $scope.contactList.length = 0;                
                 var url= GLOBALS.baseUrl+"user/get-batches-teacher?token="+userSessions.userSession.userToken;
@@ -1632,13 +1555,12 @@ angular.module('starter.controllers', [])
             else{
                 $scope.checkRecipient = false;
                 $scope.checkRole = "display-no";
-                $scope.recipient = "";
+                $scope.recipient = "Add Recipient+ ";
                 $scope.contactList.length = 0;
                 $scope.getTeacherList();
             }
         }
-        $scope.getClass = function(batchType){
-               //$scope.classes = filterClasses.getClasses(userSessions.userSession.userToken, batchType['id']);
+        $scope.getClass = function(batchType){               
                var url= GLOBALS.baseUrl+"user/getclasses/"+batchType['id']+"?token="+userSessions.userSession.userToken;
                $http.get(url).success(function(response) {
                     $scope.classes = response['data']['classList'];
@@ -1649,7 +1571,6 @@ angular.module('starter.controllers', [])
         };
 
         $scope.getDivision = function(classType){
-            //$scope.divisions = filterDivisions.getDivisions(userSessions.userSession.userToken, classType['id']);
             var url= GLOBALS.baseUrl+"user/getdivisions/"+classType['id']+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
                    $scope.divisions = response['data']['divisionList'];
@@ -1707,19 +1628,19 @@ angular.module('starter.controllers', [])
             $scope.closeModal();
         };
                 
-        $scope.setMessage = function(message){
+        $scope.setmessage = function(message){
           $scope.message = message;  
         };
         
-        $scope.sendMessage= function(){
-          if($scope.recipient == "" || $scope.message == "" || $scope.recipient == "" && $scope.message == ""){
-              if($scope.recipient == ""){
+        $scope.sendmessage= function(){
+          if($scope.recipient == "Add Recipient+ " || $scope.message == "" || $scope.recipient == "" && $scope.message == ""){
+              if($scope.recipient == "Add Recipient+ "){
                   $scope.msg = "Please Add Recipient";
               }
               if($scope.message == ""){
                   $scope.msg = "Cannot send blank message";
               }
-              if($scope.recipient == "" && $scope.message == ""){
+              if($scope.recipient == "Add Recipient+ " && $scope.message == ""){
                   $scope.msg = "Please Add Recipient & Cannot send blank message";
               }
               $scope.showPopup();
@@ -1761,7 +1682,6 @@ angular.module('starter.controllers', [])
                 myPopup.close(); //close the popup after 8 seconds for some reason                
             }, 3000);
         };
-
     })
     .controller('ParentMsgComposeCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $ionicHistory, $http, GLOBALS, userSessions, $ionicPopup) {
 
@@ -1821,11 +1741,11 @@ angular.module('starter.controllers', [])
             $scope.closeModal();
         };
         
-        $scope.setMessage = function(message){
+        $scope.setmessage = function(message){
           $scope.message = message;  
         };
 
-        $scope.sendMessage= function(){
+        $scope.sendmessage= function(){
                         if($scope.recipient == "" || $scope.message == "" || $scope.recipient == "" && $scope.message == ""){
                                 if($scope.recipient == ""){
                                     $scope.msg = "Please Add Recipient";
@@ -1907,7 +1827,7 @@ angular.module('starter.controllers', [])
         $scope.loadChat();
         $scope.title = $scope.envelop.title;
         
-        $scope.sendMessage= function(){
+        $scope.sendmessage= function(){
                         if($scope.message == ""){
                         $scope.msg = "Cannot send blank message";
                         $scope.showPopup();
@@ -2169,64 +2089,64 @@ angular.module('starter.controllers', [])
             $state.go('app.sharedNotification');
         };
 
-        $scope.nMessages = [{
+        $scope.nmessages = [{
             Picture: "graduate.jpg",
             Status: "unRead",
             Subject: "Notification 1",
-            Message: "School has won Math Olympaid Exam",
+            message: "School has won Math Olympaid Exam",
             Timestamp: "Date: 18 Oct 2015",
             Priority: "high"
         }, {
             Status: "Read",
             Subject: "Notification 2",
-            Message: "School has participated Math Olympaid Exam",
+            message: "School has participated Math Olympaid Exam",
             Timestamp: "Date: 17 Oct 2015",
             Priority: "medium"
         }, {
             Picture: "education-bg.jpg",
             Status: "Read",
             Subject: "Notification 3",
-            Message: "The Attendance is Compulsary",
+            message: "The Attendance is Compulsary",
             Timestamp: "Date: 15 Oct 2015",
             Priority: "high"
         },{
             Picture: "graduate.jpg",
             Status: "unRead",
             Subject: "Notification 1",
-            Message: "School has won Math Olympaid Exam",
+            message: "School has won Math Olympaid Exam",
             Timestamp: "Date: 18 Oct 2015",
             Priority: "high"
         }, {
             Status: "Read",
             Subject: "Notification 2",
-            Message: "School has participated Math Olympaid Exam",
+            message: "School has participated Math Olympaid Exam",
             Timestamp: "Date: 17 Oct 2015",
             Priority: "medium"
         }, {
             Picture: "education-bg.jpg",
             Status: "Read",
             Subject: "Notification 3",
-            Message: "The Attendance is Compulsary",
+            message: "The Attendance is Compulsary",
             Timestamp: "Date: 15 Oct 2015",
             Priority: "high"
         },{
             Picture: "graduate.jpg",
             Status: "unRead",
             Subject: "Notification 1",
-            Message: "School has won Math Olympaid Exam",
+            message: "School has won Math Olympaid Exam",
             Timestamp: "Date: 18 Oct 2015",
             Priority: "high"
         }, {
             Status: "Read",
             Subject: "Notification 2",
-            Message: "School has participated Math Olympaid Exam",
+            message: "School has participated Math Olympaid Exam",
             Timestamp: "Date: 17 Oct 2015",
             Priority: "medium"
         }, {
             Picture: "education-bg.jpg",
             Status: "Read",
             Subject: "Notification 3",
-            Message: "The Attendance is Compulsary",
+            message: "The Attendance is Compulsary",
             Timestamp: "Date: 15 Oct 2015",
             Priority: "high"
         }];
@@ -2347,53 +2267,53 @@ angular.module('starter.controllers', [])
         };
         $scope.selectedDate = new Date();
 
-        $scope.nMessages = [{
+        $scope.nmessages = [{
             Button: "display-true",
             Label: "display-false",
             Title: "Ashish Sawant",
-            Message: "Fever, Cough and Cold",
+            message: "Fever, Cough and Cold",
             Timestamp: "Applied On: 18 Oct 2015",
             Class: "5th B div"
         }, {
             Button: "display-true",
             Label: "display-false",
             Title: "Tushar Kadam",
-            Message: "Typhoid",
+            message: "Typhoid",
             Timestamp: "Applied On: 17 Oct 2015",
             Class: "8th A div"
         }, {
             Button: "display-false",
             Label: "display-true",
             Title: "Rahul Bhosale",
-            Message: "Brothers Marriage",
+            message: "Brothers Marriage",
             Timestamp: "Applied On: 15 Oct 2015",
             Class: "9th C div"
         }, {
             Button: "display-false",
             Label: "display-true",
             Title: "Ashish Sawant",
-            Message: "Cough n Cold",
+            message: "Cough n Cold",
             Timestamp: "Applied On: 13 Oct 2015",
             Class: "5th B div"
         }, {
             Button: "display-false",
             Label: "display-true",
             Title: "Rahul Bhosale",
-            Message: "Brothers Marriage",
+            message: "Brothers Marriage",
             Timestamp: "Applied On: 15 Oct 2015",
             Class: "9th C div"
         }, {
             Button: "display-false",
             Label: "display-true",
             Title: "Ashish Sawant",
-            Message: "Cough n Cold",
+            message: "Cough n Cold",
             Timestamp: "Applied On: 13 Oct 2015",
             Class: "5th B div"
         },{
             Button: "display-false",
             Label: "display-true",
             Title: "Tushar Kadam",
-            Message: "Cough n Cold",
+            message: "Cough n Cold",
             Timestamp: "Applied On: 11 Oct 2015",
             Class: "8th A div"
         }];
@@ -2469,12 +2389,45 @@ angular.module('starter.controllers', [])
         $scope.selectedDate = new Date();
 
     })    
-    .controller('TimeTableCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup) {
+    .controller('TimeTableCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup, $filter, userSessions, GLOBALS, $http) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
-
+        $scope.checkBatch = true;
+        $scope.checkClass = true;
+        $scope.timeTableList = [];
+        $scope.setDay = '';
+        $scope.divId = '';
+        $scope.date = new Date();        
+        switch ($scope.currentDay = $filter('date')(new Date(), 'EEEE')) {
+            
+            case 'Monday':
+                $scope.currentDay = 1;
+                break;
+            case 'Tuesday':
+                $scope.currentDay = 2;
+                break;
+            case 'Wednesday':
+                $scope.currentDay = 3;
+                break;
+            case 'Thursday':
+                $scope.currentDay = 4;
+                break;
+            case 'Friday':
+                $scope.currentDay = 5;
+                break;
+            case 'Saturday':
+                $scope.currentDay = 6;
+                break;
+            case 'Sunday':
+                $scope.currentDay = 7;
+                break;
+            default:
+                $scope.currentDay = 0;
+                break;
+         }
+               
         // Set Header
         $scope.$parent.hideHeader();//
 
@@ -2483,6 +2436,77 @@ angular.module('starter.controllers', [])
 
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
+        
+        $scope.defaultTimetable = function(){
+            var url = null;
+            if(userSessions.userSession.userRole == "parent"){
+              url = GLOBALS.baseUrl+"user/view-timetable-parent/"+userSessions.userSession.userId+"/"+$scope.currentDay+"?token="+userSessions.userSession.userToken; 
+            }else{
+              url = GLOBALS.baseUrl+"user/default-timetable-teacher?token="+userSessions.userSession.userToken; 
+            }           
+            $http.get(url).success(function(response) {
+                    $scope.timeTableList = response['data']['timetable'];
+                    $scope.divId = response['data']['div_id'];
+                    $scope.setDay = response['data']['day'];
+                    $scope.checkBatch = false;              
+                })
+                .error(function(response) {
+                    console.log("Error in Response: " +response);
+                });
+        };
+        
+        $scope.getTimetable = function(day){
+            var url = null;
+            if(userSessions.userSession.userRole == "parent"){
+              url = GLOBALS.baseUrl+"user/view-timetable-parent/"+userSessions.userSession.userId+"/"+day+"?token="+userSessions.userSession.userToken; 
+            }else{
+              url = GLOBALS.baseUrl+"user/view-timetable-teacher/"+$scope.divId+"/"+day+"?token="+userSessions.userSession.userToken; 
+            }           
+            $http.get(url).success(function(response) {
+                    $scope.timeTableList = response['data']['timetable'];
+                    $scope.divId = response['data']['div_id'];
+                    $scope.setDay = response['data']['day'];            
+                })
+                .error(function(response) {
+                    console.log("Error in Response: " +response);
+                });
+        };       
+        
+        $scope.getBatches = function(){                    
+            var url= GLOBALS.baseUrl+"user/get-batches?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response) {
+                    $scope.batchList = response['data'];
+                    $scope.checkBatch = false;              
+                })
+                .error(function(response) {
+                    console.log("Error in Response: " +response);
+                });
+        };
+        
+        $scope.getClass= function(batch){                
+                var url= GLOBALS.baseUrl+"user/get-classes/"+batch['id']+"?token="+userSessions.userSession.userToken;
+                $http.get(url).success(function(response) {
+                    $scope.classList = response['data'];
+                    $scope.checkClass = false;           
+                })
+                .error(function(response) {
+                    console.log("Error in Response: " +response);
+                });
+        };
+        
+        $scope.getDivision = function(classType){
+            var url= GLOBALS.baseUrl+"user/get-divisions/"+classType['id']+"?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response) {
+                   $scope.divisionsList = response['data'];
+                })
+                .error(function(response) {
+                    console.log("Error in Response: " +response);
+                });
+        };
+        
+        $scope.getDivId = function(division){
+            $scope.divId = division['id'];            
+        }        
 
         // Triggered on a button click, or some other target
         $scope.showPopup = function() {
@@ -2493,30 +2517,21 @@ angular.module('starter.controllers', [])
                 template: '<div class="list">'+
                     '<div class="row">'+
                     '<div class="col-33 border-bottom">'+
-                    '<select class="item item-input item-select">'+
-                    '<option selected class="padding-top-5">Batch</option>'+
-                    '<option class="padding-top-5">Morning</option>'+
-                    '<option class="padding-top-5">Afternoon</option>'+
-                    '<option class="padding-top-5">Evening</option>'+
-                    '</select>'+
+                        '<select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batchList track by batch.id" ng-change="getClass(selectedBatch.batch)">'+
+                            '<option value="" ng-disabled="true">-Batch-</option>'+
+                        '</select>'+
+                    '</div>'+
+                    '<div class="col-33 border-right border-bottom">'+
+                        '<select class="item item-input item-select" ng-model="selectedClass.class" ng-options="class.name for class in classList track by class.id" ng-change="getDivision(selectedClass.class)" ng-disabled="checkBatch">'+
+                            '<option value="" ng-disabled="true">-Class-</option>'+
+                        '</select>'+
                     '</div>'+
                     '<div class="col-33 border-bottom">'+
-                    '<select class="item item-input item-select">'+
-                    '<option selected class="padding-top-5">Class</option>'+
-                    '<option class="padding-top-5">Class I</option>'+
-                    '<option class="padding-top-5">Class II</option>'+
-                    '<option class="padding-top-5">Class III</option>'+
-                    '</select>'+
+                        '<select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.name for division in divisionsList track by division.id" ng-change="getDivId(selectedDivision.division)" ng-disabled="checkClass">'+
+                            '<option value="" ng-disabled="true">-Div-</option>'+
+                        '</select>'+
                     '</div>'+
-                    '<div class="col-33 border-bottom">'+
-                    '<select class="item item-input item-select">'+
-                    '<option selected class="padding-top-5">Div</option>'+
-                    '<option class="padding-top-5">Div A</option>'+
-                    '<option class="padding-top-5">Div B</option>'+
-                    '<option class="padding-top-5">Div C</option>'+
-                    '</select>'+
-                    '</div>'+
-                    '</div>'+
+              '</div>'+
                     '</div>',
                 title: 'Select Details',
                 subTitle: '',
@@ -2524,15 +2539,11 @@ angular.module('starter.controllers', [])
                 buttons: [
                     { text: 'Cancel' },
                     {
-                        text: '<b>Save</b>',
+                        text: '<b>Ok</b>',
                         type: 'button-timetable',
                         onTap: function(e) {
-                            if (!$scope.data.studName) {
-                                myPopup.close();
-                            } else {
-                                //return $scope.data.studName;
-                                myPopup.close();
-                            }
+                            $scope.getTimetable($scope.currentDay);
+                            myPopup.close();                            
                         }
                     }
                 ]
@@ -2540,60 +2551,7 @@ angular.module('starter.controllers', [])
             myPopup.then(function(res) {
                 console.log('Tapped!', res);
             });
-            $timeout(function() {
-                myPopup.close(); //close the popup after 8 seconds for some reason
-            }, 40000);
         };
-
-        $scope.timeTableList = [
-            {
-                Subject: 'Science',
-                Teacher: 'Mr. S.Sonawane.',
-                Time: '11:00 am - 11:40 am'
-            },
-            {
-                Subject: 'Maths',
-                Teacher: 'Mr. A.Adkar.',
-                Time: '11:45 am - 12:25 pm'
-            },
-            {
-                Subject: 'English',
-                Teacher: 'Mrs. P.Dsouza.',
-                Time: '12:30 pm - 01:10 pm'
-            },
-            {
-                Subject: 'Marathi',
-                Teacher: 'Mr. C.Agarkar',
-                Time: '01:15 pm - 01:55 pm'
-            },
-            {
-                Subject: 'Geography',
-                Teacher: 'Mr. V.M.Das',
-                Time: '02:00 pm - 02:40 pm'
-            },
-            {
-                Subject: 'History',
-                Teacher: 'Mrs. A.Rao.',
-                Time: '02:45 pm - 03:25 pm'
-            },
-            {
-                Subject: 'Recess',
-                Teacher: '',
-                Time: '03:30 pm - 4:10 pm'
-
-            },
-            {
-                Subject: 'Hindi',
-                Teacher: 'Mrs. D.Saxena.',
-                Time: '04:15 pm - 04:55 pm'
-            },
-            {
-                Subject: 'Drawing',
-                Teacher: 'Mr. Vijay.Kulkarni',
-                Time: '05:00 pm - 05:55 pm'
-            }
-        ];
-
     })
     .controller('ResultViewCntrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $ionicPopup) {
         $scope.$parent.clearFabs();
@@ -2840,4 +2798,4 @@ angular.module('starter.controllers', [])
 
         };
 
-    }); // end of Ctrl
+}); // end of Ctrl

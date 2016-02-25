@@ -30,7 +30,7 @@
         <ion-list>
             <ion-item class="notify-item-border no-border margin-bottom-10" ng-repeat="hw in homeworksListing">
                 <div class="row">
-                    <div class="col-80" ng-click="hwDetail(hw)">
+                    <div class="col-80" ng-class='{ disabled: clickStatus}' ng-click="clickStatus || hwDetail(hw)">
                         <h2><strong>{{hw.title}}</strong></h2>
                         <p>{{hw.description}}<br><strong>{{hw.class_name}} {{hw.division_name}} Div {{hw.subject_name}}</strong></p>
                         <div class="row padding-0 margin-top-5">

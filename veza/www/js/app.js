@@ -52,8 +52,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
         $translateProvider.preferredLanguage('en');
         $translateProvider.useSanitizeValueStrategy('escape');
 
-    $stateProvider
-
+    $stateProvider    
     .state('login', {
         url: '/login',
         templateUrl: 'templates/login.html',
