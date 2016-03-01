@@ -1632,7 +1632,7 @@ angular.module('starter.controllers', [])
           $scope.message = message;  
         };
         
-        $scope.sendmessage= function(){
+        $scope.sendMessage= function(){
           if($scope.recipient == "Add Recipient+ " || $scope.message == "" || $scope.recipient == "" && $scope.message == ""){
               if($scope.recipient == "Add Recipient+ "){
                   $scope.msg = "Please Add Recipient";
@@ -1745,7 +1745,7 @@ angular.module('starter.controllers', [])
           $scope.message = message;  
         };
 
-        $scope.sendmessage= function(){
+        $scope.sendMessage= function(){
                         if($scope.recipient == "" || $scope.message == "" || $scope.recipient == "" && $scope.message == ""){
                                 if($scope.recipient == ""){
                                     $scope.msg = "Please Add Recipient";
@@ -1827,7 +1827,7 @@ angular.module('starter.controllers', [])
         $scope.loadChat();
         $scope.title = $scope.envelop.title;
         
-        $scope.sendmessage= function(){
+        $scope.sendMessage= function(){
                         if($scope.message == ""){
                         $scope.msg = "Cannot send blank message";
                         $scope.showPopup();

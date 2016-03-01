@@ -41,7 +41,6 @@
                 Sun
             </a>
         </div>
-        <ion-nav-view name="default-tab" class="{{blankView.view}}">
                 <div class="bar bar-time-table bar-header has-tabs-top">
                     <iion-item class="row">
                         <div class="row">
@@ -53,13 +52,12 @@
                             <div class="col-70 margin-top-5">
                                 <span class="inner-header">Time Table</span>
                             </div>
-                            <div class="col-20" ng-click="showPopup()">
+                            <div class="col-20" ng-click="showPopup()" ng-if="userSessions.userSession.userRole == 'teacher'">
                                 <a><i class="icon ion-android-person-add align-delete-bin" ></i></a>
                             </div>
                         </div>
                     </iion-item>
                 </div>
-                <ion-view>
                     <div class="bar bar-header bar-dark margin-top-44"><div class="col-offset-25 col-50 text-center padding-10">{{setDay}}</div></div>
                     <ion-content >
                         <ion-list>
@@ -79,13 +77,11 @@
                                     </div>
                                 </ion-item>
                             </div>
-
                         </ion-list>
                     </ion-content>
-                </ion-view>
-        </ion-nav-view>
+         </ion-view>
 
-        <ion-nav-view name="changeView-tab">
+        <!--<ion-nav-view name="changeView-tab">
 
         </ion-nav-view>
     </div>
@@ -334,7 +330,7 @@
             </ion-list>
         </ion-content>
     </ion-view>
-</script>
+</script>-->
 
 <script id="popup-template.html" type="text/ng-template">
     <div class="list">
