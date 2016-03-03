@@ -211,7 +211,7 @@ display: none;
     color: #ffffff;
 }
 .background-break{
-    background-color: #F5A9BC;
+    background-color: #F5C8D4;
 }
 .approve-button{
     font-size: 14px;
@@ -262,6 +262,9 @@ display: none;
 
 .margin-bottom-10{
     margin-bottom: 10px;
+}
+.margin-bottom-100{
+    margin-bottom: 100px;
 }
 .height-bottom-10{
     height: 10px;

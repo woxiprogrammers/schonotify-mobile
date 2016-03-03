@@ -3,8 +3,8 @@
 var db = null;
 angular.module('starter.controllers', [])
 .constant('GLOBALS',{
-   baseUrl:'http://school_mit.woxiapps.com/api/v1/',
-  // baseUrl:'http://192.168.2.8/api/v1/'  
+   baseUrl:'http://test.woxiapps.com/api/v1/',
+//   baseUrl:'http://192.168.2.8/api/v1/'
 })
 .service('userSessions', function Usersession(){
 
@@ -2037,13 +2037,15 @@ angular.module('starter.controllers', [])
             };
 
             $scope.events = [
-                {Title: '13-', Subject: ' Priyanshi Prajapati', date: "2015-12-03"},
-                {Title: '44-', Subject: ' Nimish Jagtap', date: "2015-12-03"},
-                {Title: '51-', Subject: ' Komal Jagtap', date: "2015-12-03"},
-                {Title: '02-', Subject: ' Pranav Athale', date: "2015-12-03"},
-                {Title: '11-', Subject: ' Rekha Mathani', date: "2015-11-10"},
-                {Title: '44-', Subject: ' Abhi Kadam', date: "2015-11-20"},
-                {Title: '65-', Subject: ' Ram Shukla', date: "2015-11-20"}
+                {date: "2015-12-03"},
+                {date: "2015-12-03"},
+                {date: "2015-12-03"},
+                {date: "2015-12-03"},
+                {date: "2015-11-10"},
+                {date: "2015-11-20"},
+                {date: "2016-03-05"},
+                {date: "2016-03-07"},
+                {date: "2016-03-10"}
             ];
 
     })
@@ -2399,6 +2401,10 @@ angular.module('starter.controllers', [])
         $scope.timeTableList = [];
         $scope.setDay = '';
         $scope.divId = '';
+        $scope.batchName = 'Batch';
+        $scope.className = 'Class';
+        $scope.divisionName = 'Div';
+        $scope.userRole = userSessions.userSession.userRole;
         $scope.date = new Date();        
         switch ($scope.currentDay = $filter('date')(new Date(), 'EEEE')) {
             
@@ -2426,7 +2432,7 @@ angular.module('starter.controllers', [])
             default:
                 $scope.currentDay = 0;
                 break;
-         }
+         }       
                
         // Set Header
         $scope.$parent.hideHeader();//
@@ -2436,24 +2442,58 @@ angular.module('starter.controllers', [])
 
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
-        
+                
         $scope.defaultTimetable = function(){
             var url = null;
             if(userSessions.userSession.userRole == "parent"){
               url = GLOBALS.baseUrl+"user/view-timetable-parent/"+userSessions.userSession.userId+"/"+$scope.currentDay+"?token="+userSessions.userSession.userToken; 
             }else{
-              url = GLOBALS.baseUrl+"user/default-timetable-teacher?token="+userSessions.userSession.userToken; 
-            }           
+              url = GLOBALS.baseUrl+"user/default-timetable-teacher?token="+userSessions.userSession.userToken;
+            }
             $http.get(url).success(function(response) {
+                if(response['status'] == 200){                    
                     $scope.timeTableList = response['data']['timetable'];
                     $scope.divId = response['data']['div_id'];
                     $scope.setDay = response['data']['day'];
-                    $scope.checkBatch = false;              
+                    if(userSessions.userSession.userRole == "teacher"){
+                         $scope.batchName = response['data']['batchName'];
+                         $scope.className = response['data']['className'];
+                         $scope.divisionName = response['data']['divisionName'];
+                    }
+                }else{
+                    $scope.timeTableList = response['data']['timetable'];
+                    $scope.divId = response['data']['div_id'];
+                    $scope.setDay = response['data']['day'];
+                    if(userSessions.userSession.userRole == "teacher"){
+                        $scope.batchName = response['data']['batchName'];
+                        $scope.className = response['data']['className'];
+                        $scope.divisionName = response['data']['divisionName'];
+                    }
+                    $scope.message = response['message'];
+                    $scope.showPopupError();
+                }            
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
+                    if(response.hasOwnProperty('status')){
+                        $scope.message = response['message'];
+                        $scope.timeTableList = response['data']['timetable'];
+                        $scope.divId = response['data']['div_id'];
+                        $scope.setDay = response['data']['day'];
+                        if(userSessions.userSession.userRole == "teacher"){
+                            $scope.batchName = response['data']['batchName'];
+                            $scope.className = response['data']['className'];
+                            $scope.divisionName = response['data']['divisionName'];
+                        }
+                    }
+                    else{
+                        $scope.message = "Access Denied";
+                    }
+                    $scope.showPopupError();
                 });
         };
+        
+        $scope.defaultTimetable();
         
         $scope.getTimetable = function(day){
             var url = null;
@@ -2463,31 +2503,65 @@ angular.module('starter.controllers', [])
               url = GLOBALS.baseUrl+"user/view-timetable-teacher/"+$scope.divId+"/"+day+"?token="+userSessions.userSession.userToken; 
             }           
             $http.get(url).success(function(response) {
+                if(response['status'] == 200){                    
                     $scope.timeTableList = response['data']['timetable'];
                     $scope.divId = response['data']['div_id'];
-                    $scope.setDay = response['data']['day'];            
+                    $scope.setDay = response['data']['day'];
+                    if(userSessions.userSession.userRole == "teacher"){
+                        $scope.batchName = response['data']['batchName'];
+                        $scope.className = response['data']['className'];
+                        $scope.divisionName = response['data']['divisionName'];
+                    }
+                }else{
+                    $scope.timeTableList = response['data']['timetable'];
+                    $scope.divId = response['data']['div_id'];
+                    $scope.setDay = response['data']['day'];
+                    if(userSessions.userSession.userRole == "teacher"){
+                        $scope.batchName = response['data']['batchName'];
+                        $scope.className = response['data']['className'];
+                        $scope.divisionName = response['data']['divisionName'];
+                    }
+                    $scope.message = response['message'];
+                    $scope.showPopupError();
+                }                                
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
+                    if(response.hasOwnProperty('status')){
+                        $scope.message = response['message'];
+                        $scope.timeTableList = response['data']['timetable'];
+                        $scope.divId = response['data']['div_id'];
+                        $scope.setDay = response['data']['day'];
+                        if(userSessions.userSession.userRole == "teacher"){
+                            $scope.batchName = response['data']['batchName'];
+                            $scope.className = response['data']['className'];
+                            $scope.divisionName = response['data']['divisionName'];
+                        }
+                    }
+                    else{
+                        $scope.message = "Access Denied";
+                    }
+                    $scope.showPopupError();
                 });
         };       
-        
-        $scope.getBatches = function(){                    
-            var url= GLOBALS.baseUrl+"user/get-batches?token="+userSessions.userSession.userToken;
-            $http.get(url).success(function(response) {
-                    $scope.batchList = response['data'];
-                    $scope.checkBatch = false;              
+           if($scope.userRole != 'parent'){
+               var url= GLOBALS.baseUrl+"user/get-batches?token="+userSessions.userSession.userToken;
+                    $http.get(url).success(function(response) {
+                    $scope.batchList = response['data'];                                  
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
-        };
+           }               
+            
         
         $scope.getClass= function(batch){                
                 var url= GLOBALS.baseUrl+"user/get-classes/"+batch['id']+"?token="+userSessions.userSession.userToken;
                 $http.get(url).success(function(response) {
                     $scope.classList = response['data'];
-                    $scope.checkClass = false;           
+                    $scope.className = 'Class';
+                    $scope.divisionName = 'Div';
+                    $scope.checkBatch = false;           
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
@@ -2497,7 +2571,8 @@ angular.module('starter.controllers', [])
         $scope.getDivision = function(classType){
             var url= GLOBALS.baseUrl+"user/get-divisions/"+classType['id']+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
-                   $scope.divisionsList = response['data'];
+                   $scope.divisionsList = response['data'];                   
+                    $scope.checkClass = false;
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
@@ -2505,10 +2580,26 @@ angular.module('starter.controllers', [])
         };
         
         $scope.getDivId = function(division){
-            $scope.divId = division['id'];            
+            $scope.divId = division['id'];           
         }        
 
         // Triggered on a button click, or some other target
+        $scope.showPopupError = function() {
+            // An elaborate, custom popup
+            var myPopupError = $ionicPopup.show({
+                template: '<div class = "row"><span class = "align-center red-font text-center-align">'+$scope.message+'</span></div>',
+                title: '',
+                subTitle: '',
+                scope: $scope
+            });
+            myPopupError.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopupError.close(); //close the popup after 3 seconds for some reason
+            }, 3000);
+        };
+        
         $scope.showPopup = function() {
             $scope.data = {}
 
@@ -2518,17 +2609,17 @@ angular.module('starter.controllers', [])
                     '<div class="row">'+
                     '<div class="col-33 border-bottom">'+
                         '<select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batchList track by batch.id" ng-change="getClass(selectedBatch.batch)">'+
-                            '<option value="" ng-disabled="true">-Batch-</option>'+
+                            '<option value="" ng-disabled="true" ng-model="batchName">-{{batchName}}-</option>'+
                         '</select>'+
                     '</div>'+
                     '<div class="col-33 border-right border-bottom">'+
                         '<select class="item item-input item-select" ng-model="selectedClass.class" ng-options="class.name for class in classList track by class.id" ng-change="getDivision(selectedClass.class)" ng-disabled="checkBatch">'+
-                            '<option value="" ng-disabled="true">-Class-</option>'+
+                            '<option value="" ng-disabled="true" ng-model="className">-{{className}}-</option>'+
                         '</select>'+
                     '</div>'+
                     '<div class="col-33 border-bottom">'+
                         '<select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.name for division in divisionsList track by division.id" ng-change="getDivId(selectedDivision.division)" ng-disabled="checkClass">'+
-                            '<option value="" ng-disabled="true">-Div-</option>'+
+                            '<option value="" ng-disabled="true" ng-model="divisionName">-{{divisionName}}-</option>'+
                         '</select>'+
                     '</div>'+
               '</div>'+
