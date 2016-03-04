@@ -313,6 +313,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                 }
             }
         })
+        .state('app.leavecreate', {
+            url: '/leavecreate',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/create-leave.html',
+                    controller: 'CreateLeaveCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
         .state('app.viewevents', {
             url: '/viewevents',
             views: {
@@ -536,6 +548,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                 },
                 'fabContent': {
                     template: ''
+                }
+            }
+        })
+        .state('app.parentattendancelanding', {
+            url: '/parentattendancelanding',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/attendance-landing-parent.html',
+                    controller: ''
+                },
+                'fabContent': {
+                    template: '<button id="fab-new-leave" ng-click="createLeave()" class="button button-fab button-fab-bottom-right expanded bar-pink  spin"><i class="icon ion-edit"></i></button>', 
+                    controller: function ($timeout) {
+                        $timeout(function () {
+                            document.getElementById('fab-new-homework').classList.toggle('on');
+                        }, 900);
+                    }
                 }
             }
         })        

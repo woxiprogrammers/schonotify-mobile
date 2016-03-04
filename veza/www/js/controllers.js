@@ -207,6 +207,10 @@ angular.module('starter.controllers', [])
         $scope.composeHw = function() {
             $state.go('app.hwcompose');          
         };
+        
+         $scope.createLeave = function() {
+            $state.go('app.leavecreate');          
+        };
 
         $scope.composeMsg = function() {
                 if(userSessions.userSession.userRole == "parent"){
@@ -243,8 +247,17 @@ angular.module('starter.controllers', [])
             }
             else{
                  $state.go('app.homeworklanding'); 
+            }            
+        };
+        
+        $scope.attendanceLanding = function (){
+            if(userSessions.userSession.userRole == "parent"){
+                 $state.go('app.parentattendancelanding');                     
+            }
+            else{
+                 $state.go('app.attendancelanding'); 
             } 
-        };        
+        };             
 
         $scope.homeworkDetails = function() {
             $state.go('app.homeworkdetails');
@@ -1885,10 +1898,6 @@ angular.module('starter.controllers', [])
         //Side-Menu
 
         $ionicSideMenuDelegate.canDragContent(true);
-
-        $scope.noticeBoard = function() {
-            $state.go('app.sharedNotification');
-        };
     })
     .controller('MarkAttendanceCtrl', function($scope, $state, $timeout, ionicMaterialInk, $log, $ionicSideMenuDelegate) {
 
@@ -2247,6 +2256,99 @@ angular.module('starter.controllers', [])
             {Title: '65-', Subject: ' Ram Shukla', date: "2015-11-20"}
         ];
 
+    })
+    .controller('CreateLeaveCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicPopup, $ionicSideMenuDelegate, GLOBALS, $http, userSessions) {
+
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+        $ionicSideMenuDelegate.canDragContent(true);
+        $scope.leaveTitle = '';
+        $scope.LeaveId = '';
+        $scope.checkClass = true;
+        $scope.fromDate = new Date();
+        $scope.toDate = new Date();
+        $scope.description = '';
+        $scope.setTitle = function(title){
+          $scope.leaveTitle = title;  
+        };
+        
+        $scope.setDescription = function(reason){
+          $scope.description = reason;  
+        };
+        
+        var url= GLOBALS.baseUrl+"user/leave-types/?token="+userSessions.userSession.userToken;
+        $http.get(url).success(function(response) {
+             $scope.leaveType = response['data'];                   
+             $scope.checkClass = false;
+        })
+        .error(function(response) {
+             console.log("Error in Response: " +response);
+        });
+        
+        $scope.getSelectedLeave = function(leave){
+            $scope.LeaveId = leave['id'];           
+        }
+        $scope.send = function(){
+                        if($scope.leaveTitle == "" || $scope.LeaveId == "" || $scope.description == "" || $scope.LeaveId == "" && $scope.leaveTitle == "" && $scope.message == ""){
+                                if($scope.leaveTitle == ""){
+                                    $scope.msg = "Please Add Title";
+                                }
+                                if($scope.LeaveId == ""){
+                                    $scope.msg = "Select Leave Type";
+                                }
+                                if($scope.description == ""){
+                                    $scope.msg = "Please Add Description";
+                                }
+                                if($scope.LeaveId == "" && $scope.leaveTitle == "" && $scope.message == ""){
+                                    $scope.msg = "Cannot create blank Leave";
+                                }
+                        $scope.showPopup();
+                        }
+                        else{
+                            var url= GLOBALS.baseUrl+"user/create-leave?token="+userSessions.userSession.userToken;
+                            $http.post(url, {student_id: userSessions.userSession.userId, title: $scope.leaveTitle, leave_type_id: $scope.LeaveId, reason: $scope.description, from_date: $scope.fromDate, end_date: $scope.toDate})
+                            .success(function(response) {
+                            if(response['status'] == 200){
+                                    $scope.msg = response['message'];                         
+                            }
+                            else{
+                                    $scope.msg = response['message'];
+                                    $scope.showPopup();
+                            }
+                        })
+                            .error(function(response) {
+                                console.log("Error in Response: " +response);
+                                $scope.msg = "Access Denied";
+                                $scope.showPopup();
+                        });
+                    }
+        };
+        $scope.showPopup = function() {
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div>'+$scope.msg+'</div>',
+                title: '',
+                subTitle: '',
+                scope: $scope
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); //close the popup after 8 seconds for some reason
+            }, 3000);
+        };
+        
     })
     .controller('ViewLeaveApprovalCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.$parent.clearFabs();
