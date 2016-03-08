@@ -26,14 +26,14 @@
                     </button>
                 </div>
                 <div class="col-90 margin-top-5">
-                    <span class="inner-header">Leave Approvals</span>
+                    <span class="inner-header">Pending Leave Approval</span>
                 </div>
             </div>
         </iion-item>
     </div>
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="padding-l-r-5 margin-top-48">
         <ion-list>
-            <ion-item class="notify-item-border no-border margin-bottom-10" ng-repeat="nMsg in nMessages">
+            <ion-item class="notify-item-border no-border margin-bottom-10" ng-repeat="leave in leaveListing">
                 <div class="row">
                 <div class="col-80" ng-click="leaveDetails()">
                     <a class="text-decoration-none">
@@ -41,8 +41,8 @@
                         <p>{{nMsg.Message}}<br><strong><i class="font-italic"> {{nMsg.Subject}} {{nMsg.Timestamp}}</i></strong></p>
                     </a>
                 </div>
-                <div class="col-20 ">
-                    <button class="button button-balanced approve-button display">
+                <div class="col-20">
+                    <button class="button button-balanced approve-button">
                         Approve
                     </button>
                 </div>

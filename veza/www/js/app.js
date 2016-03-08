@@ -559,10 +559,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                     controller: ''
                 },
                 'fabContent': {
-                    template: '<button id="fab-new-leave" ng-click="createLeave()" class="button button-fab button-fab-bottom-right expanded bar-pink  spin"><i class="icon ion-edit"></i></button>', 
+                    template: '<button id="fab-leave-button" ng-click="createLeave()" class="button button-fab button-fab-bottom-right expanded bar-orange  spin"><i class="icon ion-edit"></i></button>', 
                     controller: function ($timeout) {
                         $timeout(function () {
-                            document.getElementById('fab-new-homework').classList.toggle('on');
+                            document.getElementById('fab-leave-button').classList.toggle('on');
                         }, 900);
                     }
                 }

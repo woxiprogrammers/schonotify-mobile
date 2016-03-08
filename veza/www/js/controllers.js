@@ -302,7 +302,7 @@ angular.module('starter.controllers', [])
             $state.go('app.chatmsg');
         };
         
-        $scope.viewmessagesList = function(){
+        $scope.viewMessagesList = function(){
                $state.go('app.message');            
         };
         
@@ -2319,7 +2319,9 @@ angular.module('starter.controllers', [])
                             $http.post(url, {student_id: userSessions.userSession.userId, title: $scope.leaveTitle, leave_type_id: $scope.LeaveId, reason: $scope.description, from_date: $scope.fromDate, end_date: $scope.toDate})
                             .success(function(response) {
                             if(response['status'] == 200){
-                                    $scope.msg = response['message'];                         
+                                    $scope.msg = response['message'];
+                                    $scope.showPopup();
+                                    $state.go('app.parentattendancelanding');                        
                             }
                             else{
                                     $scope.msg = response['message'];
@@ -2345,12 +2347,12 @@ angular.module('starter.controllers', [])
                 console.log('Tapped!', res);
             });
             $timeout(function() {
-                myPopup.close(); //close the popup after 8 seconds for some reason
+                myPopup.close(); //close the popup after 8 seconds for some reason                
             }, 3000);
         };
         
     })
-    .controller('ViewLeaveApprovalCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('ViewLeaveApprovalCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, GLOBALS, $http, userSessions) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -2365,64 +2367,29 @@ angular.module('starter.controllers', [])
         //Side-Menu
 
         $ionicSideMenuDelegate.canDragContent(true);
-
-        $scope.noticeBoard = function() {
-            $state.go('app.sharedNotification');
-        };
+        
         $scope.selectedDate = new Date();
-
-        $scope.nmessages = [{
-            Button: "display-true",
-            Label: "display-false",
-            Title: "Ashish Sawant",
-            message: "Fever, Cough and Cold",
-            Timestamp: "Applied On: 18 Oct 2015",
-            Class: "5th B div"
-        }, {
-            Button: "display-true",
-            Label: "display-false",
-            Title: "Tushar Kadam",
-            message: "Typhoid",
-            Timestamp: "Applied On: 17 Oct 2015",
-            Class: "8th A div"
-        }, {
-            Button: "display-false",
-            Label: "display-true",
-            Title: "Rahul Bhosale",
-            message: "Brothers Marriage",
-            Timestamp: "Applied On: 15 Oct 2015",
-            Class: "9th C div"
-        }, {
-            Button: "display-false",
-            Label: "display-true",
-            Title: "Ashish Sawant",
-            message: "Cough n Cold",
-            Timestamp: "Applied On: 13 Oct 2015",
-            Class: "5th B div"
-        }, {
-            Button: "display-false",
-            Label: "display-true",
-            Title: "Rahul Bhosale",
-            message: "Brothers Marriage",
-            Timestamp: "Applied On: 15 Oct 2015",
-            Class: "9th C div"
-        }, {
-            Button: "display-false",
-            Label: "display-true",
-            Title: "Ashish Sawant",
-            message: "Cough n Cold",
-            Timestamp: "Applied On: 13 Oct 2015",
-            Class: "5th B div"
-        },{
-            Button: "display-false",
-            Label: "display-true",
-            Title: "Tushar Kadam",
-            message: "Cough n Cold",
-            Timestamp: "Applied On: 11 Oct 2015",
-            Class: "8th A div"
-        }];
-
-    })
+        var url = null;
+        if(userSessions.userSession.userRole == 'parent'){
+            url = GLOBALS.baseUrl+"user/leaves-parent/1/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
+        }else{
+             url = GLOBALS.baseUrl+"user/leaves-teacher/1/?token="+userSessions.userSession.userToken;
+        }
+        $http.get(url).success(function(response) {
+            if(response['status'] == 200){
+                $scope.leaveListing = response['data'];
+                }
+                else{
+                    $scope.msg = response['message'];
+                    $scope.showPopup();
+                    }
+         })
+         .error(function(response) {
+             console.log("Error in Response: " +response);
+             $scope.msg = "Access Denied";
+             $scope.showPopup();
+         });
+   })
     .controller('DetailPageCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
