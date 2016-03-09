@@ -354,7 +354,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
             views: {
                 'menuContent': {
                     templateUrl: 'templates/approved-leaves.html',
-                    controller: 'ViewLeaveApprovalCtrl'
+                    controller: 'ViewLeaveApprovedCtrl'
                 },
                 'fabContent': {
                     template: ''
@@ -438,7 +438,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
             views: {
                 'menuContent': {
                     templateUrl: 'templates/leave-details.html',
-                    controller: 'DetailPageCtrl'
+                    controller: 'LeaveDetailCtrl'
                 },
                 'fabContent': {
                     template: ''
@@ -450,7 +450,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
             views: {
                 'menuContent': {
                     templateUrl: 'templates/leave-approved-details.html',
-                    controller: 'ViewLeaveApprovalCtrl'
+                    controller: 'LeaveDetailCtrl'
                 },
                 'fabContent': {
                     template: ''

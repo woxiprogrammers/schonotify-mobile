@@ -26,9 +26,9 @@
                     </button>
                 </div>
                 <div class="col-50 margin-top-5">
-                    <span class="inner-header">Leave Title</span>
+                    <span class="inner-header">Leave Applied</span>
                 </div>
-                <div class="col-25 margin-left-15">
+                <div class="col-25 margin-left-15" ng-if="userRole == 'teacher'" ng-click="approveLeave(leaveDetail.leave_id)">
                     <button class="button-balanced header-approve">
                      Approve
                     </button>
@@ -38,17 +38,17 @@
     </div>
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
         <div class="list padding-l-r-5">
-            <div class="row bold description-title-font">Sick Leave Application</div>
+            <div class="row bold description-title-font">{{leaveDetail.title}}</div>
             <div class="margin-top-10">
                 <div class="no-border margin-top-10 margin-bottom-10">
-                <div class="row margin-top-5"><c class="bold creator-font">Rahul Kulkarni</c></div>
-                <div class="row bold"><time class="creator-time-font"> 18 August</time></div>
-                <div class="row"><b class="bold">Batch:</b> Morning<b class="bold margin-left-2">Class:</b> 5th <b class="bold margin-left-2">Div:</b> B</div>
-                <div class="row"><span><b class="bold">Leave Type:</b> Full Day</span></div>
-                    <div class="row"><span><b class="bold">Leave Form:</b> 22 Aug 2015 <b class="bold"> Leave Upto:</b>28 Aug 2015</span></div>
+                <div class="row margin-top-5"><c class="bold creator-font">{{leaveDetail.name}}</c></div>
+                <div class="row bold"><time class="creator-time-font"> {{leaveDetail.applied_on}}</time></div>
+                <div class="row"><b class="bold">Batch: </b> {{leaveDetail.batch}}<b class="bold margin-left-2">Class: </b> {{leaveDetail.class}} <b class="bold margin-left-2">Div: </b> {{leaveDetail.division}}</div>
+                <div class="row"><span><b class="bold">Leave Type: </b> {{leaveDetail.leave_type}}</span></div>
+                <div class="row"><span><b class="bold">Leave Form: </b> {{leaveDetail.form_date}} <b class="bold"> Leave Upto: </b>{{leaveDetail.end_date}}</span></div>
             </div>
             <div class="margin-top-36 description-font no-border padding-5">
-                <p>Error dicunt theophrastus cu qui. Ad eos simul possit option, adipisci principes sed at. Detracto adolescens pro ea, duo noLorem ipsum dolor sit amet, ea oblique constituam signiferumque eam. Pri adipisci maluisset te.Lorem ipsum dolor sit amet, ea oblique constituam signiferumque eam. Pri adipisci maluisset te.Lorem ipsum dolor sit amet, ea oblique constituam signiferumque eam. Pri adipisci maluisset te. </p>
+                <p>{{leaveDetail.reason}}</p>
             </div>
             </div>
         </div>

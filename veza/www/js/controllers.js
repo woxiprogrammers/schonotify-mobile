@@ -2347,12 +2347,12 @@ angular.module('starter.controllers', [])
                 console.log('Tapped!', res);
             });
             $timeout(function() {
-                myPopup.close(); //close the popup after 8 seconds for some reason                
+                myPopup.close(); //close the popup after 3 seconds for some reason                
             }, 3000);
         };
         
     })
-    .controller('ViewLeaveApprovalCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, GLOBALS, $http, userSessions) {
+    .controller('ViewLeaveApprovalCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicPopup, $ionicSideMenuDelegate, hwDetails, GLOBALS, $http, userSessions) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -2367,29 +2367,196 @@ angular.module('starter.controllers', [])
         //Side-Menu
 
         $ionicSideMenuDelegate.canDragContent(true);
-        
-        $scope.selectedDate = new Date();
+        $scope.userRole = userSessions.userSession.userRole;
         var url = null;
         if(userSessions.userSession.userRole == 'parent'){
             url = GLOBALS.baseUrl+"user/leaves-parent/1/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
         }else{
              url = GLOBALS.baseUrl+"user/leaves-teacher/1/?token="+userSessions.userSession.userToken;
         }
-        $http.get(url).success(function(response) {
-            if(response['status'] == 200){
-                $scope.leaveListing = response['data'];
+        $scope.getLeaveList = function(){
+            $http.get(url).success(function(response) {
+                if(response['status'] == 200){
+                    $scope.leaveListing = response['data'];
                 }
                 else{
                     $scope.msg = response['message'];
                     $scope.showPopup();
-                    }
-         })
-         .error(function(response) {
-             console.log("Error in Response: " +response);
-             $scope.msg = "Access Denied";
-             $scope.showPopup();
-         });
-   })
+                }
+            })
+            .error(function(response) {
+                console.log("Error in Response: " +response);
+                if(response.hasOwnProperty('status')){
+                    $scope.msg = response.message;
+                }
+                else{
+                    $scope.msg = "Access Denied";
+                }               
+                $scope.showPopup();
+            });
+        };        
+        $scope.getLeaveList();        
+        $scope.approveLeave = function(leaveId){
+            var url = GLOBALS.baseUrl+"user/approve-leaves?token="+userSessions.userSession.userToken;
+            $http.post(url, {_method: 'PUT', leave_id: leaveId}).success(function(response) {
+                if(response['status'] == 200){
+                    $scope.msg = response['message'];
+                    $scope.getLeaveList();
+                    $scope.showPopup();
+                }
+                else{
+                    $scope.msg = response['message'];
+                    $scope.showPopup();
+                }
+            })
+            .error(function(response) {
+                    console.log("Error in Response: " +response);
+                    $scope.msg = "Access Denied";
+                    $scope.showPopup();
+            });
+        }
+        $scope.leaveDetails = function(leave){
+            $scope.checkLid = hwDetails.setHwView(leave);
+            if($scope.checkLid == true){
+                $state.go('app.leavedetails');
+            };
+        }
+        
+        $scope.showPopup = function() {
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div>'+$scope.msg+'</div>',
+                title: '',
+                subTitle: '',
+                scope: $scope
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); //close the popup after 3 seconds for some reason                
+            }, 3000);
+        };
+     })
+     .controller('ViewLeaveApprovedCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicPopup, $ionicSideMenuDelegate, hwDetails, GLOBALS, $http, userSessions) {
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+         // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
+        $scope.userRole = userSessions.userSession.userRole;
+        var url = null;
+        if(userSessions.userSession.userRole == 'parent'){
+            url = GLOBALS.baseUrl+"user/leaves-parent/2/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
+        }else{
+             url = GLOBALS.baseUrl+"user/leaves-teacher/2/?token="+userSessions.userSession.userToken;
+        }
+        $scope.getLeaveList = function(){
+            $http.get(url).success(function(response) {
+                if(response['status'] == 200){
+                    $scope.leaveListing = response['data'];
+                }
+                else{
+                    $scope.msg = response['message'];
+                    $scope.showPopup();
+                }
+            })
+            .error(function(response) {
+                console.log("Error in Response: " +response);
+                if(response.hasOwnProperty('status')){
+                    $scope.msg = response.message;
+                }
+                else{
+                    $scope.msg = "Access Denied";
+                }               
+                $scope.showPopup();
+            });
+        };        
+        $scope.getLeaveList();
+        $scope.leaveDetails = function(leave){
+            $scope.checkLid = hwDetails.setHwView(leave);
+            if($scope.checkLid == true){
+                $state.go('app.approvedleavedetails');
+            };
+        }
+        
+        $scope.showPopup = function() {
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div>'+$scope.msg+'</div>',
+                title: '',
+                subTitle: '',
+                scope: $scope
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); //close the popup after 3 seconds for some reason                
+            }, 3000);
+        };
+     })
+     .controller('LeaveDetailCtrl', function($scope, $state, $timeout, $ionicPopup, ionicMaterialInk, userSessions, GLOBALS, $http, hwDetails, $ionicSideMenuDelegate, $ionicModal) {
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+        $ionicSideMenuDelegate.canDragContent(true);
+        $scope.userRole = userSessions.userSession.userRole;
+        $scope.leaveDetail = hwDetails.getHwView();
+        $scope.approveLeave = function(leaveId){
+            var url = GLOBALS.baseUrl+"user/approve-leaves?token="+userSessions.userSession.userToken;
+            $http.post(url, {_method: 'PUT', leave_id: leaveId}).success(function(response) {
+                if(response['status'] == 200){
+                    $scope.msg = response['message'];
+                    $scope.getLeaveList();
+                    $scope.showPopup();
+                }
+                else{
+                    $scope.msg = response['message'];
+                    $scope.showPopup();
+                }
+            })
+            .error(function(response) {
+                    console.log("Error in Response: " +response);
+                    $scope.msg = "Access Denied";
+                    $scope.showPopup();
+            });
+        }
+        
+        $scope.showPopup = function() {
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div>'+$scope.msg+'</div>',
+                title: '',
+                subTitle: '',
+                scope: $scope
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); //close the popup after 3 seconds for some reason                
+            }, 3000);
+        };
+    })
     .controller('DetailPageCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;

@@ -20,8 +20,8 @@
     <div class="bar bar-orange bar-header align-delete-bar">
         <iion-item class="row">
             <div class="row">
-                <div class="col-10">
-                    <button class="button-clear" ng-click="myGoBack()">
+                <div class="col-10"  ng-click="myGoBack()">
+                    <button class="button-clear">
                         <i class="ion-arrow-left-c button-back-white"></i>
                     </button>
                 </div>
@@ -33,21 +33,25 @@
     </div>
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="padding-l-r-5 margin-top-48">
         <ion-list>
-            <ion-item class="notify-item-border no-border margin-bottom-10" ng-repeat="nMsg in nMessages">
-                <div class="row">
-                    <div class="col-80" ng-click="approveLeaveDetails()">
+            <ion-item class="notify-item-border no-border margin-bottom-10" ng-repeat="leave in leaveListing">
+                <div class="row" ng-if="userRole == 'teacher'">
+                    <div class="col-80" ng-click="leaveDetails(leave)">
                         <a class="text-decoration-none">
-                            <h2><strong>{{nMsg.Title}}</strong><i class="font-italic"> {{nMsg.Class}}</i></h2>
-                            <p>{{nMsg.Message}}<br><strong><i class="font-italic"> {{nMsg.Subject}} {{nMsg.Timestamp}}</i></strong></p>
+                            <h2><strong>{{leave.name}}</strong><br><i class="font-italic"> {{leave.class}} {{leave.division}}</i></h2><br>
+                            <p>{{leave.title}}<br><strong><i class="font-italic"> {{leave.leave_type}}, {{leave.applied_on}}</i></strong></p>
                         </a>
                     </div>
-                    <div class="col-20 ">
+                    <div class="col-20">
                         <img src="img/leave-approved.png" class="display is-approved">
                     </div>
-
+                </div>
+                <div class="row" ng-click="leaveDetails(leave)" ng-if="userRole == 'parent'">
+                    <a class="text-decoration-none">
+                        <h2><strong>{{leave.title}}</strong></h2>
+                        <p>{{leave.reason}}<br><strong><i class="font-italic"> {{leave.leave_type}}, {{leave.applied_on}}</i></strong></p>
+                    </a>
                 </div>
             </ion-item>
         </ion-list>
     </ion-content>
-
 </ion-view>
