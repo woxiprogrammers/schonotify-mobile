@@ -32,52 +32,28 @@
         </iion-item>
     </div>
     <div class="row margin-top-100 no-border">
-    <div class="col-33">
-        <select class="item item-input item-select border-none">
-            <option selected class="padding-top-5">Batch</option>
-            <option class="padding-top-5">Morning</option>
-            <option class="padding-top-5">Afternoon</option>
-            <option class="padding-top-5">Evening</option>
-        </select>
-    </div>
-    <div class="col-33">
-        <select class="item item-input item-select border-none">
-            <option selected class="padding-top-5">Class</option>
-            <option class="padding-top-5">Class I</option>
-            <option class="padding-top-5">Class II</option>
-            <option class="padding-top-5">Class III</option>
-        </select>
-    </div>
-    <div class="col-33">
-        <select class="item item-input item-select border-none">
-            <option selected class="padding-top-5">Div</option>
-            <option class="padding-top-5">Div A</option>
-            <option class="padding-top-5">Div B</option>
-            <option class="padding-top-5">Div C</option>
-        </select>
+    <div class="row">
+        <div class="col-33 border-bottom">
+            <select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batches track by batch.id" ng-change="getClass(selectedBatch.batch)">
+                <option value="" ng-disabled="true">-Batch-</option>
+            </select>
+        </div>
+        <div class="col-33 border-right border-bottom">
+            <select class="item item-input item-select" ng-model="selectedClass.class" ng-options="class.class_name for class in classes track by class.id" ng-change="getDivision(selectedClass.class)">
+                <option value="" ng-disabled="true">-Class-</option>
+            </select>
+        </div>
+        <div class="col-33 border-bottom">
+            <select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.division_name for division in divisions track by division.id" ng-change="getAttendanceList(selectedDivision.division)">
+                <option value="" ng-disabled="true">-Div-</option>
+            </select>
+        </div>
     </div>
 </div>
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="padding-l-r-5 top-142">
         <flex-calendar options="options" events="events"></flex-calendar>
         <ion-list>
 	    <div class="row col-offset-33 col-33"><i class="icon ion-chevron-down margin-left-50"></i></div>
-            <div><img src="img/absent.png" class="view-attendance"></div>
-            <ion-item ng-repeat="selectedEvent in selectedEvents">
-                <div class="row">
-                    <a class="text-decoration-none">
-                        <h2>{{selectedEvent.Title}}{{selectedEvent.Subject}}</h2>
-                    </a>
-                </div>
-            </ion-item>
-            <div><img src="img/leav-applied.png" class="view-attendance"></div>
-            <ion-item ng-repeat="selectedEvent in selectedEvents">
-                <div class="row">
-                    <a class="text-decoration-none">
-                        <h2>{{selectedEvent.Title}}{{selectedEvent.Subject}}</h2>
-                    </a>
-                </div>
-            </ion-item>
-            <div><img src="img/leave-approved.png" class="view-attendance"></div>
             <ion-item ng-repeat="selectedEvent in selectedEvents">
                 <div class="row">
                     <a class="text-decoration-none">

@@ -1983,7 +1983,7 @@ angular.module('starter.controllers', [])
            $scope.selectedDate = new Date();
     })
 
-    .controller('ViewAttendanceCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('ViewAttendanceCtrl', function($scope, $state, GLOBALS, $timeout, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -1997,12 +1997,39 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
 
         //Side-Menu
-
         $ionicSideMenuDelegate.canDragContent(true);
-
-        $scope.noticeBoard = function() {
-            $state.go('app.sharedNotification');
+        var url= GLOBALS.baseUrl+"user/attendance-batches?token="+userSessions.userSession.userToken;
+        $http.get(url).success(function(response) {
+            $scope.batches = response['data'];                    
+        })
+        .error(function(response) {
+            console.log("Error in Response: " +response);
+        });
+        
+        $scope.getClass= function(batch){                
+            var url= GLOBALS.baseUrl+"user/attendance-classes/"+batch['id']+"?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response) {
+                $scope.classList = response['data'];                  
+            })
+            .error(function(response) {
+                console.log("Error in Response: " +response);
+            });
         };
+        
+        $scope.getDivision = function(classType){
+            var url= GLOBALS.baseUrl+"user/get-attendance-divisions/"+classType['id']+"?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response) {
+                $scope.divisionsList = response['data'];
+            })
+            .error(function(response) {
+                console.log("Error in Response: " +response);
+            });
+        };
+        
+        $scope.getAttendanceList = function(div){
+            
+        }
+        
             $scope.options = {
                 defaultDate: new Date(),
                 minDate: "2015-01-01",
@@ -2014,6 +2041,9 @@ angular.module('starter.controllers', [])
                 dayNamesLength: 3, // 1 for "M", 2 for "Mo", 3 for "Mon"; 9 will show full day names. Default is 1.
                 mondayIsFirstDay: true,//set monday as first day of week. Default is false
                 eventClick: function(date) {
+                    alert(date);
+                        alert(event);
+                        alert(date['event']);
                     console.log(date['event']);
                     if (date['event'][0]) {
                         // items have value
@@ -2027,9 +2057,15 @@ angular.module('starter.controllers', [])
                 },
                 dateClick: function(date) {
                     console.log(date['event']);
+                        alert(date);
+                        alert(event);
+                        alert(date['event']);
                     if (date['event'][0]) {
                         // items have value
-                        $scope.selectedEvents = date['event'];
+                        // alert(date);
+                        // alert(event);
+                        // alert(date['event']);                        
+                        //$scope.selectedEvents = date['event'];
                         console.log("DateClick "+ $scope.selectedEvents);
                     } else {
                         // items is still null
@@ -2367,14 +2403,14 @@ angular.module('starter.controllers', [])
         //Side-Menu
 
         $ionicSideMenuDelegate.canDragContent(true);
-        $scope.userRole = userSessions.userSession.userRole;
-        var url = null;
+        $scope.userRole = userSessions.userSession.userRole;        
+        $scope.getLeaveList = function(){
+            var url = null;
         if(userSessions.userSession.userRole == 'parent'){
             url = GLOBALS.baseUrl+"user/leaves-parent/1/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
         }else{
              url = GLOBALS.baseUrl+"user/leaves-teacher/1/?token="+userSessions.userSession.userToken;
         }
-        $scope.getLeaveList = function(){
             $http.get(url).success(function(response) {
                 if(response['status'] == 200){
                     $scope.leaveListing = response['data'];
@@ -2398,11 +2434,12 @@ angular.module('starter.controllers', [])
         $scope.getLeaveList();        
         $scope.approveLeave = function(leaveId){
             var url = GLOBALS.baseUrl+"user/approve-leaves?token="+userSessions.userSession.userToken;
-            $http.post(url, {_method: 'PUT', leave_id: leaveId}).success(function(response) {
+            $http.post(url, {_method:'PUT',leave_id: leaveId, teacher_id: userSessions.userSession.userId}).success(function(response) {
                 if(response['status'] == 200){
-                    $scope.msg = response['message'];
-                    $scope.getLeaveList();
+                    $scope.msg = response['message'];                    
                     $scope.showPopup();
+                    $scope.leaveListing.length =0; 
+                    $scope.getLeaveList();
                 }
                 else{
                     $scope.msg = response['message'];
@@ -2410,7 +2447,7 @@ angular.module('starter.controllers', [])
                 }
             })
             .error(function(response) {
-                    console.log("Error in Response: " +response);
+                    console.log("Error in Response: "+response);
                     $scope.msg = "Access Denied";
                     $scope.showPopup();
             });
