@@ -1849,22 +1849,22 @@ angular.module('starter.controllers', [])
                             var url= GLOBALS.baseUrl+"user/send-message?token="+userSessions.userSession.userToken;
                             $http.post(url, {from_id: $scope.envelop.user_id, to_id: $scope.envelop.title_id, description: $scope.message })
                             .success(function(response) {
-                            if(response['status'] == 200){
-                                    $scope.msg = response['message'];
-                                    $scope.loadChat();
-                                    $scope.message = "";                          
-                            }
-                            else{
-                                    $scope.msg = response['message'];
-                                    $scope.showPopup();
-                            }
-                        })
+                                if(response['status'] == 200){
+                                        $scope.msg = response['message'];
+                                        $scope.loadChat();
+                                        $scope.message = "";                          
+                                }
+                                else{
+                                        $scope.msg = response['message'];
+                                        $scope.showPopup();
+                                }
+                            })
                             .error(function(response) {
                                 console.log("Error in Response: " +response);
                                 $scope.msg = "Access Denied";
                                 $scope.showPopup();
-                        });
-                    }
+                            });
+                        }
         };
         $scope.showPopup = function() {
             // An elaborate, custom popup
@@ -1983,7 +1983,7 @@ angular.module('starter.controllers', [])
            $scope.selectedDate = new Date();
     })
 
-    .controller('ViewAttendanceCtrl', function($scope, $state, GLOBALS, $timeout, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('ViewAttendanceCtrl', function($scope, $state, GLOBALS, $ionicPopup, $filter, $timeout, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -1998,18 +1998,25 @@ angular.module('starter.controllers', [])
 
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
-        var url= GLOBALS.baseUrl+"user/attendance-batches?token="+userSessions.userSession.userToken;
-        $http.get(url).success(function(response) {
-            $scope.batches = response['data'];                    
-        })
-        .error(function(response) {
-            console.log("Error in Response: " +response);
-        });
-        
+        $scope.events = [];
+        $scope.divisionId = '';
+        $scope.selectedDateData = [];
+        $scope.selectedDateMessage = '';
+        $scope.userRole = userSessions.userSession.userRole;
+        $scope.userId = userSessions.userSession.userId;
+        if(userSessions.userSession.userRole == 'teacher'){
+            var url= GLOBALS.baseUrl+"user/attendance-batches?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response) {
+                $scope.batches = response['data'];                    
+            })
+            .error(function(response) {
+                console.log("Error in Response: " +response);
+            });
+        }
         $scope.getClass= function(batch){                
             var url= GLOBALS.baseUrl+"user/attendance-classes/"+batch['id']+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
-                $scope.classList = response['data'];                  
+                $scope.classes = response['data'];                  
             })
             .error(function(response) {
                 console.log("Error in Response: " +response);
@@ -2019,80 +2026,124 @@ angular.module('starter.controllers', [])
         $scope.getDivision = function(classType){
             var url= GLOBALS.baseUrl+"user/get-attendance-divisions/"+classType['id']+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
-                $scope.divisionsList = response['data'];
+                $scope.divisions = response['data'];
             })
             .error(function(response) {
                 console.log("Error in Response: " +response);
             });
         };
         
-        $scope.getAttendanceList = function(div){
-            
+        $scope.getAttendanceList = function(id){
+            var url = null;
+            if(userSessions.userSession.userRole == 'parent'){
+              url = GLOBALS.baseUrl+"user/default-attendance-parent/"+id+"?token="+userSessions.userSession.userToken;  
+            }
+            else{
+              $scope.divisionId = id;
+              url = GLOBALS.baseUrl+"user/default-attendance-teacher/"+id+"?token="+userSessions.userSession.userToken;
+            }
+            $http.get(url).success(function(response) {
+                $scope.events = response['data'];            
+            })
+            .error(function(response) {
+                console.log("Error in Response: " +response);
+            });
         }
         
-            $scope.options = {
-                defaultDate: new Date(),
-                minDate: "2015-01-01",
-                maxDate: "",
-                disabledDates: [
-                    "2015-11-22",
-                    "2015-11-27"
-                ],
-                dayNamesLength: 3, // 1 for "M", 2 for "Mo", 3 for "Mon"; 9 will show full day names. Default is 1.
-                mondayIsFirstDay: true,//set monday as first day of week. Default is false
-                eventClick: function(date) {
-                    alert(date);
-                        alert(event);
-                        alert(date['event']);
-                    console.log(date['event']);
-                    if (date['event'][0]) {
-                        // items have value
-                        $scope.selectedEvents = date['event'];
-                        console.log("Click "+ $scope.selectedEvents);
-                    } else {
-                        // items is still null
-                        $scope.selectedEvents = {0:{ Title: 'Nothing on selected date'}};
-                        console.log($scope.selectedEvents);
-                    }
-                },
-                dateClick: function(date) {
-                    console.log(date['event']);
-                        alert(date);
-                        alert(event);
-                        alert(date['event']);
-                    if (date['event'][0]) {
-                        // items have value
-                        // alert(date);
-                        // alert(event);
-                        // alert(date['event']);                        
-                        //$scope.selectedEvents = date['event'];
-                        console.log("DateClick "+ $scope.selectedEvents);
-                    } else {
-                        // items is still null
-                        $scope.selectedEvents = {0:{ Title: 'Nothing on selected date'}};
-                        console.log($scope.selectedEvents);
-                    }
-                },
-                changeMonth: function(month, year) {
-                    console.log(month, year);
-                },
-                filteredEventsChange: function(filteredEvents) {
-                    console.log(filteredEvents);
-                }
-            };
-
-            $scope.events = [
-                {date: "2015-12-03"},
-                {date: "2015-12-03"},
-                {date: "2015-12-03"},
-                {date: "2015-12-03"},
-                {date: "2015-11-10"},
-                {date: "2015-11-20"},
-                {date: "2016-03-05"},
-                {date: "2016-03-07"},
-                {date: "2016-03-10"}
-            ];
-
+        $scope.getSelectedDateData = function(selectedDate){
+            var url = null;
+            if(userSessions.userSession.userRole == 'parent'){
+              url = GLOBALS.baseUrl+"user/view-attendance-parent?token="+userSessions.userSession.userToken;
+                            $http.post(url, {student_id: $scope.userId, date: selectedDate})
+                            .success(function(response) {
+                                if(response['status'] == 200){
+                                    $scope.selectedDateData = response['data'];
+                                    $scope.selectedDateMessage = response['message'];                     
+                                }
+                                else{
+                                    $scope.msg = response['message'];
+                                    $scope.showPopup();
+                                }
+                            })
+                            .error(function(response) {
+                                console.log("Error in Response: " +response);
+                                if(response.hasOwnProperty('status')){
+                                   $scope.msg = response.message;
+                                }
+                                else{
+                                    $scope.msg = "Access Denied";
+                                }                                
+                                $scope.showPopup();
+                            });  
+            }
+            else{
+              url = GLOBALS.baseUrl+"user/view-attendance-teacher?token="+userSessions.userSession.userToken;
+                            $http.post(url, {division_id: $scope.divisionId, date: selectedDate})
+                            .success(function(response) {
+                                if(response['status'] == 200){
+                                    $scope.selectedDateData = response['data'];                        
+                                }
+                                else{
+                                        $scope.msg = response['message'];
+                                        $scope.showPopup();
+                                }
+                            })
+                            .error(function(response) {
+                                console.log("Error in Response: " +response);
+                                if(response.hasOwnProperty('status')){
+                                   $scope.msg = response.message;
+                                }
+                                else{
+                                    $scope.msg = "Access Denied";
+                                }                                
+                                $scope.showPopup();
+                            });
+            }
+                        
+        }
+        
+        $scope.options = {
+            defaultDate: new Date(),
+            minDate: "",
+            maxDate: "",
+            disabledDates: [],
+            dayNamesLength: 3, // 1 for "M", 2 for "Mo", 3 for "Mon"; 9 will show full day names. Default is 1.
+            mondayIsFirstDay: true,//set monday as first day of week. Default is false
+            eventClick: function(date) {
+                $scope.selectedDate = $filter('date')(date['date'], "yyyy-MM-dd");
+                $scope.getSelectedDateData($scope.selectedDate);
+                console.log(date['event']);                    
+            },
+            dateClick: function(date) {
+                console.log(date['event']);
+                $scope.selectedDate = $filter('date')(date['date'], "yyyy-MM-dd");
+                $scope.getSelectedDateData($scope.selectedDate);                    
+            },
+            changeMonth: function(month, year) {
+                console.log(month, year);
+            },
+            filteredEventsChange: function(filteredEvents) {
+                console.log(filteredEvents);
+            }
+        };
+        if($scope.userRole == 'parent'){
+            $scope.getAttendanceList($scope.userId);
+        }        
+        $scope.showPopup = function() {
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div>'+$scope.msg+'</div>',
+                title: '',
+                subTitle: '',
+                scope: $scope
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); //close the popup after 8 seconds for some reason
+            }, 3000);
+        };
     })
     .controller('LandingEventCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
@@ -2434,11 +2485,10 @@ angular.module('starter.controllers', [])
         $scope.getLeaveList();        
         $scope.approveLeave = function(leaveId){
             var url = GLOBALS.baseUrl+"user/approve-leaves?token="+userSessions.userSession.userToken;
-            $http.post(url, {_method:'PUT',leave_id: leaveId, teacher_id: userSessions.userSession.userId}).success(function(response) {
+            $http.post(url, {_method:'PUT',leave_id: leaveId}).success(function(response) {
                 if(response['status'] == 200){
                     $scope.msg = response['message'];                    
                     $scope.showPopup();
-                    $scope.leaveListing.length =0; 
                     $scope.getLeaveList();
                 }
                 else{
