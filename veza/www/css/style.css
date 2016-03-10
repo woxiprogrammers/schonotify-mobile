@@ -1037,14 +1037,14 @@ display: none;
    margin-top: 120px!important;
 }
 
-.mark-check{
+.mark-0{
     background: url('../img/attendance_true.png') center;
     clear: both;
     background-repeat: no-repeat;
     background-position: 50%;
 }
 
-.mark-uncheck{
+.mark-1{
     background: url('../img/attendance_false.png') center;
     clear: both;
     background-repeat: no-repeat;

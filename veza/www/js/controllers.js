@@ -1899,7 +1899,7 @@ angular.module('starter.controllers', [])
 
         $ionicSideMenuDelegate.canDragContent(true);
     })
-    .controller('MarkAttendanceCtrl', function($scope, $state, $timeout, ionicMaterialInk, $log, $ionicSideMenuDelegate) {
+    .controller('MarkAttendanceCtrl', function($scope, $state, $timeout, $http, $ionicPopup, userSessions, GLOBALS, $filter, ionicMaterialInk, $log, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -1915,72 +1915,94 @@ angular.module('starter.controllers', [])
         //Side-Menu
 
         $ionicSideMenuDelegate.canDragContent(true);
+        $scope.absentList = [];
+        $scope.currentDate = new Date();        
+        $scope.getStudentList = function(setDate){
+            $scope.currentDate = $filter('date')(setDate, "yyyy-MM-dd");
+            var url = GLOBALS.baseUrl+"user/students-list?token="+userSessions.userSession.userToken;
+            $http.post(url, {date: $scope.currentDate}).success(function(response) {
+                if(response['status'] == 200){
+                    $scope.studentList = response['studentList'];
+                    $scope.absentList = response['absentList'];                     
+                }
+                else{
+                    $scope.msg = response['message'];
+                    $scope.showPopup();
+                }
+            })
+            .error(function(response) {
+                console.log("Error in Response: " +response);
+                if(response.hasOwnProperty('status')){
+                    $scope.msg = response.message;
+                }
+                else{
+                    $scope.msg = "Access Denied";
+                }                                
+                $scope.showPopup();
+            });
+        }
 
-        $scope.noticeBoard = function() {
-            $state.go('app.sharedNotification');
-        };
-
-        $scope.contactList = [{
-            id: 1,
-            Name: "Student 1"
-        }, {
-            id: 2,
-            Name: "Student 2"
-        }, {
-            id: 3,
-            Name: "Student 3"
-        },{
-            id: 4,
-            Name: "Student 4"
-        },{
-            id: 5,
-            Name: "Student 5"
-        }, {
-            id: 6,
-            Name: "Student 6 (Leave Applied)"
-        }, {
-            id: 7,
-            Name: "Student 7"
-        },{
-            id: 8,
-            Name: "Student 8"
-        },{
-            id: 9,
-            Name: "Student 9 (Leave Applied)"
-        }, {
-            id: 10,
-            Name: "Student 10"
-        }, {
-            id: 11,
-            Name: "Student 11"
-        },{
-            id: 12,
-            Name: "Student 12"
-        },{
-            id: 13,
-            Name: "Student 13"
-        }, {
-            id: 14,
-            Name: "Student 14"
-        }];
-
-        $scope.toggleCheck = function(elementData) {
-
+        $scope.toggleCheck = function(elementData, studentId) {
+            var idx = $scope.absentList.indexOf(studentId);
+            if (idx > -1) {
+            $scope.absentList.splice(idx, 1);
+            }
+            // is newly selected
+            else {
+            $scope.absentList.push(studentId);
+            }
             var changeClass = angular.element(document.querySelector('#'+ elementData.target.id));
-
-
-            console.log(elementData);
-
-               if(elementData.target.classList[2] == "mark-check" || elementData.target.classList[1] == "mark-check" ){
-                   changeClass.removeClass('mark-check');
-                   changeClass.addClass('mark-uncheck');
+               if(elementData.target.classList[2] == "mark-0" || elementData.target.classList[1] == "mark-0" ){
+                   changeClass.removeClass('mark-0');
+                   changeClass.addClass('mark-1');
             }
             else{
-                   changeClass.removeClass('mark-uncheck');
-                   changeClass.addClass('mark-check');
+                   changeClass.removeClass('mark-1');
+                   changeClass.addClass('mark-0');
             }
         };
-           $scope.selectedDate = new Date();
+        
+        $scope.markAttendance = function(){
+            var url= GLOBALS.baseUrl+"user/mark-attendance?token="+userSessions.userSession.userToken;
+            $http.post(url, {date: $scope.currentDate, student_id: $scope.absentList})
+            .success(function(response) {
+                if(response['status'] == 200){
+                        $scope.msg = response['message'];
+                        $scope.showPopup();
+                        $state.go('app.attendancelanding');                    
+                }
+                else{
+                        $scope.msg = response['message'];
+                        $scope.showPopup();
+                }
+            })
+            .error(function(response) {
+                console.log("Error in Response: " +response);
+                if(response.hasOwnProperty('status')){
+                    $scope.msg = response.message;
+                }
+                else{
+                    $scope.msg = "Access Denied";
+                }                                
+                $scope.showPopup();
+            });
+        }
+                
+        $scope.showPopup = function() {
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div>'+$scope.msg+'</div>',
+                title: '',
+                subTitle: '',
+                scope: $scope
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); //close the popup after 8 seconds for some reason
+            }, 3000);
+        };
     })
 
     .controller('ViewAttendanceCtrl', function($scope, $state, GLOBALS, $ionicPopup, $filter, $timeout, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
