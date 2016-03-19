@@ -4,7 +4,7 @@ var db = null;
 angular.module('starter.controllers', [])
 .constant('GLOBALS',{
    baseUrl:'http://test.woxiapps.com/api/v1/',
-//   baseUrl:'http://192.168.2.8/api/v1/'
+//   baseUrl:'http://192.168.2.2/api/v1/'
 })
 .service('userSessions', function Usersession(){
 
@@ -1384,7 +1384,7 @@ angular.module('starter.controllers', [])
         };
         
     })
-    .controller('messageCtrl', function($scope, $state, $timeout, $ionicPopup, ionicMaterialInk, $ionicSideMenuDelegate, GLOBALS, userSessions, $http, chatHist) {
+    .controller('MessageCtrl', function($scope, $state, $timeout, $ionicPopup, ionicMaterialInk, $ionicSideMenuDelegate, GLOBALS, userSessions, $http, chatHist) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -1409,7 +1409,7 @@ angular.module('starter.controllers', [])
         $scope.nMessages = [];
         $scope.aclMessage = "Access Denied";
         $scope.clickStatus = false;
-        $scope.loadmessages = function(){
+        $scope.loadMessages = function(){
           if (userSessions.userSession.userRole == "parent"){
             var url1 = GLOBALS.baseUrl+"user/get-messages-parent/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
             $http.get(url1).success(function(response){   
@@ -1451,7 +1451,7 @@ angular.module('starter.controllers', [])
             });
         }
         };
-        $scope.loadmessages();        
+        $scope.loadMessages();        
         $scope.confirmDelete = function(from, to){
             $scope.fromId = from;
             $scope.tooId = to;
@@ -1461,7 +1461,7 @@ angular.module('starter.controllers', [])
         $scope.deleteMessage = function(){
             var url = GLOBALS.baseUrl+"user/delete-messages?token="+userSessions.userSession.userToken;
             $http.post(url, {_method: 'PUT', from_id: $scope.fromId, to_id: $scope.tooId}).success(function(response){
-                $scope.loadmessages();
+                $scope.loadMessages();
             }).error(function(err) {
                 console.log(err);
                 $scope.aclMessage = "Access Denied";
@@ -1641,7 +1641,7 @@ angular.module('starter.controllers', [])
             $scope.closeModal();
         };
                 
-        $scope.setmessage = function(message){
+        $scope.setMessage = function(message){
           $scope.message = message;  
         };
         
@@ -1915,15 +1915,17 @@ angular.module('starter.controllers', [])
         //Side-Menu
 
         $ionicSideMenuDelegate.canDragContent(true);
+        $scope.gotIt = 0;
         $scope.absentList = [];
-        $scope.currentDate = new Date();        
-        $scope.getStudentList = function(setDate){
-            $scope.currentDate = $filter('date')(setDate, "yyyy-MM-dd");
+        $scope.currentDate = new Date();
+        
+        $scope.getStudentList = function(){
+            $scope.setDate = $filter('date')($scope.currentDate, "yyyy-MM-dd");
             var url = GLOBALS.baseUrl+"user/students-list?token="+userSessions.userSession.userToken;
-            $http.post(url, {date: $scope.currentDate}).success(function(response) {
+            $http.post(url, {date: $scope.setDate, teacher_id: userSessions.userSession.userId}).success(function(response) {
                 if(response['status'] == 200){
-                    $scope.studentList = response['studentList'];
-                    $scope.absentList = response['absentList'];                     
+                    $scope.studentList = response['data']['studentList'];
+                    $scope.absentList = response['data']['absentList'];                     
                 }
                 else{
                     $scope.msg = response['message'];
@@ -1941,6 +1943,8 @@ angular.module('starter.controllers', [])
                 $scope.showPopup();
             });
         }
+        
+        $scope.getStudentList();
 
         $scope.toggleCheck = function(elementData, studentId) {
             var idx = $scope.absentList.indexOf(studentId);
@@ -1952,7 +1956,8 @@ angular.module('starter.controllers', [])
             $scope.absentList.push(studentId);
             }
             var changeClass = angular.element(document.querySelector('#'+ elementData.target.id));
-               if(elementData.target.classList[2] == "mark-0" || elementData.target.classList[1] == "mark-0" ){
+            
+               if(elementData.target.classList[2] == "mark-0" || elementData.target.classList[1] == "mark-0" || elementData.target.classList[3] == "mark-0" || elementData.target.classList[0] == "mark-0" ){
                    changeClass.removeClass('mark-0');
                    changeClass.addClass('mark-1');
             }
@@ -1963,8 +1968,9 @@ angular.module('starter.controllers', [])
         };
         
         $scope.markAttendance = function(){
+            $scope.setDate = $filter('date')($scope.currentDate, "yyyy-MM-dd");
             var url= GLOBALS.baseUrl+"user/mark-attendance?token="+userSessions.userSession.userToken;
-            $http.post(url, {date: $scope.currentDate, student_id: $scope.absentList})
+            $http.post(url, {date: $scope.setDate, student_id: $scope.absentList})
             .success(function(response) {
                 if(response['status'] == 200){
                         $scope.msg = response['message'];
@@ -2021,11 +2027,68 @@ angular.module('starter.controllers', [])
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.events = [];
+        $scope.batchName = 'Batch';
+        $scope.className = 'Class';
+        $scope.divisionName = 'Div'; 
         $scope.divisionId = '';
         $scope.selectedDateData = [];
         $scope.selectedDateMessage = '';
         $scope.userRole = userSessions.userSession.userRole;
         $scope.userId = userSessions.userSession.userId;
+        
+        $scope.getSelectedDateData = function(selectedDate){
+            $scope.selectedDate= $filter('date')(selectedDate, "yyyy-MM-dd");
+            var url = null;
+            if(userSessions.userSession.userRole == 'parent'){
+              url = GLOBALS.baseUrl+"user/view-attendance-parent?token="+userSessions.userSession.userToken;
+                            $http.post(url, {student_id: $scope.userId, date: $scope.selectedDate})
+                            .success(function(response) {
+                                if(response['status'] == 200){
+                                    $scope.selectedDateData = response['data'];
+                                    $scope.selectedDateMessage = response['message'];                
+                                }
+                                else{
+                                    $scope.msg = response['message'];
+                                    $scope.showPopup();
+                                }
+                            })
+                            .error(function(response) {
+                                console.log("Error in Response: " +response);
+                                if(response.hasOwnProperty('status')){
+                                   $scope.msg = response.message;
+                                }
+                                else{
+                                    $scope.msg = "Access Denied";
+                                }                                
+                                $scope.showPopup();
+                            });  
+            }
+            else{
+                $scope.selectedDate= $filter('date')(selectedDate, "yyyy-MM-dd");
+              url = GLOBALS.baseUrl+"user/view-attendance-teacher?token="+userSessions.userSession.userToken;
+                            $http.post(url, {division_id: $scope.divisionId, date: $scope.selectedDate})
+                            .success(function(response) {
+                                if(response['status'] == 200){
+                                    $scope.selectedDateData = response['data'];                        
+                                }
+                                else{
+                                        $scope.msg = response['message'];
+                                        $scope.showPopup();
+                                }
+                            })
+                            .error(function(response) {
+                                console.log("Error in Response: " +response);
+                                if(response.hasOwnProperty('status')){
+                                   $scope.msg = response.message;
+                                }
+                                else{
+                                    $scope.msg = "Access Denied";
+                                }                                
+                                $scope.showPopup();
+                            });
+            }
+                        
+        };
         if(userSessions.userSession.userRole == 'teacher'){
             var url= GLOBALS.baseUrl+"user/attendance-batches?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
@@ -2034,7 +2097,11 @@ angular.module('starter.controllers', [])
             .error(function(response) {
                 console.log("Error in Response: " +response);
             });
+        }else{
+            $scope.currentDate = new Date();
+            $scope.getSelectedDateData($scope.currentDate);
         }
+        
         $scope.getClass= function(batch){                
             var url= GLOBALS.baseUrl+"user/attendance-classes/"+batch['id']+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
@@ -2070,59 +2137,7 @@ angular.module('starter.controllers', [])
             .error(function(response) {
                 console.log("Error in Response: " +response);
             });
-        }
-        
-        $scope.getSelectedDateData = function(selectedDate){
-            var url = null;
-            if(userSessions.userSession.userRole == 'parent'){
-              url = GLOBALS.baseUrl+"user/view-attendance-parent?token="+userSessions.userSession.userToken;
-                            $http.post(url, {student_id: $scope.userId, date: selectedDate})
-                            .success(function(response) {
-                                if(response['status'] == 200){
-                                    $scope.selectedDateData = response['data'];
-                                    $scope.selectedDateMessage = response['message'];                     
-                                }
-                                else{
-                                    $scope.msg = response['message'];
-                                    $scope.showPopup();
-                                }
-                            })
-                            .error(function(response) {
-                                console.log("Error in Response: " +response);
-                                if(response.hasOwnProperty('status')){
-                                   $scope.msg = response.message;
-                                }
-                                else{
-                                    $scope.msg = "Access Denied";
-                                }                                
-                                $scope.showPopup();
-                            });  
-            }
-            else{
-              url = GLOBALS.baseUrl+"user/view-attendance-teacher?token="+userSessions.userSession.userToken;
-                            $http.post(url, {division_id: $scope.divisionId, date: selectedDate})
-                            .success(function(response) {
-                                if(response['status'] == 200){
-                                    $scope.selectedDateData = response['data'];                        
-                                }
-                                else{
-                                        $scope.msg = response['message'];
-                                        $scope.showPopup();
-                                }
-                            })
-                            .error(function(response) {
-                                console.log("Error in Response: " +response);
-                                if(response.hasOwnProperty('status')){
-                                   $scope.msg = response.message;
-                                }
-                                else{
-                                    $scope.msg = "Access Denied";
-                                }                                
-                                $scope.showPopup();
-                            });
-            }
-                        
-        }
+        };
         
         $scope.options = {
             defaultDate: new Date(),
@@ -2366,7 +2381,7 @@ angular.module('starter.controllers', [])
         ];
 
     })
-    .controller('CreateLeaveCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicPopup, $ionicSideMenuDelegate, GLOBALS, $http, userSessions) {
+    .controller('CreateLeaveCtrl', function($scope, $state, $timeout, $filter, ionicMaterialInk, $ionicPopup, $ionicSideMenuDelegate, GLOBALS, $http, userSessions) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -2424,6 +2439,8 @@ angular.module('starter.controllers', [])
                         $scope.showPopup();
                         }
                         else{
+                            $scope.fromDate = $filter('date')($scope.fromDate, "yyyy-MM-dd");
+                            $scope.toDate = $filter('date')($scope.toDate, "yyyy-MM-dd");
                             var url= GLOBALS.baseUrl+"user/create-leave?token="+userSessions.userSession.userToken;
                             $http.post(url, {student_id: userSessions.userSession.userId, title: $scope.leaveTitle, leave_type_id: $scope.LeaveId, reason: $scope.description, from_date: $scope.fromDate, end_date: $scope.toDate})
                             .success(function(response) {

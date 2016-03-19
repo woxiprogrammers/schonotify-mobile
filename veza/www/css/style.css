@@ -878,7 +878,9 @@ display: none;
 .modal-checkbox {
     margin-left: 30%;
 }
-
+.margin-top-150{
+    margin-top: 150px;
+}
 .padding-top-5{
     padding-top: 5px;
 }
@@ -1042,6 +1044,15 @@ display: none;
     clear: both;
     background-repeat: no-repeat;
     background-position: 50%;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 36px;
+    max-width: 40px;
+    max-height: 40px;
+    min-height: 30px;
+    width: 100%;
+    border-radius: 4px;
 }
 
 .mark-1{
@@ -1049,6 +1060,15 @@ display: none;
     clear: both;
     background-repeat: no-repeat;
     background-position: 50%;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 36px;
+    max-width: 40px;
+    max-height: 40px;
+    min-height: 30px;
+    width: 100%;
+    border-radius: 4px;
 }
 
 .margin-left-2{
@@ -1086,6 +1106,11 @@ visibility: hidden;
     font-size: 175%;
 }
 
+.attendance-list{
+    padding: 10px!important;
+    min-height: 0px!important;
+}
+
 .send-button{
     margin-top: 10px;
     margin-left: 5px;
@@ -1121,7 +1146,12 @@ visibility: hidden;
 .red-font{
     color: red;
 }
-
+.blue-font{
+    color: skyblue;
+}
+.green-font{
+    color: green;
+}
 .margin-top-70 {
     margin-top: 70px!important;
 }
