@@ -52,7 +52,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
         $translateProvider.preferredLanguage('en');
         $translateProvider.useSanitizeValueStrategy('escape');
 
-    $stateProvider    
+    $stateProvider
     .state('login', {
         url: '/login',
         templateUrl: 'templates/login.html',
@@ -62,9 +62,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
 	.state('app', {
         url: '/app',
         templateUrl: 'templates/menu.html',
-        abstract: true,        
+        abstract: true,
         controller: 'AppCtrl'
-    })    
+    })
 
     .state('app.dashboard', {
         url: '/dashboard',
@@ -272,15 +272,32 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                 }
             }
         })
-        .state('app.eventlanding', {
-            url: '/eventlanding',
+        .state('app.eventlandingteacher', {
+            url: '/eventlandingteacher',
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/event-landing.html',
-                    controller: 'LandingEventCtrl'
+                    templateUrl: 'templates/event-landing-teacher.html',
+                    controller: 'LandingEventTeacherCtrl'
                 },
                 'fabContent': {
-                    template: ''
+                    template: '<button id="fab-new-message" ui-sref="app.createevent" class="button button-fab button-fab-bottom-right expanded fab-button-event  spin"><i class="icon ion-edit"></i></button>',
+                    controller: function ($timeout) {
+                        $timeout(function () {
+                            document.getElementById('fab-new-message').classList.toggle('on');
+                        }, 900);
+                    }
+                }
+            }
+        })
+        .state('app.eventlandingparent', {
+            url: '/eventlandingparent',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/event-landing-parent.html',
+                    controller: 'LandingEventParentCtrl'
+                },
+                'fabContent': {
+                  template: ''
                 }
             }
         })
@@ -297,6 +314,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                         $timeout(function () {
                             document.getElementById('fab-new-message').classList.toggle('on');
                         }, 900);
+                    }
+                }
+            }
+        })
+        .state('app.detaileventparent', {
+            url: '/detaileventparent',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/detail-event-parent.html',
+                    controller: 'DetailEventParentCtrl'
+                },
+                'fabContent': {
+                    template: ''
                     }
                 }
             }
@@ -504,7 +534,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                 'menuContent': {
                     templateUrl: 'templates/edit-homework.html',
                     controller: 'UnpubHwListCtrl'
-                },               
+                },
                 'fabContent': {
                     template: '<button id="fab-new-homework" ng-click="composeHw()" class="button button-fab button-fab-bottom-right expanded bar-pink  spin"><i class="icon ion-edit"></i></button>',
                     controller: function ($timeout) {
@@ -559,7 +589,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                     controller: ''
                 },
                 'fabContent': {
-                    template: '<button id="fab-leave-button" ng-click="createLeave()" class="button button-fab button-fab-bottom-right expanded bar-orange  spin"><i class="icon ion-edit"></i></button>', 
+                    template: '<button id="fab-leave-button" ng-click="createLeave()" class="button button-fab button-fab-bottom-right expanded bar-orange  spin"><i class="icon ion-edit"></i></button>',
                     controller: function ($timeout) {
                         $timeout(function () {
                             document.getElementById('fab-leave-button').classList.toggle('on');
@@ -567,7 +597,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                     }
                 }
             }
-        })        
+        })
         .state('app.resultview', {
             url: '/resultview',
             views: {

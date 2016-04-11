@@ -138,7 +138,7 @@ p {
     margin-top: 5px!important;
 }
 .ion-message {
-    background: url('../img/messages.png') center;  
+    background: url('../img/messages.png') center;
     background-repeat: no-repeat;
     background-position: 50%;
     height: 100%;
@@ -353,25 +353,25 @@ display: none;
 }
 
 .disabled {
-  color: gray;  
+  color: gray;
 }
 .hero.no-header {
-    height: 0px!important;    
+    height: 0px!important;
 }
 
 .login-bg-col {
-    background: #2D2C22;    
+    background: #2D2C22;
 }
 
 .side-menu-bg {
-    background: url('../img/education-bg.jpg') center!important; 
-    background-size: cover; 
+    background: url('../img/education-bg.jpg') center!important;
+    background-size: cover;
 }
 
 .profile-uname {
     margin-top: 100px;
     font-size: 16px;
-    margin-left: 12px;    
+    margin-left: 12px;
 }
 
 .float-left{
@@ -381,9 +381,9 @@ display: none;
 .float-right{
     float: right;
 }
-    
+
 .sm-item-border {
-    border-bottom: 1px solid #fceaf6!important;    
+    border-bottom: 1px solid #fceaf6!important;
 }
 
 .no-scroll {
@@ -430,7 +430,7 @@ display: none;
 }
 
 .font-white{
-  color: white;  
+  color: white;
 }
 
 .align-delete-bin {
@@ -721,6 +721,12 @@ display: none;
 }
 .margin-top-5{
     margin-top: 5px!important;
+}
+.margin-top-3{
+    margin-top: 3px!important;
+}
+.margin-top-2{
+    margin-top: 2px!important;
 }
 .font-16{
     font-size: 16px;
@@ -1095,7 +1101,7 @@ display: none;
     display: none!important;
 }
 .visible-no{
-visibility: hidden;    
+visibility: hidden;
 }
 
 .padding-top-10{
@@ -1184,7 +1190,30 @@ visibility: hidden;
     border-radius: 12px;
 }
 
-.margin-left-5{
+.recent-button {
+    font-size: 12px;
+    height: 30px;
+    padding: 3px 3px;
+    line-height: 0;
+    min-height: 30px;
+    text-transform: none;
+    border-radius: 12px;
+    background-color: red;
+    color : white;
+}
+
+.month-button {
+    font-size: 10px;
+    height: 20px;
+    padding: 2px 0px;
+    line-height: 0;
+    min-height: 20px;
+    text-transform: none;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.margin-left-5 {
     margin-left: 5%;
 }
 
@@ -1207,6 +1236,36 @@ visibility: hidden;
 .creator-time-font{
     color: black;
     font-size: 100%;
+}
+
+.month-align {
+  text-align: right;
+  float: right;
+}
+
+.button-green {
+  background-color: green;
+  color: white;
+}
+
+.button-blue {
+  background-color: blue;
+  color: white;
+}
+
+.status-button {
+    font-size: 12px;
+    height: 24px;
+    padding: 3px 3px;
+    line-height: 0;
+    min-height: 24px;
+    text-transform: none;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.lable-font-size {
+  font-size: 12px;
 }
 
 /*********** MEDIA QUERIES ***********/
