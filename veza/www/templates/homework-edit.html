@@ -60,7 +60,7 @@
                         </select>
                     </div>
                     <div class="col-33 border-bottom">
-                        <select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.name for division in divisionsList track by division.id" ng-change="getStudentList(selectedDivision.division)">
+                        <select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.name for division in divisionsList track by division.id" ng-change="getStudentList(selectedDivision.division.id)">
                             <option value="" ng-disabled="true" ng-model = "divName">{{divName}}</option>
                         </select>
                     </div>
@@ -114,12 +114,13 @@
                                 <ion-checkbox class="checkbox-square checkbox-assertive" id="{{item.name}}" value="{{item.id}}" ng-checked="selectedList.indexOf(item.id) > -1" ng-click="toggleSelection(item.id)">
                                 </ion-checkbox>
                             </div>
-                            <div class="col-75">
+                            <div class="col-75 margin-top-5">
                                 <h2><strong>{{item.name}}</strong></h2>
                             </div>
                         </div>
                     </ion-item>
                 </div>
+                <div class = "height-15 row"></div>
             </ion-content>
             <div class="bar bar-footer modal-bottom no-border">
                 <div class="row">

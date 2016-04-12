@@ -3,8 +3,8 @@
 var db = null;
 angular.module('starter.controllers', [])
 .constant('GLOBALS',{
-   baseUrl:'http://test.woxiapps.com/api/v1/',
-//   baseUrl:'http://192.168.2.2/api/v1/'
+   //baseUrl:'http://test.woxiapps.com/api/v1/',
+   baseUrl:'http://192.168.2.7/api/v1/'
 })
 .service('userSessions', function Usersession(){
 
@@ -961,21 +961,21 @@ angular.module('starter.controllers', [])
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.editHwData = hwDetails.getHwView();
         $scope.hwId = $scope.editHwData.homework_id;        
-        $scope.contactList = $scope.editHwData.studentList;
-        $scope.recipient = $scope.contactList.length+" Student Selected";
+        $scope.contactSelectList = $scope.editHwData.studentList;
+        $scope.recipient = $scope.contactSelectList.length+" Student Selected";
         $scope.SubjectId = $scope.editHwData.subject_id;
         $scope.SubjectName = $scope.editHwData.subjectName;
         $scope.BatchId = $scope.editHwData.batch_id;
         $scope.BatchName = $scope.editHwData.batch_name;
-        $scope.selectedList=[];
-        angular.forEach($scope.contactList, function (item) {
-            $scope.selectedList.push(item.id);
-        });               
         $scope.hwTitle = $scope.editHwData.homeworkTitle;
         $scope.classId = $scope.editHwData.class_id;
         $scope.divId = $scope.editHwData.division_id;
         $scope.className = $scope.editHwData.class_name;
         $scope.divName = $scope.editHwData.division_name;
+        $scope.selectedList=[];
+        angular.forEach($scope.contactSelectList, function (item) {
+            $scope.selectedList.push(item.id);
+        });        
         $scope.minDate = new Date();
         $scope.dueDate = new Date();
         $scope.description = $scope.editHwData.description;
@@ -983,8 +983,14 @@ angular.module('starter.controllers', [])
         $scope.hwrkType = $scope.editHwData.homeworkType;
         $scope.setTitle = function(title){
           $scope.hwTitle = title;  
-        };       
-               
+        };
+        $scope.$watch(function(scope) { return scope.selectedList },
+              function(newValue, oldValue) {
+                  if(newValue.length == $scope.contactSelectList.length){
+                      $scope.getStudentList($scope.divId);
+                  }
+              }
+             );            
         $scope.setDescription = function(message){
           $scope.description = message;  
         };
@@ -1063,11 +1069,10 @@ angular.module('starter.controllers', [])
         };
         
         $scope.getStudentList = function(divType){
-                var url= GLOBALS.baseUrl+"user/get-students-list/"+divType['id']+"?token="+userSessions.userSession.userToken;
+                var url= GLOBALS.baseUrl+"user/get-students-list/"+divType+"?token="+userSessions.userSession.userToken;
                 $http.get(url)
                     .success(function(response) {
                         $scope.contactList = response['data']['studentList'];
-                        $scope.selectedList.length = 0;
                         $scope.checkRecipient = false;
                         $scope.divId = divType['id'];
                     })
@@ -1216,7 +1221,8 @@ angular.module('starter.controllers', [])
               	$scope.selectedAll = true;
             }
             }
-        };
+        };       
+        
              
         var url = GLOBALS.baseUrl+"user/get-teachers-subjects?token="+userSessions.userSession.userToken;
             $http.get(url)
@@ -1252,7 +1258,8 @@ angular.module('starter.controllers', [])
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
-        };
+        };        
+        
         
         $scope.getClass= function(batch){
             $scope.recipient = "Select Student";                
@@ -1716,7 +1723,6 @@ angular.module('starter.controllers', [])
         $scope.recipient = "";
         $scope.message = "";
         $scope.contactList = [];
-        $scope.message = '';
         if(userSessions.userSession.userToken == 0){
             $state.go('login');
         }
@@ -1754,7 +1760,7 @@ angular.module('starter.controllers', [])
             $scope.closeModal();
         };
         
-        $scope.setmessage = function(message){
+        $scope.setMessage = function(message){
           $scope.message = message;  
         };
 
@@ -1974,8 +1980,7 @@ angular.module('starter.controllers', [])
             .success(function(response) {
                 if(response['status'] == 200){
                         $scope.msg = response['message'];
-                        $scope.showPopup();
-                        $state.go('app.attendancelanding');                    
+                        $scope.showPopup();                    
                 }
                 else{
                         $scope.msg = response['message'];
@@ -2056,9 +2061,11 @@ angular.module('starter.controllers', [])
                                 console.log("Error in Response: " +response);
                                 if(response.hasOwnProperty('status')){
                                    $scope.msg = response.message;
+                                   $scope.selectedDateData.length =0;
                                 }
                                 else{
                                     $scope.msg = "Access Denied";
+                                    $scope.selectedDateData.length =0;
                                 }                                
                                 $scope.showPopup();
                             });  
@@ -2080,9 +2087,11 @@ angular.module('starter.controllers', [])
                                 console.log("Error in Response: " +response);
                                 if(response.hasOwnProperty('status')){
                                    $scope.msg = response.message;
+                                   $scope.selectedDateData.length = 0;
                                 }
                                 else{
                                     $scope.msg = "Access Denied";
+                                    $scope.selectedDateData.length = 0;
                                 }                                
                                 $scope.showPopup();
                             });
@@ -2102,8 +2111,8 @@ angular.module('starter.controllers', [])
             $scope.getSelectedDateData($scope.currentDate);
         }
         
-        $scope.getClass= function(batch){                
-            var url= GLOBALS.baseUrl+"user/attendance-classes/"+batch['id']+"?token="+userSessions.userSession.userToken;
+        $scope.getClass = function(batch){                
+            var url= GLOBALS.baseUrl+"user/attendance-classes/"+batch+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
                 $scope.classes = response['data'];                  
             })
@@ -2113,7 +2122,7 @@ angular.module('starter.controllers', [])
         };
         
         $scope.getDivision = function(classType){
-            var url= GLOBALS.baseUrl+"user/get-attendance-divisions/"+classType['id']+"?token="+userSessions.userSession.userToken;
+            var url= GLOBALS.baseUrl+"user/get-attendance-divisions/"+classType+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
                 $scope.divisions = response['data'];
             })
@@ -2129,7 +2138,7 @@ angular.module('starter.controllers', [])
             }
             else{
               $scope.divisionId = id;
-              url = GLOBALS.baseUrl+"user/default-attendance-teacher/"+id+"?token="+userSessions.userSession.userToken;
+              url = GLOBALS.baseUrl+"user/attendance-teacher/"+id+"?token="+userSessions.userSession.userToken;
             }
             $http.get(url).success(function(response) {
                 $scope.events = response['data'];            
@@ -2138,6 +2147,27 @@ angular.module('starter.controllers', [])
                 console.log("Error in Response: " +response);
             });
         };
+        
+        if(userSessions.userSession.userRole == 'teacher'){
+            url = GLOBALS.baseUrl+"user/default-attendance-teacher/?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response) {
+                $scope.events = response['data']['absentDates'];
+                $scope.batchId = response['data']['batchId'];
+                $scope.batchName = response['data']['batchName'];
+                $scope.classId = response['data']['classId'];
+                $scope.className = response['data']['className'];
+                $scope.divisionId = response['data']['divId'];
+                $scope.divName = response['data']['divName'];
+                $scope.getClass($scope.batchId);
+                $scope.getDivision($scope.classId);
+            })
+            .error(function(response) {
+                console.log("Error in Response: " +response);
+                $scope.msg ="Access Denied";
+                $scope.showPopup();
+                $state.go('app.attendancelanding');
+            });
+        }
         
         $scope.options = {
             defaultDate: new Date(),
@@ -2423,7 +2453,10 @@ angular.module('starter.controllers', [])
             $scope.LeaveId = leave['id'];           
         }
         $scope.send = function(){
-                        if($scope.leaveTitle == "" || $scope.LeaveId == "" || $scope.description == "" || $scope.LeaveId == "" && $scope.leaveTitle == "" && $scope.message == ""){
+                        $scope.fromDate = new Date();
+                        $scope.toDate = new Date();
+                        if($scope.leaveTitle == "" || $scope.LeaveId == "" || $scope.description == "" || $scope.LeaveId == "" && $scope.leaveTitle == "" && $scope.message == "" || $scope.fromDate == '' ||
+        $scope.toDate == ''|| $scope.fromDate == '' && $scope.toDate == ''){
                                 if($scope.leaveTitle == ""){
                                     $scope.msg = "Please Add Title";
                                 }
@@ -2432,6 +2465,9 @@ angular.module('starter.controllers', [])
                                 }
                                 if($scope.description == ""){
                                     $scope.msg = "Please Add Description";
+                                }
+                                if($scope.fromDate == '' || $scope.toDate == '' || $scope.fromDate == '' && $scope.toDate == ''){
+                                    $scope.msg = "Please Check the Dates";
                                 }
                                 if($scope.LeaveId == "" && $scope.leaveTitle == "" && $scope.message == ""){
                                     $scope.msg = "Cannot create blank Leave";
@@ -2804,6 +2840,29 @@ angular.module('starter.controllers', [])
 
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
+        $scope.getClass = function(batch){                
+                var url= GLOBALS.baseUrl+"user/get-classes/"+batch+"?token="+userSessions.userSession.userToken;
+                $http.get(url).success(function(response) {
+                    $scope.classList = response['data'];
+                    $scope.className = 'Class';
+                    $scope.divisionName = 'Div';
+                    $scope.checkBatch = false;           
+                })
+                .error(function(response) {
+                    console.log("Error in Response: " +response);
+                });
+        };
+        
+        $scope.getDivision = function(classType){
+            var url= GLOBALS.baseUrl+"user/get-divisions/"+classType+"?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response) {
+                   $scope.divisionsList = response['data'];                   
+                    $scope.checkClass = false;
+                })
+                .error(function(response) {
+                    console.log("Error in Response: " +response);
+                });
+        };
                 
         $scope.defaultTimetable = function(){
             var url = null;
@@ -2821,6 +2880,10 @@ angular.module('starter.controllers', [])
                          $scope.batchName = response['data']['batchName'];
                          $scope.className = response['data']['className'];
                          $scope.divisionName = response['data']['divisionName'];
+                         $scope.classId = response['data']['classId'];
+                         $scope.batchId = response['data']['batchId'];
+                         $scope.getClass($scope.batchId);
+                         $scope.getDivision($scope.classId);
                     }
                 }else{
                     $scope.timeTableList = response['data']['timetable'];
@@ -2846,6 +2909,10 @@ angular.module('starter.controllers', [])
                             $scope.batchName = response['data']['batchName'];
                             $scope.className = response['data']['className'];
                             $scope.divisionName = response['data']['divisionName'];
+                            $scope.classId = response['data']['classId'];
+                            $scope.batchId = response['data']['batchId'];
+                            $scope.getClass($scope.batchId);
+                            $scope.getDivision($scope.classId);
                         }
                     }
                     else{
@@ -2872,7 +2939,7 @@ angular.module('starter.controllers', [])
                     if(userSessions.userSession.userRole == "teacher"){
                         $scope.batchName = response['data']['batchName'];
                         $scope.className = response['data']['className'];
-                        $scope.divisionName = response['data']['divisionName'];
+                        $scope.divisionName = response['data']['divisionName'];                        
                     }
                 }else{
                     $scope.timeTableList = response['data']['timetable'];
@@ -2914,33 +2981,7 @@ angular.module('starter.controllers', [])
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
-           }               
-            
-        
-        $scope.getClass= function(batch){                
-                var url= GLOBALS.baseUrl+"user/get-classes/"+batch['id']+"?token="+userSessions.userSession.userToken;
-                $http.get(url).success(function(response) {
-                    $scope.classList = response['data'];
-                    $scope.className = 'Class';
-                    $scope.divisionName = 'Div';
-                    $scope.checkBatch = false;           
-                })
-                .error(function(response) {
-                    console.log("Error in Response: " +response);
-                });
-        };
-        
-        $scope.getDivision = function(classType){
-            var url= GLOBALS.baseUrl+"user/get-divisions/"+classType['id']+"?token="+userSessions.userSession.userToken;
-            $http.get(url).success(function(response) {
-                   $scope.divisionsList = response['data'];                   
-                    $scope.checkClass = false;
-                })
-                .error(function(response) {
-                    console.log("Error in Response: " +response);
-                });
-        };
-        
+           } 
         $scope.getDivId = function(division){
             $scope.divId = division['id'];           
         }        
@@ -2970,17 +3011,17 @@ angular.module('starter.controllers', [])
                 template: '<div class="list">'+
                     '<div class="row">'+
                     '<div class="col-33 border-bottom">'+
-                        '<select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batchList track by batch.id" ng-change="getClass(selectedBatch.batch)">'+
+                        '<select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batchList track by batch.id" ng-change="getClass(selectedBatch.batch.id)">'+
                             '<option value="" ng-disabled="true" ng-model="batchName">-{{batchName}}-</option>'+
                         '</select>'+
                     '</div>'+
                     '<div class="col-33 border-right border-bottom">'+
-                        '<select class="item item-input item-select" ng-model="selectedClass.class" ng-options="class.name for class in classList track by class.id" ng-change="getDivision(selectedClass.class)" ng-disabled="checkBatch">'+
+                        '<select class="item item-input item-select" ng-model="selectedClass.class" ng-options="class.name for class in classList track by class.id" ng-change="getDivision(selectedClass.class.id)">'+
                             '<option value="" ng-disabled="true" ng-model="className">-{{className}}-</option>'+
                         '</select>'+
                     '</div>'+
                     '<div class="col-33 border-bottom">'+
-                        '<select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.name for division in divisionsList track by division.id" ng-change="getDivId(selectedDivision.division)" ng-disabled="checkClass">'+
+                        '<select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.name for division in divisionsList track by division.id" ng-change="getDivId(selectedDivision.division)">'+
                             '<option value="" ng-disabled="true" ng-model="divisionName">-{{divisionName}}-</option>'+
                         '</select>'+
                     '</div>'+
