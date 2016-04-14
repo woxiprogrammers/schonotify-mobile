@@ -12,7 +12,7 @@
                     <i class="icon ion-homie"></i>
                 </a>
                 <a class="tab-item margin-top-10" ui-sref="app.message">
-                    <i class="icon ion-message"><span class="badge badge-assertive">1</span></i>
+                    <i class="icon ion-message"><span class="badge badge-assertive"></span></i>
                 </a>
             </div>
         </div>
@@ -25,71 +25,47 @@
                         <i class="ion-arrow-left-c button-back-white"></i>
                     </button>
                 </div>
-                <div class="col-80 margin-top-5">
-                    <span class="inner-header">New Event</span>
+                <div class="col-60 margin-top-5">
+                    <span class="inner-header">Edit Event</span>
                 </div>
-                <div class="col-10">
-                    <a><i class="icon ion-android-send align-delete-bin"></i></a>
+                <div class="col-30" ng-click="updateEvent()">
+                    <button class="button-balanced header-approve">
+                     Update
+                    </button>
                 </div>
             </div>
         </iion-item>
     </div>
-    <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
-        <div class="list">
-            <div class="row item">
-                <div class="col-20 padding-top-10 date-bg"><h2 class="margin-left-2">Date:</h2></div>
-                <input class="item-input col-80" type="date" ng-model="selectedDate">
-            </div>
-            <div class="row">
-                <div class="col-50 border-bottom border-right">
-                    <select class="item item-input item-select">
-                        <option selected class="padding-top-5">User</option>
-                        <option class="padding-top-5">Teacher</option>
-                        <option class="padding-top-5">Parent</option>
-                        <option class="padding-top-5" selected>Parent & Teacher</option>
-                        <option class="padding-top-5">Admin</option>
-                        <option class="padding-top-5">Admin & Teacher</option>
-                        <option class="padding-top-5">All</option>
-                    </select>
-                </div>
-                <div class="col-50 border-bottom">
-                    <select class="item item-input item-select border-bottom">
-                        <option selected class="padding-top-5">Batch</option>
-                        <option class="padding-top-5" selected>Morning</option>
-                        <option class="padding-top-5">Afternoon</option>
-                        <option class="padding-top-5">Evening</option>
-                    </select>
-                </div>
+    <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-2">
+      <div class="row">
+          <div class="col">
+            <div class="list">
+               <label class="item item-input item-floating-label">
+               <span class="input-label">Title : </span>
+               <input id="eventTitle" type="text" placeholder="Write Event title here">
+               </label>
 
-            </div>
-            <div class="row">
-                <div class="col-50 border-right">
-                    <select class="item item-input item-select border-bottom">
-                        <option selected class="padding-top-5">Class</option>
-                        <option class="padding-top-5">Class I</option>
-                        <option class="padding-top-5" selected>Class II</option>
-                        <option class="padding-top-5">Class III</option>
-                    </select>
-                </div>
-                <div class="col-50 border-bottom">
-                    <select class="item item-input item-select">
-                        <option selected class="padding-top-5">Div</option>
-                        <option class="padding-top-5">Div A</option>
-                        <option class="padding-top-5" selected>Div B</option>
-                        <option class="padding-top-5">Div C</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row item">
+               <label class="item item-input item-floating-label">
+               <span class="input-label">Event description : </span>
+               <input id="eventDescription" type="text" placeholder="Write Event description here">
+               </label>
+
+               <div class="row item">
+                   <div class="col-33 padding-top-10 date-bg"><h3 class="margin-left-1">Start Date : </h3></div>
+                   <input id="startEventTime" class="item-input col-67" type="date" ng-model="startEventTime">
+               </div>
+
+               <div class="row item">
+                  <div class="col-33 padding-top-10 date-bg"><h3 class="margin-left-1">End Date : </h3></div>
+                    <input id="endEventTime" class="item-input col-67" type="date" ng-model="endEventTime">
+                  </div>
+              </div>
+              <div class="row item">
                 <div class="col-33 padding-top-10 date-bg"><h2 class="margin-left-2">Upload Image:</h2></div>
-                <input class="item-input col-67" type="file" value="abcd.jpg">
+                <input class="item-input col-67" type="file">
             </div>
-            <label class="item item-input border-bottom">
-                <input type="text" placeholder="Title" value="Parents & Teachers Meet">
-            </label>
-            <label class="item item-input">
-                <textarea placeholder="Description"></textarea>
-            </label>
+          </div>
         </div>
+      </div>
     </ion-content>
 </ion-view>

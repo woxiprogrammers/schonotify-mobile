@@ -30,10 +30,9 @@
                     <span class="inner-header">Events</span>
                 </div>
                 <div class="col">
-                    <lable class="lable-font-size">Select Year : </label>
-                     <select item item-input item-select item-assertive>
-                        <option value="2016">2016</option>
-                        <option value="2015" selected>2015</option>
+                     <!--<lable class="lable-font-size">Select Year : </label>-->
+                     <select class="eventYear" id="eventYear" ng-model="selectedYear" ng-options="yearMonth.year as yearMonth.year for yearMonth in yearMonthData" ng-change="setMonth(selectedYear)">
+                          <option value="">Select Year</option>
                      </select>
                 </div>
             </div>
@@ -44,151 +43,52 @@
         <div class="row">
             <div class="col col-80">
               <ion-scroll style="height: 450px" direction="y" >
-                <ion-list class="padding-5">
-                  <ion-item class="notify-item-border">
-                    <a class="item" ui-sref="app.editevent">
-                        <div>
-                          <h3><strong>Event 3 : Diwali Celebration</strong></h3>
-                          <div class="card">
-                             <div class="item">
-                                This is a Ionic card with item-text-wrap class.
-                                This is a Ionic card with item-text-wrap class.
-                                This is a Ionic card with item-text-wrap class.
-                                This is a Ionic card with item-text-wrap class.
-                             </div>
-                             <div class="item item-text-wrap">
-                               <span><strong>Event From :</strong> 28/02/2016</span><br>
-                               <span><strong>Event To :</strong> 28/02/2016</span>
-                             </div>
-                          </div>
-                          <span>
-                            <button ng-class='{ display-no: clickStatus}' class="button button-balanced status-button" ng-disabled="clickStatus" >
-                                  Publish
-                            </button>
-                          </span>
-                        </div>
+                <ion-list>
+                  <ion-item class="notify-item-border" ng-repeat="event in eventList">
+                    <a class="item" ng-click="getDetailsOfEvent(event.id)">
+                      <h2><strong>{{event.title}}</strong></h2>
+                      <span class="eventHeaderFontSize"><strong>On </strong> {{event.start_date}}</span>
+                      <span class="pull-right" ng-if="event.status == 'Published'">
+                        <button ng-class='{ display-no: clickStatus}' class="button button-balanced status-button" ng-disabled="clickStatus" >
+                              {{event.status}}
+                        </button>
+                      </span>
+
+                      <span class="pull-right" ng-if="event.status == 'Pending'">
+                        <button ng-class='{ display-no: clickStatus}' class="button button-assertive status-button" ng-disabled="clickStatus" >
+                              {{event.status}}
+                        </button>
+                      </span>
+
+                      <span class="pull-right" ng-if="event.status == 'Draft'">
+                        <button ng-class='{ display-no: clickStatus}' class="button button-energized status-button" ng-disabled="clickStatus" >
+                              {{event.status}}
+                        </button>
+                      </span>
                     </a>
                  </ion-item>
-                 <ion-item class="notify-item-border">
-                 <a class="item" ui-sref="app.editevent">
-                     <div>
-                       <h3><strong>Event 3 : Diwali Celebration</strong></h3>
-                       <div class="card">
-                          <div class="item">
-                             This is a Ionic card with item-text-wrap class.
-                             This is a Ionic card with item-text-wrap class.
-                             This is a Ionic card with item-text-wrap class.
-                             This is a Ionic card with item-text-wrap class.
-                          </div>
-                          <div class="item item-text-wrap">
-                            <span><strong>Event From :</strong> 28/02/2016</span><br>
-                            <span><strong>Event To :</strong> 28/02/2016</span>
-                          </div>
-                       </div>
-                       <span>
-                         <button ng-class='{ display-no: clickStatus}' class="button button-energized status-button" ng-disabled="clickStatus" >
-                               Draft
-                         </button>
-                       </span>
-                     </div>
+                 <!--<ion-item class="notify-item-border">
+                 <a class="item" ui-sref="app.eventstatusteacher">
+                   <h3><strong>Event 3 : Diwali Celebration</strong></h3>
+                     <span><strong>On </strong> 28/02/2016</span>
+                     <span class="pull-right">
+                       <button ng-class='{ display-no: clickStatus}' class="button button-energized status-button" ng-disabled="clickStatus" >
+                             Draft
+                       </button>
+                     </span>
                  </a>
               </ion-item>
               <ion-item class="notify-item-border">
-              <a class="item" ui-sref="app.editevent">
-                  <div>
-                    <h3><strong>Event 3 : Diwali Celebration</strong></h3>
-                    <div class="card">
-                       <div class="item">
-                          This is a Ionic card with item-text-wrap class.
-                          This is a Ionic card with item-text-wrap class.
-                          This is a Ionic card with item-text-wrap class.
-                          This is a Ionic card with item-text-wrap class.
-                       </div>
-                       <div class="item item-text-wrap">
-                         <span><strong>Event From :</strong> 28/02/2016</span><br>
-                         <span><strong>Event To :</strong> 28/02/2016</span>
-                       </div>
-                    </div>
-                    <span>
-                      <button ng-class='{ display-no: clickStatus}' class="button button-assertive status-button" ng-disabled="clickStatus" >
-                            Unpublish
-                      </button>
-                    </span>
-                  </div>
+              <a class="item" ui-sref="app.eventstatusteacher">
+                  <h3><strong>Event 3 : Diwali Celebration</strong></h3>
+                  <span><strong>On </strong> 28/02/2016</span>
+                  <span class="pull-right">
+                    <button ng-class='{ display-no: clickStatus}' class="button button-assertive status-button" ng-disabled="clickStatus" >
+                          Unpublish
+                    </button>
+                  </span>
               </a>
-           </ion-item>
-           <ion-item class="notify-item-border">
-             <a class="item" ui-sref="app.editevent">
-                 <div>
-                   <h3><strong>Event 3 : Diwali Celebration</strong></h3>
-                   <div class="card">
-                      <div class="item">
-                         This is a Ionic card with item-text-wrap class.
-                         This is a Ionic card with item-text-wrap class.
-                         This is a Ionic card with item-text-wrap class.
-                         This is a Ionic card with item-text-wrap class.
-                      </div>
-                      <div class="item item-text-wrap">
-                        <span><strong>Event From :</strong> 28/02/2016</span><br>
-                        <span><strong>Event To :</strong> 28/02/2016</span>
-                      </div>
-                   </div>
-                   <span>
-                     <button ng-class='{ display-no: clickStatus}' class="button button-balanced status-button" ng-disabled="clickStatus" >
-                           Publish
-                     </button>
-                   </span>
-                 </div>
-             </a>
-          </ion-item>
-          <ion-item class="notify-item-border">
-          <a class="item" ui-sref="app.editevent">
-              <div>
-                <h3><strong>Event 3 : Diwali Celebration</strong></h3>
-                <div class="card">
-                   <div class="item">
-                      This is a Ionic card with item-text-wrap class.
-                      This is a Ionic card with item-text-wrap class.
-                      This is a Ionic card with item-text-wrap class.
-                      This is a Ionic card with item-text-wrap class.
-                   </div>
-                   <div class="item item-text-wrap">
-                     <span><strong>Event From :</strong> 28/02/2016</span><br>
-                     <span><strong>Event To :</strong> 28/02/2016</span>
-                   </div>
-                </div>
-                <span>
-                  <button ng-class='{ display-no: clickStatus}' class="button button-energized status-button" ng-disabled="clickStatus" >
-                        Draft
-                  </button>
-                </span>
-              </div>
-          </a>
-       </ion-item>
-       <ion-item class="notify-item-border">
-       <a class="item" ui-sref="app.editevent">
-           <div>
-             <h3><strong>Event 3 : Diwali Celebration</strong></h3>
-             <div class="card">
-                <div class="item">
-                   This is a Ionic card with item-text-wrap class.
-                   This is a Ionic card with item-text-wrap class.
-                   This is a Ionic card with item-text-wrap class.
-                   This is a Ionic card with item-text-wrap class.
-                </div>
-                <div class="item item-text-wrap">
-                  <span><strong>Event From :</strong> 28/02/2016</span><br>
-                  <span><strong>Event To :</strong> 28/02/2016</span>
-                </div>
-             </div>
-             <span>
-               <button ng-class='{ display-no: clickStatus}' class="button button-assertive status-button" ng-disabled="clickStatus" >
-                     Unpublish
-               </button>
-             </span>
-           </div>
-       </a>
-    </ion-item>
+           </ion-item>-->
                 </ion-list>
               </ion-scroll>
             </div>
@@ -199,88 +99,67 @@
                     </button>
                 </div>
 
-                <div class="row margin-top-2">
-                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="recentEvent()">
-                        Jan
+                <div class="row margin-top-2" ng-repeat="(key, value) in monthList">
+                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="eventByMonth({{key}})">
+                        {{value}}
                     </button>
                 </div>
-                <div class="row margin-top-2">
-                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="recentEvent()">
+                <!--<div class="row margin-top-2">
+                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="eventByMonth(2)">
                         Feb
                     </button>
                 </div>
                 <div class="row margin-top-2">
-                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="recentEvent()">
+                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="eventByMonth(3)">
                         Mar
                     </button>
                 </div>
                 <div class="row margin-top-2">
-                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="recentEvent()">
+                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="eventByMonth(4)">
                         Apr
                     </button>
                 </div>
                 <div class="row margin-top-2">
-                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="recentEvent()">
+                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="eventByMonth(5)">
                         May
                     </button>
                 </div>
                 <div class="row margin-top-2">
-                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="recentEvent()">
+                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="eventByMonth(6)">
                         Jun
                     </button>
                 </div>
                 <div class="row margin-top-2">
-                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="recentEvent()">
+                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="eventByMonth(7)">
                         Jul
                     </button>
                 </div>
                 <div class="row margin-top-2">
-                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="recentEvent()">
+                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="eventByMonth(8)">
                         Aug
                     </button>
                 </div>
                 <div class="row margin-top-2">
-                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="recentEvent()">
+                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="eventByMonth(9)">
                         Sep
                     </button>
                 </div>
                 <div class="row margin-top-2">
-                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="recentEvent()">
+                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="eventByMonth(10)">
                         Oct
                     </button>
                 </div>
                 <div class="row margin-top-2">
-                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="recentEvent()">
+                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="eventByMonth(11)">
                         Nov
                     </button>
                 </div>
                 <div class="row margin-top-2">
-                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="recentEvent()">
+                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="eventByMonth(12)">
                         Dec
                     </button>
-                </div>
-
+                </div>-->
             </div>
         </div>
     </ion-content>
-<!--    <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
-        <ion-list>
-            <ion-item class="notify-item-border">
-                <a class="item" ui-sref="app.editevent">
-                    <div class="col-90 col-offset-10">
-                        <h2><strong>Create / Edit Event</strong></h2><br>
-                        <p>Create new event or Edit existing Event</p>
-                    </div>
-                </a>
-            </ion-item>
-            <ion-item class="notify-item-border">
-                <a class="item" ui-sref="app.viewevents">
-                    <div class="col-90 col-offset-10">
-                        <h2><strong>View Events</strong></h2><br>
-                        <p>View Events for Current Academic Year</p>
-                    </div>
-                </a>
-            </ion-item>
-        </ion-list>
-    </ion-content>-->
 </ion-view>

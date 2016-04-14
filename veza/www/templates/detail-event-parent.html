@@ -1,0 +1,77 @@
+<ion-view view-title="Event" name="event" class="touch-effect">
+    <div class="row padding-0">
+        <div class="tabs-striped tabs-color-positive tabs-top">
+            <div class="tabs tab-align-inner">
+                <a class="tab-item margin-top-0">
+                    <i class="icon ion-android-menu slide-button" ng-click="toggleLeftSideMenu()"></i>
+                </a>
+                <a class="tab-item margin-top-10" ui-sref="app.notification">
+                    <i class="icon ion-notify"></i>
+                </a>
+                <a class="tab-item margin-top-10" ui-sref="app.dashboard">
+                    <i class="icon ion-homie"></i>
+                </a>
+                <a class="tab-item margin-top-10" ui-sref="app.message">
+                    <i class="icon ion-message"><span class="badge badge-assertive"></span></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="bar bar-event bar-header align-delete-bar">
+        <iion-item class="row">
+            <div class="row">
+                <div class="col col-10">
+                    <button class="button-clear" ng-click="myGoBack()">
+                        <i class="ion-arrow-left-c button-back-white"></i>
+                    </button>
+                </div>
+                <div class="col col-90 margin-top-5">
+                    <span class="inner-header">Events Details</span>
+                </div>
+            </div>
+        </iion-item>
+    </div>
+
+    <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-40">
+        <div class="row">
+            <div class="col">
+              <div class="card">
+                 <div class="item item-text-wrap">
+                    <span class="pull-right">
+                        <button ng-class='{ display-no: clickStatus}' class="button button-balanced status-button" ng-disabled="clickStatus" >
+                           Publish
+                         </button>
+                    </span><br>
+                    <h2><strong>Event title goes here</strong></h2>
+                    <h3>
+                      <span>
+                        <i>Created by <strong>Firstname Lastname</strong> on
+                          <strong> 10 Apr 2016  2:02pm</strong>
+                        </i>
+                      </span>
+                    </h3>
+                  </div>
+                 <div class="item item-text-wrap">
+                   <span><strong>Event From : </strong> 28/02/2016</span><br>
+                   <span><strong>Event To : </strong> 28/02/2016</span>
+                 </div>
+                 <div class="item item-body">
+                    <img class="full-image" src="http://www.woxiprogrammers.com/wp-content/uploads/2015/11/woxi-logo1.png">
+                 </div>
+                 <div class="item item-text-wrap">
+                    <span>Event Desc goes over here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget pharetra tortor. Proin quis eros imperdiet, facilisis nisi in, tincidunt orci. Nam tristique elit massa, quis faucibus augue finibus ac.This is a Ionic card without item-text-wrap class.</span>
+                 </div>
+                 <div class="item item-text-wrap">
+                    <h3>
+                      <span>
+                        <i>Published by <strong>Firstname Lastname</strong> on
+                          <strong> 10 Apr 2016  2:02pm</strong>
+                        </i>
+                      </span>
+                    </h3>
+                  </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1264,8 +1264,23 @@ visibility: hidden;
     text-align: center;
 }
 
+.action-button {
+    font-size: 14px;
+    height: 30px;
+    padding: 3px 3px;
+    line-height: 0;
+    min-height: 30px;
+    text-transform: none;
+    border-radius: 10px;
+    text-align: center;
+}
+
 .lable-font-size {
   font-size: 12px;
+}
+
+.eventHeaderFontSize {
+  font-size : 11px;
 }
 
 /*********** MEDIA QUERIES ***********/

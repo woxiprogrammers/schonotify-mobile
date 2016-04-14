@@ -280,10 +280,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                     controller: 'LandingEventTeacherCtrl'
                 },
                 'fabContent': {
-                    template: '<button id="fab-new-message" ui-sref="app.createevent" class="button button-fab button-fab-bottom-right expanded fab-button-event  spin"><i class="icon ion-edit"></i></button>',
+                    template: '<button id="fab-new-event" ui-sref="app.createevent" class="button button-fab button-fab-bottom-right expanded fab-button-event  spin"><i class="icon ion-edit"></i></button>',
                     controller: function ($timeout) {
                         $timeout(function () {
-                            document.getElementById('fab-new-message').classList.toggle('on');
+                            document.getElementById('fab-new-event').classList.toggle('on');
                         }, 900);
                     }
                 }
@@ -301,6 +301,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                 }
             }
         })
+        .state('app.eventstatusteacher', {
+            url: '/eventstatusteacher',
+            params: {
+              obj: null
+            },
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/event-status-teacher.html',
+                    controller: 'EventStatusTeacherCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+
+        })
         .state('app.editevent', {
             url: '/editevent',
             views: {
@@ -309,12 +325,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                     controller: 'EditEventCtrl'
                 },
                 'fabContent': {
-                    template: '<button id="fab-new-message" ui-sref="app.createevent" class="button button-fab button-fab-bottom-right expanded fab-button-event  spin"><i class="icon ion-edit"></i></button>',
-                    controller: function ($timeout) {
-                        $timeout(function () {
-                            document.getElementById('fab-new-message').classList.toggle('on');
-                        }, 900);
-                    }
+                    template: ''
                 }
             }
         })
@@ -327,7 +338,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                 },
                 'fabContent': {
                     template: ''
-                    }
                 }
             }
         })
@@ -521,7 +531,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
             views: {
                 'menuContent': {
                     templateUrl: 'templates/event-edit.html',
-                    controller: 'DetailPageCtrl'
+                    controller: 'EditEventCtrl'
                 },
                 'fabContent': {
                     template: ''

@@ -1136,7 +1136,7 @@ angular.module('starter.controllers', [])
                 var url = GLOBALS.baseUrl+"user/update-homework?token="+userSessions.userSession.userToken;
                 $http.post(url, {_method:'PUT', homework_id: $scope.hwId, subject_id: $scope.SubjectId, title: $scope.hwTitle, batch_id: $scope.BatchId, class_id: $scope.classId, division_id: $scope.divId, due_date: $scope.dueDate, student: $scope.selectedList, description: $scope.description, homework_type: $scope.hwTypeId, attachment_file: ''}).success(function(response){
                     if(response['status'] == 200){
-                        $scope.msg = response['message'];
+                          $scope.msg = response['message'];
                           $scope.showPopup();
                           $state.go('app.edithomeworklisting');
                     }
@@ -2204,7 +2204,7 @@ angular.module('starter.controllers', [])
             }, 3000);
         };
     })
-    .controller('LandingEventTeacherCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('LandingEventTeacherCtrl', function($scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -2224,6 +2224,108 @@ angular.module('starter.controllers', [])
         $scope.noticeBoard = function() {
             $state.go('app.sharedNotification');
         };
+        $scope.eventList = null;
+        $scope.recentEvent  = function() {
+        var url = GLOBALS.baseUrl+"user/view-top-five-event/?token="+userSessions.userSession.userToken;
+        $http.get(url).success(function(response){
+            if(response['status'] == 200){
+                   $scope.eventList = response['data'];
+                   if($scope.eventList == ''){
+                       $scope.aclMessage = response['message'];
+                       $scope.showPopup();
+                   }
+            } else {
+                    $scope.aclMessage = response['message'];
+                    $scope.showPopup();
+            }
+        }).error(function(err) {
+            $scope.aclMessage = "Access Denied";
+            $scope.showPopup();
+        });
+      }
+      $scope.selectedYear = null;
+      $scope.yearMonthData = null;
+      $scope.monthList = null;
+
+      $scope.eventYearMonth = function() {
+        var url = GLOBALS.baseUrl+"user/get-year-month?token="+userSessions.userSession.userToken;
+        $http.get(url).success(function(response){
+          if(response['status'] == 200){
+                 $scope.yearMonthData = response['data'];
+                 if($scope.yearMonthData == ''){
+                     $scope.aclMessage = response['message'];
+                     $scope.showPopup();
+                 }
+          } else {
+                  $scope.aclMessage = response['message'];
+                  $scope.showPopup();
+          }
+          }).error(function(err) {
+            $scope.aclMessage = "Something Went Wrong!!!";
+            $scope.showPopup();
+          });
+      }
+      $scope.eventYearMonth();
+
+      $scope.setMonth = function(year) {
+        $scope.monthList = null;
+        angular.forEach($scope.yearMonthData, function(item) {
+          if (item.year === year) {
+              $scope.monthList = item.month[0];
+          }
+        });
+      }
+
+      $scope.setMonth($scope.selectedYear);
+
+      $scope.eventByMonth  = function(month) {
+      var url = GLOBALS.baseUrl+"user/view-months-event/"+$scope.selectedYear+"/"+month+"/?token="+userSessions.userSession.userToken;
+      $http.get(url).success(function(response){
+          if(response['status'] == 200){
+                 $scope.eventList = response['data'];
+                 if($scope.eventList == '') {
+                     $scope.aclMessage = response['message'];
+                     $scope.showPopup();
+                 }
+          } else {
+                  $scope.aclMessage = response['message'];
+                  $scope.showPopup();
+          }
+      }).error(function(err) {
+          $scope.aclMessage = "Something Went Worng!!!";
+          $scope.showPopup();
+      });
+    }
+
+    $scope.getDetailsOfEvent = function(event_id){
+      var keepGoing = true;
+      angular.forEach($scope.eventList, function(item) {
+        if (keepGoing) {
+          if (item.id === event_id) {
+              $state.go('app.eventstatusteacher', {obj:item});
+              keepGoing = false;
+            }
+          }
+      });
+    }
+
+        $scope.showPopup = function() {
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div>'+$scope.aclMessage+'</div>',
+                title: '',
+                subTitle: '',
+                scope: $scope
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); //close the popup after 3 seconds for some reason
+            }, 3000);
+        };
+
+        $scope.recentEvent();
     })
 
     .controller('LandingEventParentCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
@@ -2246,7 +2348,59 @@ angular.module('starter.controllers', [])
         $scope.noticeBoard = function() {
             $state.go('app.sharedNotification');
         };
+
+
     })
+
+    .controller('DetailEventParentCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
+
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
+
+        $scope.noticeBoard = function() {
+            $state.go('app.sharedNotification');
+        };
+    })
+
+    .controller('EventStatusTeacherCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
+
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
+
+        $scope.noticeBoard = function() {
+            $state.go('app.sharedNotification');
+        };
+
+        $scope.startEventTime = new Date();
+        $scope.endEventTime = new Date();
+
+        $scope.eventdetailsList = $stateParams;
+    })
+
     .controller('EditEventCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
@@ -2268,6 +2422,7 @@ angular.module('starter.controllers', [])
             $state.go('app.sharedNotification');
         };
 
+        /*
         $scope.nmessages = [{
             Picture: "graduate.jpg",
             Status: "unRead",
@@ -2328,7 +2483,9 @@ angular.module('starter.controllers', [])
             message: "The Attendance is Compulsary",
             Timestamp: "Date: 15 Oct 2015",
             Priority: "high"
-        }];
+        }];*/
+        $scope.startEventTime = new Date();
+        $scope.endEventTime = new Date();
     })
     .controller('CreateEventCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.$parent.clearFabs();
@@ -2349,7 +2506,8 @@ angular.module('starter.controllers', [])
         $scope.noticeBoard = function() {
             $state.go('app.sharedNotification');
         };
-        $scope.selectedDate = new Date();
+        $scope.startEventTime = new Date();
+        $scope.endEventTime = new Date();
 
     })
     .controller('ViewEventsCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
