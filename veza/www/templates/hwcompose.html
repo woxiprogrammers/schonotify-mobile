@@ -11,7 +11,7 @@
                 <a class="tab-item margin-top-10" ui-sref="app.dashboard">
                     <i class="icon ion-homie"></i>
                 </a>
-                <a class="tab-item margin-top-10">
+                <a class="tab-item margin-top-10" ui-sref="app.message">
                     <i class="icon ion-message"><span class="badge badge-assertive"></span></i>
                 </a>
             </div>
@@ -73,7 +73,7 @@
                 </div>
               </div>         
             <label class="item item-input">Due Date:
-                 <input class="item-input border-bottom padding-5" ng-model ="dueDate" type="date" value= {{dueDate}} min="{{minDate}}">
+                 <input class="item-input border-bottom padding-5" ng-model ="dueDate" type="date" value= {{dueDate}} min="{{minDate}}" ng-change="updateDueDate(dueDate)">
             </label>
             <label class="item item-input border-bottom" ng-click="openModal()" ng-model="recipient">
                 {{recipient}}
@@ -98,7 +98,7 @@
             <ion-content has-bouncing="true">
                 <div class="list">
                     <ion-item class="contact-list">
-                        <div class="row" ng-click="checkAll()">
+                        <div class="row">
                             <div class="col-25">
                                 <ion-checkbox class="checkbox checkbox-assertive" ng-model="selectedAll" ng-click="checkAll()">
                                 </ion-checkbox>

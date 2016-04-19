@@ -3,8 +3,8 @@
 var db = null;
 angular.module('starter.controllers', [])
 .constant('GLOBALS',{
-   //baseUrl:'http://test.woxiapps.com/api/v1/',
-   baseUrl:'http://192.168.2.7/api/v1/'
+   baseUrl:'http://test.woxiapps.com/api/v1/',
+//    baseUrl:'http://192.168.2.10/api/v1/'
 })
 .service('userSessions', function Usersession(){
 
@@ -18,26 +18,26 @@ angular.module('starter.controllers', [])
             userSessions.userSession.msgcount = msgcount;
             return true;
         };
-        
-        userSessions.setUserId = function(id){            
+
+        userSessions.setUserId = function(id){
             userSessions.userSession.userId = id;
             return true;
         };
-        
+
         userSessions.setMsgCount = function(count){
             userSessions.userSession.msgcount = count;
             return true;
         };
-        
+
         userSessions.setToken = function(id){
             userSessions.userSession.userToken = id;
             return true;
         };
-        
+
         userSessions.setMsgCount_0 = function(){
             userSessions.userSession.msgcount = '';
             return true;
-        };    
+        };
 })
 .service('userData', function uData(){
 
@@ -49,9 +49,9 @@ angular.module('starter.controllers', [])
             userData.data = dataArray;
             return true;
         };
-        userData.getUserData = function(){            
+        userData.getUserData = function(){
             return userData.data;
-        };      
+        };
 })
 .service('chatHist', function chatDetail(){
 
@@ -66,9 +66,9 @@ angular.module('starter.controllers', [])
             chatHist.data.title_id = title_id;
             return true;
         };
-        chatHist.getChatHist = function(){            
+        chatHist.getChatHist = function(){
             return chatHist.data;
-        };      
+        };
 })
 .service('hwDetails', function hmwDetail(){
 
@@ -79,9 +79,9 @@ angular.module('starter.controllers', [])
             hwDetails.data = data;
             return true;
         };
-        hwDetails.getHwView = function(){            
+        hwDetails.getHwView = function(){
             return hwDetails.data;
-        };      
+        };
 })
 .service('studentToggle', function studentToggle(){
 
@@ -93,9 +93,9 @@ angular.module('starter.controllers', [])
             studentToggle.data = dataArray;
             return true;
         };
-        studentToggle.getUserData = function(){            
+        studentToggle.getUserData = function(){
             return studentToggle.data;
-        };      
+        };
 })
 .controller('AppCtrl', function($scope, $state, $ionicPopup, $http, $ionicModal, $ionicPopover, $timeout, $ionicSideMenuDelegate, $ionicHistory, userSessions) {
     // Form data for the login modal
@@ -189,7 +189,7 @@ angular.module('starter.controllers', [])
 
     $scope.toggleStudent = function() {
         console.log("Changing Student");
-        $scope.studToggle = $scope.studToggle === false ? true: false;            
+        $scope.studToggle = $scope.studToggle === false ? true: false;
         };
 
     $scope.toggleLeftSideMenu = function() {
@@ -205,19 +205,19 @@ angular.module('starter.controllers', [])
         };
 
         $scope.composeHw = function() {
-            $state.go('app.hwcompose');          
+            $state.go('app.hwcompose');
         };
-        
+
          $scope.createLeave = function() {
-            $state.go('app.leavecreate');          
+            $state.go('app.leavecreate');
         };
 
         $scope.composeMsg = function() {
                 if(userSessions.userSession.userRole == "parent"){
-                        $state.go('app.parentMsgcompose');                     
+                        $state.go('app.parentMsgcompose');
                 }
                 else{
-                        $state.go('app.msgcompose');                   
+                        $state.go('app.msgcompose');
                 }
         };
 
@@ -240,24 +240,24 @@ angular.module('starter.controllers', [])
         $scope.notifyDetail = function() {
             $state.go('app.notificationdetails');
         };
-        
+
         $scope.homeworkView = function (){
             if(userSessions.userSession.userRole == "parent"){
-                 $state.go('app.parenthomework');                     
+                 $state.go('app.parenthomework');
             }
             else{
-                 $state.go('app.homeworklanding'); 
-            }            
+                 $state.go('app.homeworklanding');
+            }
         };
-        
+
         $scope.attendanceLanding = function (){
             if(userSessions.userSession.userRole == "parent"){
-                 $state.go('app.parentattendancelanding');                     
+                 $state.go('app.parentattendancelanding');
             }
             else{
-                 $state.go('app.attendancelanding'); 
-            } 
-        };             
+                 $state.go('app.attendancelanding');
+            }
+        };
 
         $scope.homeworkDetails = function() {
             $state.go('app.homeworkdetails');
@@ -271,9 +271,9 @@ angular.module('starter.controllers', [])
         };
 
         $scope.homeworkEdit = function() {
-               $state.go('app.homeworkedit');             
+               $state.go('app.homeworkedit');
         };
-        
+
         $scope.unPublishList = function() {
             $state.go('app.edithomeworklisting');
         };
@@ -297,20 +297,20 @@ angular.module('starter.controllers', [])
         $scope.signIn = function() {
             $state.go('app.dashboard');
         };
-        
+
         $scope.msgDetail = function() {
             $state.go('app.chatmsg');
         };
-        
+
         $scope.viewMessagesList = function(){
-               $state.go('app.message');            
+               $state.go('app.message');
         };
-        
+
 })
 .controller('LoginCtrl', function($scope, $state, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
 
     $scope.data = [];
-    ionicMaterialInk.displayEffect();                
+    ionicMaterialInk.displayEffect();
         $scope.submit = function(email,password){
             $scope.sessionId = '';
             $scope.sessionToken = '';
@@ -321,29 +321,29 @@ angular.module('starter.controllers', [])
                         $scope.data.message = res['message'];
                         console.log("Status: "+res['status']);
                         if(res['status'] == 200){
-                            $scope.userDataArray = userData.setUserData(res['data']['users']);                            
+                            $scope.userDataArray = userData.setUserData(res['data']['users']);
                             $scope.sessionToken = res['data']['users']['token'];
                             $scope.sessionUserRole = res['data']['users']['role_type'];
                             $scope.sessionId = res['data']['Badge_count']['user_id'];
                             $scope.messageCount = res['data']['Badge_count']['message_count'];
                             var  userSet = false;
-                            var idSet = false;                      
+                            var idSet = false;
                             userSet = userSessions.setSession($scope.sessionToken, $scope.sessionUserRole, $scope.messageCount);
-                            idSet = userSessions.setUserId($scope.sessionId);                           
+                            idSet = userSessions.setUserId($scope.sessionId);
                                 if(userSet == true && idSet == true){
                                    $state.go('app.dashboard');
-                                }                                   
+                                }
                         }
             })
             .error(function(err) {
-                console.log("Error: "+err);                
+                console.log("Error: "+err);
                 if(err.hasOwnProperty('status')){
                     $scope.data.message = err.message;
                 }
                 else{
                     $scope.data.message = "Sorry!! Incorrect email or password";
                 }
-                $scope.showPopup();            
+                $scope.showPopup();
             });
         }
 
@@ -378,11 +378,11 @@ angular.module('starter.controllers', [])
         ionicMaterialInk.displayEffect();
 
         //Side-Menu
-        $ionicSideMenuDelegate.canDragContent(true);        
+        $ionicSideMenuDelegate.canDragContent(true);
         $scope.msgCount = '';
         if(userSessions.userSession.userToken == 0){
             $state.go('login');
-        }       
+        }
         
         var url= GLOBALS.baseUrl+"user/get-message-count/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
@@ -391,14 +391,14 @@ angular.module('starter.controllers', [])
                     $scope.msgCount = response['data']['Badge_count']['message_count'];
                 }else{
                     $scope.msgCount = '';
-                }                   
+                }
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
-                });        
+                });
         if(userSessions.userSession.msgcount > 0){
             $scope.msgCount = userSessions.userSession.msgcount;
-        }    
+        }
 })
 .controller('NotificationCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
@@ -488,7 +488,7 @@ angular.module('starter.controllers', [])
 
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
-           
+
         $scope.nmessages = [{
             Status: "unRead",
             Subject: "Class Test for Std 5 on this thursday",
@@ -656,26 +656,26 @@ angular.module('starter.controllers', [])
                        if($scope.homeworksListing == ''){
                             $scope.errorMessage = response['message'];
                             $scope.showPopup();
-                       } 
+                       }
                     }
                     else{
                         $scope.errorMessage = response['message'];
                         $scope.showPopup();
-                    }                    
+                    }
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                     $scope.errorMessage = "Access Denied";
                     $scope.showPopup();
-                }); 
-                
+                });
+
         $scope.hwDetail= function(hwd){
             $scope.checkHid = hwDetails.setHwView(hwd);
             if($scope.checkHid == true){
                 $state.go('app.teacherhwdetail');
             };
         };
-        
+
         $scope.showPopup = function() {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
@@ -711,7 +711,7 @@ angular.module('starter.controllers', [])
             $state.go('login');
         }
         $scope.clickStatus = false;
-        
+
         $scope.publishHw = function(hwId){
             var url = GLOBALS.baseUrl+"user/publish-homework?token="+userSessions.userSession.userToken;
             $http.post(url, {_method: 'PUT', homework_id: hwId}).success(function(response){
@@ -722,23 +722,24 @@ angular.module('starter.controllers', [])
                 console.log(err);
                 $scope.aclMessage = "Access Denied";
                 $scope.showPopup();
+                $state.go('app.homework');
             });
         };
-        
+
        $scope.loadUnpHw = function(){
             var url= GLOBALS.baseUrl+"user/view-unpublished-homework?token="+userSessions.userSession.userToken;
-            $http.get(url).success(function(response) {                    
+            $http.get(url).success(function(response) {
                     if(response['status'] == 200){
                        $scope.homeworksListing = response['data'];
                        if($scope.homeworksListing == ''){
                             $scope.errorMessage = response['message'];
                             $scope.showPopup();
-                       } 
+                       }
                     }
                     else{
                         $scope.errorMessage = response['message'];
                         $scope.showPopup();
-                    }                    
+                    }
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
@@ -746,19 +747,19 @@ angular.module('starter.controllers', [])
                     $scope.showPopup();
                 });
          };
-          
-        $scope.loadUnpHw();                
+
+        $scope.loadUnpHw();
         $scope.hwDetail = function(hwd){
             $scope.checkHid = hwDetails.setHwView(hwd);
             if($scope.checkHid == true){
                 $state.go('app.homeworkedit');
-            }          
-        };  
-        
+            }
+        };
+
         $scope.confirmDelete = function(hwId){
                 $scope.hwId = hwId;
-                $scope.showConfirmBox();             
-            };     
+                $scope.showConfirmBox();
+            };
 
         $scope.deleteHomework = function(){
             var url = GLOBALS.baseUrl+"user/deleteHomework?token="+userSessions.userSession.userToken;
@@ -768,9 +769,9 @@ angular.module('starter.controllers', [])
                 console.log(err);
                 $scope.aclMessage = "Access Denied";
                 $scope.showPopup();
-            });            
+            });
         };
-        
+
         $scope.showConfirmBox = function() {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
@@ -782,25 +783,25 @@ angular.module('starter.controllers', [])
                     {
                         text: '<b>Close</b>',
                         type: 'button-calm',
-                        onTap: function(e) {                            
-                                myPopup.close();                           
+                        onTap: function(e) {
+                                myPopup.close();
                         }
                     },
                     {
                         text: '<b>Delete</b>',
                         type: 'button-assertive',
-                        onTap: function(e) {                            
-                                $scope.deleteHomework();                           
+                        onTap: function(e) {
+                                $scope.deleteHomework();
                         }
                     }
                 ]
-                
+
             });
             myPopup.then(function(res) {
                 console.log('Tapped!', res);
             });
         };
-        
+
         $scope.showPopup = function() {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
@@ -844,7 +845,7 @@ angular.module('starter.controllers', [])
                        if($scope.homeworksListing == ''){
                             $scope.errorMessage = response['message'];
                             $scope.showPopup();
-                       } 
+                       }
                     }
                     else if(response['status'] == 202){
                             $scope.errorMessage = response['message'];
@@ -853,21 +854,21 @@ angular.module('starter.controllers', [])
                     else{
                         $scope.errorMessage = response['message'];
                         $scope.showPopup();
-                    }                    
+                    }
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                     $scope.errorMessage = "Access Denied";
                     $scope.showPopup();
-                }); 
-                
+                });
+
         $scope.hwDetail= function(hwd){
             $scope.checkHid = hwDetails.setHwView(hwd);
             if($scope.checkHid == true){
                 $state.go('app.homeworkdetails');
             };
         };
-        
+
         $scope.showPopup = function() {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
@@ -900,15 +901,15 @@ angular.module('starter.controllers', [])
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.hwrkDetail = hwDetails.getHwView();
         $scope.hwId = $scope.hwrkDetail.homework_id;
-        
+
         var url= GLOBALS.baseUrl+"user/view-detail-homework/"+$scope.hwId+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
-                 $scope.contactList = response['data']['studentList'];                    
+                 $scope.contactList = response['data']['studentList'];
             })
             .error(function(response) {
                     console.log("Error in Response: " +response);
             });
-               
+
        $ionicModal.fromTemplateUrl('studentlist.html', {
             scope: $scope,
             animation: 'slide-in-up'
@@ -942,9 +943,9 @@ angular.module('starter.controllers', [])
 
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
-        $scope.hwrkDetail = hwDetails.getHwView();        
+        $scope.hwrkDetail = hwDetails.getHwView();
     })
-    .controller('EditHomeworkCtrl', function($scope, $state, $ionicPopup, $timeout, hwDetails, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
+    .controller('EditHomeworkCtrl', function($scope, $state, $ionicPopup, $timeout, $filter, hwDetails, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -960,9 +961,8 @@ angular.module('starter.controllers', [])
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.editHwData = hwDetails.getHwView();
-        $scope.hwId = $scope.editHwData.homework_id;        
-        $scope.contactSelectList = $scope.editHwData.studentList;
-        $scope.recipient = $scope.contactSelectList.length+" Student Selected";
+        $scope.hwId = $scope.editHwData.homework_id;
+        $scope.contactList = $scope.editHwData.studentList;
         $scope.SubjectId = $scope.editHwData.subject_id;
         $scope.SubjectName = $scope.editHwData.subjectName;
         $scope.BatchId = $scope.editHwData.batch_id;
@@ -972,114 +972,142 @@ angular.module('starter.controllers', [])
         $scope.divId = $scope.editHwData.division_id;
         $scope.className = $scope.editHwData.class_name;
         $scope.divName = $scope.editHwData.division_name;
+        $scope.defaultList = [];
         $scope.selectedList=[];
-        angular.forEach($scope.contactSelectList, function (item) {
+        $scope.classList = [];
+        $scope.divisionsList = [];
+        angular.forEach($scope.contactList, function (item) {
             $scope.selectedList.push(item.id);
-        });        
+            $scope.defaultList.push(item.id);
+            $scope.$watch(function(scope) { return scope.selectedList },
+              function(newValue, oldValue) {
+                  if(newValue.length == $scope.contactList.length){
+                      $scope.recipient = $scope.selectedList.length+" Student Selected";
+                      $scope.getStudentList($scope.divId, 1);
+                  }
+              }
+             );
+        });
         $scope.minDate = new Date();
+        $scope.minDate = $filter('date')($scope.minDate, "yyyy-MM-dd");
         $scope.dueDate = new Date();
         $scope.description = $scope.editHwData.description;
         $scope.hwTypeId = $scope.editHwData.homeworkTypeId;
         $scope.hwrkType = $scope.editHwData.homeworkType;
         $scope.setTitle = function(title){
-          $scope.hwTitle = title;  
-        };
-        $scope.$watch(function(scope) { return scope.selectedList },
-              function(newValue, oldValue) {
-                  if(newValue.length == $scope.contactSelectList.length){
-                      $scope.getStudentList($scope.divId);
-                  }
-              }
-             );            
+          $scope.hwTitle = title;
+        };        
         $scope.setDescription = function(message){
-          $scope.description = message;  
+          $scope.description = message;
         };
         // toggle selection for a given student by name
-        $scope.toggleSelection = function toggleSelection(studentId) {
-			$scope.selectedAll = false;
+        $scope.toggleSelection = function(studentId) {
             var idx = $scope.selectedList.indexOf(studentId);
             if (idx > -1) {
             $scope.selectedList.splice(idx, 1);
             }
             // is newly selected
             else {
-            $scope.selectedList.push(studentId);
-            if($scope.selectedList.length == $scope.contactList.length){
-              	$scope.selectedAll = true;
+              $scope.selectedList.push(studentId);
             }
-            }
-        };        
+            $scope.$apply();
+            $scope.$digest();
+        };
         var url = GLOBALS.baseUrl+"user/get-teachers-subjects?token="+userSessions.userSession.userToken;
             $http.get(url)
                 .success(function(response) {
-                    $scope.subjectsList = response['data'];                    
+                    $scope.subjectsList = response['data'];
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
-                
+
         var hwTypeurl = GLOBALS.baseUrl+"user/get-homework-types?token="+userSessions.userSession.userToken;
             $http.get(hwTypeurl)
                 .success(function(response) {
-                    $scope.hwTypeList = response['data'];                    
+                    $scope.hwTypeList = response['data'];
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
-                
+
         $scope.getSelectedHwType = function(hwtype){
             $scope.hwTypeId = hwtype['id'];
         };
-         
-        $scope.getSelectedSub = function(subject){
-            $scope.recipient = $scope.editHwData.studentList.length+" Student Selected";                    
+        
+        $scope.updateDueDate = function(newDate){
+            $scope.dueDate = newDate;
+        }
+
+        $scope.getSelectedSub = function(subject){            
             var url= GLOBALS.baseUrl+"user/get-subjects-batches/"+subject['id']+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
                     $scope.batchList = response['data'];
-                    $scope.SubjectId = subject['id'];                
+                    $scope.SubjectId = subject['id'];
+                    $scope.classList.length = 0;
+                    $scope.BatchName = "-Batch-";
+                    $scope.className = "-Class-";
+                    $scope.divName = "-Div-";
+                    $scope.divisionsList.length = 0;
+                    $scope.contactList.length = 0;
+                    $scope.selectedList.length = 0;
+                    $scope.defaultList.length = 0;
+                    $scope.recipient = $scope.selectedList.length+" Student Selected";
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
         };
-        
-        $scope.getClass= function(batch){                
+
+        $scope.getClass= function(batch){
                 var url= GLOBALS.baseUrl+"user/get-batches-classes/"+$scope.SubjectId+"/"+batch['id']+"?token="+userSessions.userSession.userToken;
                 $http.get(url).success(function(response) {
                     $scope.classList = response['data'];
                     $scope.BatchId = batch['id'];
+                    $scope.divName = "-Div-";
+                    $scope.divisionsList.length = 0;
                     $scope.contactList.length = 0;
-                    $scope.contactList.length = 0;                  
+                    $scope.selectedList.length = 0;
+                    $scope.defaultList.length = 0;
+                    $scope.recipient = $scope.selectedList.length+" Student Selected";
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
         };
-        
+
         $scope.getDivision = function(classType){
             var url= GLOBALS.baseUrl+"user/get-classes-division/"+$scope.SubjectId+"/"+$scope.BatchId+"/"+classType['id']+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
                    $scope.divisionsList = response['data'];
                    $scope.classId = classType['id'];
+                   $scope.selectedList.length = 0;
+                   $scope.defaultList.length = 0;
                    $scope.contactList.length = 0;
+                   $scope.recipient = $scope.selectedList.length+" Student Selected";
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
         };
-        
-        $scope.getStudentList = function(divType){
+
+        $scope.getStudentList = function(divType, setClear){
+            if(setClear == 0){
+                $scope.selectedList.length = 0;
+            }
                 var url= GLOBALS.baseUrl+"user/get-students-list/"+divType+"?token="+userSessions.userSession.userToken;
                 $http.get(url)
                     .success(function(response) {
+                        $scope.contactList.length = 0;
+                        $scope.recipient = $scope.selectedList.length+" Student Selected";
                         $scope.contactList = response['data']['studentList'];
                         $scope.checkRecipient = false;
-                        $scope.divId = divType['id'];
+                        $scope.divId = divType;
                     })
                     .error(function(response) {
                         console.log("Error in Response: " +response);
-                    });                    
-        }; 
+                    });
+        };
         $ionicModal.fromTemplateUrl('studentHwCntctlist.html', {
             scope: $scope,
             animation: 'slide-in-up'
@@ -1098,61 +1126,80 @@ angular.module('starter.controllers', [])
         $scope.$on('$destroy', function() {
             $scope.modal.remove();
         });
+        $scope.selectedAll = false;
         
         $scope.checkAll = function () {
-            if ($scope.selectedAll) {
-                $scope.selectedAll = true;
-            } else {
-                $scope.selectedAll = false;
-            }
-            $scope.selectedList.length =0;
-            angular.forEach($scope.contactList, function (item) {
+            $scope.selectedList.length = 0;      
+            $scope.selectedAll = !$scope.selectedAll; 
             if($scope.selectedAll == true){
-                item.Selected = $scope.selectedAll;
-                $scope.selectedList.push(item.id);
-            }
-            else{
-                item.Selected = $scope.selectedAll;
-                $scope.selectedList.pop(item.id);
-            }            
-            });
+                angular.forEach($scope.contactList, function (item) {
+                    $scope.toggleSelection(item.id);                                    
+                });
+            }          
         };
-        
-        $scope.sendTo = function(){
+
+        $scope.sendTo = function(){            
             $scope.recipient = $scope.selectedList.length+" Student selected";
+            $scope.defaultList.length = 0;            
+            angular.forEach($scope.selectedList, function (item) {
+                $scope.defaultList.push(item);
+            });
             $scope.closeModal();
         };
         
+        $scope.cancelList = function(){
+            $scope.selectedList.length = 0;            
+            angular.forEach($scope.defaultList, function (item) {
+                $scope.selectedList.push(item);
+            });
+            
+            $scope.recipient = $scope.selectedList.length+" Student selected";
+            $scope.closeModal();
+        };
+
         $scope.saveDraft = function(){
-            if($scope.selectedList.length == 0){
+            
+            $scope.dueDate = $filter('date')($scope.dueDate, "yyyy-MM-dd");
+            $scope.minDate = $filter('date')($scope.minDate, "yyyy-MM-dd");
+            if($scope.dueDate >= $scope.minDate){
+                if($scope.selectedList.length <= 0){
                 $scope.msg = "Please Add Recipient";
                 $scope.showPopup();
-            }
-            else{
-                var url = GLOBALS.baseUrl+"user/update-homework?token="+userSessions.userSession.userToken;
-                $http.post(url, {_method:'PUT', homework_id: $scope.hwId, subject_id: $scope.SubjectId, title: $scope.hwTitle, batch_id: $scope.BatchId, class_id: $scope.classId, division_id: $scope.divId, due_date: $scope.dueDate, student: $scope.selectedList, description: $scope.description, homework_type: $scope.hwTypeId, attachment_file: ''}).success(function(response){ 
-                    if(response['status'] == 200){
-                        $scope.msg = response['message'];
-                          $scope.showPopup();
-                          $state.go('app.edithomeworklisting');
-                    }
-                    else{
-                        $scope.msg = response['message'];
-                         $scope.showPopup();
-                    }
-                }).error(function(err) {
-                    console.log(err);
-                    if(err['status'] == 500){
-                     $scope.msg = err['message'];
-                    }
-                    else{
-                        $scope.msg = "Access Denied";
-                    }                    
+            }else{
+                if($scope.hwTitle == '' || $scope.dueDate == '' || $scope.description == ''  || $scope.selectedList.length <= 0 || $scope.hwTypeId == ''){
+                    $scope.msg = "Check if all fields are filled";
                     $scope.showPopup();
-                });
-            } 
+                }
+                else{
+                    var url = GLOBALS.baseUrl+"user/update-homework?token="+userSessions.userSession.userToken;               
+                    $http.post(url, {_method:'PUT', homework_id: $scope.hwId, subject_id: $scope.SubjectId, title: $scope.hwTitle, batch_id: $scope.BatchId, class_id: $scope.classId, division_id: $scope.divId, due_date: $scope.dueDate, student: $scope.selectedList, description: $scope.description, homework_type: $scope.hwTypeId, attachment_file: ''}).success(function(response){
+                        if(response['status'] == 200){
+                            $scope.msg = response['message'];
+                            $scope.showPopup();
+                            $state.go('app.edithomeworklisting');
+                        }
+                        else{
+                            $scope.msg = response['message'];
+                            $scope.showPopup();
+                        }
+                    }).error(function(response) {
+                                console.log("Error in Response: " +response);
+                                if(response.hasOwnProperty('status')){
+                                    $scope.msg = response.message;
+                                }
+                                else{
+                                    $scope.msg = "Access Denied";
+                                }
+                                $scope.showPopup();
+                       });
+                    }
+                }                  
+            }else{
+                $scope.msg = "Due Date should be greater than Current Date";
+                $scope.showPopup();
+            }                      
         };
-        
+
         $scope.showPopup = function() {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
@@ -1165,12 +1212,12 @@ angular.module('starter.controllers', [])
                 console.log('Tapped!', res);
             });
             $timeout(function() {
-                myPopup.close(); //close the popup after 8 seconds for some reason                
+                myPopup.close(); //close the popup after 8 seconds for some reason
             }, 3000);
         };
-        
+
     })
-    .controller('HwComposeCtrl', function($scope, $state, $ionicPopup, $timeout, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
+    .controller('HwComposeCtrl', function($scope, $state, $ionicPopup, $filter, $timeout, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -1182,6 +1229,18 @@ angular.module('starter.controllers', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
+        var url = GLOBALS.baseUrl+"user/get-acl-details?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response){
+                $scope.data = response['Data']['Acl_Modules'];
+                if($scope.data.indexOf('Create_homework') == -1){
+                    $scope.msg = "Access Denied";
+                    $scope.showPopup();
+                    $state.go('app.homeworklanding');
+                } 
+            }).error(function(err) {
+                console.log(err);
+            });
+        
 
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
@@ -1198,82 +1257,82 @@ angular.module('starter.controllers', [])
         $scope.hwTypeId = '';
         $scope.contactList = [];
         $scope.minDate = new Date();
-        
+        $scope.minDate = $filter('date')($scope.minDate, "yyyy-MM-dd");
         $scope.setTitle = function(title){
-          $scope.hwTitle = title;  
+          $scope.hwTitle = title;
         };
-        
+
         $scope.setDescription = function(message){
-          $scope.description = message;  
+          $scope.description = message;
         };
         
-        // toggle selection for a given employee by name
-        $scope.toggleSelection = function toggleSelection(studentId) {
-			$scope.selectedAll = false;
+        $scope.updateDueDate = function(newDate){
+            $scope.dueDate = newDate;
+        };
+        
+        $scope.toggleSelection = function(studentId) {
             var idx = $scope.selectedList.indexOf(studentId);
             if (idx > -1) {
             $scope.selectedList.splice(idx, 1);
             }
             // is newly selected
             else {
-            $scope.selectedList.push(studentId);
-            if($scope.selectedList.length == $scope.contactList.length){
-              	$scope.selectedAll = true;
+              $scope.selectedList.push(studentId);
             }
-            }
-        };       
-        
-             
-        var url = GLOBALS.baseUrl+"user/get-teachers-subjects?token="+userSessions.userSession.userToken;
-            $http.get(url)
+            $scope.$apply();
+            $scope.$digest();
+        };
+
+        var url1 = GLOBALS.baseUrl+"user/get-teachers-subjects?token="+userSessions.userSession.userToken;
+            $http.get(url1)
                 .success(function(response) {
-                    $scope.subjectsList = response['data'];                    
+                    $scope.subjectsList = response['data'];
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
-                
+
         var hwTypeurl = GLOBALS.baseUrl+"user/get-homework-types?token="+userSessions.userSession.userToken;
             $http.get(hwTypeurl)
                 .success(function(response) {
-                    $scope.hwTypeList = response['data'];                    
+                    $scope.hwTypeList = response['data'];
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
-                
+
         $scope.getSelectedHwType = function(hwtype){
             $scope.hwTypeId = hwtype['id'];
         };
-         
+
         $scope.getSelectedSub = function(subject){
             $scope.recipient = "Select Student";
             $scope.checkRecipient = true;
-            $scope.contactList.length = 0;         
+            $scope.contactList.length = 0;
             var url= GLOBALS.baseUrl+"user/get-subjects-batches/"+subject['id']+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
                     $scope.batchList = response['data'];
-                    $scope.SubjectId = subject['id'];                
+                    $scope.SubjectId = subject['id'];
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
-        };        
-        
-        
+        };
+
+
         $scope.getClass= function(batch){
-            $scope.recipient = "Select Student";                
+            $scope.recipient = "Select Student";
                 var url= GLOBALS.baseUrl+"user/get-batches-classes/"+$scope.SubjectId+"/"+batch['id']+"?token="+userSessions.userSession.userToken;
                 $http.get(url).success(function(response) {
                     $scope.classList = response['data'];
                     $scope.BatchId = batch['id'];
-                    $scope.contactList.length = 0;                  
+                    $scope.contactList.length = 0;
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
         };
-        
+
         $scope.getDivision = function(classType){
             $scope.recipient = "Select Student";
             var url= GLOBALS.baseUrl+"user/get-classes-division/"+$scope.SubjectId+"/"+$scope.BatchId+"/"+classType['id']+"?token="+userSessions.userSession.userToken;
@@ -1286,7 +1345,7 @@ angular.module('starter.controllers', [])
                     console.log("Error in Response: " +response);
                 });
         };
-        
+
         $scope.getStudentList = function(divType){
                 var url= GLOBALS.baseUrl+"user/get-students-list/"+divType['id']+"?token="+userSessions.userSession.userToken;
                 $http.get(url)
@@ -1297,14 +1356,14 @@ angular.module('starter.controllers', [])
                     })
                     .error(function(response) {
                         console.log("Error in Response: " +response);
-                    });                    
+                    });
         };
 
         $ionicModal.fromTemplateUrl('studentHwCntctlist.html', {
             scope: $scope,
             animation: 'slide-in-up'
         }).then(function(modal) {
-            $scope.modal = modal;            
+            $scope.modal = modal;
         })
 
         $scope.openModal = function() {
@@ -1317,63 +1376,65 @@ angular.module('starter.controllers', [])
 
         $scope.$on('$destroy', function() {
             $scope.modal.remove();
-        });        
-        
-        
+        });
+
+
         $scope.sendTo = function(){
             $scope.recipient = $scope.selectedList.length+" Student selected";
             $scope.closeModal();
         };
-        
+
         $scope.saveDraft = function(){
-            if($scope.selectedList.length == 0){
-                $scope.msg = "Please Add Recipient";
+            $scope.dueDate = $filter('date')($scope.dueDate, "yyyy-MM-dd");
+            $scope.minDate = $filter('date')($scope.minDate, "yyyy-MM-dd");
+            if($scope.dueDate >= $scope.minDate){
+                if($scope.selectedList.length == 0 || $scope.hwTitle == '' || $scope.dueDate == '' || $scope.description == '' || $scope.hwTypeId == ''){
+                    if($scope.selectedList.length <= 0){
+                        $scope.msg = "Please Add Recipient";
+                        $scope.showPopup();
+                    }else{
+                        $scope.msg = "Check if all fields are filled";
+                        $scope.showPopup();
+                    }                
+                }else{
+                    var url = GLOBALS.baseUrl+"user/homework-create?token="+userSessions.userSession.userToken;
+                        $http.post(url, {subject_id: $scope.SubjectId, title: $scope.hwTitle, batch_id: $scope.BatchId, class_id: $scope.classId, division_id: $scope.divId, due_date: $scope.dueDate, description: $scope.description, homework_type: $scope.hwTypeId, student_id: $scope.selectedList} ).success(function(response){
+                        if(response['status'] == 200){
+                            $scope.msg = response['message'];
+                            $scope.showPopup();
+                            $state.go('app.edithomeworklisting');
+                        }
+                        else{
+                            $scope.msg = response['message'];
+                            $scope.showPopup();
+                        }
+                    }).error(function(response) {
+                            console.log("Error in Response: " +response);
+                            if(response.hasOwnProperty('status')){
+                                $scope.msg = response.message;
+                            }
+                            else{
+                                $scope.msg = "Access Denied";
+                            }
+                            $scope.showPopup();
+                    });
+                } 
+            }else{
+                $scope.msg = "Due Date should be greater than Current Date";
                 $scope.showPopup();
-            }
-            else{
-                var url = GLOBALS.baseUrl+"user/homework-create?token="+userSessions.userSession.userToken;
-                    $http.post(url, {subject_id: $scope.SubjectId, title: $scope.hwTitle, batch_id: $scope.BatchId, class_id: $scope.classId, division_id: $scope.divId, due_date: $scope.dueDate, description: $scope.description, homework_type: $scope.hwTypeId, student_id: $scope.selectedList} ).success(function(response){
-                    if(response['status'] == 200){
-                        $scope.msg = response['message'];
-                          $scope.showPopup();
-                          $state.go('app.edithomeworklisting');
-                    }
-                    else{
-                        $scope.msg = response['message'];
-                         $scope.showPopup();
-                    }
-                }).error(function(err) {
-                    console.log(err);
-                    if(err['status'] == 500){
-                        $scope.msg = err['message'];
-                    }
-                    else{
-                        $scope.msg = "Access Denied";
-                    }                    
-                    $scope.showPopup();
-                });
-            } 
+            }          
         };
         $scope.selectedAll = false;
         $scope.checkAll = function () {
-            if ($scope.selectedAll) {
-                $scope.selectedAll = true;
-            } else {
-                $scope.selectedAll = false;
-            }
-            $scope.selectedList.length = 0;
-            angular.forEach($scope.contactList, function (item) {
-                if($scope.selectedAll == true){
-                    item.Selected = true;
-                    $scope.selectedList.push(item.id);
-                }
-                else{
-                    item.Selected = false;
-                    $scope.selectedList.pop(item.id);
-                }            
-            });
+            $scope.selectedList.length = 0;      
+            $scope.selectedAll = !$scope.selectedAll; 
+            if($scope.selectedAll == true){
+                angular.forEach($scope.contactList, function (item) {
+                    $scope.toggleSelection(item.id);                                    
+                });
+            }          
         };
-        
+
         $scope.showPopup = function() {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
@@ -1386,10 +1447,10 @@ angular.module('starter.controllers', [])
                 console.log('Tapped!', res);
             });
             $timeout(function() {
-                myPopup.close(); //close the popup after 8 seconds for some reason                
+                myPopup.close(); //close the popup after 8 seconds for some reason
             }, 3000);
         };
-        
+
     })
     .controller('MessageCtrl', function($scope, $state, $timeout, $ionicPopup, ionicMaterialInk, $ionicSideMenuDelegate, GLOBALS, userSessions, $http, chatHist) {
 
@@ -1419,7 +1480,7 @@ angular.module('starter.controllers', [])
         $scope.loadMessages = function(){
           if (userSessions.userSession.userRole == "parent"){
             var url1 = GLOBALS.baseUrl+"user/get-messages-parent/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
-            $http.get(url1).success(function(response){   
+            $http.get(url1).success(function(response){
                 if(response['status'] == 200){
                        $scope.nMessages = response['MessageList'];
                        if($scope.nMessages == ''){
@@ -1430,7 +1491,7 @@ angular.module('starter.controllers', [])
                     else{
                         $scope.aclMessage = response['message'];
                         $scope.showPopup();
-                    } 
+                    }
             }).error(function(err) {
                 console.log(err);
                 $scope.aclMessage = "Access Denied";
@@ -1445,7 +1506,7 @@ angular.module('starter.controllers', [])
                        if($scope.nMessages == ''){
                            $scope.aclMessage = response['message'];
                            $scope.showPopup();
-                       } 
+                       }
                     }
                     else{
                         $scope.aclMessage = response['message'];
@@ -1458,12 +1519,12 @@ angular.module('starter.controllers', [])
             });
         }
         };
-        $scope.loadMessages();        
+        $scope.loadMessages();
         $scope.confirmDelete = function(from, to){
             $scope.fromId = from;
             $scope.tooId = to;
-            $scope.showConfirmBox();             
-        };     
+            $scope.showConfirmBox();
+        };
 
         $scope.deleteMessage = function(){
             var url = GLOBALS.baseUrl+"user/delete-messages?token="+userSessions.userSession.userToken;
@@ -1473,7 +1534,7 @@ angular.module('starter.controllers', [])
                 console.log(err);
                 $scope.aclMessage = "Access Denied";
                 $scope.showPopup();
-            });            
+            });
         };
         $scope.msgDetails = function(from, to, title, title_id){
             var flag = chatHist.setChatHist(userSessions.userSession.userId, from, to, title, title_id);
@@ -1492,25 +1553,25 @@ angular.module('starter.controllers', [])
                     {
                         text: '<b>Close</b>',
                         type: 'button-calm',
-                        onTap: function(e) {                            
-                                myPopup.close();                           
+                        onTap: function(e) {
+                                myPopup.close();
                         }
                     },
                     {
                         text: '<b>Delete</b>',
                         type: 'button-assertive',
-                        onTap: function(e) {                            
-                               $scope.deleteMessage();                           
+                        onTap: function(e) {
+                               $scope.deleteMessage();
                         }
                     }
                 ]
-                
+
             });
             myPopup.then(function(res) {
                 console.log('Tapped!', res);
             });
         };
-        
+
         $scope.showPopup = function() {
             // An elaborate, custom popup
             var msgPopup = $ionicPopup.show({
@@ -1523,7 +1584,7 @@ angular.module('starter.controllers', [])
                 console.log('Tapped!', res);
             });
             $timeout(function() {
-                msgPopup.close(); //close the popup after 8 seconds for some reason                
+                msgPopup.close(); //close the popup after 8 seconds for some reason
             }, 3000);
         };
     })
@@ -1532,41 +1593,52 @@ angular.module('starter.controllers', [])
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
-        $scope.$parent.setHeaderFab(false);
-
+        $scope.$parent.setHeaderFab(false);        
         // Set Header
         $scope.$parent.hideHeader();
 
         // Set Ink
         ionicMaterialInk.displayEffect();
-
         //Side-Menu
         if(userSessions.userSession.userToken == 0){
             $state.go('login');
         }
-        $ionicSideMenuDelegate.canDragContent(true);        
+        
+        var url = GLOBALS.baseUrl+"user/get-acl-details?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response){
+                $scope.data = response['Data']['Acl_Modules'];
+                if($scope.data.indexOf('Create_message') == -1){
+                    $scope.msg = "Access Denied";
+                    $scope.showPopup();
+                    $state.go('app.message');
+                } 
+            }).error(function(err) {
+                console.log(err);
+            });      
+        
+        $ionicSideMenuDelegate.canDragContent(true);
         $scope.checkRole = "display-no";
         $scope.checkRecipient = true;
-        $scope.recipient = "Add Recipient+ ";        
+        $scope.recipient = "Add Recipient+ ";
         $scope.contactList = [];
         $scope.message = "";
-        var url= GLOBALS.baseUrl+"user/userroles?token="+userSessions.userSession.userToken;
-            $http.get(url)
+        var url1 = GLOBALS.baseUrl+"user/userroles?token="+userSessions.userSession.userToken;
+            $http.get(url1)
                 .success(function(response) {
-                    $scope.userRoles = response['data']['userRoles'];                    
+                    $scope.userRoles = response['data']['userRoles'];
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
-                }); 
-        $scope.getSelectedRole = function(roleType){          
-            if(roleType['name'] == "Student"){                
+                });
+        $scope.getSelectedRole = function(roleType){
+            if(roleType['name'] == "Student"){
                 $scope.checkRole = "";
                 $scope.recipient = "Add Recipient+ ";
                 $scope.checkRecipient = true;
-                $scope.contactList.length = 0;                
+                $scope.contactList.length = 0;
                 var url= GLOBALS.baseUrl+"user/get-batches-teacher?token="+userSessions.userSession.userToken;
                 $http.get(url).success(function(response) {
-                    $scope.batches = response['data'];                    
+                    $scope.batches = response['data'];
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
@@ -1580,7 +1652,7 @@ angular.module('starter.controllers', [])
                 $scope.getTeacherList();
             }
         }
-        $scope.getClass = function(batchType){               
+        $scope.getClass = function(batchType){
                var url= GLOBALS.baseUrl+"user/getclasses/"+batchType['id']+"?token="+userSessions.userSession.userToken;
                $http.get(url).success(function(response) {
                     $scope.classes = response['data']['classList'];
@@ -1616,7 +1688,7 @@ angular.module('starter.controllers', [])
                 var url= GLOBALS.baseUrl+"user/getteachers/?token="+userSessions.userSession.userToken;
                 $http.get(url)
                     .success(function(response) {
-                        $scope.contactList = response['data']['teachers'];                        
+                        $scope.contactList = response['data']['teachers'];
                     })
                     .error(function(response) {
                         console.log("Error in Response: " +response);
@@ -1647,11 +1719,11 @@ angular.module('starter.controllers', [])
             $scope.recipientId = id;
             $scope.closeModal();
         };
-                
+
         $scope.setMessage = function(message){
-          $scope.message = message;  
+          $scope.message = message;
         };
-        
+
         $scope.sendMessage= function(){
           if($scope.recipient == "Add Recipient+ " || $scope.message == "" || $scope.recipient == "" && $scope.message == ""){
               if($scope.recipient == "Add Recipient+ "){
@@ -1664,7 +1736,7 @@ angular.module('starter.controllers', [])
                   $scope.msg = "Please Add Recipient & Cannot send blank message";
               }
               $scope.showPopup();
-          }          
+          }
           else{
               var url= GLOBALS.baseUrl+"user/send-message?token="+userSessions.userSession.userToken;
               $http.post(url, { from_id: userSessions.userSession.userId, to_id: $scope.recipientId, description: $scope.message})
@@ -1672,7 +1744,7 @@ angular.module('starter.controllers', [])
                       if(response['status'] == 200){
                           $scope.msg = response['message'];
                           $scope.showPopup();
-                          $state.go('app.message');                          
+                          $state.go('app.message');
                       }
                       else{
                           $scope.msg = response['message'];
@@ -1699,7 +1771,7 @@ angular.module('starter.controllers', [])
                 console.log('Tapped!', res);
             });
             $timeout(function() {
-                myPopup.close(); //close the popup after 8 seconds for some reason                
+                myPopup.close(); //close the popup after 8 seconds for some reason
             }, 3000);
         };
     })
@@ -1719,6 +1791,18 @@ angular.module('starter.controllers', [])
         //Side-Menu
 
         $ionicSideMenuDelegate.canDragContent(true);
+        
+        var url = GLOBALS.baseUrl+"user/get-acl-details?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response){
+                $scope.data = response['Data']['Acl_Modules'];
+                if($scope.data.indexOf('Create_message') == -1){
+                    $scope.msg = "Access Denied";
+                    $scope.showPopup();
+                    $state.go('app.message');
+                } 
+            }).error(function(err) {
+                console.log(err);
+            });
 
         $scope.recipient = "";
         $scope.message = "";
@@ -1759,9 +1843,9 @@ angular.module('starter.controllers', [])
             $scope.recipientId = id;
             $scope.closeModal();
         };
-        
+
         $scope.setMessage = function(message){
-          $scope.message = message;  
+          $scope.message = message;
         };
 
         $scope.sendMessage= function(){
@@ -1784,7 +1868,7 @@ angular.module('starter.controllers', [])
                             if(response['status'] == 200){
                                     $scope.msg = response['message'];
                                     $scope.showPopup();
-                                    $state.go('app.message');                          
+                                    $state.go('app.message');
                             }
                             else{
                                     $scope.msg = response['message'];
@@ -1796,7 +1880,7 @@ angular.module('starter.controllers', [])
                                 $scope.msg = "Access Denied";
                                 $scope.showPopup();
                         });
-                    } 
+                    }
         };
 
         $scope.showPopup = function() {
@@ -1845,7 +1929,7 @@ angular.module('starter.controllers', [])
         };
         $scope.loadChat();
         $scope.title = $scope.envelop.title;
-        
+
         $scope.sendMessage= function(){
                         if($scope.message == ""){
                         $scope.msg = "Cannot send blank message";
@@ -1858,7 +1942,7 @@ angular.module('starter.controllers', [])
                                 if(response['status'] == 200){
                                         $scope.msg = response['message'];
                                         $scope.loadChat();
-                                        $scope.message = "";                          
+                                        $scope.message = "";
                                 }
                                 else{
                                         $scope.msg = response['message'];
@@ -1886,7 +1970,7 @@ angular.module('starter.controllers', [])
             $timeout(function() {
                 myPopup.close(); //close the popup after 8 seconds for some reason
             }, 3000);
-        };       
+        };
     })
     .controller('AttendLandingCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
@@ -1924,14 +2008,20 @@ angular.module('starter.controllers', [])
         $scope.gotIt = 0;
         $scope.absentList = [];
         $scope.currentDate = new Date();
-        
+        $scope.currentBatch = '';
+        $scope.currentClass = '';
+        $scope.currentDiv = '';
+
         $scope.getStudentList = function(){
             $scope.setDate = $filter('date')($scope.currentDate, "yyyy-MM-dd");
             var url = GLOBALS.baseUrl+"user/students-list?token="+userSessions.userSession.userToken;
             $http.post(url, {date: $scope.setDate, teacher_id: userSessions.userSession.userId}).success(function(response) {
                 if(response['status'] == 200){
                     $scope.studentList = response['data']['studentList'];
-                    $scope.absentList = response['data']['absentList'];                     
+                    $scope.absentList = response['data']['absentList'];
+                    $scope.currentBatch = response['data']['batchName'];
+                    $scope.currentClass = response['data']['className'];
+                    $scope.currentDiv = response['data']['divisionName'];
                 }
                 else{
                     $scope.msg = response['message'];
@@ -1942,37 +2032,38 @@ angular.module('starter.controllers', [])
                 console.log("Error in Response: " +response);
                 if(response.hasOwnProperty('status')){
                     $scope.msg = response.message;
+                    $scope.showPopup();
                 }
                 else{
                     $scope.msg = "Access Denied";
-                }                                
-                $scope.showPopup();
+                    $scope.showPopup();
+                    $state.go('app.attendancelanding');
+                }
             });
         }
-        
+
         $scope.getStudentList();
 
         $scope.toggleCheck = function(elementData, studentId) {
             var idx = $scope.absentList.indexOf(studentId);
             if (idx > -1) {
-            $scope.absentList.splice(idx, 1);
+              $scope.absentList.splice(idx, 1);
             }
             // is newly selected
             else {
-            $scope.absentList.push(studentId);
+              $scope.absentList.push(studentId);
             }
             var changeClass = angular.element(document.querySelector('#'+ elementData.target.id));
-            
                if(elementData.target.classList[2] == "mark-0" || elementData.target.classList[1] == "mark-0" || elementData.target.classList[3] == "mark-0" || elementData.target.classList[0] == "mark-0" ){
                    changeClass.removeClass('mark-0');
                    changeClass.addClass('mark-1');
-            }
-            else{
+                }
+                else{
                    changeClass.removeClass('mark-1');
                    changeClass.addClass('mark-0');
-            }
+                }
         };
-        
+
         $scope.markAttendance = function(){
             $scope.setDate = $filter('date')($scope.currentDate, "yyyy-MM-dd");
             var url= GLOBALS.baseUrl+"user/mark-attendance?token="+userSessions.userSession.userToken;
@@ -1980,7 +2071,7 @@ angular.module('starter.controllers', [])
             .success(function(response) {
                 if(response['status'] == 200){
                         $scope.msg = response['message'];
-                        $scope.showPopup();                    
+                        $scope.showPopup();
                 }
                 else{
                         $scope.msg = response['message'];
@@ -1994,11 +2085,11 @@ angular.module('starter.controllers', [])
                 }
                 else{
                     $scope.msg = "Access Denied";
-                }                                
+                }
                 $scope.showPopup();
             });
         }
-                
+
         $scope.showPopup = function() {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
@@ -2034,13 +2125,13 @@ angular.module('starter.controllers', [])
         $scope.events = [];
         $scope.batchName = 'Batch';
         $scope.className = 'Class';
-        $scope.divisionName = 'Div'; 
+        $scope.divisionName = 'Div';
         $scope.divisionId = '';
         $scope.selectedDateData = [];
         $scope.selectedDateMessage = '';
         $scope.userRole = userSessions.userSession.userRole;
         $scope.userId = userSessions.userSession.userId;
-        
+
         $scope.getSelectedDateData = function(selectedDate){
             $scope.selectedDate= $filter('date')(selectedDate, "yyyy-MM-dd");
             var url = null;
@@ -2050,7 +2141,7 @@ angular.module('starter.controllers', [])
                             .success(function(response) {
                                 if(response['status'] == 200){
                                     $scope.selectedDateData = response['data'];
-                                    $scope.selectedDateMessage = response['message'];                
+                                    $scope.selectedDateMessage = response['message'];
                                 }
                                 else{
                                     $scope.msg = response['message'];
@@ -2066,9 +2157,9 @@ angular.module('starter.controllers', [])
                                 else{
                                     $scope.msg = "Access Denied";
                                     $scope.selectedDateData.length =0;
-                                }                                
+                                }
                                 $scope.showPopup();
-                            });  
+                            });
             }
             else{
                 $scope.selectedDate= $filter('date')(selectedDate, "yyyy-MM-dd");
@@ -2076,7 +2167,7 @@ angular.module('starter.controllers', [])
                             $http.post(url, {division_id: $scope.divisionId, date: $scope.selectedDate})
                             .success(function(response) {
                                 if(response['status'] == 200){
-                                    $scope.selectedDateData = response['data'];                        
+                                    $scope.selectedDateData = response['data'];
                                 }
                                 else{
                                         $scope.msg = response['message'];
@@ -2092,16 +2183,16 @@ angular.module('starter.controllers', [])
                                 else{
                                     $scope.msg = "Access Denied";
                                     $scope.selectedDateData.length = 0;
-                                }                                
+                                }
                                 $scope.showPopup();
                             });
             }
-                        
+
         };
         if(userSessions.userSession.userRole == 'teacher'){
             var url= GLOBALS.baseUrl+"user/attendance-batches?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
-                $scope.batches = response['data'];                    
+                $scope.batches = response['data'];
             })
             .error(function(response) {
                 console.log("Error in Response: " +response);
@@ -2110,17 +2201,17 @@ angular.module('starter.controllers', [])
             $scope.currentDate = new Date();
             $scope.getSelectedDateData($scope.currentDate);
         }
-        
-        $scope.getClass = function(batch){                
+
+        $scope.getClass = function(batch){
             var url= GLOBALS.baseUrl+"user/attendance-classes/"+batch+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
-                $scope.classes = response['data'];                  
+                $scope.classes = response['data'];
             })
             .error(function(response) {
                 console.log("Error in Response: " +response);
             });
         };
-        
+
         $scope.getDivision = function(classType){
             var url= GLOBALS.baseUrl+"user/get-attendance-divisions/"+classType+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
@@ -2130,24 +2221,24 @@ angular.module('starter.controllers', [])
                 console.log("Error in Response: " +response);
             });
         };
-        
+
         $scope.getAttendanceList = function(id){
             var url = null;
             if(userSessions.userSession.userRole == 'parent'){
-              url = GLOBALS.baseUrl+"user/default-attendance-parent/"+id+"?token="+userSessions.userSession.userToken;  
+              url = GLOBALS.baseUrl+"user/default-attendance-parent/"+id+"?token="+userSessions.userSession.userToken;
             }
             else{
               $scope.divisionId = id;
               url = GLOBALS.baseUrl+"user/attendance-teacher/"+id+"?token="+userSessions.userSession.userToken;
             }
             $http.get(url).success(function(response) {
-                $scope.events = response['data'];            
+                $scope.events = response['data'];
             })
             .error(function(response) {
                 console.log("Error in Response: " +response);
             });
         };
-        
+
         if(userSessions.userSession.userRole == 'teacher'){
             url = GLOBALS.baseUrl+"user/default-attendance-teacher/?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
@@ -2168,7 +2259,7 @@ angular.module('starter.controllers', [])
                 $state.go('app.attendancelanding');
             });
         }
-        
+
         $scope.options = {
             defaultDate: new Date(),
             minDate: "",
@@ -2179,12 +2270,12 @@ angular.module('starter.controllers', [])
             eventClick: function(date) {
                 $scope.selectedDate = $filter('date')(date['date'], "yyyy-MM-dd");
                 $scope.getSelectedDateData($scope.selectedDate);
-                console.log(date['event']);                    
+                console.log(date['event']);
             },
             dateClick: function(date) {
                 console.log(date['event']);
                 $scope.selectedDate = $filter('date')(date['date'], "yyyy-MM-dd");
-                $scope.getSelectedDateData($scope.selectedDate);                    
+                $scope.getSelectedDateData($scope.selectedDate);
             },
             changeMonth: function(month, year) {
                 console.log(month, year);
@@ -2195,7 +2286,7 @@ angular.module('starter.controllers', [])
         };
         if($scope.userRole == 'parent'){
             $scope.getAttendanceList($scope.userId);
-        }        
+        }
         $scope.showPopup = function() {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
@@ -2423,7 +2514,17 @@ angular.module('starter.controllers', [])
 
         // Set Ink
         ionicMaterialInk.displayEffect();
-
+        var url = GLOBALS.baseUrl+"user/get-acl-details?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response){
+                $scope.data = response['Data']['Acl_Modules'];
+                if($scope.data.indexOf('Create_leave') == -1){
+                    $scope.msg = "Access Denied";
+                    $scope.showPopup();
+                    $state.go('app.parentattendancelanding');
+                } 
+            }).error(function(err) {
+                console.log(err);
+            });
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.leaveTitle = '';
@@ -2433,28 +2534,32 @@ angular.module('starter.controllers', [])
         $scope.toDate = new Date();
         $scope.description = '';
         $scope.setTitle = function(title){
-          $scope.leaveTitle = title;  
+          $scope.leaveTitle = title;
         };
-        
+
         $scope.setDescription = function(reason){
-          $scope.description = reason;  
+          $scope.description = reason;
         };
-        
+
         var url= GLOBALS.baseUrl+"user/leave-types/?token="+userSessions.userSession.userToken;
         $http.get(url).success(function(response) {
-             $scope.leaveType = response['data'];                   
+             $scope.leaveType = response['data'];
              $scope.checkClass = false;
         })
         .error(function(response) {
              console.log("Error in Response: " +response);
         });
-        
+
         $scope.getSelectedLeave = function(leave){
-            $scope.LeaveId = leave['id'];           
+            $scope.LeaveId = leave['id'];
+        }
+        $scope.updateFromDate = function(newDate){
+            $scope.fromDate = newDate;
+        }
+        $scope.updateToDate = function(newDate){
+            $scope.toDate = newDate;
         }
         $scope.send = function(){
-                        $scope.fromDate = new Date();
-                        $scope.toDate = new Date();
                         if($scope.leaveTitle == "" || $scope.LeaveId == "" || $scope.description == "" || $scope.LeaveId == "" && $scope.leaveTitle == "" && $scope.message == "" || $scope.fromDate == '' ||
         $scope.toDate == ''|| $scope.fromDate == '' && $scope.toDate == ''){
                                 if($scope.leaveTitle == ""){
@@ -2483,7 +2588,7 @@ angular.module('starter.controllers', [])
                             if(response['status'] == 200){
                                     $scope.msg = response['message'];
                                     $scope.showPopup();
-                                    $state.go('app.parentattendancelanding');                        
+                                    $state.go('app.parentattendancelanding');
                             }
                             else{
                                     $scope.msg = response['message'];
@@ -2492,11 +2597,16 @@ angular.module('starter.controllers', [])
                         })
                             .error(function(response) {
                                 console.log("Error in Response: " +response);
-                                $scope.msg = "Access Denied";
+                                if(response.hasOwnProperty('status')){
+                                    $scope.msg = response.message;
+                                }
+                                else{
+                                    $scope.msg = "Access Denied";
+                                }
                                 $scope.showPopup();
-                        });
-                    }
-        };
+                             });
+                      }
+            };
         $scope.showPopup = function() {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
@@ -2509,10 +2619,10 @@ angular.module('starter.controllers', [])
                 console.log('Tapped!', res);
             });
             $timeout(function() {
-                myPopup.close(); //close the popup after 3 seconds for some reason                
+                myPopup.close(); //close the popup after 3 seconds for some reason
             }, 3000);
         };
-        
+
     })
     .controller('ViewLeaveApprovalCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicPopup, $ionicSideMenuDelegate, hwDetails, GLOBALS, $http, userSessions) {
         $scope.$parent.clearFabs();
@@ -2529,7 +2639,7 @@ angular.module('starter.controllers', [])
         //Side-Menu
 
         $ionicSideMenuDelegate.canDragContent(true);
-        $scope.userRole = userSessions.userSession.userRole;        
+        $scope.userRole = userSessions.userSession.userRole;
         $scope.getLeaveList = function(){
             var url = null;
         if(userSessions.userSession.userRole == 'parent'){
@@ -2549,20 +2659,26 @@ angular.module('starter.controllers', [])
             .error(function(response) {
                 console.log("Error in Response: " +response);
                 if(response.hasOwnProperty('status')){
-                    $scope.msg = response.message;
+                    $scope.msg = response.message;                    
+                    $scope.showPopup();
                 }
                 else{
                     $scope.msg = "Access Denied";
-                }               
-                $scope.showPopup();
+                    $scope.showPopup();
+                     if($scope.userRole == 'teacher'){
+                         $state.go('app.attendancelanding');
+                     }else{
+                         $state.go('app.parentattendancelanding');
+                     }
+                }
             });
-        };        
-        $scope.getLeaveList();        
+        };
+        $scope.getLeaveList();
         $scope.approveLeave = function(leaveId){
             var url = GLOBALS.baseUrl+"user/approve-leaves?token="+userSessions.userSession.userToken;
             $http.post(url, {_method:'PUT',leave_id: leaveId}).success(function(response) {
                 if(response['status'] == 200){
-                    $scope.msg = response['message'];                    
+                    $scope.msg = response['message'];
                     $scope.showPopup();
                     $scope.getLeaveList();
                 }
@@ -2583,7 +2699,7 @@ angular.module('starter.controllers', [])
                 $state.go('app.leavedetails');
             };
         }
-        
+
         $scope.showPopup = function() {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
@@ -2596,7 +2712,7 @@ angular.module('starter.controllers', [])
                 console.log('Tapped!', res);
             });
             $timeout(function() {
-                myPopup.close(); //close the popup after 3 seconds for some reason                
+                myPopup.close(); //close the popup after 3 seconds for some reason
             }, 3000);
         };
      })
@@ -2636,13 +2752,20 @@ angular.module('starter.controllers', [])
                 console.log("Error in Response: " +response);
                 if(response.hasOwnProperty('status')){
                     $scope.msg = response.message;
+                    $scope.showPopup();
                 }
                 else{
                     $scope.msg = "Access Denied";
-                }               
-                $scope.showPopup();
+                    $scope.showPopup();
+                     if($scope.userRole == 'teacher'){
+                         $state.go('app.attendancelanding');
+                     }else{
+                         $state.go('app.parentattendancelanding');
+                     }
+                }
+                
             });
-        };        
+        };
         $scope.getLeaveList();
         $scope.leaveDetails = function(leave){
             $scope.checkLid = hwDetails.setHwView(leave);
@@ -2650,7 +2773,7 @@ angular.module('starter.controllers', [])
                 $state.go('app.approvedleavedetails');
             };
         }
-        
+
         $scope.showPopup = function() {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
@@ -2663,7 +2786,7 @@ angular.module('starter.controllers', [])
                 console.log('Tapped!', res);
             });
             $timeout(function() {
-                myPopup.close(); //close the popup after 3 seconds for some reason                
+                myPopup.close(); //close the popup after 3 seconds for some reason
             }, 3000);
         };
      })
@@ -2702,7 +2825,7 @@ angular.module('starter.controllers', [])
                     $scope.showPopup();
             });
         }
-        
+
         $scope.showPopup = function() {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
@@ -2715,7 +2838,7 @@ angular.module('starter.controllers', [])
                 console.log('Tapped!', res);
             });
             $timeout(function() {
-                myPopup.close(); //close the popup after 3 seconds for some reason                
+                myPopup.close(); //close the popup after 3 seconds for some reason
             }, 3000);
         };
     })
@@ -2788,7 +2911,7 @@ angular.module('starter.controllers', [])
         };
         $scope.selectedDate = new Date();
 
-    })    
+    })
     .controller('TimeTableCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup, $filter, userSessions, GLOBALS, $http) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -2803,9 +2926,9 @@ angular.module('starter.controllers', [])
         $scope.className = 'Class';
         $scope.divisionName = 'Div';
         $scope.userRole = userSessions.userSession.userRole;
-        $scope.date = new Date();        
+        $scope.date = new Date();
         switch ($scope.currentDay = $filter('date')(new Date(), 'EEEE')) {
-            
+
             case 'Monday':
                 $scope.currentDay = 1;
                 break;
@@ -2830,8 +2953,8 @@ angular.module('starter.controllers', [])
             default:
                 $scope.currentDay = 0;
                 break;
-         }       
-               
+         }
+
         // Set Header
         $scope.$parent.hideHeader();//
 
@@ -2840,39 +2963,39 @@ angular.module('starter.controllers', [])
 
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
-        $scope.getClass = function(batch){                
+        $scope.getClass = function(batch){
                 var url= GLOBALS.baseUrl+"user/get-classes/"+batch+"?token="+userSessions.userSession.userToken;
                 $http.get(url).success(function(response) {
                     $scope.classList = response['data'];
                     $scope.className = 'Class';
                     $scope.divisionName = 'Div';
-                    $scope.checkBatch = false;           
+                    $scope.checkBatch = false;
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
         };
-        
+
         $scope.getDivision = function(classType){
             var url= GLOBALS.baseUrl+"user/get-divisions/"+classType+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
-                   $scope.divisionsList = response['data'];                   
+                   $scope.divisionsList = response['data'];
                     $scope.checkClass = false;
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
         };
-                
+
         $scope.defaultTimetable = function(){
             var url = null;
             if(userSessions.userSession.userRole == "parent"){
-              url = GLOBALS.baseUrl+"user/view-timetable-parent/"+userSessions.userSession.userId+"/"+$scope.currentDay+"?token="+userSessions.userSession.userToken; 
+              url = GLOBALS.baseUrl+"user/view-timetable-parent/"+userSessions.userSession.userId+"/"+$scope.currentDay+"?token="+userSessions.userSession.userToken;
             }else{
               url = GLOBALS.baseUrl+"user/default-timetable-teacher?token="+userSessions.userSession.userToken;
             }
             $http.get(url).success(function(response) {
-                if(response['status'] == 200){                    
+                if(response['status'] == 200){
                     $scope.timeTableList = response['data']['timetable'];
                     $scope.divId = response['data']['div_id'];
                     $scope.setDay = response['data']['day'];
@@ -2896,7 +3019,7 @@ angular.module('starter.controllers', [])
                     }
                     $scope.message = response['message'];
                     $scope.showPopupError();
-                }            
+                }
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
@@ -2913,33 +3036,36 @@ angular.module('starter.controllers', [])
                             $scope.batchId = response['data']['batchId'];
                             $scope.getClass($scope.batchId);
                             $scope.getDivision($scope.classId);
+                            $scope.showPopupError();                            
                         }
                     }
                     else{
                         $scope.message = "Access Denied";
+                        $scope.showPopupError();
+                        $state.go('app.dashboard');
                     }
-                    $scope.showPopupError();
+                    
                 });
         };
-        
+
         $scope.defaultTimetable();
-        
+
         $scope.getTimetable = function(day){
             var url = null;
             if(userSessions.userSession.userRole == "parent"){
-              url = GLOBALS.baseUrl+"user/view-timetable-parent/"+userSessions.userSession.userId+"/"+day+"?token="+userSessions.userSession.userToken; 
+              url = GLOBALS.baseUrl+"user/view-timetable-parent/"+userSessions.userSession.userId+"/"+day+"?token="+userSessions.userSession.userToken;
             }else{
-              url = GLOBALS.baseUrl+"user/view-timetable-teacher/"+$scope.divId+"/"+day+"?token="+userSessions.userSession.userToken; 
-            }           
+              url = GLOBALS.baseUrl+"user/view-timetable-teacher/"+$scope.divId+"/"+day+"?token="+userSessions.userSession.userToken;
+            }
             $http.get(url).success(function(response) {
-                if(response['status'] == 200){                    
+                if(response['status'] == 200){
                     $scope.timeTableList = response['data']['timetable'];
                     $scope.divId = response['data']['div_id'];
                     $scope.setDay = response['data']['day'];
                     if(userSessions.userSession.userRole == "teacher"){
                         $scope.batchName = response['data']['batchName'];
                         $scope.className = response['data']['className'];
-                        $scope.divisionName = response['data']['divisionName'];                        
+                        $scope.divisionName = response['data']['divisionName'];
                     }
                 }else{
                     $scope.timeTableList = response['data']['timetable'];
@@ -2952,7 +3078,7 @@ angular.module('starter.controllers', [])
                     }
                     $scope.message = response['message'];
                     $scope.showPopupError();
-                }                                
+                }
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
@@ -2972,19 +3098,19 @@ angular.module('starter.controllers', [])
                     }
                     $scope.showPopupError();
                 });
-        };       
+        };
            if($scope.userRole != 'parent'){
                var url= GLOBALS.baseUrl+"user/get-batches?token="+userSessions.userSession.userToken;
                     $http.get(url).success(function(response) {
-                    $scope.batchList = response['data'];                                  
+                    $scope.batchList = response['data'];
                 })
                 .error(function(response) {
                     console.log("Error in Response: " +response);
                 });
-           } 
+           }
         $scope.getDivId = function(division){
-            $scope.divId = division['id'];           
-        }        
+            $scope.divId = division['id'];
+        }
 
         // Triggered on a button click, or some other target
         $scope.showPopupError = function() {
@@ -3002,7 +3128,7 @@ angular.module('starter.controllers', [])
                 myPopupError.close(); //close the popup after 3 seconds for some reason
             }, 3000);
         };
-        
+
         $scope.showPopup = function() {
             $scope.data = {}
 
@@ -3037,7 +3163,7 @@ angular.module('starter.controllers', [])
                         type: 'button-timetable',
                         onTap: function(e) {
                             $scope.getTimetable($scope.currentDay);
-                            myPopup.close();                            
+                            myPopup.close();
                         }
                     }
                 ]

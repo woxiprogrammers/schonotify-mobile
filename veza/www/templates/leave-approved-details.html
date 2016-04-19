@@ -11,7 +11,7 @@
                 <a class="tab-item margin-top-10" ui-sref="app.dashboard">
                     <i class="icon ion-homie"></i>
                 </a>
-                <a class="tab-item margin-top-10">
+                <a class="tab-item margin-top-10" ui-sref="app.message">
                     <i class="icon ion-message"><span class="badge badge-assertive"></span></i>
                 </a>
             </div>
@@ -36,7 +36,7 @@
             <div class="row bold description-title-font">{{leaveDetail.title}}</div>
             <div class="margin-top-10">
                 <div class="no-border margin-top-10 margin-bottom-10">
-                <div class="row margin-top-5"><c class="bold creator-font">{{leaveDetail.name}}</c></div>
+                <div class="row margin-top-5"><c class="bold creator-font">Name: {{leaveDetail.name}}</c><c class="bold creator-font"> #.{{leaveDetail.roll_number}}</c></div>
                 <div class="row bold"><time class="creator-time-font">Created: {{leaveDetail.applied_on}}</time></div>
                 <div class="row"><b class="bold">Batch: </b> {{leaveDetail.batch}}<b class="bold margin-left-2">Class: </b> {{leaveDetail.class}} <b class="bold margin-left-2">Div: </b> {{leaveDetail.division}}</div>
                 <div class="row"><span><b class="bold">Leave Type: </b> {{leaveDetail.leave_type}}</span></div>

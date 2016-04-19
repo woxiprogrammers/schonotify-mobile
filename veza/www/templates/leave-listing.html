@@ -19,8 +19,8 @@
     </div>
     <div class="bar bar-orange bar-header align-delete-bar">
         <iion-item class="row">
-            <div class="row">
-                <div class="col-20"  ng-click="myGoBack()">
+            <div class="row" ng-click="myGoBack()">
+                <div class="col-20">
                     <button class="button-clear">
                         <i class="ion-arrow-left-c button-back-white"></i>
                     </button>
@@ -38,8 +38,8 @@
                     <div class="row" ng-if="userRole == 'teacher'">
                         <div class="col-80" ng-click="leaveDetails(leave)">
                             <a class="text-decoration-none">
-                                <h2><strong>{{leave.name}}</strong><br><i class="font-italic">{{leave.batch}} {{leave.class}} {{leave.division}}</i></h2><br>
-                                <p>{{leave.title}}<br><strong><i class="font-italic"> {{leave.leave_type}}, {{leave.applied_on}}</i></strong></p>
+                                <h2><strong>{{leave.name}}</strong><strong> #.{{leave.roll_number}}</strong><br><i class="font-italic">{{leave.batch}} {{leave.class}} {{leave.division}}</i></h2><br>
+                                <p>{{leave.title}}<br><strong><i class="font-italic"> {{leave.leave_type}} {{leave.applied_on}}</i></strong></p>
                             </a>
                         </div>
                         <div class="col-20" ng-click="approveLeave(leave.leave_id)">
@@ -55,7 +55,7 @@
                         </a>
                     </div>
                 </ion-item>
-            </div>            
+            </div>
         </ion-list>
     </ion-content>
 </ion-view>

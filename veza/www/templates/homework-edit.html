@@ -11,7 +11,7 @@
                 <a class="tab-item margin-top-10" ui-sref="app.dashboard">
                     <i class="icon ion-homie"></i>
                 </a>
-                <a class="tab-item margin-top-10">
+                <a class="tab-item margin-top-10" ui-sref="app.message">
                     <i class="icon ion-message"><span class="badge badge-assertive"></span></i>
                 </a>
             </div>
@@ -47,7 +47,7 @@
                         <option value="" ng-disabled="true" ng-model = "SubjectName">{{SubjectName}}</option>
                     </select>
                 </div>
-            </div>                             
+            </div>
                 <div class="row">
                     <div class="col-33 border-bottom">
                         <select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batchList track by batch.id" ng-change="getClass(selectedBatch.batch)">
@@ -60,7 +60,7 @@
                         </select>
                     </div>
                     <div class="col-33 border-bottom">
-                        <select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.name for division in divisionsList track by division.id" ng-change="getStudentList(selectedDivision.division.id)">
+                        <select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.name for division in divisionsList track by division.id" ng-change="getStudentList(selectedDivision.division.id, 0)">
                             <option value="" ng-disabled="true" ng-model = "divName">{{divName}}</option>
                         </select>
                     </div>
@@ -71,13 +71,13 @@
                         <option value="" ng-disabled="true" ng-model = "hwrkType">{{hwrkType}}</option>
                     </select>
                 </div>
-              </div>         
+              </div>
             <label class="item item-input">Due Date:
-                 <input class="item-input border-bottom padding-5" ng-model ="dueDate" type="date" value ="{{dueDate}}">
+                 <input class="item-input border-bottom padding-5" min="{{minDate}}" ng-model ="dueDate" value = {{dueDate}} type="date" ng-change="updateDueDate(dueDate)">
             </label>
             <label class="item item-input border-bottom" ng-click="openModal()" ng-model="recipient">
                 {{recipient}}
-            </label>            
+            </label>
             <label class="item item-input">
                 <textarea ng-model="description" placeholder = "Homework Description" rows = "10" ng-change="setDescription(description)" value ="{{description}}"></textarea>
              </label>
@@ -97,21 +97,21 @@
             </ion-header-bar>
             <ion-content has-bouncing="true">
                 <div class="list">
-                    <!--<ion-item class="contact-list">
+                    <ion-item class="contact-list">
                         <div class="row">
                             <div class="col-25">
-                                <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="selectedAll" ng-click="checkAll()">
+                                <ion-checkbox class="checkbox checkbox-assertive" ng-model="selectedAll" ng-click="checkAll()">
                                 </ion-checkbox>
                             </div>
-                            <div class="col-75">
-                                <h2><strong>Select All</strong></h2>
+                            <div class="col-75 margin-top-5">
+                                <strong>Select All</strong>
                             </div>
                         </div>
-                    </ion-item>-->
+                    </ion-item>
                     <ion-item class="contact-list" ng-repeat="item in contactList">
                         <div class="row">
                             <div class="col-25">
-                                <ion-checkbox class="checkbox-square checkbox-assertive" id="{{item.name}}" value="{{item.id}}" ng-checked="selectedList.indexOf(item.id) > -1" ng-click="toggleSelection(item.id)">
+                                <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="item.Selected" id="{{item.id}}" ng-checked="selectedList.indexOf(item.id) > -1" ng-click="toggleSelection(item.id)">
                                 </ion-checkbox>
                             </div>
                             <div class="col-75 margin-top-5">
@@ -124,7 +124,7 @@
             </ion-content>
             <div class="bar bar-footer modal-bottom no-border">
                 <div class="row">
-                    <div class="col-25 col-offset-50 text-center" ng-click="closeModal()">
+                    <div class="col-25 col-offset-50 text-center" ng-click="cancelList()">
                         <label class="modal-bottom-text">CANCEL</label>
                     </div>
                     <div class="col-25  text-center" ng-click="sendTo()">
