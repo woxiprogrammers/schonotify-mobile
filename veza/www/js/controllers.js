@@ -4,7 +4,7 @@ var db = null;
 angular.module('starter.controllers', [])
 .constant('GLOBALS',{
    baseUrl:'http://test.woxiapps.com/api/v1/',
-//   baseUrl:'http://192.168.2.2/api/v1/'
+   //baseUrl:'http://192.168.2.12/api/v1/'
 })
 .service('userSessions', function Usersession(){
 
@@ -2328,7 +2328,7 @@ angular.module('starter.controllers', [])
         $scope.recentEvent();
     })
 
-    .controller('LandingEventParentCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('LandingEventParentCtrl', function($scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -2348,33 +2348,111 @@ angular.module('starter.controllers', [])
         $scope.noticeBoard = function() {
             $state.go('app.sharedNotification');
         };
+        $scope.eventList = null;
+        $scope.recentEvent  = function() {
+        var url = GLOBALS.baseUrl+"user/view-top-five-event/?token="+userSessions.userSession.userToken;
+        $http.get(url).success(function(response){
+            if(response['status'] == 200){
+                   $scope.eventList = response['data'];
+                   if($scope.eventList == ''){
+                       $scope.aclMessage = response['message'];
+                       $scope.showPopup();
+                   }
+            } else {
+                    $scope.aclMessage = response['message'];
+                    $scope.showPopup();
+            }
+        }).error(function(err) {
+            $scope.aclMessage = "Access Denied";
+            $scope.showPopup();
+        });
+      }
+      $scope.selectedYear = null;
+      $scope.yearMonthData = null;
+      $scope.monthList = null;
 
+      $scope.eventYearMonth = function() {
+        var url = GLOBALS.baseUrl+"user/get-year-month?token="+userSessions.userSession.userToken;
+        $http.get(url).success(function(response){
+          if(response['status'] == 200){
+                 $scope.yearMonthData = response['data'];
+                 if($scope.yearMonthData == ''){
+                     $scope.aclMessage = response['message'];
+                     $scope.showPopup();
+                 }
+          } else {
+                  $scope.aclMessage = response['message'];
+                  $scope.showPopup();
+          }
+          }).error(function(err) {
+            $scope.aclMessage = "Something Went Wrong!!!";
+            $scope.showPopup();
+          });
+      }
+      $scope.eventYearMonth();
 
-    })
+      $scope.setMonth = function(year) {
+        $scope.monthList = null;
+        angular.forEach($scope.yearMonthData, function(item) {
+          if (item.year === year) {
+              $scope.monthList = item.month[0];
+          }
+        });
+      }
 
-    .controller('DetailEventParentCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
+      $scope.setMonth($scope.selectedYear);
 
-        $scope.$parent.clearFabs();
-        $scope.isExpanded = false;
-        $scope.$parent.setExpanded(false);
-        $scope.$parent.setHeaderFab(false);
+      $scope.eventByMonth  = function(month) {
+      var url = GLOBALS.baseUrl+"user/view-months-event/"+$scope.selectedYear+"/"+month+"/?token="+userSessions.userSession.userToken;
+      $http.get(url).success(function(response){
+          if(response['status'] == 200){
+                 $scope.eventList = response['data'];
+                 if($scope.eventList == '') {
+                     $scope.aclMessage = response['message'];
+                     $scope.showPopup();
+                 }
+          } else {
+                  $scope.aclMessage = response['message'];
+                  $scope.showPopup();
+          }
+      }).error(function(err) {
+          $scope.aclMessage = "Something Went Worng!!!";
+          $scope.showPopup();
+      });
+    }
 
-        // Set Header
-        $scope.$parent.hideHeader();
+    $scope.getDetailsOfEvent = function(event_id){
+      var keepGoing = true;
+      angular.forEach($scope.eventList, function(item) {
+        if (keepGoing) {
+          if (item.id === event_id) {
+              $state.go('app.detaileventparent', {obj:item});
+              keepGoing = false;
+            }
+          }
+      });
+    }
 
-        // Set Ink
-        ionicMaterialInk.displayEffect();
-
-        //Side-Menu
-
-        $ionicSideMenuDelegate.canDragContent(true);
-
-        $scope.noticeBoard = function() {
-            $state.go('app.sharedNotification');
+        $scope.showPopup = function() {
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div>'+$scope.aclMessage+'</div>',
+                title: '',
+                subTitle: '',
+                scope: $scope
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); //close the popup after 3 seconds for some reason
+            }, 3000);
         };
+
+        $scope.recentEvent();
     })
 
-    .controller('EventStatusTeacherCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
+    .controller('DetailEventParentCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -2401,7 +2479,7 @@ angular.module('starter.controllers', [])
         $scope.eventdetailsList = $stateParams;
     })
 
-    .controller('EditEventCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('EventStatusTeacherCtrl', function($state, $scope, $http, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams, userSessions, GLOBALS, $ionicPopup) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -2422,72 +2500,126 @@ angular.module('starter.controllers', [])
             $state.go('app.sharedNotification');
         };
 
-        /*
-        $scope.nmessages = [{
-            Picture: "graduate.jpg",
-            Status: "unRead",
-            Subject: "Notification 1",
-            message: "School has won Math Olympaid Exam",
-            Timestamp: "Date: 18 Oct 2015",
-            Priority: "high"
-        }, {
-            Status: "Read",
-            Subject: "Notification 2",
-            message: "School has participated Math Olympaid Exam",
-            Timestamp: "Date: 17 Oct 2015",
-            Priority: "medium"
-        }, {
-            Picture: "education-bg.jpg",
-            Status: "Read",
-            Subject: "Notification 3",
-            message: "The Attendance is Compulsary",
-            Timestamp: "Date: 15 Oct 2015",
-            Priority: "high"
-        },{
-            Picture: "graduate.jpg",
-            Status: "unRead",
-            Subject: "Notification 1",
-            message: "School has won Math Olympaid Exam",
-            Timestamp: "Date: 18 Oct 2015",
-            Priority: "high"
-        }, {
-            Status: "Read",
-            Subject: "Notification 2",
-            message: "School has participated Math Olympaid Exam",
-            Timestamp: "Date: 17 Oct 2015",
-            Priority: "medium"
-        }, {
-            Picture: "education-bg.jpg",
-            Status: "Read",
-            Subject: "Notification 3",
-            message: "The Attendance is Compulsary",
-            Timestamp: "Date: 15 Oct 2015",
-            Priority: "high"
-        },{
-            Picture: "graduate.jpg",
-            Status: "unRead",
-            Subject: "Notification 1",
-            message: "School has won Math Olympaid Exam",
-            Timestamp: "Date: 18 Oct 2015",
-            Priority: "high"
-        }, {
-            Status: "Read",
-            Subject: "Notification 2",
-            message: "School has participated Math Olympaid Exam",
-            Timestamp: "Date: 17 Oct 2015",
-            Priority: "medium"
-        }, {
-            Picture: "education-bg.jpg",
-            Status: "Read",
-            Subject: "Notification 3",
-            message: "The Attendance is Compulsary",
-            Timestamp: "Date: 15 Oct 2015",
-            Priority: "high"
-        }];*/
         $scope.startEventTime = new Date();
         $scope.endEventTime = new Date();
+
+        $scope.eventdetailsList = $stateParams;
+
+        $scope.draftEventForPublish = function(eventId) {
+          var url = GLOBALS.baseUrl+"user/send-for-publish-event?token="+userSessions.userSession.userToken;
+          $http.post(url, {event_id: eventId, _method : 'PUT'})
+          .success(function(response){
+              if(response['status'] == 200){
+                         $scope.responseMessage = response['message'];
+                         $scope.showPopup();
+                         $state.go(app.eventlandingteacher);
+              } else {
+                      $scope.responseMessage = response['message'];
+                      $scope.showPopup();
+              }
+          }).error(function(err) {
+              $scope.responseMessage = "Something Went Worng!!!";
+              $scope.showPopup();
+          });
+        }
+
+        $scope.deleteEvent = function(eventId) {
+          var url = GLOBALS.baseUrl+"user/delete-event?token="+userSessions.userSession.userToken;
+          $http.post(url, {event_id: eventId, _method : 'PUT'})
+          .success(function(response){
+              if(response['status'] == 200){
+                         $scope.responseMessage = response['message'];
+                         $scope.showPopup();
+                         $state.go(app.eventlandingteacher);
+              } else {
+                      $scope.responseMessage = response['message'];
+                      $scope.showPopup();
+              }
+          }).error(function(err) {
+              $scope.responseMessage = "Something Went Worng!!!";
+              $scope.showPopup();
+          });
+        }
+
+        $scope.editEvent = function() {
+            $state.go('app.eventedit', {'obj' : $stateParams});
+        }
+
+        $scope.showPopup = function() {
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div>'+$scope.responseMessage+'</div>',
+                title: '',
+                subTitle: '',
+                scope: $scope
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); //close the popup after 3 seconds for some reason
+            }, 3000);
+        }
     })
-    .controller('CreateEventCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
+
+    .controller('EditEventCtrl', function($scope, $state, $filter, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
+
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+
+        // Set Header
+        $scope.$parent.hideHeader();
+
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+
+        //Side-Menu
+
+        $ionicSideMenuDelegate.canDragContent(true);
+
+        $scope.noticeBoard = function() {
+            $state.go('app.sharedNotification');
+        };
+
+        $scope.eventData = $stateParams.obj;
+        $scope.startEventTime = new Date();
+        $scope.endEventTime = new Date();
+        $scope.minDate = new Date();
+        $scope.eventTitle = null
+        $scope.eventDetail = null;
+        $scope.eventImage = null;
+        $scope.responseMessage = null;
+        $scope.statusEvent = 0;
+
+        alert("start Time : " + $scope.startEventTime);
+
+        angular.forEach($scope.eventData, function (event) {
+          $scope.eventTitle = event.title;
+          $scope.eventDetail = event.detail;
+          $scope.eventImage = event.path;
+          $scope.statusEvent = 0;
+          $scope.startEventTime = $filter('date')(event.start_date, "yyyy-MM-dd");
+          $scope.endEventTime = $filter('date')(event.end_date, "yyyy-MM-dd");
+        });
+
+        alert("test 11 : " + $scope.startEventTime);
+
+        $scope.setEventTitle = function(title){
+          $scope.eventTitle = title;
+        }
+
+        $scope.setEventDetail = function(detail){
+          $scope.eventDetail = detail;
+        }
+
+        $scope.setImage = function(image){
+          $scope.eventImage = image;
+        }
+
+    })
+    .controller('CreateEventCtrl', function($filter, $scope, $state, GLOBALS, $timeout, $http, userSessions, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -2508,7 +2640,87 @@ angular.module('starter.controllers', [])
         };
         $scope.startEventTime = new Date();
         $scope.endEventTime = new Date();
+        $scope.minDate = new Date();
+        $scope.eventTitle = null
+        $scope.eventDetail = null;
+        $scope.eventImage = null;
+        $scope.responseMessage = null;
+        $scope.statusEvent = 0;
 
+        $scope.setEventTitle = function(title){
+          $scope.eventTitle = title;
+        }
+
+        $scope.setEventDetail = function(detail){
+          $scope.eventDetail = detail;
+        }
+
+        $scope.setImage = function(image){
+          $scope.eventImage = image;
+        }
+
+        $scope.publishEvent = function() {
+          $scope.statusEvent = 1;
+          $scope.craeteEventWithPublishAndDraft($scope.statusEvent); //ststus  = 0 => Draft
+        }
+
+        $scope.saveAsDraftEvent  = function() {
+            $scope.statusEvent = 0;
+            $scope.craeteEventWithPublishAndDraft($scope.statusEvent); //ststus  = 1 => Send for approval : pending
+        }
+
+
+      $scope.craeteEventWithPublishAndDraft = function(statusEvent) {
+        if($scope.eventTitle == "" || $scope.eventDetail == "" || $scope.startEventTime == "" || $scope.endEventTime == ""){
+                if($scope.eventTitle == ""){
+                    $scope.responseMessage = "Please Add Title";
+                }
+                if($scope.eventDetail == ""){
+                    $scope.responseMessage = "Please Add Description";
+                }
+                if($scope.startEventTime == ""){
+                    $scope.responseMessage = "Please Add Start time";
+                }
+                if($scope.endEventTime == ""){
+                    $scope.responseMessage = "Please Add End time";
+                }
+                $scope.showPopup();
+        } else {
+          $scope.startEventTime = $filter('date')($scope.startEventTime, "yyyy-MM-dd");
+          $scope.endEventTime = $filter('date')($scope.endEventTime, "yyyy-MM-dd");
+          var url = GLOBALS.baseUrl+"user/create-event?token="+userSessions.userSession.userToken;
+          $http.post(url, {title: $scope.eventTitle, detail: $scope.eventDetail, start_date: $scope.startEventTime, end_date: $scope.endEventTime, image: $scope.eventImage, status:statusEvent})
+          .success(function(response){
+              if(response['status'] == 200){
+                         $scope.responseMessage = response['message'];
+                         $scope.showPopup();
+                         $state.go(app.eventlandingteacher);
+              } else {
+                      $scope.responseMessage = response['message'];
+                      $scope.showPopup();
+              }
+          }).error(function(err) {
+              $scope.responseMessage = "Something Went Worng!!!";
+              $scope.showPopup();
+          });
+        }
+      }
+
+      $scope.showPopup = function() {
+          // An elaborate, custom popup
+          var myPopup = $ionicPopup.show({
+              template: '<div>'+$scope.responseMessage+'</div>',
+              title: '',
+              subTitle: '',
+              scope: $scope
+          });
+          myPopup.then(function(res) {
+              console.log('Tapped!', res);
+          });
+          $timeout(function() {
+              myPopup.close(); //close the popup after 3 seconds for some reason
+          }, 3000);
+      }
     })
     .controller('ViewEventsCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 

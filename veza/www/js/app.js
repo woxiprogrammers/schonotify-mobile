@@ -331,6 +331,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
         })
         .state('app.detaileventparent', {
             url: '/detaileventparent',
+            params: {
+              obj: null
+            },
             views: {
                 'menuContent': {
                     templateUrl: 'templates/detail-event-parent.html',
@@ -528,6 +531,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
         })
         .state('app.eventedit', {
             url: '/eventedit',
+            params: {
+              'obj': null
+            },
             views: {
                 'menuContent': {
                     templateUrl: 'templates/event-edit.html',

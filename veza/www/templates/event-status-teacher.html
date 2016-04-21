@@ -20,7 +20,7 @@
 
     <div class="bar bar-event bar-header align-delete-bar">
         <iion-item class="row">
-            <div class="row">
+            <div class="row" ng-repeat="event in eventdetailsList">
                 <div class="col col-10">
                     <button class="button-clear" ng-click="myGoBack()">
                         <i class="ion-arrow-left-c button-back-white"></i>
@@ -29,16 +29,17 @@
                 <div class="col col-50 margin-top-5">
                     <span class="inner-header">Events Details</span>
                 </div>
-                <div class="col-20" ng-click="publishEvent()">
-                    <button class="button-balanced header-approve">
+                <div class="col-20" ng-if="event.status == 'Draft'">
+                  <a ng-click="draftEventForPublish(event.id)"><button class="button-balanced header-approve" >
                      Publish
                     </button>
+                  </a>
                 </div>
-                <div class="col-10">
-                    <a ng-click="deleteEvent()"><i class="icon ion-android-delete align-delete-bin"></i></a>
+                <div class="col-10" ng-if="event.status == 'Draft'">
+                    <a ng-click="deleteEvent(event.id)"><i class="icon ion-android-delete align-delete-bin"></i></a>
                 </div>
-                <div class="col-10">
-                    <a ui-sref="app.eventedit"><i class="icon ion-edit align-delete-bin"></i></a>
+                <div class="col-10" ng-if="event.status == 'Draft'">
+                    <a ng-click="editEvent()"><i class="icon ion-edit align-delete-bin"></i></a>
                 </div>
             </div>
         </iion-item>
@@ -81,7 +82,7 @@
                    <span><strong>Event To : </strong> {{event.end_date}}</span>
                  </div>
                  <div class="item item-body">
-                    <img class="full-image" src="http://test.woxiapps.com{{event.path}}">
+                    <img class="full-image" src="{{event.path}}">
                  </div>
                  <div class="item item-text-wrap">
                     <span>{{event.detail}}</span>
@@ -90,7 +91,7 @@
                     <h3>
                       <span>
                         <i>Published by <strong>{{event.published_by}}</strong> on
-                          <strong> 10 Apr 2016  2:02pm</strong>
+                          <strong> {{event.published_at}}</strong>
                         </i>
                       </span>
                     </h3>

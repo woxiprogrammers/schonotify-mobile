@@ -33,8 +33,10 @@
                      Publish
                     </button>
                 </div>
-                <div class="col-10">
-                    <a><i class="icon ion-android-send align-delete-bin"></i></a>
+                <div class="col-10" ng-click="saveAsDraftEvent()">
+                    <a>
+                      <i class="icon ion-android-send align-delete-bin"></i>
+                    </a>
                 </div>
             </div>
         </iion-item>
@@ -45,27 +47,27 @@
             <div class="list">
                <label class="item item-input item-floating-label">
                <span class="input-label">Title : </span>
-               <input id="eventTitle" type="text" placeholder="Write Event title here">
+               <input id="eventTitle" ng-model="eventTitle" type="text" placeholder="Write Event title here" ng-change="setEventTitle(eventTitle)">
                </label>
 
                <label class="item item-input item-floating-label">
                <span class="input-label">Event description : </span>
-               <input id="eventDescription" type="text" placeholder="Write Event description here">
+                      <textarea ng-model="eventDetail" placeholder="Write Event description here" rows = "7" ng-change="setEventDetail(eventDetail)"></textarea>
                </label>
 
                <div class="row item">
                    <div class="col-33 padding-top-10 date-bg"><h3 class="margin-left-1">Start Date : </h3></div>
-                   <input id="startEventTime" class="item-input col-67" type="date" ng-model="startEventTime">
+                   <input id="startEventTime" class="item-input col-67" type="date" ng-model="startEventTime" value="{{startEventTime}}" min="{{minDate}}">
                </div>
 
                <div class="row item">
                   <div class="col-33 padding-top-10 date-bg"><h3 class="margin-left-1">End Date : </h3></div>
-                    <input id="endEventTime" class="item-input col-67" type="date" ng-model="endEventTime">
+                    <input id="endEventTime" class="item-input col-67" type="date" ng-model="endEventTime" value="{{endEventTime}}" min="{{minDate}}">
                   </div>
               </div>
               <div class="row item">
                 <div class="col-33 padding-top-10 date-bg"><h2 class="margin-left-2">Upload Image:</h2></div>
-                <input class="item-input col-67" type="file">
+                <input class="item-input col-67" type="file" ng-model="eventImage" ng-change="setImage(eventImage)">
             </div>
           </div>
         </div>

@@ -26,7 +26,7 @@
                         <i class="ion-arrow-left-c button-back-white"></i>
                     </button>
                 </div>
-                <div class="col col-90 margin-top-5">
+                <div class="col margin-top-5">
                     <span class="inner-header">Events Details</span>
                 </div>
             </div>
@@ -36,37 +36,38 @@
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-40">
         <div class="row">
             <div class="col">
-              <div class="card">
+              <div class="card" ng-repeat="event in eventdetailsList">
                  <div class="item item-text-wrap">
-                    <span class="pull-right">
-                        <button ng-class='{ display-no: clickStatus}' class="button button-balanced status-button" ng-disabled="clickStatus" >
-                           Publish
-                         </button>
-                    </span><br>
-                    <h2><strong>Event title goes here</strong></h2>
+                   <span class="pull-right">
+                     <button ng-class='{ display-no: clickStatus}' class="button button-balanced status-button" ng-disabled="clickStatus" >
+                           {{event.status}}
+                     </button>
+                   </span>
+                    <br>
+                    <h2><strong>{{event.title}}</strong></h2>
                     <h3>
                       <span>
-                        <i>Created by <strong>Firstname Lastname</strong> on
-                          <strong> 10 Apr 2016  2:02pm</strong>
+                        <i>Created by <strong>{{event.created_by}}</strong> on
+                          <strong> {{event.created_at}}</strong>
                         </i>
                       </span>
                     </h3>
                   </div>
                  <div class="item item-text-wrap">
-                   <span><strong>Event From : </strong> 28/02/2016</span><br>
-                   <span><strong>Event To : </strong> 28/02/2016</span>
+                   <span><strong>Event From : </strong> {{event.start_date}}</span><br>
+                   <span><strong>Event To : </strong> {{event.end_date}}</span>
                  </div>
                  <div class="item item-body">
-                    <img class="full-image" src="http://www.woxiprogrammers.com/wp-content/uploads/2015/11/woxi-logo1.png">
+                    <img class="full-image" src="{{event.path}}">
                  </div>
                  <div class="item item-text-wrap">
-                    <span>Event Desc goes over here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget pharetra tortor. Proin quis eros imperdiet, facilisis nisi in, tincidunt orci. Nam tristique elit massa, quis faucibus augue finibus ac.This is a Ionic card without item-text-wrap class.</span>
+                    <span>{{event.detail}}</span>
                  </div>
-                 <div class="item item-text-wrap">
+                 <div class="item item-text-wrap" ng-if="event.status == 'Published'">
                     <h3>
                       <span>
-                        <i>Published by <strong>Firstname Lastname</strong> on
-                          <strong> 10 Apr 2016  2:02pm</strong>
+                        <i>Published by <strong>{{event.published_by}}</strong> on
+                          <strong> {{event.published_at}}</strong>
                         </i>
                       </span>
                     </h3>
