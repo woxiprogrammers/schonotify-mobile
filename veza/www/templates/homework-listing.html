@@ -24,7 +24,12 @@
                     <ion-checkbox class="checkbox-square checkboxList checkbox-assertive inner-hw-checkbox" ng-model="selectedAll" ng-click="checkAll()">
                     </ion-checkbox>
                 </div>-->
-                <div class="margin-top-5">
+                <div class="col-10"  ng-click="myGoBack()">
+                    <button class="button-clear">
+                        <i class="ion-arrow-left-c button-back-white"></i>
+                    </button>
+                </div>
+                <div class="col-90 margin-top-5">
                     <span class="inner-header">Homework</span>
                 </div>
                 <!--<div class="col-25">
@@ -37,9 +42,9 @@
         <ion-list>
             <ion-item class="notify-item-border no-border margin-bottom-10" ng-repeat="hw in homeworksListing">
                 <div class="row">
-                    <div class="col-80" ng-click="hwDetail(hw)">
+                    <div class="col-80" ng-class='{ disabled: clickStatus}' ng-click="clickStatus || hwDetail(hw)">
                         <h2><strong>{{hw.homeworkTitle}}</strong></h2>
-                        <p>{{hw.description}}<br><strong>{{hw.class_name}} {{hw.division_name}} Div {{hw.subjectName}}</strong></p>
+                        <p>{{hw.description}}<br><strong>{{hw.batch_name}} {{hw.class_name}} {{hw.division_name}} {{hw.subjectName}}</strong></p>
                         <div class="row padding-0 margin-top-5">
                             <div class="col-15">{{hw.created_at}}</div>
                             <div class="col-10 col-offset-75 attachment-no"></div>                            

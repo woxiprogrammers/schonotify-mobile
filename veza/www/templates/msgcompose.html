@@ -60,8 +60,8 @@
                     </select>
                 </div>
             </div>
-            <label class="item item-input border-bottom">
-                <input type="text" ng-model="recipient" placeholder="Add Recipient+ " value="{{recipient}}" ng-click="openModal()" ng-disabled="checkRecipient">
+            <label class="item item-input border-bottom" ng-click="openModal()" ng-model="recipient" ng-disabled="checkRecipient">
+                {{recipient}}
             </label>
              <label class="item item-input">
                 <textarea ng-model="message" placeholder = "Write {{recipient}} a message..." rows = "10" ng-change="setMessage(message)"></textarea>
@@ -75,7 +75,7 @@
 <script id="studentCntctlist.html" type="text/ng-template">
     <div class="modal">
         <div class="modal-view">
-            <ion-header-bar class="bar-calm">
+            <ion-header-bar class="bar-cool">
                 <div class="row">
                     <div class="col-80">
                         <h3 class="modal-title">Select Recipient</h3>
@@ -90,11 +90,12 @@
                     <ion-item class="contact-list no-border" ng-repeat="contct in contactList">
                         <div class="row" ng-click="selectRecipient(contct.name, contct.id)">
                             <div class="col-75">
-                                <h2><strong>{{contct.name}}</strong></h2>
+                                <strong>{{contct.name}}</strong>
                             </div>
                         </div>
                     </ion-item>
                 </div>
+                <div class = "height-bottom-10 row"></div>
             </ion-content>
         </div>
     </div>

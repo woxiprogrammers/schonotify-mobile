@@ -52,8 +52,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
         $translateProvider.preferredLanguage('en');
         $translateProvider.useSanitizeValueStrategy('escape');
 
-    $stateProvider
-
+    $stateProvider    
     .state('login', {
         url: '/login',
         templateUrl: 'templates/login.html',
@@ -314,6 +313,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                 }
             }
         })
+        .state('app.leavecreate', {
+            url: '/leavecreate',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/create-leave.html',
+                    controller: 'CreateLeaveCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
         .state('app.viewevents', {
             url: '/viewevents',
             views: {
@@ -343,7 +354,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
             views: {
                 'menuContent': {
                     templateUrl: 'templates/approved-leaves.html',
-                    controller: 'ViewLeaveApprovalCtrl'
+                    controller: 'ViewLeaveApprovedCtrl'
                 },
                 'fabContent': {
                     template: ''
@@ -427,7 +438,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
             views: {
                 'menuContent': {
                     templateUrl: 'templates/leave-details.html',
-                    controller: 'DetailPageCtrl'
+                    controller: 'LeaveDetailCtrl'
                 },
                 'fabContent': {
                     template: ''
@@ -439,7 +450,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
             views: {
                 'menuContent': {
                     templateUrl: 'templates/leave-approved-details.html',
-                    controller: 'ViewLeaveApprovalCtrl'
+                    controller: 'LeaveDetailCtrl'
                 },
                 'fabContent': {
                     template: ''
@@ -540,78 +551,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                 }
             }
         })
-        .state('app.timetable.defaulttimetable', {
-            url: "/defaulttimetable",
+        .state('app.parentattendancelanding', {
+            url: '/parentattendancelanding',
             views: {
-                'default-tab': {
-                    templateUrl: "templates/default-timetable.html",
-                    controller: 'TimeTableCtrl'
+                'menuContent': {
+                    templateUrl: 'templates/attendance-landing-parent.html',
+                    controller: ''
+                },
+                'fabContent': {
+                    template: '<button id="fab-leave-button" ng-click="createLeave()" class="button button-fab button-fab-bottom-right expanded bar-orange  spin"><i class="icon ion-edit"></i></button>', 
+                    controller: function ($timeout) {
+                        $timeout(function () {
+                            document.getElementById('fab-leave-button').classList.toggle('on');
+                        }, 900);
+                    }
                 }
             }
-        })
-        .state('app.timetable.mondaytimetable', {
-            url: "/mondaytimetable",
-            views: {
-                'changeView-tab': {
-                    templateUrl: "templates/monday-timetable.html",
-                    controller: 'TimeTableCtrl'
-                }
-            }
-        })
-        .state('app.timetable.tuesdaytimetable', {
-            url: "/tuesdaytimetable",
-            views: {
-                'changeView-tab': {
-                    templateUrl: "templates/tuesday-timetable.html",
-                    controller: 'TimeTableCtrl'
-                }
-            }
-        })
-        .state('app.timetable.wednesdaytimetable', {
-            url: "/wednesdaytimetable",
-            views: {
-                'changeView-tab': {
-                    templateUrl: "templates/wednesday-timetable.html",
-                    controller: 'TimeTableCtrl'
-                }
-            }
-        })
-        .state('app.timetable.thursdaytimetable', {
-            url: "/thursdaytimetable",
-            views: {
-                'changeView-tab': {
-                    templateUrl: "templates/thursday-timetable.html",
-                    controller: 'TimeTableCtrl'
-                }
-            }
-        })
-        .state('app.timetable.fridaytimetable', {
-            url: "/fridaytimetable",
-            views: {
-                'changeView-tab': {
-                    templateUrl: "templates/friday-timetable.html",
-                    controller: 'TimeTableCtrl'
-                }
-            }
-        })
-        .state('app.timetable.saturdaytimetable', {
-            url: "/saturdaytimetable",
-            views: {
-                'changeView-tab': {
-                    templateUrl: "templates/saturday-timetable.html",
-                    controller: 'TimeTableCtrl'
-                }
-            }
-        })
-        .state('app.timetable.sundaytimetable', {
-            url: "/sundaytimetable",
-            views: {
-                'changeView-tab': {
-                    templateUrl: "templates/sunday-timetable.html",
-                    controller: 'TimeTableCtrl'
-                }
-            }
-        })
+        })        
         .state('app.resultview', {
             url: '/resultview',
             views: {

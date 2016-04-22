@@ -11,7 +11,7 @@
                 <a class="tab-item margin-top-10" ui-sref="app.dashboard">
                     <i class="icon ion-homie"></i>
                 </a>
-                <a class="tab-item margin-top-10">
+                <a class="tab-item margin-top-10" ui-sref="app.message">
                     <i class="icon ion-message"><span class="badge badge-assertive"></span></i>
                 </a>
             </div>
@@ -73,7 +73,7 @@
                 </div>
               </div>         
             <label class="item item-input">Due Date:
-                 <input class="item-input border-bottom padding-5" ng-model ="dueDate" type="date" value= {{dueDate}}>
+                 <input class="item-input border-bottom padding-5" ng-model ="dueDate" type="date" value= {{dueDate}} min="{{minDate}}" ng-change="updateDueDate(dueDate)">
             </label>
             <label class="item item-input border-bottom" ng-click="openModal()" ng-model="recipient">
                 {{recipient}}
@@ -97,29 +97,30 @@
             </ion-header-bar>
             <ion-content has-bouncing="true">
                 <div class="list">
-                    <!--<ion-item class="contact-list">
-                        <div class="row" ng-click="checkAll()">
+                    <ion-item class="contact-list">
+                        <div class="row">
                             <div class="col-25">
-                                <ion-checkbox class="checkbox checkbox-assertive" ng-model="selectedAll">
+                                <ion-checkbox class="checkbox checkbox-assertive" ng-model="selectedAll" ng-click="checkAll()">
                                 </ion-checkbox>
                             </div>
-                            <div class="col-75">
-                                <h2><strong>Select All</strong></h2>
-                            </div>
-                        </div>
-                    </ion-item>-->
-                    <ion-item class="contact-list" ng-repeat="item in contactList">
-                        <div class="row" ng-click="toggleSelection(item.id)">
-                            <div class="col-25">
-                                <ion-checkbox class="checkbox checkbox-assertive" ng-model="item.Selected" id="{{item.name}}" value="{{item.id}}" ng-checked="selection.indexOf(item.id) > -1">
-                                </ion-checkbox>
-                            </div>
-                            <div class="col-75">
-                                <h2 class = "margin-top-10"><strong>{{item.name}}</strong></h2>
+                            <div class="col-75 margin-top-5">
+                                <strong>Select All</strong>
                             </div>
                         </div>
                     </ion-item>
+                    <ion-item class="contact-list" ng-repeat="item in contactList">
+                        <div class="row" ng-click="toggleSelection(item.id)">
+                            <div class="col-25">
+                                <ion-checkbox class="checkbox checkbox-assertive" ng-model="item.Selected" id="{{item.name}}" value="{{item.id}}" ng-checked="selectedList.indexOf(item.id) > -1">
+                                </ion-checkbox>
+                            </div>
+                            <div class="col-75 margin-top-5">
+                                <h2 class = "margin-top-10"><strong>{{item.name}}</strong></h2>
+                            </div>
+                        </div>
+                    </ion-item>                    
                 </div>
+                <div class = "height-15 row"></div>
             </ion-content>
             <div class="bar bar-footer modal-bottom no-border">
                 <div class="row">
