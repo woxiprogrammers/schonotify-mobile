@@ -12,7 +12,7 @@
                     <i class="icon ion-homie"></i>
                 </a>
                 <a class="tab-item margin-top-10" ui-sref="app.message">
-                    <i class="icon ion-message"><span class="badge badge-assertive">1</span></i>
+                    <i class="icon ion-message"><span class="badge badge-assertive"></span></i>
                 </a>
             </div>
         </div>
@@ -34,7 +34,7 @@
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
         <ion-list>
             <ion-item class="notify-item-border">
-                <a class="item" ui-sref="app.edithomeworklisting">
+                <a class="item" ng-click="unPublishList()">
                     <div class="col-90 col-offset-10">
                         <h2><strong>Create / Edit Homework</strong></h2><br>
                         <p>Create, Edit and Publish Homework</p>

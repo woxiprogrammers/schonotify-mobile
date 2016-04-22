@@ -1,5 +1,5 @@
 <ion-view view-title="Message Chat" name="msghistory" class="touch-effect">
-    <div class="row padding-0">
+   <div class="row padding-0">
         <div class="tabs-striped tabs-color-positive tabs-top">
             <div class="tabs tab-align-inner">
                 <a class="tab-item margin-top-0">
@@ -12,7 +12,7 @@
                     <i class="icon ion-homie"></i>
                 </a>
                 <a class="tab-item margin-top-10" ui-sref="app.message">
-                    <i class="icon ion-message"><span class="badge badge-assertive">1</span></i>
+                    <i class="icon ion-message"><span class="badge badge-assertive"></span></i>
                 </a>
             </div>
         </div>
@@ -26,33 +26,36 @@
                     </button>
                 </div>
                 <div class="col-90">
-                    <div class="inner-header font-white margin-top-5"><span>Student Name 5th B</span></div>
+                    <div class="inner-header font-white margin-top-5"><span>{{title}}</span></div>
                 </div>
             </div>
         </iion-item>
     </div>
-    <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
-        <div class="bubbledRight no-border">
-            Error dicunt theophrastus cu qui. Ad eos simul possit option, adipisci principes sed at. Detracto adolescens pro ea, duo noLorem ipsum dolor sit amet, ea oblique constituam signiferumque eam. Pri adipisci maluisset te.Lorem ipsum dolor sit amet, ea oblique constituam signiferumque eam. Pri adipisci maluisset te.Lorem ipsum dolor sit amet, ea oblique constituam signiferumque eam. Pri adipisci maluisset te.<br><small class="msg-timestamp">Jun 11 10:48 am</small>
+    <ion-content has-bouncing="true" class="has-header has-footer margin-top-48 padding-l-r-5" 
+              delegate-handle="userMessageScroll">
+        <div ng-repeat = "message in messageList">
+            <div class="bubbledLeft no-border" ng-if="message.type == 'Receive'">
+                    {{message.description}}
+                <br><small class="msg-timestamp">{{message.timestamp}}</small>
+            </div>
+            <div class="bubbledRight no-border" ng-if="message.type == 'Sent'">
+                    {{message.description}}
+                <br>
+                <small class="msg-timestamp">{{message.timestamp}}</small>
+            </div>            
         </div>
-        <div class="bubbledLeft no-border">
-            Lorem ipsum dolor sit amet, ea oblique constituam signiferumque eam. Pri adipisci maluisset te.<br><small class="msg-timestamp">Jun 11 10:50 am</small>
-        </div>
-        <div class="bubbledRight no-border">
-            Error dicunt theophrastus cu qui.<br><small class="msg-timestamp">Jun 11 10:55 am</small>
-        </div>
+        <div class = "height-bottom-10 row"></div>       
     </ion-content>
-
     <ion-footer-bar keyboard-attach class="bar-stable footer-chat item-input-inset">
         <div class="row">
             <div class="col-90">
                 <div class="item item-input-inset">
                     <label class="item-input-wrapper">
-                        <input type="text" size="160" placeholder="Send Message">
+                        <input type="text" size="160" placeholder="Send Message" ng-model="message">
                     </label>
                 </div>
             </div>
-            <div class="col-10 send-button"><i class="icon ion-android-send font-175"></i></div>
+            <div class="col-10 send-button" ng-click="sendMessage()"><i class="icon ion-android-send font-175"></i></div>
         </div>
     </ion-footer-bar>
 </ion-view>

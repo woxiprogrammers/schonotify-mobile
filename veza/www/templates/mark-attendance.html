@@ -12,78 +12,58 @@
                     <i class="icon ion-homie"></i>
                 </a>
                 <a class="tab-item margin-top-10" ui-sref="app.message">
-                    <i class="icon ion-message"><span class="badge badge-assertive">1</span></i>
+                    <i class="icon ion-message"><span class="badge badge-assertive"></span></i>
                 </a>
             </div>
         </div>
     </div>
     <div class="bar bar-orange bar-header align-delete-bar">
         <iion-item class="row">
-            <div class="row">
+            <div class="row"  ng-click="myGoBack()">
                 <div class="col-10">
-                    <button class="button-clear" ng-click="myGoBack()">
+                    <button class="button-clear">
                         <i class="ion-arrow-left-c button-back-white"></i>
                     </button>
                 </div>
                 <div class="col-90 margin-top-5">
-                    <span class="inner-header">Mark Attendance</span>
+                    <span class="inner-header">{{currentBatch}} {{currentClass}} {{currentDiv}}</span>
                 </div>
             </div>
         </iion-item>
     </div>
-    <div class="row margin-top-100 no-border">
-        <div class="col-33">
-            <select class="item item-input item-select border-none">
-                <option selected class="padding-top-5">Batch</option>
-                <option class="padding-top-5">Morning</option>
-                <option class="padding-top-5">Afternoon</option>
-                <option class="padding-top-5">Evening</option>
-            </select>
+    <div class="item margin-top-100 item-borderless">
+        <div class="row">
+            <div class="col-20 padding-top-10 date-bg"><h2 class="margin-left-2">Date:</h2></div>
+            <input class="item-input col-80" type="date" ng-model="currentDate" ng-change="getStudentList()">
         </div>
-        <div class="col-33">
-            <select class="item item-input item-select border-none">
-                <option selected class="padding-top-5">Class</option>
-                <option class="padding-top-5">Class I</option>
-                <option class="padding-top-5">Class II</option>
-                <option class="padding-top-5">Class III</option>
-            </select>
-        </div>
-        <div class="col-33">
-            <select class="item item-input item-select border-none">
-                <option selected class="padding-top-5">Div</option>
-                <option class="padding-top-5">Div A</option>
-                <option class="padding-top-5">Div B</option>
-                <option class="padding-top-5">Div C</option>
-            </select>
+        <div class="row">
+            <div class="col-20 margin-top-10 item-borderless">
+                <strong>No.</strong>
+            </div>
+            <div class="margin-top-10 col-80 item-borderless">
+                <strong>Names</strong>
+            </div>
         </div>
     </div>
-    <div class="row no-border item margin-top-5">
-        <div class="col-20 padding-top-10 date-bg"><h2 class="margin-left-2">Date:</h2></div>
-        <input class="item-input col-90" type="date" ng-model="selectedDate">
-    </div>
-    <div class="row header bar row">
-        <div class="col-10 item-borderless margin-top-10 margin-left-2">
-            <strong>No.</strong>
+    <ion-content ng-class="{expanded:$scope.isExpanded}" class="padding-l-r-5 margin-top-150">
+        <div class="list">
+            <div class= "item" ng-repeat="item in studentList">
+                <div class="col-90">
+                    <div class="row" id="{{item.name}}" value="{{item.id}}" ng-checked="selection.indexOf(item.id) > -1" ng-if="item.leave_status == 0"><div class="col-20">{{item.roll_number}}</div><div class="col-80">{{item.name}}</div></div>
+                    <div class="row" id="{{item.name}}" value="{{item.id}}" ng-checked="selection.indexOf(item.id) > -1" ng-if="item.leave_status == 1"><div class="col-20">{{item.roll_number}}</div><div class="col-80">{{item.name}} Applied</div></div>
+                    <div class="row" id="{{item.name}}" value="{{item.id}}" ng-checked="selection.indexOf(item.id) > -1" ng-if="item.leave_status == 2"><div class="col-20">{{item.roll_number}}</div><div class="col-80">{{item.name}} Approved</div></div>
+                </div>
+                <div class="col-10 padding-5 mark-{{item.absent_status}}"  id="check{{item.id}}" ng-click="toggleCheck($event, item.id)"></div>
+            </div>
         </div>
-        <div class="margin-top-10 item-borderless margin-left-2 col-90">
-            <strong>Names</strong>
-        </div>
-    </div>
-    <ion-content ng-class="{expanded:$scope.isExpanded}" class="padding-l-r-5 margin-top-140">
-        <div class="list scroll margin-top-70">
-            <ion-item class="contact-list row" ng-repeat="contct in contactList">
-                    <div class="col-10 padding-5"><h2>{{contct.id}}</h2></div>
-                    <div class="col-80 padding-5"><h2>{{contct.Name}}</h2></div>
-                    <div class="col-10 mark-check padding-5" id="check{{contct.id}}" ng-click="toggleCheck($event)"></div>
-            </ion-item>
-        </div>
+        <div class = "height-15 row"></div>
     </ion-content>
     <div class="bar bar-footer modal-bottom no-border">
         <div class="row">
-            <div class="col-25 col-offset-50 text-center">
+            <div class="col-25 col-offset-50 text-center" ng-click="getStudentList()">
                 <label class="modal-bottom-text-orange">CANCEL</label>
             </div>
-            <div class="col-25  text-center">
+            <div class="col-25  text-center" ng-click="markAttendance()">
                 <label class="modal-bottom-text-orange">OK</label>
             </div>
         </div>

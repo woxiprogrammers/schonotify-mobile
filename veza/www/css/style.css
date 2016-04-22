@@ -207,8 +207,11 @@ display: none;
 }
 
 .bar-yellow{
-    background-color: #ffe502;
+    background-color: #44C9D2;
     color: #ffffff;
+}
+.background-break{
+    background-color: #F5C8D4;
 }
 .approve-button{
     font-size: 14px;
@@ -259,6 +262,25 @@ display: none;
 
 .margin-bottom-10{
     margin-bottom: 10px;
+}
+.margin-bottom-100{
+    margin-bottom: 100px;
+}
+.height-bottom-10{
+    height: 10px;
+}
+.delete-hw{
+    font-size: 175%;
+    float: left;
+    margin-left: 10%;
+    margin-top: 10%;
+}
+.delete-msg{
+    font-size: 175%;
+    float: right;
+    margin-right: 10%;
+    margin-top: 10%;
+    color: #11c1f3;
 }
 
 .col-offset-17{
@@ -330,6 +352,9 @@ display: none;
     font-weight: bold;
 }
 
+.disabled {
+  color: gray;  
+}
 .hero.no-header {
     height: 0px!important;    
 }
@@ -404,12 +429,16 @@ display: none;
     color: #444444;
 }
 
+.font-white{
+  color: white;  
+}
+
 .align-delete-bin {
     font-size: 160%;
-   // margin-left: 48px;
     float: right;
     margin-right: 28%;
     margin-top: 0%;
+    color: white;
 }
 
 .margin-left-16{
@@ -450,28 +479,28 @@ display: none;
     padding-right: 5px;
 }
 
-.msg-Read p{
+.msg-1 p{
     color: #adabab;
 }
 
-.msg-Read i{
+.msg-1 i{
     color: #adabab;
 }
 
-.msg-Read small{
+.msg-1 small{
     color: #a8a4a4;
 }
 
-.msg-Read strong{
+.msg-1 strong{
     color: black;
     font-weight: 100!important;
 }
 
-.msg-unRead p{
+.msg-0 p{
     color: black;
 }
 
-.msg-unRead strong{
+.msg-0 strong{
     color: black;
     font-weight: bold;
 }
@@ -735,7 +764,6 @@ display: none;
 }
 
 .logo-align{
-    width: 100%;
     margin-top: 20%;
     z-index: 1;
 }
@@ -842,14 +870,16 @@ display: none;
 }
 
 .contact-list{
-    padding: 10px!important;
+    padding: 0px!important;
     min-height: 0px!important;
 }
 
 .modal-checkbox {
     margin-left: 30%;
 }
-
+.margin-top-150{
+    margin-top: 150px;
+}
 .padding-top-5{
     padding-top: 5px;
 }
@@ -861,14 +891,11 @@ display: none;
 .width-5{
     width: 5%;
 }
-.inner-hw-checkbox{
-
-}
 
 .bar-pink {
-    border-color: #f210aa;
-    background-color: #f747c2;
-    background-image: linear-gradient(0deg, #f210aa, #f210aa 50%, transparent 50%);
+    border-color: #FF7182;
+    background-color: #FF7182;
+    background-image: linear-gradient(0deg, #FF7182, #FF7182 50%, transparent 50%);
     color: #fff;
 }
 
@@ -1011,18 +1038,36 @@ display: none;
    margin-top: 120px!important;
 }
 
-.mark-check{
+.mark-0{
     background: url('../img/attendance_true.png') center;
     clear: both;
     background-repeat: no-repeat;
     background-position: 50%;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 36px;
+    max-width: 40px;
+    max-height: 40px;
+    min-height: 30px;
+    width: 100%;
+    border-radius: 4px;
 }
 
-.mark-uncheck{
+.mark-1{
     background: url('../img/attendance_false.png') center;
     clear: both;
     background-repeat: no-repeat;
     background-position: 50%;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 36px;
+    max-width: 40px;
+    max-height: 40px;
+    min-height: 30px;
+    width: 100%;
+    border-radius: 4px;
 }
 
 .margin-left-2{
@@ -1048,12 +1093,21 @@ display: none;
 .display-no{
     display: none!important;
 }
+.visible-no{
+visibility: hidden;    
+}
+
 .padding-top-10{
     padding-top: 10px;
 }
 
 .font-175{
     font-size: 175%;
+}
+
+.attendance-list{
+    padding: 10px!important;
+    min-height: 0px!important;
 }
 
 .send-button{
@@ -1084,14 +1138,25 @@ display: none;
     margin-top: 36px;
 }
 
+.text-center-align{
+    text-align: center;
+}
+
 .red-font{
     color: red;
 }
-
+.blue-font{
+    color: skyblue;
+}
+.green-font{
+    color: green;
+}
 .margin-top-70 {
     margin-top: 70px!important;
 }
-
+.height-15{
+    height: 20px;
+}
 .view-attendance{
     width: 132px;
     margin-top: 10px;

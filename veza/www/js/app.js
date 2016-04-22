@@ -1,34 +1,22 @@
 // Ionic Starter App
+//Creator: Shantanu Acharya
 
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
+angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-material', 'highcharts-ng', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate'])
 
-var db = null;
-
-angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'highcharts-ng', 'ionic-material', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate'])
-
-.run(function($ionicPlatform, $cordovaSQLite) {
+.run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
-        // Hide the accessory bar by changeView (remove this to show the accessory bar above the keyboard
+        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            cordova.plugins.Keyboard.disableScroll(true);
         }
         if (window.StatusBar) {
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
-        db = $cordovaSQLite.openDB("veza.db");
-        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS users (id integer primary key autoincrement, user_id integer, username text, password text, role_type text, email text, avatar text, token varchar default null)");
-        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS acl_modules (id integer primary key autoincrement, user_id integer, acl_module text)");
-        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS parent_students (id integer primary key autoincrement, parent_id integer,student_id integer, student_name text, div_id integer)");
-        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS badge_counts (id integer primary key autoincrement, user_id integer,message_count integer, auto_notification_count integer)");
-        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS messages (id integer primary key autoincrement, from_id integer, to_id integer, description text, timestamp text, status integer)");
     });
  })
-
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $translateProvider) {
 
     // Turn off caching for demo simplicity's sake
@@ -64,8 +52,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'highcha
         $translateProvider.preferredLanguage('en');
         $translateProvider.useSanitizeValueStrategy('escape');
 
-    $stateProvider
-
+    $stateProvider    
     .state('login', {
         url: '/login',
         templateUrl: 'templates/login.html',
@@ -171,6 +158,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'highcha
               }
           }
      })
+     .state('app.parenthomework', {
+          url: '/parenthomework',
+          views: {
+             'menuContent': {
+                templateUrl: 'templates/parent-hw-list.html',
+                controller: 'ParentHomeworkCtrl'
+             },
+              'fabContent': {
+                  template: ''
+              }
+          }
+     })
      .state('app.hwcompose', {
             url: '/hwcompose',
             views: {
@@ -206,6 +205,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'highcha
                 'menuContent': {
                     templateUrl: 'templates/msgcompose.html',
                     controller: 'MsgComposeCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.parentMsgcompose', {
+            url: '/parentMsgcompose',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/parentmsgcompose.html',
+                    controller: 'ParentMsgComposeCtrl'
                 },
                 'fabContent': {
                     template: ''
@@ -302,6 +313,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'highcha
                 }
             }
         })
+        .state('app.leavecreate', {
+            url: '/leavecreate',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/create-leave.html',
+                    controller: 'CreateLeaveCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
         .state('app.viewevents', {
             url: '/viewevents',
             views: {
@@ -331,7 +354,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'highcha
             views: {
                 'menuContent': {
                     templateUrl: 'templates/approved-leaves.html',
-                    controller: 'ViewLeaveApprovalCtrl'
+                    controller: 'ViewLeaveApprovedCtrl'
                 },
                 'fabContent': {
                     template: ''
@@ -391,7 +414,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'highcha
             views: {
                 'menuContent': {
                     templateUrl: 'templates/homework-details.html',
-                    controller: 'DetailPageCtrl'
+                    controller: 'HWdetailCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+        .state('app.teacherhwdetail', {
+            url: '/teacherhwdetail',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/teacher-hw-detail.html',
+                    controller: 'THWdetailCtrl'
                 },
                 'fabContent': {
                     template: ''
@@ -403,7 +438,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'highcha
             views: {
                 'menuContent': {
                     templateUrl: 'templates/leave-details.html',
-                    controller: 'DetailPageCtrl'
+                    controller: 'LeaveDetailCtrl'
                 },
                 'fabContent': {
                     template: ''
@@ -415,7 +450,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'highcha
             views: {
                 'menuContent': {
                     templateUrl: 'templates/leave-approved-details.html',
-                    controller: 'ViewLeaveApprovalCtrl'
+                    controller: 'LeaveDetailCtrl'
                 },
                 'fabContent': {
                     template: ''
@@ -439,10 +474,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'highcha
             views: {
                 'menuContent': {
                     templateUrl: 'templates/homework-landing.html',
-                    controller: 'DetailPageCtrl'
+                    controller: ''
                 },
                 'fabContent': {
-                    template: ''
+                    template: '<button id="fab-new-homework" ng-click="composeHw()" class="button button-fab button-fab-bottom-right expanded bar-pink  spin"><i class="icon ion-edit"></i></button>',
+                    controller: function ($timeout) {
+                        $timeout(function () {
+                            document.getElementById('fab-new-homework').classList.toggle('on');
+                        }, 900);
+                    }
                 }
             }
         })
@@ -463,8 +503,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'highcha
             views: {
                 'menuContent': {
                     templateUrl: 'templates/edit-homework.html',
-                    controller: 'HomeworkCtrl'
-                },
+                    controller: 'UnpubHwListCtrl'
+                },               
                 'fabContent': {
                     template: '<button id="fab-new-homework" ng-click="composeHw()" class="button button-fab button-fab-bottom-right expanded bar-pink  spin"><i class="icon ion-edit"></i></button>',
                     controller: function ($timeout) {
@@ -480,7 +520,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'highcha
             views: {
                 'menuContent': {
                     templateUrl: 'templates/homework-edit.html',
-                    controller: 'DetailPageCtrl'
+                    controller: 'EditHomeworkCtrl'
                 },
                 'fabContent': {
                     template: ''
@@ -511,78 +551,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'highcha
                 }
             }
         })
-        .state('app.timetable.defaulttimetable', {
-            url: "/defaulttimetable",
+        .state('app.parentattendancelanding', {
+            url: '/parentattendancelanding',
             views: {
-                'default-tab': {
-                    templateUrl: "templates/default-timetable.html",
-                    controller: 'TimeTableCtrl'
+                'menuContent': {
+                    templateUrl: 'templates/attendance-landing-parent.html',
+                    controller: ''
+                },
+                'fabContent': {
+                    template: '<button id="fab-leave-button" ng-click="createLeave()" class="button button-fab button-fab-bottom-right expanded bar-orange  spin"><i class="icon ion-edit"></i></button>', 
+                    controller: function ($timeout) {
+                        $timeout(function () {
+                            document.getElementById('fab-leave-button').classList.toggle('on');
+                        }, 900);
+                    }
                 }
             }
-        })
-        .state('app.timetable.mondaytimetable', {
-            url: "/mondaytimetable",
-            views: {
-                'changeView-tab': {
-                    templateUrl: "templates/monday-timetable.html",
-                    controller: 'TimeTableCtrl'
-                }
-            }
-        })
-        .state('app.timetable.tuesdaytimetable', {
-            url: "/tuesdaytimetable",
-            views: {
-                'changeView-tab': {
-                    templateUrl: "templates/tuesday-timetable.html",
-                    controller: 'TimeTableCtrl'
-                }
-            }
-        })
-        .state('app.timetable.wednesdaytimetable', {
-            url: "/wednesdaytimetable",
-            views: {
-                'changeView-tab': {
-                    templateUrl: "templates/wednesday-timetable.html",
-                    controller: 'TimeTableCtrl'
-                }
-            }
-        })
-        .state('app.timetable.thursdaytimetable', {
-            url: "/thursdaytimetable",
-            views: {
-                'changeView-tab': {
-                    templateUrl: "templates/thursday-timetable.html",
-                    controller: 'TimeTableCtrl'
-                }
-            }
-        })
-        .state('app.timetable.fridaytimetable', {
-            url: "/fridaytimetable",
-            views: {
-                'changeView-tab': {
-                    templateUrl: "templates/friday-timetable.html",
-                    controller: 'TimeTableCtrl'
-                }
-            }
-        })
-        .state('app.timetable.saturdaytimetable', {
-            url: "/saturdaytimetable",
-            views: {
-                'changeView-tab': {
-                    templateUrl: "templates/saturday-timetable.html",
-                    controller: 'TimeTableCtrl'
-                }
-            }
-        })
-        .state('app.timetable.sundaytimetable', {
-            url: "/sundaytimetable",
-            views: {
-                'changeView-tab': {
-                    templateUrl: "templates/sunday-timetable.html",
-                    controller: 'TimeTableCtrl'
-                }
-            }
-        })
+        })        
         .state('app.resultview', {
             url: '/resultview',
             views: {

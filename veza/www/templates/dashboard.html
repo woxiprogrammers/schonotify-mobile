@@ -17,26 +17,25 @@
                 <a class="tab-item margin-top-7 active">
                     <i class="icon ion-homie-select"></i>
                 </a>
-                <a class="tab-item margin-top-7" ui-sref="app.message">
+                <a class="tab-item margin-top-7" ng-click="viewMessagesList()">
                     <i class="icon ion-message"><span class="badge badge-assertive">{{msgCount}}</span></i>
                 </a>
             </div>
     </div>
-    </div>
-    
+    </div>    
     <ion-content ng-class="{expanded:$scope.isExpanded}">
         <div class="home-dashboard animate-fade-slide-in-right margin-bottom-10">
                 <div class="row">
                     <div class="col-33">
-                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/1_announcement_shadow.png" ng-click="noticeBoard()"/></div>
+                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/1_announcement_shadow.png" ui-sref="app.sharedNotification"/></div>
                         <span class="full-width dashboard-text">Notice Board</span>
                     </div>
                     <div class="col-33">
-                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/2_homework_shadow.png" ui-sref="app.homeworklanding"/></div>
+                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/2_homework_shadow.png" ng-click="homeworkView()"/></div>
                         <span class="full-width dashboard-text">Homework</span>
                     </div>
                     <div class="col-33">
-                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/3_attendance_shadow.png" ui-sref="app.attendancelanding"/></div>
+                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/3_attendance_shadow.png" ng-click="attendanceLanding()"/></div>
                         <span class="full-width dashboard-text">Attendance</span>
                     </div>
                 </div>
