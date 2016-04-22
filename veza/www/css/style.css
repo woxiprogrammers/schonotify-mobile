@@ -770,7 +770,6 @@ display: none;
 }
 
 .logo-align{
-    width: 100%;
     margin-top: 20%;
     z-index: 1;
 }
@@ -1161,7 +1160,9 @@ visibility: hidden;
 .margin-top-70 {
     margin-top: 70px!important;
 }
-
+.height-15{
+    height: 20px;
+}
 .view-attendance{
     width: 132px;
     margin-top: 10px;

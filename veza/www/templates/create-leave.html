@@ -11,7 +11,7 @@
                 <a class="tab-item margin-top-10" ui-sref="app.dashboard">
                     <i class="icon ion-homie"></i>
                 </a>
-                <a class="tab-item margin-top-10">
+                <a class="tab-item margin-top-10" ui-sref="app.message">
                     <i class="icon ion-message"><span class="badge badge-assertive"></span></i>
                 </a>
             </div>
@@ -47,10 +47,10 @@
                 </div>
             </div>              
             <label class="item item-input">From Date:
-                 <input class="item-input border-bottom padding-5" ng-model ="fromDate" type="date" value= {{fromDate}} min="{{minDate}}">
+                 <input class="item-input border-bottom padding-5" ng-model ="fromDate" type="date" value = {{fromDate}} ng-change="updateFromDate(fromDate)">
             </label>
-            <label class="item item-input">From Date:
-                 <input class="item-input border-bottom padding-5" ng-model ="toDate" type="date" value= {{toDate}} min="{{minDate}}">
+            <label class="item item-input">To Date:
+                 <input class="item-input border-bottom padding-5" ng-model ="toDate" type="date" value = {{toDate}} ng-change="updateToDate(toDate)">
             </label>           
             <label class="item item-input">
                 <textarea ng-model="description" placeholder = "Leave Description" rows = "10" ng-change="setDescription(description)"></textarea>
