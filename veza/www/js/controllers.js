@@ -3,7 +3,7 @@
 var db = null;
 angular.module('starter.controllers', [])
 .constant('GLOBALS',{
-   baseUrl:'http://test.woxiapps.com/api/v1/',
+   baseUrl:'http://test.woxi.co.in/api/v1/',
    //baseUrl:'http://192.168.2.12/api/v1/'
 })
 .service('userSessions', function Usersession(){
