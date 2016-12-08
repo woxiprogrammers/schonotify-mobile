@@ -35,17 +35,17 @@
     <div class="row" ng-if="userRole == 'teacher'">
         <div class="col-33 border-bottom">
             <select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batches track by batch.id" ng-change="getClass(selectedBatch.batch)">
-                <option value="" ng-disabled="true">-{{batchName}}-</option>
+                <option value="" ng-disabled="true">{{batchName}}</option>
             </select>
         </div>
         <div class="col-33 border-right border-bottom">
             <select class="item item-input item-select" ng-model="selectedClass.class" ng-options="class.name for class in classes track by class.id" ng-change="getDivision(selectedClass.class)">
-                <option value="" ng-disabled="true">-{{className}}-</option>
+                <option value="" ng-disabled="true">{{className}}</option>
             </select>
         </div>
         <div class="col-33 border-bottom">
             <select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.name for division in divisions track by division.id" ng-change="getAttendanceList(selectedDivision.division.id)">
-                <option value="" ng-disabled="true">-{{divisionName}}-</option>
+                <option value="" ng-disabled="true">{{divisionName}}</option>
             </select>
         </div>
     </div>
@@ -70,7 +70,7 @@
                                 <span class="blue-font">Leave Applied On:</span> {{student.applied_on}}
                                 <br>
                                 <span class="green-font">Leave Approved On:</span> {{student.approved_at}}
-                            </div>                            
+                            </div>
                         </p>
                     </div>
                 </div>
@@ -87,11 +87,11 @@
                             </div>
                             <div ng-if="student.leaveStatus == 2">
                                 <span class="blue-font">Leave Applied On:</span> {{student.applied_on}}
-                                <br>                                
+                                <br>
                                 <span class="green-font">Leave Approved On:</span> {{student.approved_at}}
                                 <br>
                                 <span class="blue-font">Leave Approved By:</span> {{student.approved_by}}
-                            </div>                            
+                            </div>
                         </p>
                     </div>
                 </div>

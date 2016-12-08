@@ -4,7 +4,7 @@ var db = null;
 angular.module('starter.controllers', [])
 .constant('GLOBALS',{
    baseUrl:'http://test.woxi.co.in/api/v1/',
-   //baseUrl:'http://192.168.2.12/api/v1/'
+   //baseUrl:'http://192.168.2.12/api/v1/'ginc
 })
 .service('userSessions', function Usersession(){
 
@@ -97,6 +97,7 @@ angular.module('starter.controllers', [])
             return studentToggle.data;
         };
 })
+
 .controller('AppCtrl', function($scope, $state, $ionicPopup, $http, $ionicModal, $ionicPopover, $timeout, $ionicSideMenuDelegate, $ionicHistory, userSessions) {
     // Form data for the login modal
     $scope.loginData = {};
@@ -131,6 +132,7 @@ angular.module('starter.controllers', [])
             }
         }
     };
+
 
     $scope.setExpanded = function(bool) {
         $scope.isExpanded = bool;
@@ -316,7 +318,10 @@ angular.module('starter.controllers', [])
         };
 
 })
-.controller('LoginCtrl', function($scope, $state, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
+.controller('LoginCtrl', function($scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
+
+
+
 
     $scope.data = [];
     ionicMaterialInk.displayEffect();
@@ -340,6 +345,7 @@ angular.module('starter.controllers', [])
                             userSet = userSessions.setSession($scope.sessionToken, $scope.sessionUserRole, $scope.messageCount);
                             idSet = userSessions.setUserId($scope.sessionId);
                                 if(userSet == true && idSet == true){
+                                  //$scope.show();
                                    $state.go('app.dashboard');
                                 }
                         }
@@ -373,7 +379,22 @@ angular.module('starter.controllers', [])
         };
 })
 
-.controller('DashboardCtrl', function($scope, $state, $timeout, GLOBALS, $http, ionicMaterialInk, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData) {
+.controller('DashboardCtrl', function($scope, $state,$ionicLoading, $timeout, GLOBALS, $http, ionicMaterialInk, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData) {
+  $scope.$on("$ionicView.beforeEnter", function(event, data){
+    alert("before enter");
+     // handle event$scope.show = function() {
+       $ionicLoading.show({
+         template: 'Loading...',
+         duration: 3000
+       })
+
+     $scope.hide = function(){
+       $ionicLoading.hide().then(function(){
+          console.log("The loading indicator is now hidden");
+       });
+     }
+   });
+
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -2104,7 +2125,7 @@ angular.module('starter.controllers', [])
                                    $scope.msg = response.message;
                                 }
                                 else{
-                                    $scope.msg = "Access Denied";
+                                    $scope.msg = "Select Batch,Division & class.";
                                 }
                                 $scope.showPopup();
                             });

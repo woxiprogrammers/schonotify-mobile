@@ -16,7 +16,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
             StatusBar.styleDefault();
         }
     });
+    
  })
+
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $translateProvider) {
 
     // Turn off caching for demo simplicity's sake
