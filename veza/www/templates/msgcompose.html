@@ -75,7 +75,7 @@
 <script id="studentCntctlist.html" type="text/ng-template">
     <div class="modal">
         <div class="modal-view">
-            <ion-header-bar class="bar-calm">
+            <ion-header-bar class="bar-cool">
                 <div class="row">
                     <div class="col-80">
                         <h3 class="modal-title">Select Recipient</h3>
@@ -90,11 +90,12 @@
                     <ion-item class="contact-list no-border" ng-repeat="contct in contactList">
                         <div class="row" ng-click="selectRecipient(contct.name, contct.id)">
                             <div class="col-75">
-                                <h2><strong>{{contct.name}}</strong></h2>
+                                <strong>{{contct.name}}</strong>
                             </div>
                         </div>
                     </ion-item>
                 </div>
+                <div class = "height-bottom-10 row"></div>
             </ion-content>
         </div>
     </div>

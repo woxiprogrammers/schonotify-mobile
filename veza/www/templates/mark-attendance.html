@@ -19,14 +19,14 @@
     </div>
     <div class="bar bar-orange bar-header align-delete-bar">
         <iion-item class="row">
-            <div class="row">
+            <div class="row"  ng-click="myGoBack()">
                 <div class="col-10">
-                    <button class="button-clear" ng-click="myGoBack()">
+                    <button class="button-clear">
                         <i class="ion-arrow-left-c button-back-white"></i>
                     </button>
                 </div>
                 <div class="col-90 margin-top-5">
-                    <span class="inner-header">Mark Attendance</span>
+                    <span class="inner-header">{{currentBatch}} {{currentClass}} {{currentDiv}}</span>
                 </div>
             </div>
         </iion-item>
@@ -35,7 +35,7 @@
         <div class="row">
             <div class="col-20 padding-top-10 date-bg"><h2 class="margin-left-2">Date:</h2></div>
             <input class="item-input col-80" type="date" ng-model="currentDate" ng-change="getStudentList()">
-        </div>   
+        </div>
         <div class="row">
             <div class="col-20 margin-top-10 item-borderless">
                 <strong>No.</strong>
@@ -46,14 +46,17 @@
         </div>
     </div>
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="padding-l-r-5 margin-top-150">
-        <div class="list">            
+        <div class="list">
             <div class= "item" ng-repeat="item in studentList">
                 <div class="col-90">
-                    <h2 id="{{item.name}}" value="{{item.id}}" ng-checked="selection.indexOf(item.id) > -1">{{item.roll_number}} {{item.name}}</h2>                        
+                    <div class="row" id="{{item.name}}" value="{{item.id}}" ng-checked="selection.indexOf(item.id) > -1" ng-if="item.leave_status == 0"><div class="col-20">{{item.roll_number}}</div><div class="col-80">{{item.name}}</div></div>
+                    <div class="row" id="{{item.name}}" value="{{item.id}}" ng-checked="selection.indexOf(item.id) > -1" ng-if="item.leave_status == 1"><div class="col-20">{{item.roll_number}}</div><div class="col-80">{{item.name}} Applied</div></div>
+                    <div class="row" id="{{item.name}}" value="{{item.id}}" ng-checked="selection.indexOf(item.id) > -1" ng-if="item.leave_status == 2"><div class="col-20">{{item.roll_number}}</div><div class="col-80">{{item.name}} Approved</div></div>
                 </div>
-                <div class="col-10 padding-5 mark-{{item.absent_status}}"  id="check{{item.id}}" ng-click="toggleCheck($event, item.id)"></div>                        
+                <div class="col-10 padding-5 mark-{{item.absent_status}}"  id="check{{item.id}}" ng-click="toggleCheck($event, item.id)"></div>
             </div>
         </div>
+        <div class = "height-15 row"></div>
     </ion-content>
     <div class="bar bar-footer modal-bottom no-border">
         <div class="row">

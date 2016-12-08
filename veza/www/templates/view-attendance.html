@@ -34,18 +34,22 @@
     <div class="row margin-top-100 no-border">
     <div class="row" ng-if="userRole == 'teacher'">
         <div class="col-33 border-bottom">
-            <select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batches track by batch.id" ng-change="getClass(selectedBatch.batch)">
-                <option value="" ng-disabled="true">{{batchName}}</option>
+
+            <select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batches track by batch.id" ng-change="getClass(selectedBatch.batch.id)">
+                <option value="" ng-disabled="true">-{{batchName}}-</option>
             </select>
         </div>
         <div class="col-33 border-right border-bottom">
-            <select class="item item-input item-select" ng-model="selectedClass.class" ng-options="class.name for class in classes track by class.id" ng-change="getDivision(selectedClass.class)">
-                <option value="" ng-disabled="true">{{className}}</option>
+            <select class="item item-input item-select" ng-model="selectedClass.class" ng-options="class.name for class in classes track by class.id" ng-change="getDivision(selectedClass.class.id)">
+                <option value="" ng-disabled="true">-{{className}}-</option>
+
             </select>
         </div>
         <div class="col-33 border-bottom">
             <select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.name for division in divisions track by division.id" ng-change="getAttendanceList(selectedDivision.division.id)">
-                <option value="" ng-disabled="true">{{divisionName}}</option>
+
+                <option value="" ng-disabled="true">-{{divName}}-</option>
+
             </select>
         </div>
     </div>
