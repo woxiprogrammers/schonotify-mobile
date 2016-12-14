@@ -47,7 +47,7 @@
                   <ion-item class="notify-item-border" ng-repeat="event in eventList">
                     <a class="item" ng-click="getDetailsOfEvent(event.id)">
                       <h2><strong>{{event.title}}</strong></h2>
-                      <span class="eventHeaderFontSize"><strong>On </strong> {{event.start_date}}</span>
+                      <span class="eventHeaderFontSize"><strong>On </strong> {{event.startdate}}</span>
                       <span class="pull-right" ng-if="event.status == 'Published'">
                         <button ng-class='{ display-no: clickStatus}' class="button button-balanced status-button" ng-disabled="clickStatus" >
                               {{event.status}}

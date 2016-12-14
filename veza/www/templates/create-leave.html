@@ -45,13 +45,13 @@
                         <option value="" ng-disabled="true">--Leave Type--</option>
                     </select>
                 </div>
-            </div>              
+            </div>
             <label class="item item-input">From Date:
-                 <input class="item-input border-bottom padding-5" ng-model ="fromDate" type="date" value = {{fromDate}} ng-change="updateFromDate(fromDate)">
+                 <input class="item-input border-bottom padding-5"   ng-model ="fromDate" type="date" value = {{fromDate}} ng-bind="fromDate | date:'yyyy/dd/MM'"ng-change="updateFromDate(fromDate)">
             </label>
             <label class="item item-input">To Date:
-                 <input class="item-input border-bottom padding-5" ng-model ="toDate" type="date" value = {{toDate}} ng-change="updateToDate(toDate)">
-            </label>           
+                 <input class="item-input border-bottom padding-5"  ng-model ="toDate" type="date" value = {{toDate}} ng-change="updateToDate(toDate)">
+            </label>
             <label class="item item-input">
                 <textarea ng-model="description" placeholder = "Leave Description" rows = "10" ng-change="setDescription(description)"></textarea>
              </label>
