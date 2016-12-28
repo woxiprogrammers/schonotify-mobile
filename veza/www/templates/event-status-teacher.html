@@ -51,19 +51,19 @@
               <div class="card" ng-repeat="event in eventdetailsList">
                  <div class="item item-text-wrap">
                    <span class="pull-right" ng-if="event.status == 'Published'">
-                     <button ng-class='{ display-no: clickStatus}' class="button button-balanced status-button" ng-disabled="clickStatus" >
+                     <button  class="button button-balanced status-button" ng-disabled="clickStatus" >
                            {{event.status}}
                      </button>
                    </span>
 
                    <span class="pull-right" ng-if="event.status == 'Pending'">
-                     <button ng-class='{ display-no: clickStatus}' class="button button-assertive status-button" ng-disabled="clickStatus" >
+                     <button class="button button-assertive status-button" ng-disabled="clickStatus" >
                            {{event.status}}
                      </button>
                    </span>
 
                    <span class="pull-right" ng-if="event.status == 'Draft'">
-                     <button ng-class='{ display-no: clickStatus}' class="button button-energized status-button" ng-disabled="clickStatus" >
+                     <button  class="button button-energized status-button" ng-disabled="clickStatus" >
                            {{event.status}}
                      </button>
                    </span>

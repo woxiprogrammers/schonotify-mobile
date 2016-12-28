@@ -49,19 +49,19 @@
                       <h2><strong>{{event.title}}</strong></h2>
                       <span class="eventHeaderFontSize"><strong>On </strong> {{event.startdate}}</span>
                       <span class="pull-right" ng-if="event.status == 'Published'">
-                        <button ng-class='{ display-no: clickStatus}' class="button button-balanced status-button" ng-disabled="clickStatus" >
+                        <button  class="button button-balanced status-button" ng-disabled="clickStatus" >
                               {{event.status}}
                         </button>
                       </span>
 
                       <span class="pull-right" ng-if="event.status == 'Pending'">
-                        <button ng-class='{ display-no: clickStatus}' class="button button-assertive status-button" ng-disabled="clickStatus" >
+                        <button  class="button button-assertive status-button" ng-disabled="clickStatus" >
                               {{event.status}}
                         </button>
                       </span>
 
                       <span class="pull-right" ng-if="event.status == 'Draft'">
-                        <button ng-class='{ display-no: clickStatus}' class="button button-energized status-button" ng-disabled="clickStatus" >
+                        <button  class="button button-energized status-button" ng-disabled="clickStatus" >
                               {{event.status}}
                         </button>
                       </span>
@@ -72,13 +72,13 @@
             </div>
             <div class="col col-20 pull-right">
                 <div class="row">
-                    <button ng-class='{ display-no: clickStatus}' class="button button-royal recent-button" ng-disabled="clickStatus" ng-click="recentEvent()">
+                    <button  class="button button-royal recent-button" ng-disabled="clickStatus" ng-click="recentEvent()">
                             Recent
                     </button>
                 </div>
 
                 <div class="row margin-top-2" ng-repeat="(key, value) in monthList">
-                    <button ng-class='{ display-no: clickStatus}' class="button button-positive month-button" ng-disabled="clickStatus" ng-click="eventByMonth({{key}})">
+                    <button  class="button button-positive month-button" ng-disabled="clickStatus" ng-click="eventByMonth({{key}})">
                         {{value}}
                     </button>
                 </div>

@@ -4,8 +4,9 @@ var db = null;
 angular.module('starter.controllers', [])
 .constant('GLOBALS',{
 
-  // baseUrl:'http://test.woxi.co.in/api/v1/',
-   baseUrl:'http://school_mit.schnotify.com/api/v1/'
+ baseUrl:'http://test.woxi.co.in/api/v1/'
+   //baseUrl:'http://test.veza.co.in/',
+// baseUrl:'http://school_mit.schnotify.com/api/v1/'
   // http://school_mit.schnotify.com/
 
 })
@@ -327,7 +328,9 @@ angular.module('starter.controllers', [])
             $scope.sessionUserRole = '';
                     var url= GLOBALS.baseUrl+"user/auth";
                     console.log(url);
+                  //  alert("email:" + email + "password:" + password);
                     $http.post(url, { email: email, password: password }).success(function(res) {
+                    //  alert(res);
                         $scope.data.message = res['message'];
                         console.log("Status: "+res['status']);
                         if(res['status'] == 200){
@@ -348,13 +351,14 @@ angular.module('starter.controllers', [])
             })
             .error(function(err) {
                 console.log("Error: "+err);
-                if(err.hasOwnProperty('status')){
+              /*  if(err.hasOwnProperty('status')){
                     $scope.data.message = err.message;
                 }
                 else{
                     $scope.data.message = "Sorry!! Incorrect email or password";
                 }
                 $scope.showPopup();
+                */
             });
         }
 
@@ -377,7 +381,7 @@ angular.module('starter.controllers', [])
 
 .controller('DashboardCtrl', function($scope, $state,$ionicLoading, $timeout, GLOBALS, $http, ionicMaterialInk, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData) {
   $scope.$on("$ionicView.beforeEnter", function(event, data){
-    alert("before enter");
+  //  alert("before enter");
      // handle event$scope.show = function() {
        $ionicLoading.show({
          template: 'Loading...',
@@ -523,6 +527,8 @@ angular.module('starter.controllers', [])
 
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
+
+
 
         $scope.nmessages = [{
             Status: "unRead",
@@ -2407,9 +2413,10 @@ angular.module('starter.controllers', [])
         };
     })
     .controller('LandingEventTeacherCtrl', function($scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
-
+//alert("1");
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
+
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
 
@@ -2426,11 +2433,18 @@ angular.module('starter.controllers', [])
         $scope.noticeBoard = function() {
             $state.go('app.sharedNotification');
         };
+
         $scope.eventList = null;
         $scope.recentEvent  = function() {
+
         var url = GLOBALS.baseUrl+"user/view-top-five-event/?token="+userSessions.userSession.userToken;
+//alert("2");
         $http.get(url).success(function(response){
+
+          //    alert(response);
+
             if(response['status'] == 200){
+
                    $scope.eventList = response['data'];
                    if($scope.eventList == ''){
                        $scope.aclMessage = response['message'];
@@ -2795,7 +2809,7 @@ angular.module('starter.controllers', [])
         $scope.responseMessage = null;
         $scope.statusEvent = 0;
 
-        alert("start Time : " + $scope.startEventTime);
+        //alert("start Time : " + $scope.startEventTime);
 
         angular.forEach($scope.eventData, function (event) {
           $scope.eventTitle = event.title;
@@ -2806,7 +2820,7 @@ angular.module('starter.controllers', [])
           $scope.endEventTime = $filter('date')(event.end_date, "yyyy-MM-dd");
         });
 
-        alert("test 11 : " + $scope.startEventTime);
+      //  alert("test 11 : " + $scope.startEventTime);
 
         $scope.setEventTitle = function(title){
           $scope.eventTitle = title;
@@ -2821,7 +2835,7 @@ angular.module('starter.controllers', [])
         }
 
     })
-    .controller('CreateEventCtrl', function($filter, $scope, $state, GLOBALS, $timeout, $http, userSessions, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup) {
+    .controller('CreateEventCtrl', function($filter, $scope, $state, GLOBALS, $timeout, $http, userSessions, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $cordovaActionSheet) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -2845,26 +2859,173 @@ angular.module('starter.controllers', [])
         $scope.minDate = new Date();
         $scope.eventTitle = null
         $scope.eventDetail = null;
-        $scope.eventImage = null;
+        //$scope.eventImage = null;
         $scope.responseMessage = null;
         $scope.statusEvent = 0;
 
         $scope.setEventTitle = function(title){
           $scope.eventTitle = title;
         }
-
+        $scope.setEventStartDate= function(startEventTime) {
+          $scope.startEventTime = startEventTime;
+        }
+        $scope.setEventEndDate= function(endEventTime) {
+          $scope.endEventTime = endEventTime;
+        }
         $scope.setEventDetail = function(detail){
           $scope.eventDetail = detail;
         }
 
-        $scope.setImage = function(image){
-          $scope.eventImage = image;
+        $scope.setImage = function(eventImage){
+
         }
 
         $scope.publishEvent = function() {
           $scope.statusEvent = 1;
           $scope.craeteEventWithPublishAndDraft($scope.statusEvent); //ststus  = 0 => Draft
         }
+
+        $scope.imgUrl;
+ $scope.dataImg;
+ $scope.tackPicture = function(){
+   var options = {
+     quality: 50,
+     destinationType: Camera.DestinationType.DATA_URL,
+     sourceType: Camera.PictureSourceType.CAMERA,
+     allowEdit: true,
+     encodingType: Camera.EncodingType.JPEG,
+     targetWidth: 100,
+     targetHeight: 100,
+     popoverOptions: CameraPopoverOptions,
+     saveToPhotoAlbum: false,
+   correctOrientation:true
+   };
+  $cordovaCamera.getPicture(options).then(function(imageData) {
+    //alert(imageData);
+     //var image = document.getElementById('myImage');
+   $scope.dataImg = imageData; // <--- this is your Base64 string
+   //alert("base64:"+$scope.dataImg);
+     $scope.imgUrl = "data:image/jpeg;base64," + imageData;
+  //   alert("$scope.imgUrl:"+$scope.imgUrl)
+   }, function(err) {
+     // error
+   });
+ }
+
+          $scope.loadImage = function() {
+                    var options = {
+
+                      title: 'Select Image Source',
+                      buttonLabels: ['Load from Library', 'Use Camera'],
+                      addCancelButtonWithLabel: 'Cancel',
+                      androidEnableCancelButton : true,
+                    };
+                    $cordovaActionSheet.show(options).then(function(btnIndex) {
+                      var type = null;
+                      if (btnIndex === 1) {
+                        type = Camera.PictureSourceType.PHOTOLIBRARY;
+                      } else if (btnIndex === 2) {
+                        type = Camera.PictureSourceType.CAMERA;
+                      }
+                      if (type !== null) {
+                        $scope.selectPicture(type);
+                      }
+                    });
+                    };
+
+                    $scope.selectPicture = function(sourceType) {
+                  //    alert(sourceType);
+                        var options = {
+                          quality: 100,
+
+                          destinationType: Camera.DestinationType.FILE_URI,
+                          sourceType: sourceType,
+                          saveToPhotoAlbum: false
+                        };
+
+
+                        $cordovaCamera.getPicture(options).then(function(imagePath) {
+                          //alert("imagePath:"+imagePath);
+                          // Grab the file name of the photo in the temporary directory
+                          var currentName = imagePath.replace(/^.*[\\\/]/, '');
+                        //    alert("currentName:"+currentName);
+                          //Create a new name for the photo
+                          var d = new Date(),
+                          n = d.getTime(),
+                          newFileName =  n + ".jpg";
+
+                        //  alert("newFileName:"+newFileName);
+                          //  alert("$cordovaDevice.getPlatform():"+$cordovaDevice.getPlatform());
+
+                          // If you are trying to load image from the gallery on Android we need special treatment!
+                                       if (sourceType === Camera.PictureSourceType.PHOTOLIBRARY) {
+                                  //       alert("inside getplatform");
+                            window.FilePath.resolveNativePath(imagePath, function(entry) {
+                            //  alert("imagePath:"+imagePath);
+                              window.resolveLocalFileSystemURL(entry, success, fail);
+                              function fail(e) {
+                                console.error('Error: ', e);
+                              }
+
+                              function success(fileEntry) {
+                                var namePath = fileEntry.nativeURL.substr(0, fileEntry.nativeURL.lastIndexOf('/') + 1);
+                                // Only copy because of access rights
+                                $cordovaFile.copyFile(namePath, fileEntry.name, cordova.file.dataDirectory, newFileName).then(function(success){
+                                  $scope.image = newFileName;
+                                }, function(error){
+                                  $scope.showAlert('Error', error.exception);
+                                });
+                              };
+                            }
+                          );
+                          } else {
+                            var namePath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+                      //      alert("here");
+                            // Move the file to permanent storage
+                            $cordovaFile.moveFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(function(success){
+                              $scope.image = newFileName;
+                            }, function(error){
+                              $scope.showAlert('Error', error.exception);
+                            });
+                          }
+                        },
+                        function(err){
+                          // Not always an error, maybe cancel was pressed...
+                        })
+                        };
+                        $scope.pathForImage = function(image) {
+                            if (image === null) {
+                                  return '';
+                                                }
+                           else {
+                                  return cordova.file.dataDirectory + image;
+                                }
+                              };
+                              $scope.uploadImage = function() {
+  // Destination URL
+var url = GLOBALS.baseUrl+"user/image-upload?token="+userSessions.userSession.userToken;
+
+  // File for Upload
+  var targetPath = $scope.pathForImage($scope.image);
+
+  // File name only
+  var filename = $scope.image;;
+
+  var options = {
+    fileKey: "file",
+    fileName: filename,
+    chunkedMode: false,
+    mimeType: "multipart/form-data",
+    params : {'fileName': filename}
+  };
+
+  $cordovaFileTransfer.upload(url, targetPath, options).then(function(result) {
+    $scope.showAlert('Success', 'Image upload finished.');
+  });
+}
+
+
+
 
         $scope.saveAsDraftEvent  = function() {
             $scope.statusEvent = 0;
@@ -2873,6 +3034,7 @@ angular.module('starter.controllers', [])
 
 
       $scope.craeteEventWithPublishAndDraft = function(statusEvent) {
+
         if($scope.eventTitle == "" || $scope.eventDetail == "" || $scope.startEventTime == "" || $scope.endEventTime == ""){
                 if($scope.eventTitle == ""){
                     $scope.responseMessage = "Please Add Title";
@@ -2888,6 +3050,10 @@ angular.module('starter.controllers', [])
                 }
                 $scope.showPopup();
         } else {
+
+
+
+
           $scope.startEventTime = $filter('date')($scope.startEventTime, "yyyy-MM-dd");
           $scope.endEventTime = $filter('date')($scope.endEventTime, "yyyy-MM-dd");
           var url = GLOBALS.baseUrl+"user/create-event?token="+userSessions.userSession.userToken;
@@ -2896,7 +3062,7 @@ angular.module('starter.controllers', [])
               if(response['status'] == 200){
                          $scope.responseMessage = response['message'];
                          $scope.showPopup();
-                         $state.go(app.eventlandingteacher);
+                        // $state.go(app.eventlandingteacher);
               } else {
                       $scope.responseMessage = response['message'];
                       $scope.showPopup();
@@ -3070,7 +3236,7 @@ angular.module('starter.controllers', [])
         }
         $scope.send = function(){
 
-            alert($scope.fromDate);
+          //  alert($scope.fromDate);
           //  console.log(toDate);
                         if($scope.leaveTitle == "" || $scope.LeaveId == "" || $scope.description == "" || $scope.LeaveId == "" && $scope.leaveTitle == "" && $scope.message == "" || $scope.fromDate == '' ||
         $scope.toDate == ''|| $scope.fromDate == '' && $scope.toDate == ''){

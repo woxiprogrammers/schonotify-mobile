@@ -1,4 +1,5 @@
 <ion-view view-title="Shared Notification" name="sharedNotify" class="touch-effect">
+
     <div class="row padding-0">
         <div class="tabs-striped tabs-color-positive tabs-top">
             <div class="tabs tab-align-inner">
@@ -29,34 +30,42 @@
                 </a>
             </div>
     </div>
-    <div class="bar header-bar align-delete-bar-divided">
-        <div class="row">
-            <div class="row">
-                <div class="col-25">
-                    <ion-checkbox class="checkbox-square checkboxList checkbox-assertive inner-notify-checkbox" ng-model="selectedAll" ng-click="checkAll()">
-                    </ion-checkbox>
-                </div>
-                <div class="col-25 col-offset-50">
-                    <a><i class="icon ion-trash-b align-delete-bin"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <ion-content ng-class="{expanded:$scope.isExpanded}" class="top-22">
-        <ion-list>
-            <ion-item class="notify-item-border padding-0" ng-repeat="nMsg in nMessages">
-                <div class="row padding-r-0">
-                    <div class="col-15">
-                        <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="nMsg.Selected">
-                        </ion-checkbox>
-                    </div>
-                    <div class="col-66 msg-{{nMsg.Status}}"  ng-click="announceDetails()">
-                        <h2><strong>{{nMsg.Subject}}</strong></h2>
-                        <p>{{nMsg.Message}}<br><strong><i class="font-italic ">{{nMsg.Timestamp}}</i></strong></p>
-                    </div>
-                    <div class="col-5 col-offset-22 priority-{{nMsg.Priority}}"></div>
-                </div>
-            </ion-item>
-        </ion-list>
+
+    <ion-content ng-class="{expanded:$scope.isExpanded}" class="top-22" has-header="true">
+
+    <h4>njndnjfnvjnvjnvjnvjjnvjnvjvjnjfnvjfjnf</h2>
+      <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+
+<ion-item ng-repeat="item in items" class="notify-item-border padding-0"      item="item"  class="item-remove-animate">
+          <div class="col-15">
+              <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="nMsg.Selected">
+              </ion-checkbox>
+          </div>
+            Item {{ item.id }}
+
+              <div class="col-66 msg-{{item.Status}}"  ng-click="announceDetails()">
+                            <h2><strong> {{ item.Status }}</strong></h2>
+                  <h2><strong>{{item.Subject}}</strong></h2>
+                    <p>{{item.Message}}<br><strong><i class="font-italic ">{{item.Timestamp}}</i></strong></p>
+              </div>
+              <div class="col-5 col-offset-22 priority-{{nMsg.Priority}}">{{nMsg.Priority}}</div>
+          </div>
+
+  <ion-delete-button class="ion-minus-circled"
+                     ng-click="onItemDelete(item)">
+  </ion-delete-button>
+  <ion-option-button class="button-assertive"
+                     ng-click="edit(item)">
+    Edit
+  </ion-option-button>
+  <ion-option-button class="button-calm"
+                     ng-click="share(item)">
+    Share
+  </ion-option-button>
+  <ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
+</ion-item>
+
+</ion-list>
+
     </ion-content>
 </ion-view>

@@ -57,19 +57,26 @@
 
                <div class="row item">
                    <div class="col-33 padding-top-10 date-bg"><h3 class="margin-left-1">Start Date : </h3></div>
-                   <input id="startEventTime" class="item-input col-67" type="date" ng-model="startEventTime" value="{{startEventTime}}" min="{{minDate}}">
+                   <input id="startEventTime" class="item-input col-67" type="date" ng-model="startEventTime"  min="{{minDate}}" ng-change="setEventStartDate(startEventTime)">
+
                </div>
 
                <div class="row item">
                   <div class="col-33 padding-top-10 date-bg"><h3 class="margin-left-1">End Date : </h3></div>
-                    <input id="endEventTime" class="item-input col-67" type="date" ng-model="endEventTime" value="{{endEventTime}}" min="{{minDate}}">
+                    <input id="endEventTime" class="item-input col-67" type="date" ng-model="endEventTime" value="{{endEventTime}}" min="{{minDate}}" ng-change="setEventEndDate(endEventTime)">
                   </div>
               </div>
-              <div class="row item">
-                <div class="col-33 padding-top-10 date-bg"><h2 class="margin-left-2">Upload Image:</h2></div>
-                <input class="item-input col-67" type="file" ng-model="eventImage" ng-change="setImage(eventImage)">
-            </div>
+
+            <div class="row item">
+               <img ng-src="{{pathForImage(image)}}" style="width: 400px; height: 200px;">
+               <button class="button icon-left ion-camera" ng-click="tackPicture()">Take Photo</button>
+
           </div>
+
+
+          </div>
+
+
         </div>
       </div>
     </ion-content>

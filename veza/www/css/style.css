@@ -5,6 +5,8 @@ html,body {
     -webkit-touch-callout: none;
 }
 
+
+
 .touch-effect {
     -webkit-tap-highlight-color: rgba(0,0,0,0)!important;
   -webkit-tap-highlight-color: transparent!important; /* For some Androids */
