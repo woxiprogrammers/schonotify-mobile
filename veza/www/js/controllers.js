@@ -2508,7 +2508,7 @@ angular.module('starter.controllers', [])
                   $scope.showPopup();
           }
       }).error(function(err) {
-          $scope.aclMessage = "Something Went Worng!!!";
+          $scope.aclMessage = "Event Not Found For This Instance!!!";
           $scope.showPopup();
       });
     }
@@ -3034,18 +3034,18 @@ var url = GLOBALS.baseUrl+"user/image-upload?token="+userSessions.userSession.us
 
 
       $scope.craeteEventWithPublishAndDraft = function(statusEvent) {
-
-        if($scope.eventTitle == "" || $scope.eventDetail == "" || $scope.startEventTime == "" || $scope.endEventTime == ""){
-                if($scope.eventTitle == ""){
+          //alert("$scope.eventTitle:"+$scope.eventTitle);
+        if($scope.eventTitle == null || $scope.eventDetail == null || $scope.startEventTime == null || $scope.endEventTime == null){
+                if($scope.eventTitle == null){
                     $scope.responseMessage = "Please Add Title";
                 }
-                if($scope.eventDetail == ""){
+                if($scope.eventDetail == null){
                     $scope.responseMessage = "Please Add Description";
                 }
-                if($scope.startEventTime == ""){
+                if($scope.startEventTime == null){
                     $scope.responseMessage = "Please Add Start time";
                 }
-                if($scope.endEventTime == ""){
+                if($scope.endEventTime == null){
                     $scope.responseMessage = "Please Add End time";
                 }
                 $scope.showPopup();
@@ -3060,10 +3060,12 @@ var url = GLOBALS.baseUrl+"user/image-upload?token="+userSessions.userSession.us
           $http.post(url, {title: $scope.eventTitle, detail: $scope.eventDetail, start_date: $scope.startEventTime, end_date: $scope.endEventTime, image: $scope.eventImage, status:statusEvent})
           .success(function(response){
               if(response['status'] == 200){
+              //  alert("1");
                          $scope.responseMessage = response['message'];
                          $scope.showPopup();
                         // $state.go(app.eventlandingteacher);
               } else {
+              //  alert("2");
                       $scope.responseMessage = response['message'];
                       $scope.showPopup();
               }
