@@ -6,49 +6,49 @@
         <ion-nav-view name="menuContent" animation="slide-left-right" ng-class="{expanded: isExpanded}" ></ion-nav-view>
     </ion-side-menu-content>
     <ion-side-menu side="left" id="left-menu">
-        <ion-header-bar class="side-menu-bg expanded">
-             <ul class="font-black col-90" ng-click="toggleStudent()">
-                 <li>
-                     <div class="avatar profile-bg"></div>
-                 </li>
-                 <li>
-                     <ul class="profile-uname">
-                         <li>Salim Khan</li>
-                         <li>
-                            <span class="float-left">Sohail</span>
-                            <i class="ion-chevron-down float-right" ng-show="studToggle"></i>
-                            <i class="ion-chevron-up float-right" ng-hide="studToggle"></i>
-                        </li>
-                     </ul>
-                 </li>
-             </ul>         
-        </ion-header-bar>
-        <ion-content class="has-expanded-header">
+
+        <ion-content>
+          <div style="height:200px;background-color:#b1bdd1;position:relative;padding:8px" >
+
+                   <div>
+                        <div><img src="img/parent.jpg" style="float:left;width:30%;border-radius:50%;padding:5px;"></img>
+                           <h3 style="">{{obj.student_name}}</h3>
+                           <h4 style="color:grey;margin-left:20px;">{{obj.student_div}}</h4>
+                        </div>
+                   </div>
+                           <div  style="position: absolute; height: 38px;bottom: 0; right: 0;  left: 0;background-color:#d0d8e5;padding:7px;"  ng-click="toggle = !toggle">Change Student</div>
+          </div>
+
+
+
+          <div class="box on" ng-show="toggle" ng-animate="'box'">
             <ion-list ng-show="studToggle">
-                <ion-item nav-clear menu-close class="sm-item-border" ui-sref="app.dashboard">
-                    Home
-                </ion-item> 
-                <ion-item nav-clear menu-close class="sm-item-border" ui-sref="app.dashboard" >
-                    Settings
-                </ion-item> 
-                <ion-item nav-clear menu-close class="sm-item-border" ui-sref="app.dashboard">
-                    App Info
-                </ion-item> 
-                <ion-item nav-clear menu-close class="sm-item-border" ui-sref="app.dashboard">
-                    Contact
-                </ion-item> 
-                <ion-item nav-clear menu-close class="sm-item-border" ng-click="signOut()">
-                    Logout
-                </ion-item>                              
-            </ion-list>
-            <ion-list ng-hide="studToggle">
-                <ion-item nav-clear menu-close class="sm-item-border" ng-hide="studToggle" ui-sref="app.dashboard">
-                    Salman
+                <ion-item nav-clear menu-close class="sm-item-border" ng-repeat="student in studentdataswitch" ng-click="studentclick(student.student_id)">
+                  <div style="color:green;font-size:10;"> {{student.student_name}}</div>
+                  <div style="color:black;font-size:5;">   <small>div:{{student.student_div}}</small> </div>
+
+
                 </ion-item>
-                <ion-item nav-clear menu-close ng-show="studToggle">
-                    Sohail
-                </ion-item>                             
-            </ion-list>
+                </ion-list>
+
+          </div>
+          <div class="box off" ng-hide="toggle" ng-animate="'box'">
+            <div class="list">
+                        <div class="item item-icon-left" ng-click="showAlert()">
+                          <i class="icon ion-man"></i>About us</div>
+                          <div class="item item-icon-left" ng-click="showAlert()">
+                            <i class="icon ion-ios-telephone"></i>Contact us</div>
+                              <div class="item item-icon-left" ng-click="showAlert()">
+                                <i class="icon ion-clipboard"></i>Terms and conditions</div>
+                         <div class="item item-divider" style="height:10px;"></div>
+                         <div class="item item-icon-left" ng-click="showAlert()">
+                           <i class="icon ion-settings"></i>Settings</div>
+                             <div class="item item-icon-left" ng-click="showAlert()">
+                               <i class="icon ion-power"></i>Logout</div>
+             </div>
+
+          </div>
+
         </ion-content>
     </ion-side-menu-content>
    </ion-side-menu>

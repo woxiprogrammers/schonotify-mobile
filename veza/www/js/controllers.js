@@ -6,10 +6,16 @@ angular.module('starter.controllers', [])
 
  baseUrl:'http://test.woxi.co.in/api/v1/'
    //baseUrl:'http://test.veza.co.in/',
-// baseUrl:'http://school_mit.schnotify.com/api/v1/'
-  // http://school_mit.schnotify.com/
+ //baseUrl:'http://school_mit.schnotify.com/api/v1/'
+  // h//ttp://school_mit.schnotify.com/
 
 })
+.factory('Data', function() {
+    return {message}
+})
+.service('myservice', function() {
+     this.Switchstudentlist = "yyy";
+   })
 .service('userSessions', function Usersession(){
 
         var userSessions = this;
@@ -24,6 +30,7 @@ angular.module('starter.controllers', [])
         };
 
         userSessions.setUserId = function(id){
+
             userSessions.userSession.userId = id;
             return true;
         };
@@ -48,12 +55,15 @@ angular.module('starter.controllers', [])
         var userData = this;
 
         userData.data = [];
+        console.log(userData.data);
 
         userData.setUserData = function(dataArray){
             userData.data = dataArray;
+
             return true;
         };
         userData.getUserData = function(){
+          console.log("aaa"+userData.data);
             return userData.data;
         };
 })
@@ -98,13 +108,64 @@ angular.module('starter.controllers', [])
             return true;
         };
         studentToggle.getUserData = function(){
+
             return studentToggle.data;
         };
 })
 
-.controller('AppCtrl', function($scope, $state, $ionicPopup, $http, $ionicModal, $ionicPopover, $timeout, $ionicSideMenuDelegate, $ionicHistory, userSessions) {
+.controller('AppCtrl', function(myservice,GLOBALS,$scope, $state, $ionicPopup, $http, $ionicModal, $ionicPopover, $timeout, $ionicSideMenuDelegate, $ionicHistory, userSessions) {
     // Form data for the login modal
+
+    $scope.showAlert = function() {
+   var alertPopup = $ionicPopup.alert({
+   title: 'Under construction!',
+   template: 'To be released soon..! '
+   });
+   }
+    var url= GLOBALS.baseUrl+"user/get-switching-details?token="+userSessions.userSession.userToken;
+        $http.get(url).success(function(response) {
+          console.log(response['data']['Parent_student_relation']['Students']);
+          localStorage.setItem("studentdata", JSON.stringify(response['data']['Parent_student_relation']['Students']));
+
+
+            $scope.studentdataswitch=(response['data']['Parent_student_relation']['Students']);
+
+            $scope.setActiveStudentData=function()
+                 {
+                           var retrievedData = localStorage.getItem("studentdata");
+                           var students = JSON.parse(retrievedData);
+                          var obj = students.filter(function ( obj )
+                        {
+                              return obj.student_id === userSessions.userSession.userId;
+                        })[0];
+                        $scope.obj=obj;
+                              console.log( obj );
+
+                  }
+                  $scope.setActiveStudentData();
+                  })
+
+               .error(function(response)
+                           {
+                               console.log("Error in Response: " +response);
+                           });
+                $scope.studentclick=function(student_id)
+                           {
+                               $scope.setActiveStudentData();
+                               $scope.gotodashboard();
+                               return userSessions.setUserId(student_id);
+
+                            }
+                $scope.gotodashboard=function()
+                            {
+                                $state.go('app.dashboard');
+                            }
+
+
+
+
     $scope.loginData = {};
+    console.log("scasa:"+  $scope.loginData);
     $scope.isExpanded = false;
     $scope.hasHeaderFabLeft = false;
     $scope.hasHeaderFabRight = false;
@@ -315,7 +376,7 @@ angular.module('starter.controllers', [])
         };
 
 })
-.controller('LoginCtrl', function($scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
+.controller('LoginCtrl', function(myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
 
 
 
@@ -328,13 +389,19 @@ angular.module('starter.controllers', [])
             $scope.sessionUserRole = '';
                     var url= GLOBALS.baseUrl+"user/auth";
                     console.log(url);
-                  //  alert("email:" + email + "password:" + password);
+
                     $http.post(url, { email: email, password: password }).success(function(res) {
-                    //  alert(res);
+
+                    $scope.Switchstudentlist=(res['data']['Students']);
+                    console.log($scope.Switchstudentlist);
                         $scope.data.message = res['message'];
                         console.log("Status: "+res['status']);
                         if(res['status'] == 200){
+                          $scope.studentlist=(res.data['users']);
+                          console.log($scope.studentlist);
                             $scope.userDataArray = userData.setUserData(res['data']['users']);
+
+
                             $scope.sessionToken = res['data']['users']['token'];
                             $scope.sessionUserRole = res['data']['users']['role_type'];
                             $scope.sessionId = res['data']['Badge_count']['user_id'];
@@ -379,14 +446,20 @@ angular.module('starter.controllers', [])
         };
 })
 
-.controller('DashboardCtrl', function($scope, $state,$ionicLoading, $timeout, GLOBALS, $http, ionicMaterialInk, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData) {
+.controller('DashboardCtrl', function($scope, $state,$ionicLoading,$ionicPopup, $timeout, GLOBALS, $http, ionicMaterialInk, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData) {
   $scope.$on("$ionicView.beforeEnter", function(event, data){
-  //  alert("before enter");
-     // handle event$scope.show = function() {
+  //
        $ionicLoading.show({
          template: 'Loading...',
          duration: 3000
        })
+
+       $scope.showAlert = function() {
+   var alertPopup = $ionicPopup.alert({
+     title: 'Under construction!',
+     template: 'To be released soon..! '
+   });
+ }
 
      $scope.hide = function(){
        $ionicLoading.hide().then(function(){
@@ -1697,7 +1770,7 @@ angular.module('starter.controllers', [])
         $scope.contactList = [];
         $scope.message = "";
         var url1 = GLOBALS.baseUrl+"user/userroles?token="+userSessions.userSession.userToken;
-      //  alert(url1);
+
             $http.get(url1)
                 .success(function(response) {
                     $scope.userRoles = response['data']['userRoles'];
@@ -2412,163 +2485,187 @@ angular.module('starter.controllers', [])
             }, 3000);
         };
     })
-    .controller('LandingEventTeacherCtrl', function($scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate,$ionicModal) {
-//alert("1");
-        $scope.$parent.clearFabs();
-        $scope.isExpanded = false;
+    .controller('LandingEventTeacherCtrl', function($ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate,$ionicModal) {
+      $scope.$on("$ionicView.beforeEnter", function(event, data){
 
-        $scope.$parent.setExpanded(false);
-        $scope.$parent.setHeaderFab(false);
+         // handle event$scope.show = function() {
+           $ionicLoading.show({
+             template: 'Loading...',
+             duration: 1500
+           })
 
-        // Set Header
-        $scope.$parent.hideHeader();
+           $scope.showAlert = function() {
+       var alertPopup = $ionicPopup.alert({
+         title: 'Under construction!',
+         template: 'We are working on that.'
+       });
+     }
 
-        // Set Ink
-        ionicMaterialInk.displayEffect();
+         $scope.hide = function(){
+           $ionicLoading.hide().then(function(){
+              console.log("The loading indicator is now hidden");
+           });
+         }
+       });
 
-        //Side-Menu
 
-        $ionicSideMenuDelegate.canDragContent(true);
 
-        $scope.noticeBoard = function() {
-            $state.go('app.sharedNotification');
-        };
-        $ionicModal.fromTemplateUrl('my-modal.html', {
-    scope: $scope,
-    animation: 'slide-in-right'
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-  $scope.openModal = function() {
-    $scope.modal.show();
-  };
-  $scope.closeModal = function() {
-    $scope.modal.hide();
-  };
-  // Cleanup the modal when we're done with it!
-  $scope.$on('$destroy', function() {
-    $scope.modal.remove();
-  });
-  // Execute action on hide modal
-  $scope.$on('modal.hidden', function() {
-    // Execute action
-  });
-  // Execute action on remove modal
-  $scope.$on('modal.removed', function() {
-    // Execute action
-  });
+      $scope.$parent.clearFabs();
+              $scope.isExpanded = false;
 
-        $scope.eventList = null;
-        $scope.recentEvent  = function() {
+              $scope.$parent.setExpanded(false);
+              $scope.$parent.setHeaderFab(false);
 
-        var url = GLOBALS.baseUrl+"user/view-top-five-event/?token="+userSessions.userSession.userToken;
-//alert("2");
-        $http.get(url).success(function(response){
+              // Set Header
+              $scope.$parent.hideHeader();
 
-          //    alert(response);
+              // Set Ink
+              ionicMaterialInk.displayEffect();
 
-            if(response['status'] == 200){
+              //Side-Menu
 
-                   $scope.eventList = response['data'];
-                   if($scope.eventList == ''){
-                       $scope.aclMessage = response['message'];
-                       $scope.showPopup();
-                   }
-            } else {
-                    $scope.aclMessage = response['message'];
-                    $scope.showPopup();
-            }
-        }).error(function(err) {
-            $scope.aclMessage = "Access Denied";
-            $scope.showPopup();
-        });
-      }
-      $scope.selectedYear = null;
-      $scope.yearMonthData = null;
-      $scope.monthList = null;
+              $ionicSideMenuDelegate.canDragContent(true);
 
-      $scope.eventYearMonth = function() {
-        var url = GLOBALS.baseUrl+"user/get-year-month?token="+userSessions.userSession.userToken;
-        $http.get(url).success(function(response){
-          if(response['status'] == 200){
-                 $scope.yearMonthData = response['data'];
-                 if($scope.yearMonthData == ''){
-                     $scope.aclMessage = response['message'];
-                     $scope.showPopup();
-                 }
-          } else {
-                  $scope.aclMessage = response['message'];
+              $scope.noticeBoard = function() {
+                  $state.go('app.sharedNotification');
+              };
+
+              $scope.eventList = null;
+              $scope.recentEvent  = function() {
+
+              var url = GLOBALS.baseUrl+"user/view-top-five-event/?token="+userSessions.userSession.userToken;
+
+              $http.get(url).success(function(response){
+                console.log("top five events response:"+response);
+
+
+
+                  if(response['status'] == 200){
+
+
+                         $scope.eventList = response['data'];
+                         if($scope.eventList == ''){
+                             $scope.aclMessage = response['message'];
+                             $scope.showPopup();
+                         }
+                  } else {
+                          $scope.aclMessage = response['message'];
+                          $scope.showPopup();
+                  }
+              }).error(function(err) {
+                  $scope.aclMessage = "Access Denied";
                   $scope.showPopup();
-          }
-          }).error(function(err) {
-            $scope.aclMessage = "Something Went Wrong!!!";
-            $scope.showPopup();
-          });
-      }
-      $scope.eventYearMonth();
-
-      $scope.setMonth = function(year) {
-        $scope.monthList = null;
-        angular.forEach($scope.yearMonthData, function(item) {
-          if (item.year === year) {
-              $scope.monthList = item.month[0];
-          }
-        });
-      }
-
-      $scope.setMonth($scope.selectedYear);
-
-      $scope.eventByMonth  = function(month) {
-      var url = GLOBALS.baseUrl+"user/view-months-event/"+$scope.selectedYear+"/"+month+"/?token="+userSessions.userSession.userToken;
-      $http.get(url).success(function(response){
-          if(response['status'] == 200){
-                 $scope.eventList = response['data'];
-                 if($scope.eventList == '') {
-                     $scope.aclMessage = response['message'];
-                     $scope.showPopup();
-                 }
-          } else {
-                  $scope.aclMessage = response['message'];
-                  $scope.showPopup();
-          }
-      }).error(function(err) {
-          $scope.aclMessage = "Event Not Found For This Instance!!!";
-          $scope.showPopup();
-      });
-    }
-
-    $scope.getDetailsOfEvent = function(event_id){
-      var keepGoing = true;
-      angular.forEach($scope.eventList, function(item) {
-        if (keepGoing) {
-          if (item.id === event_id) {
-              $state.go('app.eventstatusteacher', {obj:item});
-              keepGoing = false;
+              });
             }
+            $scope.selectedYear = null;
+            $scope.yearMonthData = null;
+            $scope.monthList = null;
+
+
+
+            $scope.eventYearMonth = function() {
+              var url = GLOBALS.baseUrl+"user/get-year-month?token="+userSessions.userSession.userToken;
+              $http.get(url).success(function(response){
+                if(response['status'] == 200){
+                       $scope.yearMonthData = response['data'];
+                       if($scope.yearMonthData == ''){
+                           $scope.aclMessage = response['message'];
+                           $scope.showPopup();
+                       }
+                } else {
+                        $scope.aclMessage = response['message'];
+                        $scope.showPopup();
+                }
+                }).error(function(err) {
+                  $scope.aclMessage = "Something Went Wrong!!!";
+                  $scope.showPopup();
+                });
+            }
+            $scope.eventYearMonth();
+
+            $scope.setMonth = function(year) {
+              $scope.monthList = null;
+              angular.forEach($scope.yearMonthData, function(item) {
+                if (item.year === year) {
+                    $scope.monthList = item.month[0];
+                }
+              });
+            }
+
+            $scope.setMonth($scope.selectedYear);
+
+            $scope.eventByMonth  = function(month) {
+            var url = GLOBALS.baseUrl+"user/view-months-event/"+$scope.selectedYear+"/"+month+"/?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response){
+                if(response['status'] == 200){
+                       $scope.eventList = response['data'];
+                       if($scope.eventList == '') {
+                           $scope.aclMessage = response['message'];
+                           $scope.showPopup();
+                       }
+                } else {
+                        $scope.aclMessage = response['message'];
+                        $scope.showPopup();
+                }
+            }).error(function(err) {
+                $scope.aclMessage = "Event Not Found For This Instance!!!";
+                $scope.showPopup();
+            });
           }
-      });
-    }
 
-        $scope.showPopup = function() {
-            // An elaborate, custom popup
-            var myPopup = $ionicPopup.show({
-                template: '<div>'+$scope.aclMessage+'</div>',
-                title: '',
-                subTitle: '',
-                scope: $scope
+          $scope.getDetailsOfEvent = function(event_id){
+            var keepGoing = true;
+            angular.forEach($scope.eventList, function(item) {
+              if (keepGoing) {
+                if (item.id === event_id) {
+                    $state.go('app.eventstatusteacher', {obj:item});
+                    keepGoing = false;
+                  }
+                }
             });
-            myPopup.then(function(res) {
-                console.log('Tapped!', res);
-            });
-            $timeout(function() {
-                myPopup.close(); //close the popup after 3 seconds for some reason
-            }, 3000);
-        };
+          }
 
-        $scope.recentEvent();
+              $scope.showPopup = function() {
+                  // An elaborate, custom popup
+                  var myPopup = $ionicPopup.show({
+                      template: '<div>'+$scope.aclMessage+'</div>',
+                      title: '',
+                      subTitle: '',
+                      scope: $scope
+                  });
+                  myPopup.then(function(res) {
+                      console.log('Tapped!', res);
+                  });
+                  $timeout(function() {
+                      myPopup.close(); //close the popup after 3 seconds for some reason
+                  }, 3000);
+              };
+
+              $scope.recentEvent();
     })
 
-    .controller('LandingEventParentCtrl', function($scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('LandingEventParentCtrl', function($ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
+      $scope.$on("$ionicView.beforeEnter", function(event, data){
+
+         // handle event$scope.show = function() {
+           $ionicLoading.show({
+             template: 'Loading...',
+             duration: 1500
+           })
+
+           $scope.showAlert = function() {
+       var alertPopup = $ionicPopup.alert({
+         title: 'Under construction!',
+         template: 'We are working on that.'
+       });
+     }
+
+         $scope.hide = function(){
+           $ionicLoading.hide().then(function(){
+              console.log("The loading indicator is now hidden");
+           });
+         }
+       });
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -2592,6 +2689,7 @@ angular.module('starter.controllers', [])
         $scope.recentEvent  = function() {
         var url = GLOBALS.baseUrl+"user/view-top-five-event/?token="+userSessions.userSession.userToken;
         $http.get(url).success(function(response){
+          console.log(response);
             if(response['status'] == 200){
                    $scope.eventList = response['data'];
                    if($scope.eventList == ''){
@@ -2746,6 +2844,7 @@ angular.module('starter.controllers', [])
         $scope.eventdetailsList = $stateParams;
 
         $scope.draftEventForPublish = function(eventId) {
+
           var url = GLOBALS.baseUrl+"user/send-for-publish-event?token="+userSessions.userSession.userToken;
           $http.post(url, {event_id: eventId, _method : 'PUT'})
           .success(function(response){
@@ -2758,15 +2857,20 @@ angular.module('starter.controllers', [])
                       $scope.showPopup();
               }
           }).error(function(err) {
-              $scope.responseMessage = "Something Went Worng!!!";
+              $scope.responseMessage = "You do not have permission,please contact admin!!!";
               $scope.showPopup();
           });
         }
 
         $scope.deleteEvent = function(eventId) {
+
+
           var url = GLOBALS.baseUrl+"user/delete-event?token="+userSessions.userSession.userToken;
+
           $http.post(url, {event_id: eventId, _method : 'PUT'})
           .success(function(response){
+
+            console.log("deleteresponse:"+response);
               if(response['status'] == 200){
                          $scope.responseMessage = response['message'];
                          $scope.showPopup();
@@ -2833,7 +2937,7 @@ angular.module('starter.controllers', [])
         $scope.responseMessage = null;
         $scope.statusEvent = 0;
 
-        //alert("start Time : " + $scope.startEventTime);
+
 
         angular.forEach($scope.eventData, function (event) {
           $scope.eventTitle = event.title;
@@ -2844,7 +2948,7 @@ angular.module('starter.controllers', [])
           $scope.endEventTime = $filter('date')(event.end_date, "yyyy-MM-dd");
         });
 
-      //  alert("test 11 : " + $scope.startEventTime);
+
 
         $scope.setEventTitle = function(title){
           $scope.eventTitle = title;
@@ -2859,7 +2963,35 @@ angular.module('starter.controllers', [])
         }
 
     })
-    .controller('CreateEventCtrl', function($filter, $scope, $state, GLOBALS, $timeout, $http, userSessions, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $cordovaActionSheet) {
+    .controller('CreateEventCtrl', function( $ionicHistory,$ionicLoading,$filter, $scope, $state, GLOBALS, $timeout, $http, userSessions, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $cordovaActionSheet,$cordovaImagePicker, $ionicPlatform,$base64) {
+      $scope.$on("$ionicView.beforeEnter", function(event, data){
+
+         // handle event$scope.show = function() {
+           $ionicLoading.show({
+             template: 'Loading...',
+             duration: 3000
+           })
+
+           $scope.showAlert = function() {
+       var alertPopup = $ionicPopup.alert({
+         title: 'Under construction!',
+         template: 'We are working on that.'
+       });
+     }
+     $scope.myGoBack = function() {
+         $ionicHistory.goBack();
+     };
+
+         $scope.hide = function(){
+           $ionicLoading.hide().then(function(){
+              console.log("The loading indicator is now hidden");
+           });
+         }
+       });
+
+
+
+
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -2874,6 +3006,7 @@ angular.module('starter.controllers', [])
         //Side-Menu
 
         $ionicSideMenuDelegate.canDragContent(true);
+
 
         $scope.noticeBoard = function() {
             $state.go('app.sharedNotification');
@@ -2900,153 +3033,74 @@ angular.module('starter.controllers', [])
           $scope.eventDetail = detail;
         }
 
-        $scope.setImage = function(eventImage){
 
-        }
+        $scope.image = null;
+
+          $scope.showAlert = function(title, msg) {
+            var alertPopup = $ionicPopup.alert({
+              title: title,
+              template: msg
+            });
+          };
+
+          $scope.loadImage = function() {
+  var options = {
+    title: 'Select Image Source',
+    buttonLabels: ['Load from Library', 'Use Camera'],
+    addCancelButtonWithLabel: 'Cancel',
+    androidEnableCancelButton : true,
+  };
+  $cordovaActionSheet.show(options).then(function(btnIndex) {
+    var type = null;
+    if (btnIndex === 1) {
+      type = Camera.PictureSourceType.PHOTOLIBRARY;
+    } else if (btnIndex === 2) {
+      type = Camera.PictureSourceType.CAMERA;
+    }
+    if (type !== null) {
+      $scope.selectPicture(type);
+    }
+  });
+};
+$scope.selectPicture = function(sourceType) {
+
+  var options = {
+       quality: 50,
+       destinationType: Camera.DestinationType.DATA_URL,
+       sourceType: Camera.PictureSourceType.CAMERA,
+       allowEdit: true,
+       encodingType: Camera.EncodingType.JPEG,
+       targetWidth: 100,
+       targetHeight: 100,
+       popoverOptions: CameraPopoverOptions,
+       saveToPhotoAlbum: false,
+ 	  correctOrientation:true
+     };
+
+     $cordovaCamera.getPicture(options).then(function(imageData) {
+
+       var image = document.getElementById('myImage');
+       $scope.imagesrc =  imageData;
+
+       return $scope.imagesrc;
+     }, function(err) {
+       // error
+     });
+
+   }, false;
+
+
+
+
+
+
 
         $scope.publishEvent = function() {
           $scope.statusEvent = 1;
           $scope.craeteEventWithPublishAndDraft($scope.statusEvent); //ststus  = 0 => Draft
         }
 
-        $scope.imgUrl;
- $scope.dataImg;
- $scope.tackPicture = function(){
-   var options = {
-     quality: 50,
-     destinationType: Camera.DestinationType.DATA_URL,
-     sourceType: Camera.PictureSourceType.CAMERA,
-     allowEdit: true,
-     encodingType: Camera.EncodingType.JPEG,
-     targetWidth: 100,
-     targetHeight: 100,
-     popoverOptions: CameraPopoverOptions,
-     saveToPhotoAlbum: false,
-   correctOrientation:true
-   };
-  $cordovaCamera.getPicture(options).then(function(imageData) {
-    //alert(imageData);
-     //var image = document.getElementById('myImage');
-   $scope.dataImg = imageData; // <--- this is your Base64 string
-   //alert("base64:"+$scope.dataImg);
-     $scope.imgUrl = "data:image/jpeg;base64," + imageData;
-  //   alert("$scope.imgUrl:"+$scope.imgUrl)
-   }, function(err) {
-     // error
-   });
- }
 
-          $scope.loadImage = function() {
-                    var options = {
-
-                      title: 'Select Image Source',
-                      buttonLabels: ['Load from Library', 'Use Camera'],
-                      addCancelButtonWithLabel: 'Cancel',
-                      androidEnableCancelButton : true,
-                    };
-                    $cordovaActionSheet.show(options).then(function(btnIndex) {
-                      var type = null;
-                      if (btnIndex === 1) {
-                        type = Camera.PictureSourceType.PHOTOLIBRARY;
-                      } else if (btnIndex === 2) {
-                        type = Camera.PictureSourceType.CAMERA;
-                      }
-                      if (type !== null) {
-                        $scope.selectPicture(type);
-                      }
-                    });
-                    };
-
-                    $scope.selectPicture = function(sourceType) {
-                  //    alert(sourceType);
-                        var options = {
-                          quality: 100,
-
-                          destinationType: Camera.DestinationType.FILE_URI,
-                          sourceType: sourceType,
-                          saveToPhotoAlbum: false
-                        };
-
-
-                        $cordovaCamera.getPicture(options).then(function(imagePath) {
-                          //alert("imagePath:"+imagePath);
-                          // Grab the file name of the photo in the temporary directory
-                          var currentName = imagePath.replace(/^.*[\\\/]/, '');
-                        //    alert("currentName:"+currentName);
-                          //Create a new name for the photo
-                          var d = new Date(),
-                          n = d.getTime(),
-                          newFileName =  n + ".jpg";
-
-                        //  alert("newFileName:"+newFileName);
-                          //  alert("$cordovaDevice.getPlatform():"+$cordovaDevice.getPlatform());
-
-                          // If you are trying to load image from the gallery on Android we need special treatment!
-                                       if (sourceType === Camera.PictureSourceType.PHOTOLIBRARY) {
-                                  //       alert("inside getplatform");
-                            window.FilePath.resolveNativePath(imagePath, function(entry) {
-                            //  alert("imagePath:"+imagePath);
-                              window.resolveLocalFileSystemURL(entry, success, fail);
-                              function fail(e) {
-                                console.error('Error: ', e);
-                              }
-
-                              function success(fileEntry) {
-                                var namePath = fileEntry.nativeURL.substr(0, fileEntry.nativeURL.lastIndexOf('/') + 1);
-                                // Only copy because of access rights
-                                $cordovaFile.copyFile(namePath, fileEntry.name, cordova.file.dataDirectory, newFileName).then(function(success){
-                                  $scope.image = newFileName;
-                                }, function(error){
-                                  $scope.showAlert('Error', error.exception);
-                                });
-                              };
-                            }
-                          );
-                          } else {
-                            var namePath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-                      //      alert("here");
-                            // Move the file to permanent storage
-                            $cordovaFile.moveFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(function(success){
-                              $scope.image = newFileName;
-                            }, function(error){
-                              $scope.showAlert('Error', error.exception);
-                            });
-                          }
-                        },
-                        function(err){
-                          // Not always an error, maybe cancel was pressed...
-                        })
-                        };
-                        $scope.pathForImage = function(image) {
-                            if (image === null) {
-                                  return '';
-                                                }
-                           else {
-                                  return cordova.file.dataDirectory + image;
-                                }
-                              };
-                              $scope.uploadImage = function() {
-  // Destination URL
-var url = GLOBALS.baseUrl+"user/image-upload?token="+userSessions.userSession.userToken;
-
-  // File for Upload
-  var targetPath = $scope.pathForImage($scope.image);
-
-  // File name only
-  var filename = $scope.image;;
-
-  var options = {
-    fileKey: "file",
-    fileName: filename,
-    chunkedMode: false,
-    mimeType: "multipart/form-data",
-    params : {'fileName': filename}
-  };
-
-  $cordovaFileTransfer.upload(url, targetPath, options).then(function(result) {
-    $scope.showAlert('Success', 'Image upload finished.');
-  });
-}
 
 
 
@@ -3058,19 +3112,20 @@ var url = GLOBALS.baseUrl+"user/image-upload?token="+userSessions.userSession.us
 
 
       $scope.craeteEventWithPublishAndDraft = function(statusEvent) {
-          //alert("$scope.eventTitle:"+$scope.eventTitle);
+
+
         if($scope.eventTitle == null || $scope.eventDetail == null || $scope.startEventTime == null || $scope.endEventTime == null){
                 if($scope.eventTitle == null){
-                    $scope.responseMessage = "Please Add Title";
+                    $scope.responseMessage = "Fill mandatory fields";
                 }
                 if($scope.eventDetail == null){
-                    $scope.responseMessage = "Please Add Description";
+                    $scope.responseMessage = "Fill mandatory fields";
                 }
                 if($scope.startEventTime == null){
-                    $scope.responseMessage = "Please Add Start time";
+                    $scope.responseMessage = "Fill mandatory fields";
                 }
                 if($scope.endEventTime == null){
-                    $scope.responseMessage = "Please Add End time";
+                    $scope.responseMessage = "Fill mandatory fields";
                 }
                 $scope.showPopup();
         } else {
@@ -3081,15 +3136,15 @@ var url = GLOBALS.baseUrl+"user/image-upload?token="+userSessions.userSession.us
           $scope.startEventTime = $filter('date')($scope.startEventTime, "yyyy-MM-dd");
           $scope.endEventTime = $filter('date')($scope.endEventTime, "yyyy-MM-dd");
           var url = GLOBALS.baseUrl+"user/create-event?token="+userSessions.userSession.userToken;
-          $http.post(url, {title: $scope.eventTitle, detail: $scope.eventDetail, start_date: $scope.startEventTime, end_date: $scope.endEventTime, image: $scope.eventImage, status:statusEvent})
+          $http.post(url, {title: $scope.eventTitle, detail: $scope.eventDetail, start_date: $scope.startEventTime, end_date: $scope.endEventTime, image: $scope.imagesrc, status:statusEvent})
           .success(function(response){
               if(response['status'] == 200){
-              //  alert("1");
+
                          $scope.responseMessage = response['message'];
                          $scope.showPopup();
                         // $state.go(app.eventlandingteacher);
               } else {
-              //  alert("2");
+
                       $scope.responseMessage = response['message'];
                       $scope.showPopup();
               }
@@ -3097,6 +3152,7 @@ var url = GLOBALS.baseUrl+"user/image-upload?token="+userSessions.userSession.us
               $scope.responseMessage = "Something Went Worng!!!";
               $scope.showPopup();
           });
+          $scope.myGoBack();
         }
       }
 
@@ -3209,7 +3265,7 @@ var url = GLOBALS.baseUrl+"user/image-upload?token="+userSessions.userSession.us
         // Set Ink
         ionicMaterialInk.displayEffect();
         var url = GLOBALS.baseUrl+"user/get-acl-details?token="+userSessions.userSession.userToken;
-//alert(url);
+
 
             $http.get(url).success(function(response){
                 $scope.data = response['Data']['Acl_Modules'];
@@ -3262,8 +3318,7 @@ var url = GLOBALS.baseUrl+"user/image-upload?token="+userSessions.userSession.us
         }
         $scope.send = function(){
 
-          //  alert($scope.fromDate);
-          //  console.log(toDate);
+
                         if($scope.leaveTitle == "" || $scope.LeaveId == "" || $scope.description == "" || $scope.LeaveId == "" && $scope.leaveTitle == "" && $scope.message == "" || $scope.fromDate == '' ||
         $scope.toDate == ''|| $scope.fromDate == '' && $scope.toDate == ''){
                                 if($scope.leaveTitle == ""){
@@ -3284,7 +3339,7 @@ var url = GLOBALS.baseUrl+"user/image-upload?token="+userSessions.userSession.us
                         $scope.showPopup();
                         }
                         else{
-                          //alert(fromDate);
+
 
                             var url= GLOBALS.baseUrl+"user/create-leave?token="+userSessions.userSession.userToken;
                             $http.post(url, {student_id: userSessions.userSession.userId, title: $scope.leaveTitle, leave_type_id: $scope.LeaveId, reason: $scope.description, from_date: $scope.fromDate, end_date: $scope.toDate})

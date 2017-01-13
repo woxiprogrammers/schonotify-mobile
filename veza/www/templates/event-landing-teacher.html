@@ -19,34 +19,35 @@
     </div>
 
     <div class="bar bar-event bar-header align-delete-bar">
-        <div class="row">
+        <iion-item class="row">
             <div class="row">
-                <div style="width:33%">
+                <div class="col col-10">
                     <button class="button-clear" ng-click="myGoBack()">
                         <i class="ion-arrow-left-c button-back-white"></i>
                     </button>
                 </div>
-                <div style="width:33%">
+                <div class="col col-50 margin-top-5">
                     <span class="inner-header">Events</span>
-
                 </div>
-                <button ng-click="openModal()">Select Year</button>
-
-
+                <div class="col">
+                     <!--<lable class="lable-font-size">Select Year : </label>-->
+                     <select class="eventYear" id="eventYear" ng-model="selectedYear" ng-options="yearMonth.year as yearMonth.year for yearMonth in yearMonthData" ng-change="setMonth(selectedYear)">
+                          <option value="">Select Year</option>
+                     </select>
+                </div>
             </div>
-        </div>
+        </iion-item>
     </div>
 
-    <ion-content style="margin-top:40px">
-        <div>
-            <div>
-
-
+    <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-40">
+        <div class="row">
+            <div class="col col-80">
+              <ion-scroll style="height: 450px" direction="y" >
                 <ion-list>
-                  <ion-item class="notify-item-border" ng-repeat="event in eventList" >
+                  <ion-item class="notify-item-border" ng-repeat="event in eventList">
                     <a class="item" ng-click="getDetailsOfEvent(event.id)">
                       <h2><strong>{{event.title}}</strong></h2>
-                      <span class="eventHeaderFontSize"><strong>On </strong> {{event.startdate}}</span>
+                      <span class="eventHeaderFontSize"><strong>On </strong> {{event.start_date}}</span>
                       <span class="pull-right" ng-if="event.status == 'Published'">
                         <button  class="button button-balanced status-button" ng-disabled="clickStatus" >
                               {{event.status}}
@@ -67,31 +68,21 @@
                     </a>
                  </ion-item>
                 </ion-list>
-
+              </ion-scroll>
             </div>
+            <div class="col col-20 pull-right">
+                <div class="row">
+                    <button  class="button button-royal recent-button" ng-disabled="clickStatus" ng-click="recentEvent()">
+                            Recent
+                    </button>
+                </div>
 
-
-
-
+                <div class="row margin-top-2" ng-repeat="(key, value) in monthList">
+                    <button  class="button button-positive month-button" ng-disabled="clickStatus" ng-click="eventByMonth({{key}})">
+                        {{value}}
+                    </button>
+                </div>
+            </div>
+        </div>
     </ion-content>
-    <script id="my-modal.html" type="text/ng-template">
-        <ion-modal-view style="margin-bottom:50%;background-color:#caccce; width:30%;margin-left:70%;margin-top:100px;">
-            <ion-header-bar bar bar-stable>
-                <select class="eventYear" id="eventYear" ng-model="selectedYear" ng-options="yearMonth.year as yearMonth.year for yearMonth in yearMonthData" ng-change="setMonth(selectedYear)" style="width:50%">
-                          <option value="" >Select Year</option>
-                 </select>
-                 <button ng-click="closeModal()"><i class="ion-close-round"></i></button>
-            </ion-header-bar>
-                <ion-content>
-
-                     <div class="row margin-top-2" ng-repeat="(key, value) in monthList">
-                        <button  class="button button-positive month-button" ng-disabled="clickStatus" ng-click="eventByMonth({{key}})">
-                          {{value}}
-                        </button>
-                     <div>
-
-                </ion-content>
-         </ion-modal-view>
-       </script>
-
-    </ion-view>
+</ion-view>
