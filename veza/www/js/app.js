@@ -3,7 +3,7 @@
 
 angular.module('starter', ['ionic','base64', 'starter.controllers', 'ngCordova', 'ionic-material', 'highcharts-ng', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate'])
 
-.run(function($ionicPlatform) {
+.run(function($rootScope, $ionicPlatform, $cordovaSplashscreen) {
     $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)

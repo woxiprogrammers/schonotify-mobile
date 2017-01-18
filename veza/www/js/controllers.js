@@ -6,8 +6,8 @@ angular.module('starter.controllers', [])
 
  baseUrl:'http://test.woxi.co.in/api/v1/'
    //baseUrl:'http://test.veza.co.in/',
- //baseUrl:'http://school_mit.schnotify.com/api/v1/'
-  // h//ttp://school_mit.schnotify.com/
+// baseUrl:'http://school_mit.schnotify.com/api/v1/'
+//   http:'school_mit.schnotify.com/'
 
 })
 .factory('Data', function() {
@@ -32,7 +32,21 @@ angular.module('starter.controllers', [])
         userSessions.setUserId = function(id){
 
             userSessions.userSession.userId = id;
+
+
             return true;
+        };
+
+
+        this.ss = function(id){
+           var retrievedData = localStorage.getItem("studentdata");
+           var students = JSON.parse(retrievedData);
+           var obj = students.filter(function ( obj )
+           {
+             return obj.student_id === userSessions.userSession.userId;
+            })[0];
+              console.log(obj);
+               return obj;
         };
 
         userSessions.setMsgCount = function(count){
@@ -63,7 +77,7 @@ angular.module('starter.controllers', [])
             return true;
         };
         userData.getUserData = function(){
-          console.log("aaa"+userData.data);
+
             return userData.data;
         };
 })
@@ -114,35 +128,23 @@ angular.module('starter.controllers', [])
 })
 
 .controller('AppCtrl', function(myservice,GLOBALS,$scope, $state, $ionicPopup, $http, $ionicModal, $ionicPopover, $timeout, $ionicSideMenuDelegate, $ionicHistory, userSessions) {
-    // Form data for the login modal
 
-    $scope.showAlert = function() {
-   var alertPopup = $ionicPopup.alert({
-   title: 'Under construction!',
-   template: 'To be released soon..! '
-   });
-   }
+
+
+      $scope.showAlert = function() {
+      var alertPopup = $ionicPopup.alert({
+      title: 'Under construction!',
+      template: 'To be released soon..! '
+         });
+    }
     var url= GLOBALS.baseUrl+"user/get-switching-details?token="+userSessions.userSession.userToken;
-        $http.get(url).success(function(response) {
+          $http.get(url).success(function(response) {
           console.log(response['data']['Parent_student_relation']['Students']);
           localStorage.setItem("studentdata", JSON.stringify(response['data']['Parent_student_relation']['Students']));
 
 
             $scope.studentdataswitch=(response['data']['Parent_student_relation']['Students']);
 
-            $scope.setActiveStudentData=function()
-                 {
-                           var retrievedData = localStorage.getItem("studentdata");
-                           var students = JSON.parse(retrievedData);
-                          var obj = students.filter(function ( obj )
-                        {
-                              return obj.student_id === userSessions.userSession.userId;
-                        })[0];
-                        $scope.obj=obj;
-                              console.log( obj );
-
-                  }
-                  $scope.setActiveStudentData();
                   })
 
                .error(function(response)
@@ -151,8 +153,7 @@ angular.module('starter.controllers', [])
                            });
                 $scope.studentclick=function(student_id)
                            {
-                               $scope.setActiveStudentData();
-                               $scope.gotodashboard();
+
                                return userSessions.setUserId(student_id);
 
                             }
@@ -260,7 +261,18 @@ angular.module('starter.controllers', [])
         };
 
     $scope.toggleLeftSideMenu = function() {
-         $ionicSideMenuDelegate.toggleLeft();
+      if(userSessions.userSession.userRole == "parent")
+      {
+          $scope.obj=  userSessions.ss();
+           $ionicSideMenuDelegate.toggleLeft();
+      }
+      else{
+            $ionicSideMenuDelegate.toggleLeft();
+      }
+
+
+
+
          };
 
         $scope.myGoBack = function() {
@@ -392,13 +404,17 @@ angular.module('starter.controllers', [])
 
                     $http.post(url, { email: email, password: password }).success(function(res) {
 
+
                     $scope.Switchstudentlist=(res['data']['Students']);
                     console.log($scope.Switchstudentlist);
+
                         $scope.data.message = res['message'];
                         console.log("Status: "+res['status']);
+
                         if(res['status'] == 200){
                           $scope.studentlist=(res.data['users']);
                           console.log($scope.studentlist);
+
                             $scope.userDataArray = userData.setUserData(res['data']['users']);
 
 
@@ -406,12 +422,17 @@ angular.module('starter.controllers', [])
                             $scope.sessionUserRole = res['data']['users']['role_type'];
                             $scope.sessionId = res['data']['Badge_count']['user_id'];
                             $scope.messageCount = res['data']['Badge_count']['message_count'];
+
                             var  userSet = false;
                             var idSet = false;
+
                             userSet = userSessions.setSession($scope.sessionToken, $scope.sessionUserRole, $scope.messageCount);
+
                             idSet = userSessions.setUserId($scope.sessionId);
+
+
                                 if(userSet == true && idSet == true){
-                                  //$scope.show();
+
                                    $state.go('app.dashboard');
                                 }
                         }
@@ -2577,7 +2598,7 @@ angular.module('starter.controllers', [])
                         $scope.showPopup();
                 }
                 }).error(function(err) {
-                  $scope.aclMessage = "Something Went Wrong!!!";
+                  $scope.aclMessage = "Data not found for this Instance!!!";
                   $scope.showPopup();
                 });
             }
@@ -2598,6 +2619,7 @@ angular.module('starter.controllers', [])
             var url = GLOBALS.baseUrl+"user/view-months-event/"+$scope.selectedYear+"/"+month+"/?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response){
                 if(response['status'] == 200){
+                  console.log(response['data']);
                        $scope.eventList = response['data'];
                        if($scope.eventList == '') {
                            $scope.aclMessage = response['message'];
@@ -2723,7 +2745,7 @@ angular.module('starter.controllers', [])
                   $scope.showPopup();
           }
           }).error(function(err) {
-            $scope.aclMessage = "Something Went Wrong!!!";
+            $scope.aclMessage = "Data not found for this instance!!!";
             $scope.showPopup();
           });
       }
@@ -2754,7 +2776,7 @@ angular.module('starter.controllers', [])
                   $scope.showPopup();
           }
       }).error(function(err) {
-          $scope.aclMessage = "Something Went Worng!!!";
+          $scope.aclMessage = "Data not found for this instance!!!";
           $scope.showPopup();
       });
     }
@@ -2906,7 +2928,7 @@ angular.module('starter.controllers', [])
         }
     })
 
-    .controller('EditEventCtrl', function($scope, $state, $filter, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
+    .controller('EditEventCtrl', function($ionicPopup,GLOBALS,$http,userSessions,$scope, $state, $filter, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -2961,6 +2983,75 @@ angular.module('starter.controllers', [])
         $scope.setImage = function(image){
           $scope.eventImage = image;
         }
+        $scope.saveAsDraftEvent  = function() {
+          alert("ddd");
+            $scope.statusEvent = 0;
+            $scope.craeteEventWithPublishAndDraft($scope.statusEvent); //ststus  = 1 => Send for approval : pending
+        }
+        $scope.showPopup = function() {
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div>'+$scope.responseMessage+'</div>',
+                title: '',
+                subTitle: '',
+                scope: $scope
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); //close the popup after 3 seconds for some reason
+            }, 3000);
+        }
+
+      $scope.updateevent = function(statusEvent) {
+
+
+        if($scope.eventTitle == null || $scope.eventDetail == null || $scope.startEventTime == null || $scope.endEventTime == null){
+                if($scope.eventTitle == null){
+                    $scope.responseMessage = "Fill mandatory fields";
+                }
+                if($scope.eventDetail == null){
+                    $scope.responseMessage = "Fill mandatory fields";
+                }
+                if($scope.startEventTime == null){
+                    $scope.responseMessage = "Fill mandatory fields";
+                }
+                if($scope.endEventTime == null){
+                    $scope.responseMessage = "Fill mandatory fields";
+                }
+                $scope.showPopup();
+        } else {
+
+
+
+
+          $scope.startEventTime = $filter('date')($scope.startEventTime, "yyyy-MM-dd");
+          $scope.endEventTime = $filter('date')($scope.endEventTime, "yyyy-MM-dd");
+          var url = GLOBALS.baseUrl+"user/edit-event?token="+userSessions.userSession.userToken;
+
+          $http.post(url, {title: $scope.eventTitle, detail: $scope.eventDetail, start_date: $scope.startEventTime, end_date: $scope.endEventTime, img: $scope.imagesrc, status:statusEvent,flag:1})
+          .success(function(response){
+              if(response['status'] == 200){
+
+                         $scope.responseMessage = response['message'];
+                         $scope.showPopup();
+
+              } else {
+
+                      $scope.responseMessage = response['message'];
+                      $scope.showPopup();
+              }
+          }).error(function(err) {
+              $scope.responseMessage = "Something Went Worng!!!";
+              $scope.showPopup();
+          });
+          $scope.myGoBack();
+        }
+      }
+
+
+
 
     })
     .controller('CreateEventCtrl', function( $ionicHistory,$ionicLoading,$filter, $scope, $state, GLOBALS, $timeout, $http, userSessions, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $cordovaActionSheet,$cordovaImagePicker, $ionicPlatform,$base64) {
@@ -3081,7 +3172,7 @@ $scope.selectPicture = function(sourceType) {
 
        var image = document.getElementById('myImage');
        $scope.imagesrc =  imageData;
-
+      alert($scope.imagesrc);
        return $scope.imagesrc;
      }, function(err) {
        // error
@@ -3122,10 +3213,10 @@ $scope.selectPicture = function(sourceType) {
                     $scope.responseMessage = "Fill mandatory fields";
                 }
                 if($scope.startEventTime == null){
-                    $scope.responseMessage = "Fill mandatory fields";
+                    $scope.responseMessage = "Fill StartDate properly";
                 }
                 if($scope.endEventTime == null){
-                    $scope.responseMessage = "Fill mandatory fields";
+                    $scope.responseMessage = "Fill EndDate properly";
                 }
                 $scope.showPopup();
         } else {
@@ -3136,7 +3227,8 @@ $scope.selectPicture = function(sourceType) {
           $scope.startEventTime = $filter('date')($scope.startEventTime, "yyyy-MM-dd");
           $scope.endEventTime = $filter('date')($scope.endEventTime, "yyyy-MM-dd");
           var url = GLOBALS.baseUrl+"user/create-event?token="+userSessions.userSession.userToken;
-          $http.post(url, {title: $scope.eventTitle, detail: $scope.eventDetail, start_date: $scope.startEventTime, end_date: $scope.endEventTime, image: $scope.imagesrc, status:statusEvent})
+        
+          $http.post(url, {title: $scope.eventTitle, detail: $scope.eventDetail, start_date: $scope.startEventTime, end_date: $scope.endEventTime, img: $scope.imagesrc, status:statusEvent})
           .success(function(response){
               if(response['status'] == 200){
 
