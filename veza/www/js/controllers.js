@@ -4,8 +4,13 @@ var db = null;
 angular.module('starter.controllers', [])
 .constant('GLOBALS',{
 
+<<<<<<< HEAD
          baseUrl:'http://sspss.veza.co.in/api/v1/'
    //baseUrl:'http://test.woxi.co.in/api/v1/',
+=======
+ baseUrl:'http://sspss.veza.co.in/api/v1/'
+   //baseUrl:'http://test.veza.co.in/',
+>>>>>>> 604b4e49e322db5109c16d51c238dadd24779c21
 // baseUrl:'http://school_mit.schnotify.com/api/v1/'
 //   http:'school_mit.schnotify.com/'
 
