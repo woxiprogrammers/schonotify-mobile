@@ -4,8 +4,8 @@ var db = null;
 angular.module('starter.controllers', [])
 .constant('GLOBALS',{
 
- baseUrl:'http://test.woxi.co.in/api/v1/'
-   //baseUrl:'http://test.veza.co.in/',
+         baseUrl:'http://sspss.veza.co.in/api/v1/'
+   //baseUrl:'http://test.woxi.co.in/api/v1/',
 // baseUrl:'http://school_mit.schnotify.com/api/v1/'
 //   http:'school_mit.schnotify.com/'
 
@@ -3227,7 +3227,7 @@ $scope.selectPicture = function(sourceType) {
           $scope.startEventTime = $filter('date')($scope.startEventTime, "yyyy-MM-dd");
           $scope.endEventTime = $filter('date')($scope.endEventTime, "yyyy-MM-dd");
           var url = GLOBALS.baseUrl+"user/create-event?token="+userSessions.userSession.userToken;
-        
+
           $http.post(url, {title: $scope.eventTitle, detail: $scope.eventDetail, start_date: $scope.startEventTime, end_date: $scope.endEventTime, img: $scope.imagesrc, status:statusEvent})
           .success(function(response){
               if(response['status'] == 200){
