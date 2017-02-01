@@ -52,12 +52,12 @@
 
                <div class="row item">
                    <div class="col-33 padding-top-10 date-bg"><h3 class="margin-left-1">Start Date : </h3></div>
-                   <input id="startEventTime" class="item-input col-67" type="date" ng-model="startEventTime" value="{{startEventTime}}" min="{{minDate}}">
+                   <input  class="item-input col-67" type="date"  ng-model="startEventTime" value="{{startEventTime}}" min="{{minDate}}"  ng-change="setEventStartDate(startEventTime)" >
                </div>
-
+            
                <div class="row item">
                   <div class="col-33 padding-top-10 date-bg"><h3 class="margin-left-1">End Date : </h3></div>
-                    <input id="endEventTime" class="item-input col-67" type="date" ng-model="endEventTime" value="{{endEventTime}}" min="{{minDate}} ">
+                    <input id="endEventTime" class="item-input col-67" type="date" ng-model="endEventTime" value="{{endEventTime}}" min="{{minDate}} " ng-change="setEventEndDate(endEventTime)">
                   </div>
               </div>
               <div class="row item">
@@ -67,5 +67,6 @@
           </div>
         </div>
       </div>
+
     </ion-content>
 </ion-view>

@@ -5,6 +5,19 @@ html,body {
     -webkit-touch-callout: none;
 }
 
+.fade-hide, .fade-show {
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+.fade-hide {
+    opacity:1;
+}
+.fade-hide.fade-hide-active {
+    opacity:0.5;
+}
+
 .box { color: white; text-align: center; }
 .on  {  }
 .off {  }
@@ -1214,13 +1227,13 @@ visibility: hidden;
 }
 
 .recent-button {
-    font-size: 12px;
-    height: 30px;
+    font-size: 8px;
+    height: 10px;
     padding: 3px 3px;
     line-height: 0;
-    min-height: 30px;
+    min-height: 10px;
     text-transform: none;
-    border-radius: 12px;
+    border-radius: 8px;
     background-color: red;
     color : white;
 }

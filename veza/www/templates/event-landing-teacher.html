@@ -19,32 +19,54 @@
     </div>
 
     <div class="bar bar-event bar-header align-delete-bar">
-        <iion-item class="row">
+
             <div class="row">
-                <div class="col col-10">
+                <div class="col col-30">
                     <button class="button-clear" ng-click="myGoBack()">
                         <i class="ion-arrow-left-c button-back-white"></i>
                     </button>
                 </div>
-                <div class="col col-50 margin-top-5">
+                <div class="col col-40 margin-top-5">
                     <span class="inner-header">Events</span>
                 </div>
-                <div class="col">
-                     <!--<lable class="lable-font-size">Select Year : </label>-->
-                     <select class="eventYear" id="eventYear" ng-model="selectedYear" ng-options="yearMonth.year as yearMonth.year for yearMonth in yearMonthData" ng-change="setMonth(selectedYear)">
-                          <option value="">Select Year</option>
-                     </select>
-                </div>
+                <button class="col col-30 margin-top-5" ng-hide="hidden == false" class="button button-stable" ng-click="hidden=false" style="float:right">Select Year</button>
+                <div class="col col-30 margin-top-5" ng-hide="hidden == true" ng-animate="'fade'" style="float:right;height:350px;margin-left:10%;margin-top:-1%">
+
+
+
+                      <select  id="eventYear" ng-model="selectedYear" ng-options="yearMonth.year as yearMonth.year for yearMonth in yearMonthData" ng-change="setMonth(selectedYear)">
+                           <option value="">Select Year</option>
+                      </select>
+                      <div>
+                          <button  class=" " ng-disabled="clickStatus" ng-click="recentEvent()" style="height:3px;width:100px">
+                                  Recent
+                          </button>
+                      </div>
+
+                      <div ng-repeat="(key, value) in monthList">
+                        <button ion-button round ng-click="eventByMonth({{key}})"  style="height:5px;padding:3px;width:100px">
+                          {{value}}
+                        </button>
+
+                      </div>
+                      <i class="icon ion-close-circled" ng-click="hidden=true" style="font-size:40px;color:black"></i>
+                 </div>
+
+
+
+
+
             </div>
-        </iion-item>
+
     </div>
 
-    <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-40">
-        <div class="row">
-            <div class="col col-80">
-              <ion-scroll style="height: 450px" direction="y" >
+    <ion-content >
+
+        <div style="margin-top:50px;">
+            <div >
+              <ion-scroll  direction="y" >
                 <ion-list>
-                  <ion-item class="notify-item-border" ng-repeat="event in eventList">
+                  <ion-item  ng-repeat="event in eventList">
                     <a class="item" ng-click="getDetailsOfEvent(event.id)">
                       <h2><strong>{{event.title}}</strong></h2>
                       <span class="eventHeaderFontSize"><strong>On </strong> {{event.start_date}}</span>
@@ -71,18 +93,9 @@
               </ion-scroll>
             </div>
             <div class="col col-20 pull-right">
-                <div class="row">
-                    <button  class="button button-royal recent-button" ng-disabled="clickStatus" ng-click="recentEvent()">
-                            Recent
-                    </button>
-                </div>
 
-                <div class="row margin-top-2" ng-repeat="(key, value) in monthList">
-                    <button  class="button button-positive month-button" ng-disabled="clickStatus" ng-click="eventByMonth({{key}})">
-                        {{value}}
-                    </button>
-                </div>
             </div>
+
         </div>
     </ion-content>
 </ion-view>

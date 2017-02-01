@@ -4,14 +4,10 @@ var db = null;
 angular.module('starter.controllers', [])
 .constant('GLOBALS',{
 
-<<<<<<< HEAD
-         baseUrl:'http://sspss.veza.co.in/api/v1/'
-   //baseUrl:'http://test.woxi.co.in/api/v1/',
-=======
- baseUrl:'http://sspss.veza.co.in/api/v1/'
-   //baseUrl:'http://test.veza.co.in/',
->>>>>>> 604b4e49e322db5109c16d51c238dadd24779c21
-// baseUrl:'http://school_mit.schnotify.com/api/v1/'
+
+// baseUrl:'http://sspss.veza.co.in/api/v1/'
+  //baseUrl:'http://test.woxi.co.in/api/v1/',
+baseUrl:'http://school_mit.schnotify.com/api/v1/'
 //   http:'school_mit.schnotify.com/'
 
 })
@@ -131,6 +127,8 @@ angular.module('starter.controllers', [])
             return studentToggle.data;
         };
 })
+
+
 
 .controller('AppCtrl', function(myservice,GLOBALS,$scope, $state, $ionicPopup, $http, $ionicModal, $ionicPopover, $timeout, $ionicSideMenuDelegate, $ionicHistory, userSessions) {
 
@@ -2534,7 +2532,8 @@ angular.module('starter.controllers', [])
          }
        });
 
-
+         $scope.hidden = true;
+          $scope.hiddenn = true;
 
       $scope.$parent.clearFabs();
               $scope.isExpanded = false;
@@ -2955,8 +2954,6 @@ angular.module('starter.controllers', [])
         };
 
         $scope.eventData = $stateParams.obj;
-        $scope.startEventTime = new Date();
-        $scope.endEventTime = new Date();
         $scope.minDate = new Date();
         $scope.eventTitle = null
         $scope.eventDetail = null;
@@ -2966,17 +2963,16 @@ angular.module('starter.controllers', [])
 
 
 
-        angular.forEach($scope.eventData, function (event) {
-          $scope.eventTitle = event.title;
-          $scope.eventDetail = event.detail;
-          $scope.eventImage = event.path;
-          $scope.statusEvent = 0;
-          $scope.startEventTime = $filter('date')(event.start_date, "yyyy-MM-dd");
-          $scope.endEventTime = $filter('date')(event.end_date, "yyyy-MM-dd");
-        });
 
 
 
+
+        $scope.setEventStartDate= function(startEventTime) {
+          $scope.startEventTime = startEventTime;
+        }
+        $scope.setEventEndDate= function(endEventTime) {
+          $scope.endEventTime = endEventTime;
+        }
         $scope.setEventTitle = function(title){
           $scope.eventTitle = title;
         }
@@ -2988,12 +2984,26 @@ angular.module('starter.controllers', [])
         $scope.setImage = function(image){
           $scope.eventImage = image;
         }
-        $scope.saveAsDraftEvent  = function() {
-          alert("ddd");
+
+        angular.forEach($scope.eventData, function (event) {
+          $scope.eventTitle = event.title;
+          $scope.eventDetail = event.detail;
+          $scope.eventImage = event.path;
+          $scope.statusEvent = 0;
+          $scope.startEventTime=event.start_date;
+          $scope.endEventTime=event.end_date;
+
+
+
+        });
+         var pqr=$scope.eventData.obj['id'];
+
+            $scope.saveAsDraftEvent  = function() {
             $scope.statusEvent = 0;
             $scope.craeteEventWithPublishAndDraft($scope.statusEvent); //ststus  = 1 => Send for approval : pending
         }
-        $scope.showPopup = function() {
+
+            $scope.showPopup = function() {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
                 template: '<div>'+$scope.responseMessage+'</div>',
@@ -3009,7 +3019,7 @@ angular.module('starter.controllers', [])
             }, 3000);
         }
 
-      $scope.updateevent = function(statusEvent) {
+      $scope.updateEvent = function(statusEvent) {
 
 
         if($scope.eventTitle == null || $scope.eventDetail == null || $scope.startEventTime == null || $scope.endEventTime == null){
@@ -3033,9 +3043,11 @@ angular.module('starter.controllers', [])
 
           $scope.startEventTime = $filter('date')($scope.startEventTime, "yyyy-MM-dd");
           $scope.endEventTime = $filter('date')($scope.endEventTime, "yyyy-MM-dd");
+
           var url = GLOBALS.baseUrl+"user/edit-event?token="+userSessions.userSession.userToken;
 
-          $http.post(url, {title: $scope.eventTitle, detail: $scope.eventDetail, start_date: $scope.startEventTime, end_date: $scope.endEventTime, img: $scope.imagesrc, status:statusEvent,flag:1})
+          $http.post(url, {_method:"PUT",event_id:pqr,title: $scope.eventTitle, detail: $scope.eventDetail, start_date:$scope.startEventTime, end_date: $scope.endEventTime, status:statusEvent,flag:1})
+
           .success(function(response){
               if(response['status'] == 200){
 
@@ -3051,7 +3063,7 @@ angular.module('starter.controllers', [])
               $scope.responseMessage = "Something Went Worng!!!";
               $scope.showPopup();
           });
-          $scope.myGoBack();
+          $state.go('app.eventlandingteacher');
         }
       }
 
@@ -3177,7 +3189,7 @@ $scope.selectPicture = function(sourceType) {
 
        var image = document.getElementById('myImage');
        $scope.imagesrc =  imageData;
-      alert($scope.imagesrc);
+
        return $scope.imagesrc;
      }, function(err) {
        // error
