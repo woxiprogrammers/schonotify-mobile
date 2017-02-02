@@ -13,14 +13,17 @@ th, td {
     text-align: left;
     padding: 8px;
 }
-p.speech {
+div.speech {
+  text-align: center;
+  padding:3px;
+
   position: relative;
   width: 170px;
-  height: 80px;
-  text-align: center;
-  line-height: 70px;
+  height: 90px;
+
+  line-height: 30px;
   background-color: #dff9a2;
-  border: 4px solid #666;
+  border: 1px solid #666;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius: 20px;
@@ -62,14 +65,17 @@ p{
 
 
 
-p.speech1 {
+div.speech1 {
+  text-align: center;
+  padding:3px;
+
   position: relative;
   width: 170px;
-  height: 80px;
-  text-align: center;
-  line-height: 70px;
+  height: 90px;
+
+  line-height: 30px;
   background-color: white;
-  border: 4px solid #666;
+  border: 1px solid #666;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius: 20px;
