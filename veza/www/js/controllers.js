@@ -6,8 +6,8 @@ angular.module('starter.controllers', [])
 
 
 // baseUrl:'http://sspss.veza.co.in/api/v1/'
-  //baseUrl:'http://test.woxi.co.in/api/v1/',
-baseUrl:'http://school_mit.schnotify.com/api/v1/'
+  baseUrl:'http://test.woxi.co.in/api/v1/',
+//baseUrl:'http://school_mit.schnotify.com/api/v1/'
 //   http:'school_mit.schnotify.com/'
 
 })
@@ -491,6 +491,17 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
        });
      }
    });
+
+         $scope.feelanding=function(){
+           if(userSessions.userSession.userRole=="parent")
+           {
+             $state.go('app.feelanding');
+           }
+           else{
+             alert("Access Denied");
+           }
+         }
+
 
         $scope.eventlanding=function(){
           if(userSessions.userSession.userRole == "parent"){
@@ -2670,10 +2681,75 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
               $scope.recentEvent();
     })
 
+
+    .controller('FeeLandingParentCntrl', function($ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
+      $scope.$on("$ionicView.beforeEnter", function(event, data){
+
+
+           $ionicLoading.show({
+             template: 'Loading...',
+             duration: 1500
+           })
+
+           $scope.showAlert = function() {
+       var alertPopup = $ionicPopup.alert({
+         title: 'Under construction!',
+         template: 'We are working on that.'
+       });
+     }
+
+         $scope.hide = function(){
+           $ionicLoading.hide().then(function(){
+              console.log("The loading indicator is now hidden");
+           });
+         }
+       });
+             $scope.color="#001193";
+             $scope.clickOn="con1";
+       $scope.showCon=function(con){
+
+          $scope.clickOn=con;
+                  if(con=="con1")
+                  {
+
+                     $scope.color="#001193";
+                     $scope.color1="";
+
+                  }
+                  else{
+
+                       $scope.color1="#001193";
+                       $scope.color="";
+                      }
+
+
+
+                }
+
+
+
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     .controller('LandingEventParentCtrl', function($ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
       $scope.$on("$ionicView.beforeEnter", function(event, data){
 
-         // handle event$scope.show = function() {
+
            $ionicLoading.show({
              template: 'Loading...',
              duration: 1500

@@ -1,0 +1,160 @@
+<ion-view view-title="Event" name="event" class="touch-effect">
+    <div class="row padding-0">
+        <div class="tabs-striped tabs-color-positive tabs-top">
+            <div class="tabs tab-align-inner">
+                <a class="tab-item margin-top-0">
+                    <i class="icon ion-android-menu slide-button" ng-click="toggleLeftSideMenu()"></i>
+                </a>
+                <a class="tab-item margin-top-10" ui-sref="app.notification">
+                    <i class="icon ion-notify"></i>
+                </a>
+                <a class="tab-item margin-top-10" ui-sref="app.dashboard">
+                    <i class="icon ion-homie"></i>
+                </a>
+                <a class="tab-item margin-top-10" ui-sref="app.message">
+                    <i class="icon ion-message"><span class="badge badge-assertive"></span></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <ion-content overflow-scroll="false">
+      <br>
+
+
+
+
+           <div ng-show="clickOn=='con1'" style="height:100%;width:100%">
+             <div style="text-align:center;">
+
+               <select name="Batch" >
+                   <option value="double chocolate">Batch A</option>
+                   <option value="vanilla">Vanilla</option>
+                   <option value="strawberry">Strawberry</option>
+                   <option value="caramel">Caramel</option>
+               </select>
+               <select name="Class">
+                   <option value="double chocolate"> I </option>
+                   <option value="vanilla">Vanilla</option>
+                   <option value="strawberry">Strawberry</option>
+                   <option value="caramel">Caramel</option>
+               </select>
+
+             </div>
+             <div style="overflow:scroll" >
+
+             <div class="card"><table>
+                       <tr>
+                       <h3 style="background-color:#3afc7a;text-align:center;width:100%;height:50px;padding:8px;">Concession</h3>
+
+                       </tr>
+                       <tr>
+                       <td>Peter</td>
+                       <td>Griffin</td>
+                       <td>$100</td>
+                       </tr>
+                       <tr>
+                       <td>Lois</td>
+                       <td>Griffin</td>
+                       <td>$150</td>
+                       </tr>
+
+
+             </table>
+           </div>
+
+             <div class="card"><table>
+                       <tr>
+                         <h3 style="background-color:#3afc7a;text-align:center;width:100%;height:50px;padding:8px;">Installments</h3>
+
+
+                       </tr>
+                       <tr>
+                       <td>1</td>
+                       <td>Griffin</td>
+                       <td>$100</td>
+                       </tr>
+                       <tr>
+                       <td>2</td>
+                       <td>Griffin</td>
+                       <td>$150</td>
+                       </tr>
+
+                       <td>3</td>
+                       <td>Brown</td>
+                       <td>$250</td>
+                       </tr>
+             </table></div>
+
+
+
+           </div>
+           <div class="bar bar-footer" style="background-color:#3afc7a;padding:8px;height:50px;">
+                   <h3>Total Fee</h3>  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <h3>8000 INR</h3>
+           </div>
+           </div>
+
+           <div ng-show="clickOn=='con2'" style="height:100%;width:100%;">
+
+                <div style="float:left;">
+                   <p class="speech1">Current Year Fee</p>
+
+                </div>
+                      <div style="float:right;" class="css_blink">
+                            <p class="speech">Due Fee</p>
+
+                      </div>
+
+
+                <br>
+                <div >
+               <div class="list" >
+                        <div class="item"><div class="card list">
+                           <div class="item item-divider">
+                              Installment number :01
+                           </div>
+
+                            <div class="item item-text-wrap">
+                               Details
+                            </div>
+
+                             <div class="item item-divider">
+                                  Installment date: 24-06-2017
+                              </div>
+                                  </div>
+                                 </div>
+                                       <div class="item"><div class="card list">
+                                      <div class="item item-divider">
+                                       Installment number :02
+                                       </div>
+
+                                      <div class="item item-text-wrap">
+                                        Details
+                                       </div>
+
+                                      <div class="item item-divider">
+                                         Installment date: 24-07-2017
+                                      </div>
+                                     </div></div>
+                                       <div class="item"><div class="card list">
+                                     <div class="item item-divider">
+                                       Card header
+                                         </div>
+
+                                                 </div>
+                    </div>
+                      </div>
+                    </div>
+
+       </div>
+
+    </ion-content>
+    <ion-footer-bar align-title="center" class="bar-dark">
+      <button class="" ng-click="showCon('con1')" style="height:50px;width:50%;background-color:{{color}};color:red;font-weight: bold;font-style: italic;">View Fee Structure</button>
+      <button class="" ng-click="showCon('con2')" style="height:50px;width:49%;background-color:{{color1}};color:red;font-weight: bold;font-style: italic;">My Fee</button>
+    </ion-footer-bar>
+
+
+
+
+
+</ion-view>

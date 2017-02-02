@@ -4,6 +4,86 @@ html,body {
     -webkit-tap-highlight-color: rgba(0,0,0,0)!important;
     -webkit-touch-callout: none;
 }
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+p.speech {
+  position: relative;
+  width: 170px;
+  height: 80px;
+  text-align: center;
+  line-height: 70px;
+  background-color: #dff9a2;
+  border: 4px solid #666;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  -webkit-box-shadow: 2px 2px 4px #888;
+  -moz-box-shadow: 2px 2px 4px #888;
+  box-shadow: 2px 2px 4px #888;
+}
+p{
+  font-family: "Lucida Sans Unicode","Lucida Grande",sans-serif;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.css_blink {
+	-webkit-animation-name: blinker;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-iteration-count: infinite;
+
+	-moz-animation-name: blinker;
+	-moz-animation-duration: 1s;
+	-moz-animation-timing-function: linear;
+	-moz-animation-iteration-count: infinite;
+
+	animation-name: blinker;
+	animation-duration: 2s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+
+
+
+@-webkit-keyframes blinker {
+	0% { opacity: 1.0; }
+	50% { opacity: 0.0; }
+	100% { opacity: 1.0; }
+}
+
+
+
+
+p.speech1 {
+  position: relative;
+  width: 170px;
+  height: 80px;
+  text-align: center;
+  line-height: 70px;
+  background-color: white;
+  border: 4px solid #666;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  -webkit-box-shadow: 2px 2px 4px #888;
+  -moz-box-shadow: 2px 2px 4px #888;
+  box-shadow: 2px 2px 4px #888;
+}
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+
+}
 
 .fade-hide, .fade-show {
     -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
