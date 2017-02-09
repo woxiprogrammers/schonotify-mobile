@@ -493,13 +493,9 @@ angular.module('starter.controllers', [])
    });
 
          $scope.feelanding=function(){
-           if(userSessions.userSession.userRole=="parent")
-           {
+
              $state.go('app.feelanding');
-           }
-           else{
-             alert("Access Denied");
-           }
+
          }
 
 
@@ -2704,22 +2700,41 @@ angular.module('starter.controllers', [])
            });
          }
        });
-             $scope.color="#001193";
+
+             if(userSessions.userSession.userRole=="teacher"){
+               $scope.show="showw";
+               $scope.abc="100%";
+
+
+             }else{
+                      $scope.show="show";
+                      $scope.abc="50%";
+
+             }
+             $scope.color="underline";
              $scope.clickOn="con1";
+             $scope.side="left";
+             $scope.bold1="bold";
        $scope.showCon=function(con){
 
           $scope.clickOn=con;
                   if(con=="con1")
-                  {
+                      {
 
-                     $scope.color="#001193";
-                     $scope.color1="";
+                           $scope.color="underline";
+                           $scope.color1="";
+                           $scope.side="left";
+                           $scope.bold1="bold";
+                           $scope.bold2="";
 
-                  }
+                      }
                   else{
 
-                       $scope.color1="#001193";
-                       $scope.color="";
+                          $scope.color1="underline";
+                          $scope.color="";
+                          $scope.side="right";
+                          $scope.bold2="bold";
+                          $scope.bold1="";
                       }
 
 

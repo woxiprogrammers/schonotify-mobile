@@ -24,39 +24,53 @@
 
 
            <div ng-show="clickOn=='con1'" style="height:100%;width:100%">
-             <div style="text-align:center;">
+              <h4 style="float:left">Please select your desired class to view fee structure : </h4>
 
-               <select name="Batch" >
-                   <option value="double chocolate">Batch A</option>
-                   <option value="vanilla">Vanilla</option>
-                   <option value="strawberry">Strawberry</option>
-                   <option value="caramel">Caramel</option>
-               </select>
-               <select name="Class">
-                   <option value="double chocolate"> I </option>
+
+               <select name="Batch" style="height:40px;float:left;width:40%">
+
+                   <option value="double chocolate">Batch</option>
                    <option value="vanilla">Vanilla</option>
                    <option value="strawberry">Strawberry</option>
                    <option value="caramel">Caramel</option>
                </select>
 
-             </div>
-             <br>
+                 &nbsp
+
+
+
+
+               <select  style="height:40px;width:40%">
+
+                   <option value="double chocolate"> Class </option>
+                   <option value="vanilla">Vanilla</option>
+                   <option value="strawberry">Strawberry</option>
+                   <option value="caramel">Caramel</option>
+               </select>
+
+
+
+             <br><br>
              <div>
             <div style="overflow:scroll;overflow-x: hidden;"">
-             <div class="card" style="overflow:scroll;overflow-x: hidden;height:200px"><table>
-                       <tr>
-                       <h3 style="background-color:#3afc7a;text-align:center;width:100%;height:50px;padding:8px;">Concession</h3>
+             <div class="card" style="overflow:scroll;overflow-x: hidden;height:200px;background-color:grey:"><table>
 
+                       <h3 style="height:30px;padding:8px;">Concession</h3>
+                       <div style="background-color:black;height:3px;width:100%"></div>
+                       <tr>
+                       <td>NT</td>
+                       <td>1500</td>
+                       <td>4%</td>
                        </tr>
                        <tr>
-                       <td>Peter</td>
-                       <td>Griffin</td>
-                       <td>$100</td>
+                       <td>SC</td>
+                       <td>1000</td>
+                       <td>15%</td>
                        </tr>
                        <tr>
-                       <td>Lois</td>
-                       <td>Griffin</td>
-                       <td>$150</td>
+                       <td>O.B.C.</td>
+                       <td>700</td>
+                       <td>5%</td>
                        </tr>
 
 
@@ -64,25 +78,23 @@
            </div>
             <br>
              <div class="card" style="overflow:scroll;overflow-x: hidden;height:200px"><table>
-                       <tr>
-                         <h3 style="background-color:#3afc7a;text-align:center;width:100%;height:50px;padding:8px;">Installments</h3>
 
-
-                       </tr>
-                       <tr>
+                         <h3 style="height:30px;padding:8px;">Installment Structure</h3>
+                          <div style="background-color:black;height:3px;width:100%"></div>
+                        <tr>
                        <td>1</td>
-                       <td>Griffin</td>
-                       <td>$100</td>
+                       <td>10,000</td>
+                       <td>33.33%</td>
                        </tr>
                        <tr>
                        <td>2</td>
-                       <td>Griffin</td>
-                       <td>$150</td>
+                       <td>10,000</td>
+                       <td>33.33%</td>
                        </tr>
 
                        <td>3</td>
-                       <td>Brown</td>
-                       <td>$250</td>
+                       <td>10,000</td>
+                       <td>33.33%</td>
                        </tr>
              </table></div>
 
@@ -104,9 +116,9 @@
 
                 </div>
                       <div style="float:right;" class="css_blink">
-                            <div class="speech">Due Fee
+                            <div class="speech"><h4>Due Fee</h4>
 
-                                <br>   10,000 INR
+                                 <h5> 10,000 INR</h5>
                              </div>
 
                       </div>
@@ -115,49 +127,50 @@
                 <br>
                 <div >
                <div class="list" >
-                        <div class="item"><div class="card list">
-                           <div class="item item-divider">
-                              Installment number :01
-                           </div>
+                       <div class="item" >
+                            <div class="card" style="height:100px;">
+                              <h2 style="float:left">Installment No:01</h2>
+                              <br><br>
+                              <h4 style="float:left">Voucher/NEFT No: A201</h4>
+                              <br>
+                              <h4 style="float:left">Date :12-01-2017</h4>
 
-                            <div class="item item-text-wrap">
-                               Details
                             </div>
+                       </div>
+                       <div class="item" >
+                            <div class="card" style="height:100px;">
+                              <h2 style="float:left">Installment No:02</h2>
+                              <br><br>
+                              <h4 style="float:left">Voucher/NEFT No: B301</h4>
+                               <br>
+                              <h4 style="float:left">Date :12-03-2017</h4>
 
-                             <div class="item item-divider">
-                                  Installment date: 24-06-2017
-                              </div>
-                                  </div>
-                                 </div>
-                                       <div class="item"><div class="card list">
-                                      <div class="item item-divider">
-                                       Installment number :02
-                                       </div>
+                            </div>
+                       </div>
+                       <div class="item" >
+                            <div class="card" style="height:100px;">
 
-                                      <div class="item item-text-wrap">
-                                        Details
-                                       </div>
+                            <h2 style="float:left">Installment No:03</h2>
+                            <br>
+                            <br>
+                            <h4 style="float:left">Voucher/NEFT No: C201</h4>
+                             <br>
+                            <h4 style="float:left">Date :12-04-2017</h4>
+                            </div>
+                       </div>
 
-                                      <div class="item item-divider">
-                                         Installment date: 24-07-2017
-                                      </div>
-                                     </div></div>
-                                       <div class="item"><div class="card list">
-                                     <div class="item item-divider">
-                                       Card header
-                                         </div>
-
-                                                 </div>
-                    </div>
+               </div>
                       </div>
                     </div>
 
        </div>
 
     </ion-content>
-    <ion-footer-bar align-title="center" class="bar-dark">
-      <button class="" ng-click="showCon('con1')" style="height:50px;width:50%;background-color:{{color}};color:red;font-weight: bold;font-style: italic;">View Fee Structure</button>
-      <button class="" ng-click="showCon('con2')" style="height:50px;width:49%;background-color:{{color1}};color:red;font-weight: bold;font-style: italic;">My Fee</button>
+    <ion-footer-bar align-title="center" style="border-top:2px solid grey">
+
+
+      <div class="" ng-click="showCon('con1')" style="height:60px;width:{{abc}};text-decoration:{{color}};color:#04a021;font-weight: {{bold1}};font-size:100%;text-align:center;border-right:1px solid grey;padding:6px">View Fee Structure</div>
+      <div class="" ng-click="showCon('con2')" style="height:60px;width:50%;text-decoration:{{color1}};color:#04a021;font-weight: {{bold2}};font-size:100%;text-align:center;padding:6px" ng-show="show=='show'">My Fee</div>
     </ion-footer-bar>
 
 
