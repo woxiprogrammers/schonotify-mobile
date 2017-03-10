@@ -14,7 +14,7 @@
                 <a class="tab-item margin-top-0">
                     <i class="icon ion-navicon slide-button" ng-click="toggleLeftSideMenu()"></i>
                 </a>
-                <a class="tab-item margin-top-7" ui-sref="app.notification" ng-click="showAlert()">
+                <a class="tab-item margin-top-7" ui-sref="app.notification">
                     <i class="icon ion-notify"></i>
                 </a>
                 <a class="tab-item margin-top-7 active">
@@ -30,15 +30,15 @@
         <div class="home-dashboard animate-fade-slide-in-right margin-bottom-10">
                 <div class="row">
                     <div class="col-33">
-                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/1_announcement_shadow.png" ng-click="showAlert()"/></div>
+                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/1_announcement_shadow.png" ui-sref="app.sharedNotification"/></div>
                         <span class="full-width dashboard-text">Notice Board</span>
                     </div>
                     <div class="col-33">
-                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/2_homework_shadow.png" ng-click="showAlert()"/></div>
+                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/2_homework_shadow.png" ng-click="homeworkView()"/></div>
                         <span class="full-width dashboard-text">Homework</span>
                     </div>
                     <div class="col-33">
-                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/3_attendance_shadow.png" ng-click="showAlert()"/></div>
+                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/3_attendance_shadow.png" ng-click="attendanceLanding()"/></div>
                         <span class="full-width dashboard-text">Attendance</span>
                     </div>
                 </div>
@@ -48,25 +48,27 @@
                         <span class="full-width dashboard-text">Events</span>
                     </div>
                     <div class="col-33">
-                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/5_results_shadow.png" ng-click="showAlert()"/></div>
+                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/5_results_shadow.png" ui-sref="app.resultview"/></div>
                         <span class="full-width dashboard-text">Results</span>
                     </div>
                     <div class="col-33">
+
                         <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/6_fees_shadow.png" ng-click="feelanding()"/></div>
+
                         <span class="full-width dashboard-text">Fees</span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-33">
-                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/timetable.png" ng-click="showAlert()"/></div>
+                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/timetable.png" ui-sref="app.timetable"/></div>
                         <span class="full-width dashboard-text">Time Table</span>
                     </div>
                     <div class="col-33">
-                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/6_history_shadow.png" ng-click="showAlert()"/></div>
+                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/6_history_shadow.png"/></div>
                         <span class="full-width dashboard-text">Student History</span>
                     </div>
                     <div class="col-33">
-                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/7_about_shadow.png" ng-click="showAlert()"/></div>
+                        <div class="full-width padding-bottom-text"><img class="dashboard-icon" src="img/7_about_shadow.png"/></div>
                         <span class="full-width dashboard-text">About</span>
                     </div>
                 </div>

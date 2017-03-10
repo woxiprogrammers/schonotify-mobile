@@ -2715,30 +2715,25 @@ angular.module('starter.controllers', [])
              $scope.clickOn="con1";
              $scope.side="left";
              $scope.bold1="bold";
-       $scope.showCon=function(con){
+$scope.showCon=function(con)
+         {
 
           $scope.clickOn=con;
                   if(con=="con1")
                       {
-
                            $scope.color="underline";
                            $scope.color1="";
                            $scope.side="left";
                            $scope.bold1="bold";
                            $scope.bold2="";
-
                       }
                   else{
-
                           $scope.color1="underline";
                           $scope.color="";
                           $scope.side="right";
                           $scope.bold2="bold";
                           $scope.bold1="";
                       }
-
-
-
                 }
 
 
