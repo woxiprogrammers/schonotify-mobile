@@ -36,7 +36,7 @@
             </div>
         </iion-item>
     </div>
-    <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
+    <ion-content ng-class="{expanded:$scope.isExpanded}" class='has-header has-subheader'>
         <div class="list padding-l-r-10">
             <label class="item item-input border-bottom">
                 <input type="text" ng-model="hwTitle" placeholder="Homework Title" ng-change="setTitle(hwTitle)">
@@ -47,7 +47,7 @@
                         <option value="" ng-disabled="true">--Select Subject--</option>
                     </select>
                 </div>
-            </div>                             
+            </div>
                 <div class="row">
                     <div class="col-33 border-bottom">
                         <select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batchList track by batch.id" ng-change="getClass(selectedBatch.batch)" ng-disabled="checkRole">
@@ -71,16 +71,31 @@
                         <option value="" ng-disabled="true">--Homework Type--</option>
                     </select>
                 </div>
-              </div>         
+              </div>
             <label class="item item-input">Due Date:
                  <input class="item-input border-bottom padding-5" ng-model ="dueDate" type="date" value= {{dueDate}} min="{{minDate}}" ng-change="updateDueDate(dueDate)">
             </label>
             <label class="item item-input border-bottom" ng-click="openModal()" ng-model="recipient">
                 {{recipient}}
-            </label>            
+            </label>
             <label class="item item-input">
                 <textarea ng-model="description" placeholder = "Homework Description" rows = "10" ng-change="setDescription(description)"></textarea>
              </label>
+
+
+                 <input type="file" placeholder="file" fileread="uploadme">
+                 <img src="{{uploadme}}" width="100" height="50" alt="Image preview...">
+
+               Image dataURI:
+                <input type="text" ng-model="myVal" value={{uploadme}}/>
+                <button ng-click="uploadImage()">test</button>
+
+                <br>
+                <button class="button button-full button-positive" ng-click="getImageSaveContact()">
+                    Get Image and Save a Contact with It
+                </button>
+                <img ng-src="{{collection.selectedImage}}" style="width:100%; height: auto;"/>
+
         </div>
     </ion-content>
 </ion-view>
@@ -118,17 +133,17 @@
                                 <h2 class = "margin-top-10"><strong>{{item.name}}</strong></h2>
                             </div>
                         </div>
-                    </ion-item>                    
+                    </ion-item>
                 </div>
                 <div class = "height-15 row"></div>
             </ion-content>
             <div class="bar bar-footer modal-bottom no-border">
                 <div class="row">
                     <div class="col-25 col-offset-50 text-center" ng-click="closeModal()">
-                        <label class="modal-bottom-text">CANCEL</label>
+                        <label class="modal-bottom-text" style="background-color:pink">Close</label>
                     </div>
                     <div class="col-25  text-center" ng-click="sendTo()">
-                        <label class="modal-bottom-text">OK</label>
+                        <label class="modal-bottom-text" style="background-color:pink">Ok</label>
                     </div>
                 </div>
 

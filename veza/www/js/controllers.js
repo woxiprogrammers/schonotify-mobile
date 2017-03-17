@@ -6,11 +6,12 @@ angular.module('starter.controllers', [])
 
 
 // baseUrl:'http://sspss.veza.co.in/api/v1/'
-  baseUrl:'http://test.woxi.co.in/api/v1/',
-//baseUrl:'http://school_mit.schnotify.com/api/v1/'
+  //baseUrl:'http://test.woxi.co.in/api/v1/',
+baseUrl:'http://school_mit.schnotify.com/api/v1/'
 //   http:'school_mit.schnotify.com/'
 
 })
+
 .factory('Data', function() {
     return {message}
 })
@@ -1191,28 +1192,6 @@ angular.module('starter.controllers', [])
             $scope.dueDate = newDate;
         }
 
-        $scope.getSelectedSub = function(subject){
-
-            var url= GLOBALS.baseUrl+"user/get-subjects-batches/"+subject['id']+"?token="+userSessions.userSession.userToken;
-            $http.get(url).success(function(response) {
-                    $scope.batchList = response['data'];
-                    $scope.SubjectId = subject['id'];
-
-                    $scope.classList.length = 0;
-                    $scope.BatchName = "-Batch-";
-                    $scope.className = "-Class-";
-                    $scope.divName = "-Div-";
-                    $scope.divisionsList.length = 0;
-                    $scope.contactList.length = 0;
-                    $scope.selectedList.length = 0;
-                    $scope.defaultList.length = 0;
-                    $scope.recipient = $scope.selectedList.length+" Student Selected";
-
-                })
-                .error(function(response) {
-                    console.log("Error in Response: " +response);
-                });
-        };
 
         $scope.getClass= function(batch){
                 var url= GLOBALS.baseUrl+"user/get-batches-classes/"+$scope.SubjectId+"/"+batch['id']+"?token="+userSessions.userSession.userToken;
@@ -1384,7 +1363,69 @@ angular.module('starter.controllers', [])
         };
 
     })
-    .controller('HwComposeCtrl', function($scope, $state, $ionicPopup, $filter, $timeout, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
+    .controller('HwComposeCtrl', function($scope, $state, $ionicPopup, $filter, $timeout, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal ,$cordovaImagePicker, $ionicPlatform)
+    {
+      $scope.collection = {
+    selectedImage : ''
+};
+
+$ionicPlatform.ready(function() {
+
+    $scope.getImageSaveContact = function() {
+        // Image picker will load images according to these settings
+        var options = {
+            maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
+            width: 800,
+            height: 800,
+            quality: 80            // Higher is better
+        };
+
+        $cordovaImagePicker.getPictures(options).then(function (results) {
+            // Loop through acquired images
+            for (var i = 0; i < results.length; i++) {
+                $scope.collection.selectedImage = results[i];   // We loading only one image so we can use it like this
+
+                window.plugins.Base64.encodeFile($scope.collection.selectedImage, function(base64){  // Encode URI to Base64 needed for contacts plugin
+                    $scope.collection.selectedImage = base64;
+
+
+                });
+            }
+        }, function(error) {
+            console.log('Error: ' + JSON.stringify(error));    // In case of error
+        });
+    };
+
+});
+
+
+
+       alert("s:"+$scope.myVal);
+    $scope.uploadImage = function() {
+
+      var fd = new FormData();
+       console.log("up:"+$scope.myVal);
+      var imgBlob = $scope.dataURItoBlob($scope.uploadme);
+      console.log(imgBlob);
+      fd.append('file', imgBlob);
+      $http.post(
+          'imageURL',
+          fd, {
+            transformRequest: angular.identity,
+            headers: {
+              'Content-Type': undefined
+            }
+          }
+        )
+        .success(function(response) {
+          console.log('success', response);
+        })
+        .error(function(response) {
+          console.log('error', response);
+        });
+    }
+
+
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -1437,7 +1478,7 @@ angular.module('starter.controllers', [])
 
 
         $scope.updateDueDate = function(newDate){
-            $scope.dueDate = newDate;
+          $scope.dueDate = newDate;
         };
 
         $scope.toggleSelection = function(studentId) {
@@ -1478,6 +1519,7 @@ angular.module('starter.controllers', [])
         };
 
         $scope.getSelectedSub = function(subject){
+
             $scope.recipient = "Select Student";
             $scope.checkRecipient = true;
             $scope.contactList.length = 0;
@@ -1495,6 +1537,10 @@ angular.module('starter.controllers', [])
 
 
         $scope.getClass= function(batch){
+            if(batch['id'] == null)
+            {
+              $scope.classList="null";
+            }
             $scope.recipient = "Select Student";
                 var url= GLOBALS.baseUrl+"user/get-batches-classes/"+$scope.SubjectId+"/"+batch['id']+"?token="+userSessions.userSession.userToken;
                 $http.get(url).success(function(response) {
@@ -1554,6 +1600,7 @@ angular.module('starter.controllers', [])
 
 
         $scope.sendTo = function(){
+          console.log($scope.selectedList);
             $scope.recipient = $scope.selectedList.length+" Student selected";
             $scope.closeModal();
         };
@@ -1571,8 +1618,10 @@ angular.module('starter.controllers', [])
                         $scope.showPopup();
                     }
                 }else{
-                    var url = GLOBALS.baseUrl+"user/homework-create?token="+userSessions.userSession.userToken;
-                        $http.post(url, {subject_id: $scope.SubjectId, title: $scope.hwTitle, batch_id: $scope.BatchId, class_id: $scope.classId, division_id: $scope.divId, due_date: $scope.dueDate, description: $scope.description, homework_type: $scope.hwTypeId, student_id: $scope.selectedList} ).success(function(response){
+                      var image=angular.toJson($scope.image);
+                      var url = GLOBALS.baseUrl+"user/homework-create?token="+userSessions.userSession.userToken;
+                        alert("abc :"+ $scope.collection.selectedImage);
+                        $http.post(url, {subject_id: $scope.SubjectId, title: $scope.hwTitle, batch_id: $scope.BatchId, class_id: $scope.classId, division_id: $scope.divId, due_date: $scope.dueDate, description: $scope.description, homework_type: $scope.hwTypeId, student_id: $scope.selectedList , image:$scope.collection.selectedImage} ).success(function(response){
                         if(response['status'] == 200){
                             $scope.msg = response['message'];
                             $scope.showPopup();
@@ -1628,6 +1677,7 @@ angular.module('starter.controllers', [])
         };
 
     })
+
     .controller('MessageCtrl', function($scope, $state, $timeout, $ionicPopup, ionicMaterialInk, $ionicSideMenuDelegate, GLOBALS, userSessions, $http, chatHist) {
 
         $scope.$parent.clearFabs();
@@ -3064,6 +3114,7 @@ $scope.showCon=function(con)
         }
 
         $scope.setEventDetail = function(detail){
+
           $scope.eventDetail = detail;
         }
 

@@ -303,18 +303,6 @@ angular.module('starter', ['ionic','base64', 'starter.controllers', 'ngCordova',
                 }
             }
         })
-        .state('app.feelanding', {
-            url: '/feelanding',
-            views: {
-                'menuContent': {
-                    templateUrl: 'templates/fee-landing-parent.html',
-                    controller: 'FeeLandingParentCntrl'
-                },
-                'fabContent': {
-                  template: ''
-                }
-            }
-        })
         .state('app.eventstatusteacher', {
             url: '/eventstatusteacher',
             params: {
