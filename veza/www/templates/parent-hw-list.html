@@ -33,9 +33,9 @@
                     <div class="col-80" ng-class='{ disabled: clickStatus}' ng-click="clickStatus || hwDetail(hw)">
                         <h2><strong>{{hw.title}}</strong></h2>
                         <p>{{hw.description}}<br><strong>{{hw.class_name}} {{hw.division_name}} Div {{hw.subject_name}}</strong></p>
-                        <div class="row padding-0 margin-top-5">
-                            <div class="col-10 col-offset-75 attachment-no"></div>
-                            <div class="col-15">{{hw.created_At}}</div>
+                        <div class="row padding-2 margin-top-5">
+                            <div style="float:left">{{hw.created_At}}</div><br>
+                            <img style="float:right" ng-src="{{hw.attachment_file}}" height="30%" width="30%">
                         </div>
                     </div>
                 </div>

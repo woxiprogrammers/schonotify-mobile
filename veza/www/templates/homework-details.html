@@ -27,11 +27,11 @@
                 </div>
                 <div class="col-90 margin-top-5">
                     <span class="inner-header">{{hwrkDetail.teacher_name}}</span>
-                </div>                
+                </div>
             </div>
         </iion-item>
     </div>
-    <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
+    <ion-content ng-class="{expanded:$scope.isExpanded}" padding="true">
         <div class="list padding-l-r-5">
             <div class="row bold description-title-font">{{hwrkDetail.title}}</div>
             <div class="row margin-top-5"><div class="bold creator-font">{{hwrkDetail.teacher_name}}</div></div>
@@ -49,6 +49,9 @@
             </div>
                     <div class="row">
                         <p class="margin-top-36 description-font"><b class="bold">Description</b><br>{{hwrkDetail.description}}</p>
+                    </div>
+                    <div class="card">
+                      <img ng-src="{{hwrkDetail.attachment_file}}" height="30%" width="90%">
                     </div>
         </div>
     </ion-content>

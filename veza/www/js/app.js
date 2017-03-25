@@ -1,7 +1,7 @@
 // Ionic Starter App
 //Creator: Shantanu Acharya
 
-angular.module('starter', ['ionic','base64', 'starter.controllers', 'ngCordova', 'ionic-material', 'highcharts-ng', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-material', 'highcharts-ng', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate'])
 
 .run(function($rootScope, $ionicPlatform, $cordovaSplashscreen) {
     $ionicPlatform.ready(function() {

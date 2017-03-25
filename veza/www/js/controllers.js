@@ -1,12 +1,12 @@
 /* global angular, document, window */
 'use strict';
 var db = null;
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['naif.base64'])
 .constant('GLOBALS',{
 
 
-// baseUrl:'http://sspss.veza.co.in/api/v1/'
-  //baseUrl:'http://test.woxi.co.in/api/v1/',
+//baseUrl:'http://sspss.veza.co.in/api/v1/'
+ //baseUrl:'http://test.woxi.co.in/api/v1/',
 baseUrl:'http://school_mit.schnotify.com/api/v1/'
 //   http:'school_mit.schnotify.com/'
 
@@ -21,7 +21,6 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
 .service('userSessions', function Usersession(){
 
         var userSessions = this;
-
         userSessions.userSession = [];
         userSessions.userSession.userToken = 0;
         userSessions.setSession = function(token, role, msgcount){
@@ -32,10 +31,7 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
         };
 
         userSessions.setUserId = function(id){
-
             userSessions.userSession.userId = id;
-
-
             return true;
         };
 
@@ -132,6 +128,37 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
 
 
 .controller('AppCtrl', function(myservice,GLOBALS,$scope, $state, $ionicPopup, $http, $ionicModal, $ionicPopover, $timeout, $ionicSideMenuDelegate, $ionicHistory, userSessions) {
+  $scope.$on("$ionicView.beforeEnter", function(event, data){
+    var url= GLOBALS.baseUrl+"user/get-message-count/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
+        $http.get(url).success(function(response) {
+            if(response['data']['Badge_count']['message_count'] > 0){
+                userSessions.setMsgCount(response['data']['Badge_count']['message_count']);
+                $scope.msgCount = response['data']['Badge_count']['message_count'];
+            }else{
+                $scope.msgCount = '';
+            }
+            })
+            .error(function(response) {
+                console.log("Error in Response: " +response);
+            });
+    if(userSessions.userSession.msgcount > 0){
+        $scope.msgCount = userSessions.userSession.msgcount;
+    }
+    $scope.studentlistForSwitch=function()
+      {
+        var url= GLOBALS.baseUrl+"user/get-switching-details?token="+userSessions.userSession.userToken;
+              $http.get(url).success(function(response) {
+              console.log(response['data']['Parent_student_relation']['Students']);
+              localStorage.setItem("studentdata", JSON.stringify(response['data']['Parent_student_relation']['Students']));
+                $scope.studentdataswitch=(response['data']['Parent_student_relation']['Students']);
+                 })
+                 .error(function(response)
+                               {
+                                   console.log("Error in Response: " +response);
+                               });
+      }
+        $scope.studentlistForSwitch();
+  });
 
 
 
@@ -141,34 +168,29 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
       template: 'To be released soon..! '
          });
     }
-    var url= GLOBALS.baseUrl+"user/get-switching-details?token="+userSessions.userSession.userToken;
-          $http.get(url).success(function(response) {
-          console.log(response['data']['Parent_student_relation']['Students']);
-          localStorage.setItem("studentdata", JSON.stringify(response['data']['Parent_student_relation']['Students']));
-
-
-            $scope.studentdataswitch=(response['data']['Parent_student_relation']['Students']);
-
-                  })
-
-               .error(function(response)
-                           {
-                               console.log("Error in Response: " +response);
-                           });
-                $scope.studentclick=function(student_id)
-                           {
-
+    $scope.studentlistForSwitch=function()
+      {
+        var url= GLOBALS.baseUrl+"user/get-switching-details?token="+userSessions.userSession.userToken;
+              $http.get(url).success(function(response) {
+              console.log(response['data']['Parent_student_relation']['Students']);
+              localStorage.setItem("studentdata", JSON.stringify(response['data']['Parent_student_relation']['Students']));
+                $scope.studentdataswitch=(response['data']['Parent_student_relation']['Students']);
+                 })
+                 .error(function(response)
+                               {
+                                   console.log("Error in Response: " +response);
+                               });
+      }
+               $scope.studentlistForSwitch();
+               $scope.studentclick=function(student_id)
+                         {
+                               $scope.gotodashboard();
                                return userSessions.setUserId(student_id);
-
-                            }
+                         }
                 $scope.gotodashboard=function()
                             {
                                 $state.go('app.dashboard');
                             }
-
-
-
-
     $scope.loginData = {};
     console.log("scasa:"+  $scope.loginData);
     $scope.isExpanded = false;
@@ -202,16 +224,12 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
             }
         }
     };
-
-
     $scope.setExpanded = function(bool) {
         $scope.isExpanded = bool;
     };
-
     $scope.setHeaderFab = function(location) {
         var hasHeaderFabLeft = false;
         var hasHeaderFabRight = false;
-
         switch (location) {
             case 'left':
                 hasHeaderFabLeft = true;
@@ -220,11 +238,9 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
                 hasHeaderFabRight = true;
                 break;
         }
-
         $scope.hasHeaderFabLeft = hasHeaderFabLeft;
         $scope.hasHeaderFabRight = hasHeaderFabRight;
     };
-
     $scope.hasHeader = function() {
         var content = document.getElementsByTagName('ion-content');
         for (var i = 0; i < content.length; i++) {
@@ -251,7 +267,6 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
             fabs[0].remove();
         }
     };
-
     $scope.signOut = function() {
         console.log("User Logged out");
         userSessions.setToken (0);
@@ -267,7 +282,22 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
     $scope.toggleLeftSideMenu = function() {
       if(userSessions.userSession.userRole == "parent")
       {
-          $scope.obj=  userSessions.ss();
+        $scope.studentlistForSwitch=function()
+          {
+            var url= GLOBALS.baseUrl+"user/get-switching-details?token="+userSessions.userSession.userToken;
+                  $http.get(url).success(function(response) {
+                  console.log(response['data']['Parent_student_relation']['Students']);
+                  localStorage.setItem("studentdata", JSON.stringify(response['data']['Parent_student_relation']['Students']));
+                    $scope.studentdataswitch=(response['data']['Parent_student_relation']['Students']);
+                     })
+                     .error(function(response)
+                                   {
+                                       console.log("Error in Response: " +response);
+                                   });
+          }
+            $scope.studentlistForSwitch();
+
+           $scope.obj=  userSessions.ss();
            $ionicSideMenuDelegate.toggleLeft();
       }
       else{
@@ -405,55 +435,31 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
             $scope.sessionUserRole = '';
                     var url= GLOBALS.baseUrl+"user/auth";
                     console.log(url);
-
                     $http.post(url, { email: email, password: password }).success(function(res) {
-
-
                     $scope.Switchstudentlist=(res['data']['Students']);
                     console.log($scope.Switchstudentlist);
-
-                        $scope.data.message = res['message'];
-                        console.log("Status: "+res['status']);
-
-                        if(res['status'] == 200){
+                    $scope.data.message = res['message'];
+                    console.log("Status: "+res['status']);
+                       if(res['status'] == 200){
                           $scope.studentlist=(res.data['users']);
                           console.log($scope.studentlist);
-
                             $scope.userDataArray = userData.setUserData(res['data']['users']);
-
-
                             $scope.sessionToken = res['data']['users']['token'];
                             $scope.sessionUserRole = res['data']['users']['role_type'];
                             $scope.sessionId = res['data']['Badge_count']['user_id'];
                             $scope.messageCount = res['data']['Badge_count']['message_count'];
-
                             var  userSet = false;
                             var idSet = false;
-
                             userSet = userSessions.setSession($scope.sessionToken, $scope.sessionUserRole, $scope.messageCount);
-
                             idSet = userSessions.setUserId($scope.sessionId);
-
-
-                                if(userSet == true && idSet == true){
-
-                                   $state.go('app.dashboard');
-                                }
+                            if(userSet == true && idSet == true){
+                                 $state.go('app.dashboard');}
                         }
             })
             .error(function(err) {
                 console.log("Error: "+err);
-              /*  if(err.hasOwnProperty('status')){
-                    $scope.data.message = err.message;
-                }
-                else{
-                    $scope.data.message = "Sorry!! Incorrect email or password";
-                }
-                $scope.showPopup();
-                */
             });
         }
-
         $scope.showPopup = function() {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
@@ -525,9 +531,6 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
         if(userSessions.userSession.userToken == 0){
             $state.go('login');
         }
-
-
-
         var url= GLOBALS.baseUrl+"user/get-message-count/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response) {
                 if(response['data']['Badge_count']['message_count'] > 0){
@@ -838,7 +841,7 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
             }, 3000);
         };
     })
-    .controller('UnpubHwListCtrl', function($scope, $state, $ionicPopup, hwDetails, userSessions, $http, GLOBALS, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('UnpubHwListCtrl', function($scope, $state, $ionicPopup, hwDetails, userSessions, $http, GLOBALS, $timeout, ionicMaterialInk, $ionicSideMenuDelegate , $ionicLoading) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -859,14 +862,21 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
         $scope.clickStatus = false;
 
         $scope.publishHw = function(hwId){
+          $ionicLoading.show({
+            template: 'Loading...',
+          })
+          $ionicLoading.show();
+
             var url = GLOBALS.baseUrl+"user/publish-homework?token="+userSessions.userSession.userToken;
             $http.post(url, {_method: 'PUT', homework_id: hwId}).success(function(response){
                 $scope.errorMessage = response['message'];
+                $ionicLoading.hide();
                 $scope.showPopup();
                 $scope.loadUnpHw();
             }).error(function(err) {
                 console.log(err);
                 $scope.aclMessage = "Access Denied";
+                $ionicLoading.hide();
                 $scope.showPopup();
                 $state.go('app.homework');
             });
@@ -908,6 +918,7 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
             };
 
         $scope.deleteHomework = function(){
+
             var url = GLOBALS.baseUrl+"user/deleteHomework?token="+userSessions.userSession.userToken;
             $http.post(url, {_method: 'PUT', homework_id: $scope.hwId}).success(function(response){
                 $scope.loadUnpHw();
@@ -988,6 +999,7 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
                 .success(function(response) {
                     if(response['status'] == 200){
                        $scope.homeworksListing = response['data'];
+                       console.log($scope.homeworksListing);
                        if($scope.homeworksListing == ''){
                             $scope.errorMessage = response['message'];
                             $scope.showPopup();
@@ -1046,6 +1058,7 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.hwrkDetail = hwDetails.getHwView();
+        console.log($scope.hwrkDetail);
         $scope.hwId = $scope.hwrkDetail.homework_id;
 
         var url= GLOBALS.baseUrl+"user/view-detail-homework/"+$scope.hwId+"?token="+userSessions.userSession.userToken;
@@ -1090,8 +1103,9 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.hwrkDetail = hwDetails.getHwView();
+
     })
-    .controller('EditHomeworkCtrl', function($scope, $state, $ionicPopup, $timeout, $filter, hwDetails, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
+    .controller('EditHomeworkCtrl', function($scope, $state, $ionicPopup, $timeout, $filter, hwDetails, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal ,$ionicLoading) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -1114,7 +1128,7 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
         $scope.BatchId = $scope.editHwData.batch_id;
         $scope.BatchName = $scope.editHwData.batch_name;
 
-
+        $scope.image=$scope.editHwData.attachment_file;
         $scope.hwTitle = $scope.editHwData.homeworkTitle;
         $scope.classId = $scope.editHwData.class_id;
         $scope.divId = $scope.editHwData.division_id;
@@ -1193,7 +1207,23 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
         }
 
 
+        $scope.getSelectedSub = function(subject){
+            $scope.recipient = "Select Student";
+            $scope.BatchName = "Batch";
+            $scope.checkRecipient = true;
+            $scope.contactList.length = 0;
+            var url= GLOBALS.baseUrl+"user/get-subjects-batches/"+subject['id']+"?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response) {
+                    $scope.batchList = response['data'];
+                    $scope.SubjectId = subject['id'];
+                })
+                .error(function(response) {
+                    console.log("Error in Response: " +response);
+                });
+        };
+
         $scope.getClass= function(batch){
+                $scope.className="Class";
                 var url= GLOBALS.baseUrl+"user/get-batches-classes/"+$scope.SubjectId+"/"+batch['id']+"?token="+userSessions.userSession.userToken;
                 $http.get(url).success(function(response) {
                     $scope.classList = response['data'];
@@ -1201,7 +1231,6 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
                     $scope.divName = "-Div-";
                     $scope.divisionsList.length = 0;
                     $scope.contactList.length = 0;
-
                     $scope.selectedList.length = 0;
                     $scope.defaultList.length = 0;
                     $scope.recipient = $scope.selectedList.length+" Student Selected";
@@ -1233,7 +1262,6 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
                 $scope.selectedList.length = 0;
             }
                 var url= GLOBALS.baseUrl+"user/get-students-list/"+divType+"?token="+userSessions.userSession.userToken;
-
                 $http.get(url)
                     .success(function(response) {
                         $scope.contactList.length = 0;
@@ -1302,17 +1330,20 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
         };
 
         $scope.saveDraft = function(){
-
+          $ionicLoading.show({template: 'Loading...',})
+          $ionicLoading.show();
             $scope.dueDate = $filter('date')($scope.dueDate, "yyyy-MM-dd");
             $scope.minDate = $filter('date')($scope.minDate, "yyyy-MM-dd");
             if($scope.dueDate >= $scope.minDate){
                 if($scope.selectedList.length <= 0){
                 $scope.msg = "Please Add Recipient";
+                $ionicLoading.hide();
                 $scope.showPopup();
 
             }else{
                 if($scope.hwTitle == '' || $scope.dueDate == '' || $scope.description == ''  || $scope.selectedList.length <= 0 || $scope.hwTypeId == ''){
                     $scope.msg = "Check if all fields are filled";
+                    $ionicLoading.hide();
                     $scope.showPopup();
                 }
                 else{
@@ -1320,11 +1351,13 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
                     $http.post(url, {_method:'PUT', homework_id: $scope.hwId, subject_id: $scope.SubjectId, title: $scope.hwTitle, batch_id: $scope.BatchId, class_id: $scope.classId, division_id: $scope.divId, due_date: $scope.dueDate, student: $scope.selectedList, description: $scope.description, homework_type: $scope.hwTypeId, attachment_file: ''}).success(function(response){
                         if(response['status'] == 200){
                             $scope.msg = response['message'];
+                            $ionicLoading.hide();
                             $scope.showPopup();
                             $state.go('app.edithomeworklisting');
                         }
                         else{
                             $scope.msg = response['message'];
+                            $ionicLoading.hide();
                             $scope.showPopup();
                         }
                     }).error(function(response) {
@@ -1335,12 +1368,14 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
                                 else{
                                     $scope.msg = "Access Denied";
                                 }
+                                $ionicLoading.hide();
                                 $scope.showPopup();
                        });
                     }
                 }
             }else{
                 $scope.msg = "Due Date should be greater than Current Date";
+                $ionicLoading.hide();
                 $scope.showPopup();
             }
 
@@ -1363,78 +1398,35 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
         };
 
     })
-    .controller('HwComposeCtrl', function($scope, $state, $ionicPopup, $filter, $timeout, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal ,$cordovaImagePicker, $ionicPlatform)
+    .controller('HwComposeCtrl', function( $window, $rootScope,$scope, $state, $ionicPopup, $filter, $timeout, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal ,$cordovaImagePicker, $ionicPlatform ,$ionicLoading)
     {
-      $scope.collection = {
-    selectedImage : ''
-};
 
-$ionicPlatform.ready(function() {
+           $scope.onChange = function (e, fileList)
+            {
 
-    $scope.getImageSaveContact = function() {
-        // Image picker will load images according to these settings
-        var options = {
-            maximumImagesCount: 1, // Max number of selected images, I'm using only one for this example
-            width: 800,
-            height: 800,
-            quality: 80            // Higher is better
-        };
-
-        $cordovaImagePicker.getPictures(options).then(function (results) {
-            // Loop through acquired images
-            for (var i = 0; i < results.length; i++) {
-                $scope.collection.selectedImage = results[i];   // We loading only one image so we can use it like this
-
-                window.plugins.Base64.encodeFile($scope.collection.selectedImage, function(base64){  // Encode URI to Base64 needed for contacts plugin
-                    $scope.collection.selectedImage = base64;
-
-
-                });
             }
-        }, function(error) {
-            console.log('Error: ' + JSON.stringify(error));    // In case of error
-        });
-    };
 
-});
+           $scope.onLoad = function (e, reader, file, fileList, fileOjects, fileObj)
+            {
 
+              $scope.image=fileObj.base64;
 
-
-       alert("s:"+$scope.myVal);
-    $scope.uploadImage = function() {
-
-      var fd = new FormData();
-       console.log("up:"+$scope.myVal);
-      var imgBlob = $scope.dataURItoBlob($scope.uploadme);
-      console.log(imgBlob);
-      fd.append('file', imgBlob);
-      $http.post(
-          'imageURL',
-          fd, {
-            transformRequest: angular.identity,
-            headers: {
-              'Content-Type': undefined
+              //alert('this is handler for file reader onload event!');
             }
-          }
-        )
-        .success(function(response) {
-          console.log('success', response);
-        })
-        .error(function(response) {
-          console.log('error', response);
-        });
-    }
 
+            var uploadedCount = 0;
+            $scope.files = [];
 
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
-
+        $scope.Batch="Batch";
+        $scope.Class="Class";
+        $scope.Division="Division";
         // Set Header
         $scope.$parent.hideHeader();
-
         // Set Ink
         ionicMaterialInk.displayEffect();
         var url = GLOBALS.baseUrl+"user/get-acl-details?token="+userSessions.userSession.userToken;
@@ -1519,8 +1511,10 @@ $ionicPlatform.ready(function() {
         };
 
         $scope.getSelectedSub = function(subject){
-
-            $scope.recipient = "Select Student";
+           $scope.recipient = "Select Student";
+            $scope.Batch="Batch";
+            $scope.Class="Class";
+            $scope.Division="Division";
             $scope.checkRecipient = true;
             $scope.contactList.length = 0;
             var url= GLOBALS.baseUrl+"user/get-subjects-batches/"+subject['id']+"?token="+userSessions.userSession.userToken;
@@ -1606,29 +1600,36 @@ $ionicPlatform.ready(function() {
         };
 
         $scope.saveDraft = function(){
+            $ionicLoading.show({
+               template: 'Loading...',})
+            $ionicLoading.show();
             $scope.dueDate = $filter('date')($scope.dueDate, "yyyy-MM-dd");
             $scope.minDate = $filter('date')($scope.minDate, "yyyy-MM-dd");
             if($scope.dueDate >= $scope.minDate){
                 if($scope.selectedList.length == 0 || $scope.hwTitle == '' || $scope.dueDate == '' || $scope.description == '' || $scope.hwTypeId == ''){
                     if($scope.selectedList.length <= 0){
                         $scope.msg = "Please Add Recipient";
+                          $ionicLoading.hide();
                         $scope.showPopup();
                     }else{
                         $scope.msg = "Check if all fields are filled";
+                        $ionicLoading.hide();
                         $scope.showPopup();
                     }
                 }else{
                       var image=angular.toJson($scope.image);
                       var url = GLOBALS.baseUrl+"user/homework-create?token="+userSessions.userSession.userToken;
-                        alert("abc :"+ $scope.collection.selectedImage);
-                        $http.post(url, {subject_id: $scope.SubjectId, title: $scope.hwTitle, batch_id: $scope.BatchId, class_id: $scope.classId, division_id: $scope.divId, due_date: $scope.dueDate, description: $scope.description, homework_type: $scope.hwTypeId, student_id: $scope.selectedList , image:$scope.collection.selectedImage} ).success(function(response){
+
+                        $http.post(url, {subject_id: $scope.SubjectId, title: $scope.hwTitle, batch_id: $scope.BatchId, class_id: $scope.classId, division_id: $scope.divId, due_date: $scope.dueDate, description: $scope.description, homework_type: $scope.hwTypeId, student_id: $scope.selectedList , image:$scope.image} ).success(function(response){
                         if(response['status'] == 200){
                             $scope.msg = response['message'];
+                            $ionicLoading.hide();
                             $scope.showPopup();
                             $state.go('app.edithomeworklisting');
                         }
                         else{
                             $scope.msg = response['message'];
+                            $ionicLoading.hide();
                             $scope.showPopup();
                         }
                     }).error(function(response) {
@@ -1639,11 +1640,13 @@ $ionicPlatform.ready(function() {
                             else{
                                 $scope.msg = "Access Denied";
                             }
+                            $ionicLoading.hide();
                             $scope.showPopup();
                     });
                 }
             }else{
                 $scope.msg = "Due Date should be greater than Current Date";
+                $ionicLoading.hide();
                 $scope.showPopup();
 
             }
@@ -2682,6 +2685,8 @@ $ionicPlatform.ready(function() {
                 if(response['status'] == 200){
                   console.log(response['data']);
                        $scope.eventList = response['data'];
+                       console.log($scope.eventList);
+
                        if($scope.eventList == '') {
                            $scope.aclMessage = response['message'];
                            $scope.showPopup();
@@ -2979,7 +2984,7 @@ $scope.showCon=function(con)
         $scope.eventdetailsList = $stateParams;
     })
 
-    .controller('EventStatusTeacherCtrl', function($state, $scope, $http, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams, userSessions, GLOBALS, $ionicPopup) {
+    .controller('EventStatusTeacherCtrl', function($state, $scope, $http, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams, userSessions, GLOBALS, $ionicPopup , $ionicLoading) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -3002,16 +3007,20 @@ $scope.showCon=function(con)
 
         $scope.startEventTime = new Date();
         $scope.endEventTime = new Date();
-
         $scope.eventdetailsList = $stateParams;
-
-        $scope.draftEventForPublish = function(eventId) {
-
-          var url = GLOBALS.baseUrl+"user/send-for-publish-event?token="+userSessions.userSession.userToken;
-          $http.post(url, {event_id: eventId, _method : 'PUT'})
-          .success(function(response){
+        $scope.draftEventForPublish = function(eventId)
+          {
+            $ionicLoading.show({
+            template: 'Loading...',
+          })
+        $ionicLoading.show();
+        var url = GLOBALS.baseUrl+"user/send-for-publish-event?token="+userSessions.userSession.userToken;
+        $http.post(url, {event_id: eventId, _method : 'PUT'})
+            .success(function(response){
               if(response['status'] == 200){
                          $scope.responseMessage = response['message'];
+                         $state.go('app.eventlandingteacher');
+                         $ionicLoading.hide();
                          $scope.showPopup();
                          $state.go(app.eventlandingteacher);
               } else {
@@ -3068,27 +3077,28 @@ $scope.showCon=function(con)
         }
     })
 
-    .controller('EditEventCtrl', function($ionicPopup,GLOBALS,$http,userSessions,$scope, $state, $filter, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
+    .controller('EditEventCtrl', function( $ionicLoading ,$ionicPopup,GLOBALS,$http,userSessions,$scope, $state, $filter, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
-
-        // Set Header
         $scope.$parent.hideHeader();
-
-        // Set Ink
         ionicMaterialInk.displayEffect();
-
-        //Side-Menu
-
         $ionicSideMenuDelegate.canDragContent(true);
-
         $scope.noticeBoard = function() {
             $state.go('app.sharedNotification');
         };
+        $scope.onChange = function (e, fileList)
+          {
 
+          }
+        $scope.onLoad = function (e, reader, file, fileList, fileOjects, fileObj)
+          {
+            $scope.image=fileObj.base64;
+          }
+        var uploadedCount = 0;
+        $scope.files = [];
         $scope.eventData = $stateParams.obj;
         $scope.minDate = new Date();
         $scope.eventTitle = null
@@ -3096,13 +3106,6 @@ $scope.showCon=function(con)
         $scope.eventImage = null;
         $scope.responseMessage = null;
         $scope.statusEvent = 0;
-
-
-
-
-
-
-
         $scope.setEventStartDate= function(startEventTime) {
           $scope.startEventTime = startEventTime;
         }
@@ -3112,33 +3115,28 @@ $scope.showCon=function(con)
         $scope.setEventTitle = function(title){
           $scope.eventTitle = title;
         }
-
         $scope.setEventDetail = function(detail){
 
           $scope.eventDetail = detail;
         }
-
         $scope.setImage = function(image){
           $scope.eventImage = image;
         }
-
-        angular.forEach($scope.eventData, function (event) {
+        angular.forEach($scope.eventData, function (event)
+        {
           $scope.eventTitle = event.title;
           $scope.eventDetail = event.detail;
           $scope.eventImage = event.path;
           $scope.statusEvent = 0;
           $scope.startEventTime=event.start_date;
           $scope.endEventTime=event.end_date;
-
-
-
         });
          var pqr=$scope.eventData.obj['id'];
-
-            $scope.saveAsDraftEvent  = function() {
+         $scope.saveAsDraftEvent  = function()
+         {
             $scope.statusEvent = 0;
             $scope.craeteEventWithPublishAndDraft($scope.statusEvent); //ststus  = 1 => Send for approval : pending
-        }
+         }
 
             $scope.showPopup = function() {
             // An elaborate, custom popup
@@ -3156,48 +3154,50 @@ $scope.showCon=function(con)
             }, 3000);
         }
 
-      $scope.updateEvent = function(statusEvent) {
-
-
-        if($scope.eventTitle == null || $scope.eventDetail == null || $scope.startEventTime == null || $scope.endEventTime == null){
+      $scope.updateEvent = function(statusEvent)
+       {
+         $ionicLoading.show({
+           template: 'Loading...',
+           duration: 3000
+         })
+          $ionicLoading.show();
+          if($scope.eventTitle == null || $scope.eventDetail == null || $scope.startEventTime == null || $scope.endEventTime == null){
                 if($scope.eventTitle == null){
-                    $scope.responseMessage = "Fill mandatory fields";
+                    $scope.responseMessage = "Fil mandatory fields";
                 }
                 if($scope.eventDetail == null){
-                    $scope.responseMessage = "Fill mandatory fields";
+                    $scope.responseMessage = "Fi mandatory fields";
                 }
                 if($scope.startEventTime == null){
-                    $scope.responseMessage = "Fill mandatory fields";
+                    $scope.responseMessage = "F mandatory fields";
                 }
                 if($scope.endEventTime == null){
-                    $scope.responseMessage = "Fill mandatory fields";
+                    $scope.responseMessage = " mandatory fields";
                 }
+                $ionicLoading.hide();
                 $scope.showPopup();
         } else {
-
-
-
 
           $scope.startEventTime = $filter('date')($scope.startEventTime, "yyyy-MM-dd");
           $scope.endEventTime = $filter('date')($scope.endEventTime, "yyyy-MM-dd");
 
           var url = GLOBALS.baseUrl+"user/edit-event?token="+userSessions.userSession.userToken;
-
-          $http.post(url, {_method:"PUT",event_id:pqr,title: $scope.eventTitle, detail: $scope.eventDetail, start_date:$scope.startEventTime, end_date: $scope.endEventTime, status:statusEvent,flag:1})
+          $http.post(url, {_method:"PUT",event_id:pqr,title: $scope.eventTitle, detail: $scope.eventDetail, start_date:$scope.startEventTime, end_date: $scope.endEventTime,imageBase:$scope.image,status:statusEvent,flag:1})
 
           .success(function(response){
               if(response['status'] == 200){
-
                          $scope.responseMessage = response['message'];
+                         $ionicLoading.hide();
                          $scope.showPopup();
 
               } else {
-
                       $scope.responseMessage = response['message'];
+                      $ionicLoading.hide();
                       $scope.showPopup();
               }
           }).error(function(err) {
               $scope.responseMessage = "Something Went Worng!!!";
+              $ionicLoading.hide();
               $scope.showPopup();
           });
           $state.go('app.eventlandingteacher');
@@ -3208,7 +3208,7 @@ $scope.showCon=function(con)
 
 
     })
-    .controller('CreateEventCtrl', function( $ionicHistory,$ionicLoading,$filter, $scope, $state, GLOBALS, $timeout, $http, userSessions, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $cordovaActionSheet,$cordovaImagePicker, $ionicPlatform,$base64) {
+    .controller('CreateEventCtrl', function( $ionicHistory,$ionicLoading,$filter, $scope, $state, GLOBALS, $timeout, $http, userSessions, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $cordovaActionSheet,$cordovaImagePicker, $ionicPlatform) {
       $scope.$on("$ionicView.beforeEnter", function(event, data){
 
          // handle event$scope.show = function() {
@@ -3233,10 +3233,16 @@ $scope.showCon=function(con)
            });
          }
        });
+        $scope.onChange = function (e, fileList)
+          {
 
-
-
-
+          }
+        $scope.onLoad = function (e, reader, file, fileList, fileOjects, fileObj)
+          {
+            $scope.image=fileObj.base64;
+          }
+        var uploadedCount = 0;
+        $scope.files = [];
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -3374,15 +3380,11 @@ $scope.selectPicture = function(sourceType) {
                 }
                 $scope.showPopup();
         } else {
-
-
-
-
           $scope.startEventTime = $filter('date')($scope.startEventTime, "yyyy-MM-dd");
           $scope.endEventTime = $filter('date')($scope.endEventTime, "yyyy-MM-dd");
           var url = GLOBALS.baseUrl+"user/create-event?token="+userSessions.userSession.userToken;
 
-          $http.post(url, {title: $scope.eventTitle, detail: $scope.eventDetail, start_date: $scope.startEventTime, end_date: $scope.endEventTime, img: $scope.imagesrc, status:statusEvent})
+          $http.post(url, {title: $scope.eventTitle, detail: $scope.eventDetail, start_date: $scope.startEventTime, end_date: $scope.endEventTime, img:$scope.image, status:statusEvent})
           .success(function(response){
               if(response['status'] == 200){
 
@@ -3931,9 +3933,9 @@ $scope.selectPicture = function(sourceType) {
         $scope.timeTableList = [];
         $scope.setDay = '';
         $scope.divId = '';
-        $scope.batchName = 'Batch';
-        $scope.className = 'Class';
-        $scope.divisionName = 'Div';
+        //$scope.batchName = 'Batch';
+        //$scope.className = 'Class';
+        //$scope.divisionName = 'Div';
         $scope.userRole = userSessions.userSession.userRole;
         $scope.date = new Date();
         switch ($scope.currentDay = $filter('date')(new Date(), 'EEEE')) {
@@ -3998,7 +4000,7 @@ $scope.selectPicture = function(sourceType) {
         };
 
 
-        $scope.defaultTimetable = function(){
+        $scope.defaultTimetable = function(batchName,className,divisionName){
             var url = null;
             if(userSessions.userSession.userRole == "parent"){
               url = GLOBALS.baseUrl+"user/view-timetable-parent/"+userSessions.userSession.userId+"/"+$scope.currentDay+"?token="+userSessions.userSession.userToken;
@@ -4126,8 +4128,7 @@ $scope.selectPicture = function(sourceType) {
         $scope.getDivId = function(division){
             $scope.divId = division['id'];
         }
-
-        // Triggered on a button click, or some other target
+       // Triggered on a button click, or some other target
         $scope.showPopupError = function() {
             // An elaborate, custom popup
             var myPopupError = $ionicPopup.show({
@@ -4153,11 +4154,13 @@ $scope.selectPicture = function(sourceType) {
                 template: '<div class="list">'+
                     '<div class="row">'+
                     '<div class="col-33 border-bottom">'+
+                      '<h2>{{batchName}}</h2>'+
                         '<select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batchList track by batch.id" ng-change="getClass(selectedBatch.batch.id)">'+
                             '<option value="" ng-disabled="true" ng-model="batchName">-{{batchName}}-</option>'+
                         '</select>'+
                     '</div>'+
                     '<div class="col-33 border-right border-bottom">'+
+                    '<h2>{{className}}</h2>'+
                         '<select class="item item-input item-select" ng-model="selectedClass.class" ng-options="class.name for class in classList track by class.id" ng-change="getDivision(selectedClass.class.id)">'+
                             '<option value="" ng-disabled="true" ng-model="className">-{{className}}-</option>'+
                         '</select>'+

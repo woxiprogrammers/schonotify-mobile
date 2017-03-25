@@ -51,17 +51,17 @@
                 <div class="row">
                     <div class="col-33 border-bottom">
                         <select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batchList track by batch.id" ng-change="getClass(selectedBatch.batch)" ng-disabled="checkRole">
-                            <option value="" ng-disabled="true">-Batch-</option>
+                            <option value="" ng-disabled="true" ng-model="Division">--{{Batch}}--</option>
                         </select>
                     </div>
                     <div class="col-33 border-right border-bottom">
                         <select class="item item-input item-select" ng-model="selectedClass.class" ng-options="class.name for class in classList track by class.id" ng-change="getDivision(selectedClass.class)" ng-disabled="checkRole">
-                            <option value="" ng-disabled="true">-Class-</option>
+                            <option value="" ng-disabled="true" ng-model="Division">--{{Class}}--</option>
                         </select>
                     </div>
                     <div class="col-33 border-bottom">
                         <select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.name for division in divisionsList track by division.id" ng-change="getStudentList(selectedDivision.division)" ng-disabled="checkRole">
-                            <option value="" ng-disabled="true">-Div-</option>
+                            <option value="" ng-disabled="true" ng-model="Division">{{Division}}</option>
                         </select>
                     </div>
               </div>
@@ -81,22 +81,45 @@
             <label class="item item-input">
                 <textarea ng-model="description" placeholder = "Homework Description" rows = "10" ng-change="setDescription(description)"></textarea>
              </label>
+        <div class="container">
+           <form name="form">
+             <h3>Single File Selection</h3>
+             <div class="input-group">
+                  <label for="file">Select File</label>
+                  <input type="file" ng-model="file" name="file" base-sixty-four-input required onLoad="onLoad" maxsize="500" accept="image/*">
+                  <span class="help-block">
+                    <ul>
+                      <li>required</li>
+                      <li>maxsize = 500</li>
+                      <li>accept = image/*</li>
+                    </ul>
+                  </span>
+              </div>
 
+               <b>Model Value:</b>
+              <table class="table table-bordered table-striped">
+                <tr>
+                  <th>filename</th>
+                  <th>filetype</th>
+                  <th>filesize (<i><small>KB</small></i>)</th>
+                  <th>base64</th>
+                </tr>
+                <tr ng-show="file">
+                  <td>{{file.filename}}</td>
+                  <td>{{file.filetype}}</td>
+                  <td>{{file.filesize / 1000}}</td>
+                  <td>{{file.base64.substring(0, 30)}}...</td>
+                </tr>
+                <tr>
+                  <td colspan="4" ng-show="!file">
+                    <small><i>No file selected.</i></small>
+                  </td>
+                </tr>
+              </table>
+              <hr>
+              </form>
+         </div>
 
-                 <input type="file" placeholder="file" fileread="uploadme">
-                 <img src="{{uploadme}}" width="100" height="50" alt="Image preview...">
-
-               Image dataURI:
-                <input type="text" ng-model="myVal" value={{uploadme}}/>
-                <button ng-click="uploadImage()">test</button>
-
-                <br>
-                <button class="button button-full button-positive" ng-click="getImageSaveContact()">
-                    Get Image and Save a Contact with It
-                </button>
-                <img ng-src="{{collection.selectedImage}}" style="width:100%; height: auto;"/>
-
-        </div>
     </ion-content>
 </ion-view>
 

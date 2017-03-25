@@ -36,7 +36,7 @@
             </div>
         </iion-item>
     </div>
-    <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
+    <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5" style=>
         <div class="list padding-l-r-10">
             <label class="item item-input border-bottom">
                 <input type="text" ng-model="hwTitle" placeholder="Homework Title" value="{{hwTitle}}" ng-change="setTitle(hwTitle)">
@@ -79,7 +79,10 @@
                 {{recipient}}
             </label>
             <label class="item item-input">
-                <textarea ng-model="description" placeholder = "Homework Description" rows = "10" ng-change="setDescription(description)" value ="{{description}}"></textarea>
+                <textarea ng-model="description" placeholder = "Homework Description" rows = "5" ng-change="setDescription(description)" value ="{{description}}"></textarea>
+             </label>
+             <label class="item item-input">
+                 <img ng-src="{{image}}" alt="HomeworkAttachment" height="90%" width="90%">
              </label>
         </div>
     </ion-content>

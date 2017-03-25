@@ -66,10 +66,46 @@
                     <input id="endEventTime" class="item-input col-67" type="date" ng-model="endEventTime" value="{{endEventTime}}" min="{{minDate}}" ng-change="setEventEndDate(endEventTime)">
                   </div>
               </div>
+              <div class="container">
+                 <form name="form">
+                   <h3>Single File Selection</h3>
+                   <div class="input-group">
+                        <label for="file">Select File</label>
+                        <input type="file" ng-model="file" name="file" base-sixty-four-input required onLoad="onLoad" maxsize="500" accept="image/*">
+                        <span class="help-block">
+                          <ul>
+                            <li>required</li>
+                            <li>maxsize = 500</li>
+                            <li>accept = image/*</li>
+                          </ul>
+                        </span>
+                    </div>
 
-              <div class="button-bar">
-                     <button class="button icon-left ion-camera" ng-click="selectPicture()">Take Photo</button>
-              </div>
+                     <b>Model Value:</b>
+                    <table class="table table-bordered table-striped">
+                      <tr>
+                        <th>filename</th>
+                        <th>filetype</th>
+                        <th>filesize (<i><small>KB</small></i>)</th>
+                        <th>base64</th>
+                      </tr>
+                      <tr ng-show="file">
+                        <td>{{file.filename}}</td>
+                        <td>{{file.filetype}}</td>
+                        <td>{{file.filesize / 1000}}</td>
+                        <td>{{file.base64.substring(0, 30)}}...</td>
+                      </tr>
+                      <tr>
+                        <td colspan="4" ng-show="!file">
+                          <small><i>No file selected.</i></small>
+                        </td>
+                      </tr>
+                    </table>
+                    <hr>
+                    </form>
+               </div>
+
+
 
 
 

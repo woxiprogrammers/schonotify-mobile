@@ -26,12 +26,13 @@
             </div>
         </iion-item>
     </div>
-    <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
-        <ion-list>
-            <ion-item class="notify-item-border no-border margin-bottom-10" ng-repeat="hwrk in homeworksListing">
+    <ion-content ng-class="{expanded:$scope.isExpanded}" padding="true"  style="background-color:#ced6e2">
+        <div style="margin-top:50px">
+        <ion-list >
+            <ion-item class="card" ng-repeat="hwrk in homeworksListing"  style="background-color:white">
                 <div class="row">
                     <div class="col-20" ng-click="clickStatus || confirmDelete(hwrk.homework_id)">
-                        <a><i class="icon ion-trash-b red-font delete-hw" ng-class='{ display-no: clickStatus}'></i></a>
+                        <a><i class="icon ion-trash-b red-font delete-hw" ></i></a>
                     </div>
                     <div class="col-80">
                         <div ng-class='{ disabled: clickStatus}' ng-click="clickStatus || hwDetail(hwrk)">
@@ -40,7 +41,7 @@
                         </div>
                         <div class="row padding-0 margin-top-5">
                             <div class="row">
-                                <button ng-class='{ display-no: clickStatus}' class="button button-positive publish-button" ng-disabled="clickStatus" ng-click="publishHw(hwrk.homework_id)">
+                                <button  class="button button-positive publish-button" ng-disabled="clickStatus" ng-click="publishHw(hwrk.homework_id)">
                                     Publish
                                 </button>
                             </div>
@@ -49,11 +50,12 @@
                         </div>
                         <div class="row padding-0 margin-top-5">
                             <div class="col-15">{{hwrk.created_at}}</div>
-                            <div class="col-10 col-offset-75 attachment-no"></div>                            
+                            <div class="col-10 col-offset-75 attachment-no"></div>
                         </div>
                     </div>
                 </div>
             </ion-item>
         </ion-list>
+      </div>
     </ion-content>
 </ion-view>
