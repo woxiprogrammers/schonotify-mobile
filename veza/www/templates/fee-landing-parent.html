@@ -18,43 +18,19 @@
         </div>
     </div>
     <ion-content overflow-scroll="false" padding="true">
-
-
-
-
-
-           <div ng-show="clickOn=='con1'" style="height:100%;width:100%">
+       <div ng-show="clickOn=='con1'" style="height:100%;width:100%">
               <h4 style="float:left">Please select your desired class to view fee structure : </h4>
-
-
-               <select name="Batch" style="height:40px;float:left;width:40%">
-
-                   <option value="double chocolate">Batch</option>
-                   <option value="vanilla">Vanilla</option>
-                   <option value="strawberry">Strawberry</option>
-                   <option value="caramel">Caramel</option>
+               <select name="Batch" ng-model="TeacherBatchm" ng-change="getClass(TeacherBatchm)" ng-options="x.id as x.name for x in TeacherBatch" style="height:40px;float:left;width:40%">
+                 <option selected>Select Batch</option>
                </select>
-
-                 &nbsp
-
-
-
-
-               <select  style="height:40px;width:40%">
-
-                   <option value="double chocolate"> Class </option>
-                   <option value="vanilla">Vanilla</option>
-                   <option value="strawberry">Strawberry</option>
-                   <option value="caramel">Caramel</option>
+                &nbsp
+               <select name="Class" ng-model="TeacherClassm" ng-change="getFees(TeacherClassm)" ng-options="x.id as x.class_name for x in TeacherClass" style="height:40px;width:40%">
                </select>
-
-
-
              <br><br>
              <div>
-            <div style="overflow:scroll;overflow-x: hidden;"">
-             <div class="card" style="overflow:scroll;overflow-x: hidden;height:200px;background-color:grey:"><table>
-
+             <div style="overflow:scroll;overflow-x: hidden;"">
+             <div class="card" style="overflow:scroll;overflow-x: hidden;height:200px;background-color:grey:">
+               <table>
                        <h3 style="height:30px;padding:8px;">Concession</h3>
                        <div style="background-color:black;height:3px;width:100%"></div>
                        <tr>
@@ -72,14 +48,11 @@
                        <td>700</td>
                        <td>5%</td>
                        </tr>
-
-
-             </table>
+            </table>
            </div>
             <br>
              <div class="card" style="overflow:scroll;overflow-x: hidden;height:200px"><table>
-
-                         <h3 style="height:30px;padding:8px;">Installment Structure</h3>
+                          <h3 style="height:30px;padding:8px;">Installment Structure</h3>
                           <div style="background-color:black;height:3px;width:100%"></div>
                         <tr>
                        <td>1</td>
@@ -97,23 +70,17 @@
                        <td>33.33%</td>
                        </tr>
              </table></div>
-
-
-
-
            <div class=" card" style="background-color:#3afc7a;padding:8px;height:50px;">
                    <h3>Total Fee</h3>  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <h3>8000 INR</h3>
            </div>
            </div>
            </div>
-         </div>
+           </div>
 
            <div ng-show="clickOn=='con2'" style="height:100%;width:100%;">
-
-                <div style="float:left;">
+                 <div style="float:left;">
                    <div class="speech1"><h4>Current Year Fee</h4>
                      <h5> 50,000 INR</h5></div>
-
                 </div>
                       <div style="float:right;" class="css_blink">
                             <div class="speech"><h4>Due Fee</h4>
@@ -122,10 +89,8 @@
                              </div>
 
                       </div>
-
-
-                <br>
-                <div >
+                 <br>
+                <div>
                <div class="list" >
                        <div class="item" >
                             <div class="card" style="height:100px;">
@@ -162,13 +127,10 @@
                </div>
                       </div>
                     </div>
+     </div>
+   </ion-content>
 
-       </div>
-
-    </ion-content>
     <ion-footer-bar align-title="center" style="border-top:2px solid grey">
-
-
       <div class="" ng-click="showCon('con1')" style="height:60px;width:{{abc}};text-decoration:{{color}};color:#04a021;font-weight: {{bold1}};font-size:100%;text-align:center;border-right:1px solid grey;padding:6px">View Fee Structure</div>
       <div class="" ng-click="showCon('con2')" style="height:60px;width:50%;text-decoration:{{color1}};color:#04a021;font-weight: {{bold2}};font-size:100%;text-align:center;padding:6px" ng-show="show=='show'">My Fee</div>
     </ion-footer-bar>

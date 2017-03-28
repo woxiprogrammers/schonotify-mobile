@@ -67,8 +67,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
         abstract: true,
         controller: 'AppCtrl'
     })
-
-    .state('app.dashboard', {
+    .state('app.feelanding', {
+            url: '/feelanding',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/fee-landing-parent.html',
+                    controller: 'FeeLandingParentCntrl'
+                },
+                'fabContent': {
+                  template: ''
+                }
+            }
+        })
+   .state('app.dashboard', {
         url: '/dashboard',
         views: {
             'menuContent': {

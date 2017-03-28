@@ -500,10 +500,8 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
    });
 
          $scope.feelanding=function(){
-
              $state.go('app.feelanding');
-
-         }
+           }
 
 
         $scope.eventlanding=function(){
@@ -2731,49 +2729,102 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
 
               $scope.recentEvent();
     })
-
-
-    .controller('FeeLandingParentCntrl', function($ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
+.controller('FeeLandingParentCntrl', function($ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
       $scope.$on("$ionicView.beforeEnter", function(event, data){
-
-
-           $ionicLoading.show({
+             $ionicLoading.show({
              template: 'Loading...',
              duration: 1500
            })
+               $scope.showAlert = function() {
+               var alertPopup = $ionicPopup.alert({
+                 title: 'Under construction!',
+                 template: 'We are working on that.'
+               });
+             }
+                $scope.hide = function(){
+                 $ionicLoading.hide().then(function(){
+                    console.log("The loading indicator is now hidden");
+                 });
+               }
+             });
+             $ionicLoading.show({
+               template: 'Loading...',
+            })
+            $scope.getClass=function(TeacherBatchm) {
+              $ionicLoading.show();
+              var url = GLOBALS.baseUrl+"user/getclasses/"+TeacherBatchm+"/?token="+userSessions.userSession.userToken;
+              $http.get(url).success(function(response){
+                  if(response['status'] == 200){
+                     $ionicLoading.hide();
+                     $scope.TeacherClass = response['data']['classList'];
+                     if($scope.TeacherClass == '') {
+                             $ionicLoading.hide();
+                             $scope.aclMessage = res['message'];
+                        }
+                  } else {
+                          $ionicLoading.hide();
+                          $scope.aclMessage = response['message'];
+                  }
+              }).error(function(err) {
+                  $ionicLoading.hide();
+                  $scope.aclMessage = "Class Not Found !!";
 
-           $scope.showAlert = function() {
-       var alertPopup = $ionicPopup.alert({
-         title: 'Under construction!',
-         template: 'We are working on that.'
-       });
-     }
+              });
+             }
+          $scope.getFees=function (TeacherClass) {
+            $ionicLoading.show();
+            var url = GLOBALS.baseUrl+"user/get-fees_teacher/"+TeacherClass+"/?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response){
+                if(response['status'] == 200){
+                   $ionicLoading.hide();
+                   $scope.TeacherClass = response['data']['classList'];
+                   if($scope.TeacherClass == '') {
+                           $ionicLoading.hide();
+                           $scope.aclMessage = res['message'];
+                      }
+                   } else {
+                        $ionicLoading.hide();
+                        $scope.aclMessage = response['message'];
+                   }
+                }).error(function(err) {
+                  $ionicLoading.hide();
+                  $scope.aclMessage = "Class Not Found !!";
+                });
+              }
 
-         $scope.hide = function(){
-           $ionicLoading.hide().then(function(){
-              console.log("The loading indicator is now hidden");
-           });
-         }
-       });
+           if(userSessions.userSession.userRole=="teacher"){
+             $ionicLoading.show();
+               var url = GLOBALS.baseUrl+"user/get-batches-teacher?"+"token="+userSessions.userSession.userToken;
+               $http.get(url).success(function(response){
+                   if(response['status'] == 200){
+                      $ionicLoading.hide();
+                     $scope.TeacherBatch = response['data'];
+                        if($scope.TeacherBatch == '') {
+                              $ionicLoading.hide();
+                              $scope.aclMessage = res['message'];
+                         }
+                   } else {
+                           $ionicLoading.hide();
+                           $scope.aclMessage = response['message'];
 
-             if(userSessions.userSession.userRole=="teacher"){
+                   }
+               }).error(function(err) {
+                   $scope.aclMessage = "Batch Not Found !!";
+
+               });
                $scope.show="showw";
                $scope.abc="100%";
-
-
-             }else{
+            }else{
                       $scope.show="show";
                       $scope.abc="50%";
-
              }
              $scope.color="underline";
              $scope.clickOn="con1";
              $scope.side="left";
              $scope.bold1="bold";
-$scope.showCon=function(con)
+    $scope.showCon=function(con)
          {
-
-          $scope.clickOn=con;
+           $scope.clickOn=con;
                   if(con=="con1")
                       {
                            $scope.color="underline";
@@ -2802,16 +2853,7 @@ $scope.showCon=function(con)
 
 
 
-
-
-
-
-
-
-
-
-
-    .controller('LandingEventParentCtrl', function($ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
+.controller('LandingEventParentCtrl', function($ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
       $scope.$on("$ionicView.beforeEnter", function(event, data){
 
 
