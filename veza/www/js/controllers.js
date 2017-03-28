@@ -3241,6 +3241,19 @@ $scope.showCon=function(con)
           {
             $scope.image=fileObj.base64;
           }
+          $scope.currentDate = new Date();
+          $scope.minDate = new Date(2105, 6, 1);
+          $scope.maxDate = new Date(2015, 6, 31);
+          $scope.datePickerCallback = function (val)
+           {
+              if (!val)
+              {
+                   console.log('Date not selected');
+              } else
+              {
+                   console.log('Selected date is : ', val);
+              }
+           }
         var uploadedCount = 0;
         $scope.files = [];
         $scope.$parent.clearFabs();
