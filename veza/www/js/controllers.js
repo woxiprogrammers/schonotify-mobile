@@ -6,8 +6,8 @@ angular.module('starter.controllers', ['naif.base64'])
 
 
 //baseUrl:'http://sspss.veza.co.in/api/v1/'
- //baseUrl:'http://test.woxi.co.in/api/v1/',
-baseUrl:'http://school_mit.schnotify.com/api/v1/'
+ baseUrl:'http://test.woxi.co.in/api/v1/',
+//baseUrl:'http://school_mit.schnotify.com/api/v1/'
 //   http:'school_mit.schnotify.com/'
 
 })
