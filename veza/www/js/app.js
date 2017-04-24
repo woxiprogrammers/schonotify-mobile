@@ -79,7 +79,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                 }
             }
         })
-   .state('app.dashboard', {
+
+    .state('app.dashboard', {
         url: '/dashboard',
         views: {
             'menuContent': {
@@ -107,15 +108,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
            'menuContent': {
                 templateUrl: 'templates/shared-notify.html',
                 controller: 'SharedNotificationCtrl'
-           },
-            'fabContent': {
-                template: '<button id="fab-new-announcement" ng-click="createAnnouncement()" class="button button-fab button-fab-bottom-right expanded fab-button-grey spin"><i class="icon ion-edit"></i></button>',
-                controller: function ($timeout) {
-                    $timeout(function () {
-                        document.getElementById('fab-new-announcement').classList.toggle('on');
-                    }, 900);
-                }
-            }
+           }
+
         }
     })
     .state('app.createannouncement', {
@@ -124,11 +118,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
           'menuContent': {
                templateUrl: 'templates/create-announcement.html',
                controller: 'CreateAnnouncementCtrl'
-          },
-           'fabContent': {
-               template: ''
-               }
-           }
+          }
+        }
     })
     .state('app.sharedAchievement', {
          url: '/sharedAchievement',
@@ -136,15 +127,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
             'menuContent': {
                templateUrl: 'templates/shared-achievement.html',
                controller: 'SharedAchievementCtrl'
-            },
-             'fabContent': {
-                 template: '<button id="fab-new-achievement" ng-click="createAchievement()" class="button button-fab button-fab-bottom-right expanded fab-button-grey  spin"><i class="icon ion-edit"></i></button>',
-                 controller: function ($timeout) {
-                     $timeout(function () {
-                         document.getElementById('fab-new-achievement').classList.toggle('on');
-                     }, 900);
-                 }
-             }
+            }
          }
      })
      .state('app.createachievement', {
@@ -153,10 +136,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
              'menuContent': {
                 templateUrl: 'templates/create-achievement.html',
                 controller: 'CreateAchievementCtrl'
-             },
-              'fabContent': {
-                  template: ''
-              }
+             }
           }
      })
      .state('app.homework', {

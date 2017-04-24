@@ -29,35 +29,16 @@
             </a>
         </div>
     </div>
-    <div class="bar header-bar align-delete-bar-divided">
-        <div class="row">
-            <div class="row">
-                <div class="col-25">
-                    <ion-checkbox class="checkbox-square checkboxList checkbox-assertive" ng-model="selectedAll" ng-click="checkAll()">
-                    </ion-checkbox>
-                </div>
-                <div class="col-25 col-offset-50">
-                    <a><i class="icon ion-trash-b align-delete-bin"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <ion-content ng-class="{expanded:$scope.isExpanded}" class="top-22 padding-l-r-10">
-        <ion-list>
-            <ion-item class="notify-item-border padding-0 item no-border margin-bottom-20" ng-repeat="item in items" ng-click="achievementDetail()">
-                <div class="card margin-0">
-                    <img src="img/{{item.Picture}}">
-                </div>
-                <div class="row">
-                    <div class="col-25">
-                        <ion-checkbox class="checkbox-square checkbox-assertive" ng-model="item.Selected">
-                        </ion-checkbox>
-                    </div>
-                    <div class="col-75 msg-{{item.Status}}">
-                        <p><strong>{{item.Message}}</strong><br><i class="font-italic">{{item.Timestamp}}</i>
-                        </p>
-                    </div>
-                </div>
+    <ion-content ng-class="{expanded:$scope.isExpanded}"  padding="true" style="background-color:#c9d8ef">
+       <div style="height:50px">
+       </div>
+        <ion-list class="item item-text-wrap">
+            <ion-item class="card" style="background-color:white;padding:10px" ng-repeat="achievement in nmessages " >
+
+                    <center><h2>{{achievement.title}}</h2></center>
+                    <hr>
+                    <p><h4>{{achievement.detail}}</h4></p>
+
             </ion-item>
         </ion-list>
     </ion-content>

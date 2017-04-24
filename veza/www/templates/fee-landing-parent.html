@@ -17,19 +17,19 @@
             </div>
         </div>
     </div>
-    <ion-content overflow-scroll="false" padding="true">
+    <ion-content overflow-scroll="false" padding="true" >
        <div ng-show="clickOn=='con1'" style="height:100%;width:100%">
-              <h4 style="float:left">Please select your desired class to view fee structure : </h4>
-               <select name="Batch" ng-model="TeacherBatchm" ng-change="getClass(TeacherBatchm)" ng-options="x.id as x.name for x in TeacherBatch" style="height:40px;float:left;width:40%">
+              <h4 ng-hide="show=='show'" style="float:left">Please select your desired class to view fee structure : </h4>
+               <select ng-hide="show=='show'" name="Batch" ng-model="TeacherBatchm" ng-change="getClass(TeacherBatchm)" ng-options="x.id as x.name for x in TeacherBatch" style="height:40px;float:left;width:40%">
                  <option selected>Select Batch</option>
                </select>
                 &nbsp
-               <select name="Class" ng-model="TeacherClassm" ng-change="getFees(TeacherClassm)" ng-options="x.id as x.class_name for x in TeacherClass" style="height:40px;width:40%">
+               <select ng-hide="show=='show'" name="Class" ng-model="TeacherClassm" ng-change="getFees(TeacherClassm)" ng-options="x.id as x.class_name for x in TeacherClass" style="height:40px;width:40%">
                </select>
              <br><br>
              <div>
-             <div style="overflow:scroll;overflow-x: hidden;"">
-             <div class="card" style="overflow:scroll;overflow-x: hidden;height:200px;background-color:grey:">
+             <div   style="overflow:scroll;overflow-x: hidden;"">
+             <div ng-hide="show=='show'" class="card" style="overflow:scroll;overflow-x: hidden;height:200px;background-color:grey:">
                <table>
                        <h3 style="height:30px;padding:8px;">Concession</h3>
                        <div style="background-color:black;height:3px;width:100%"></div>
@@ -51,82 +51,50 @@
             </table>
            </div>
             <br>
-             <div class="card" style="overflow:scroll;overflow-x: hidden;height:200px"><table>
+             <div ng-show="show=='show'" class="card" style="overflow:scroll;overflow-x: hidden;height:200px"><table>
                           <h3 style="height:30px;padding:8px;">Installment Structure</h3>
-                          <div style="background-color:black;height:3px;width:100%"></div>
-                        <tr>
-                       <td>1</td>
-                       <td>10,000</td>
-                       <td>33.33%</td>
-                       </tr>
-                       <tr>
-                       <td>2</td>
-                       <td>10,000</td>
-                       <td>33.33%</td>
-                       </tr>
-
-                       <td>3</td>
-                       <td>10,000</td>
-                       <td>33.33%</td>
-                       </tr>
-             </table></div>
-           <div class=" card" style="background-color:#3afc7a;padding:8px;height:50px;">
-                   <h3>Total Fee</h3>  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <h3>8000 INR</h3>
+                          <div class="card">
+                           <table style="width:100%">
+                            <tr style="background-color:#edf3fc">
+                            <th><b>No<b></th>
+                            <th><b>Due Date</b></th>
+                            <th><b>Amount</b></th>
+                            </tr>
+                            <tr ng-repeat="installment in installments track by installment.installment_id" >
+                            <td style="background-color:white">{{installment.installment_id}}</td>
+                            <td style="background-color:white">{{installment.due_date}}</td>
+                            <td style="background-color:white">{{installment.discount}}</td>
+                            </tr>
+                          </table></div>
+            </div>
+            </div>
            </div>
            </div>
-           </div>
-           </div>
-
            <div ng-show="clickOn=='con2'" style="height:100%;width:100%;">
                  <div style="float:left;">
                    <div class="speech1"><h4>Current Year Fee</h4>
-                     <h5> 50,000 INR</h5></div>
-                </div>
-                      <div style="float:right;" class="css_blink">
-                            <div class="speech"><h4>Due Fee</h4>
-
-                                 <h5> 10,000 INR</h5>
-                             </div>
-
-                      </div>
-                 <br>
-                <div>
-               <div class="list" >
-                       <div class="item" >
-                            <div class="card" style="height:100px;">
-                              <h2 style="float:left">Installment No:01</h2>
-                              <br><br>
-                              <h4 style="float:left">Voucher/NEFT No: A201</h4>
-                              <br>
-                              <h4 style="float:left">Date :12-01-2017</h4>
-
-                            </div>
-                       </div>
-                       <div class="item" >
-                            <div class="card" style="height:100px;">
-                              <h2 style="float:left">Installment No:02</h2>
-                              <br><br>
-                              <h4 style="float:left">Voucher/NEFT No: B301</h4>
-                               <br>
-                              <h4 style="float:left">Date :12-03-2017</h4>
-
-                            </div>
-                       </div>
-                       <div class="item" >
-                            <div class="card" style="height:100px;">
-
-                            <h2 style="float:left">Installment No:03</h2>
-                            <br>
-                            <br>
-                            <h4 style="float:left">Voucher/NEFT No: C201</h4>
-                             <br>
-                            <h4 style="float:left">Date :12-04-2017</h4>
-                            </div>
-                       </div>
-
-               </div>
-                      </div>
+                     <h5> {{fee}}  INR</h5>
+                   </div>
+                 </div>
+                 <div style="float:right;" class="css_blink">
+                    <div class="speech"><h4>Due Fee</h4>
+                      <h5> {{pending_fee}}  INR</h5>
                     </div>
+                 </div>
+                  <br>
+                  <div>
+                    <ion-list>
+                      <ion-item class="card" ng-repeat="item in fees">
+                             <h4>Transaction Id:{{item.id}}</h4><br>
+                             <h4>Description:{{item.transaction_detail}}</h4><br>
+                             <h4>Amount:{{item.transaction_amount}}</h4><br>
+                             <h4>Date:{{item.date}}</h4><br>
+                             <h4>Type:  {{item.transaction_type}}</h4>
+
+                      </ion-item>
+                   </ion-list>
+                  </div>
+          </div>
      </div>
    </ion-content>
 
