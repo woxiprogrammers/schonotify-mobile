@@ -1,4 +1,4 @@
-<ion-view view-title="Shared Notification" name="sharedNotify" class="touch-effect">
+cd <ion-view view-title="Shared Notification" name="sharedNotify" class="touch-effect">
 
     <div class="row padding-0">
         <div class="tabs-striped tabs-color-positive tabs-top">
@@ -31,14 +31,31 @@
             </div>
     </div>
 
-  <ion-content ng-class="{expanded:$scope.isExpanded}" has-header="true"  style="background-color:#c9d8ef">
+  <ion-content ng-class="{expanded:$scope.isExpanded}" has-header="true"  >
       <div style="height:50px">
       </div>
        <ion-list class="item item-text-wrap">
-          <ion-item class="card" ng-repeat="announcement in nMessages " style="background-color:white;padding:10px">
-                   <center><h2>{{announcement.title}}</h2></center>
+          <ion-item class="card" ng-repeat="announcement in nMessages " on-hold="onHold()" style="background-color:white;padding:10px">
+            <span class="pull-right" ng-if="announcement.status == 2">
+              <button  class="button button-balanced status-button" ng-disabled="clickStatus" >
+                    Published
+              </button>
+            </span>
+            <span class="pull-right" ng-if="announcement.status == 1">
+              <button  class="button button-assertive status-button" ng-disabled="clickStatus" >
+                    Pending
+              </button>
+            </span>
+            <span class="pull-right" ng-if="announcement.status == 0">
+              <button  class="button button-energized status-button" ng-disabled="clickStatus" >
+                   Draft
+              </button>
+            </span><br>
+                   <center><h2 style="color:#8e2a2a;text-transform: capitalize;">{{announcement.title}}</h2></center>
                    <hr>
-                   <h3>{{announcement.detail}}</h3>
+                   <h3>{{announcement.detail}}</h3><br>
+                   <h4><span style="color:#8e2a2a;">Created By :</span> {{announcement.createdBy['first_name']}}  {{announcement.createdBy['last_name']}}<span style="color:#8e2a2a;"> On</span> {{announcement.created_at}}</h4>
+                   <h4><span style="color:#8e2a2a;">Published By :</span>  {{announcement.publishedBy['first_name']}}  {{announcement.publishedBy['last_name']}}</h4>
           </ion-item>
        </ion-list>
     </ion-content>

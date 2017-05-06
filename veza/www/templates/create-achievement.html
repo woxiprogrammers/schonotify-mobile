@@ -25,16 +25,34 @@
                         <i class="ion-arrow-left-c button-back-white"></i>
                     </button>
                 </div>
-                <div class="col-70 margin-top-5">
-                    <span class="inner-header">Create Achievement</span>
-                </div>
-                <div class="col-20">
-                    <a><i class="icon ion-android-send align-delete-bin"></i></a>
-                </div>
+                <center>
+                <h4 style="color:white;"><i><strong>Create Achievement</strong></i></h4>
+                </center>
             </div>
         </iion-item>
     </div>
-    <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
-    
+    <ion-content ng-class="{expanded:$scope.isExpanded}" padding="true" class="margin-top-48 padding-l-r-5">
+      <div class="list">
+           <label class="item item-input item-floating-label">
+           <span class="input-label">Title</span>
+           <input type="text" ng-model="title" placeholder="Title" required="true" ng-change="titleChange(title)">
+           </label>
+           <label class="item item-input item-floating-label">
+           <span class="input-label">Description</span>
+           <input type="text" ng-model="detail" placeholder="Description" ng-change="detailChange(detail)" required="true">
+           </label>
+           <label>
+           <span class="input-label">Priority</span>
+           <input type="range" ng-model="range" min="0" max="2" placeholder="Description" required="true" ng-change="priorityChange(range)">
+         </label><br><br><br>
+           <label>
+           <span class="input-label">Upload Images</span>
+             <input type="file" ng-model="file" name="file" base-sixty-four-input required onLoad="onLoad" maxsize="1000" accept="image/*">
+           </label>
+         </div>
+           <div class="padding">
+           <button class="button button-block button-dark" ng-click="create()" style="color:white">Create</div>
+           </div>
+
     </ion-content>
 </ion-view>

@@ -28,20 +28,28 @@
                 <div class="col-75 margin-top-5">
                     <span class="inner-header"></span>
                 </div>
-                <div class="col-15"><a><i class="icon ion-trash-b align-delete-bin"></i></a></div>
-            </div>
+                <div ><a><i class="icon ion-edit" style="font-size:30px;color:white" ng-click="editAchievment()"></i></a></div>
+                </div>
+                <div ><a><i class="icon ion-trash-b align-delete-bin" ng-repeat="achievementDetail in DetailAchievemtns" style="font-size:35px" ng-click="deleteAchievement({{achievementDetail.id}})"></i></a></div>
+                </div>
+
         </iion-item>
     </div>
-    <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
-        <div class="list padding-l-r-5">
-                <div class="row bold description-title-font">D.A.V wins Inter School Basketball Tournament 2015</div>
-                <div class="row margin-top-5"><c class="bold creator-font">Rahul Kulkarni</c></div>
-                <div class="row bold"><time class="creator-time-font"> 34 mins ago.</time></div>
-            <div class="card margin-top-20">
-                <img src="img/graduate.jpg">
-            </div>
-            <div class="row">
-                <p class="margin-top-36 description-font">Error dicunt theophrastus cu qui. Ad eos simul possit option, adipisci principes sed at. Detracto adolescens pro ea, duo noLorem ipsum dolor sit amet, ea oblique constituam signiferumque eam. Pri adipisci maluisset te.Lorem ipsum dolor sit amet, ea oblique constituam signiferumque eam. Pri adipisci maluisset te.Lorem ipsum dolor sit amet, ea oblique constituam signiferumque eam. Pri adipisci maluisset te. </p>
+    <ion-content ng-class="{expanded:$scope.isExpanded}" padding="true" style="background-color:#d7fc41">
+        <br><br><div class="card" ng-repeat="achievementDetail in DetailAchievemtns">
+                <h3 style="text-transform:capitalize;text-align:center;text-shadow: 2px 1px #72f9ea;">{{achievementDetail.title}}</h3>
+                <div class="row margin-top-5"><c class="bold creator-font">{{achievementDetail.createdBy['first_name']}}  {{achievementDetail.createdBy['last_name']}}</c></div>
+                <div class="row bold"><time class="creator-time-font"> {{achievementDetail.created_at}}</time></div>
+                <ion-slide-box >
+                  <ion-slide ng-if="images.image" ng-repeat="images in imageData">
+                      <div class="card margin-top-20">
+                      <img src="{{achievementDetail.path}}/uploads/achievement/events/{{achievementDetail.id}}/{{images.image}}" height="150px" width="100%">
+                      </div>
+                  </ion-slide>
+               </ion-slide-box>
+            <br>
+            <div style="margin:10px;word-wrap: break-word;">
+                <p style="text-align:justify"><h4>{{achievementDetail.detail}}<h4></p>
             </div>
         </div>
     </ion-content>

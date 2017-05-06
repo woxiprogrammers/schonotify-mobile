@@ -28,8 +28,8 @@
                 <div class="col-70 margin-top-5">
                     <span class="inner-header">Create Announcement</span>
                 </div>
-                <div class="col-20">
-                    <a><i class="icon ion-android-send align-delete-bin"></i></a>
+                <div class="col-20" >
+                    <a><i class="icon ion-android-send align-delete-bin" ng-click="submit()"></i></a>
                 </div>
             </div>
         </iion-item>
@@ -37,50 +37,87 @@
     <ion-content ng-class="{expanded:$scope.isExpanded}" class="margin-top-48 padding-l-r-5">
         <div class="list">
             <div class="row">
-                <div class="col-50 border-bottom border-right">
-                    <select class="item item-input item-select">
-                        <option selected class="padding-top-5">User</option>
-                        <option class="padding-top-5">Teacher</option>
-                        <option class="padding-top-5">Parent</option>
-                        <option class="padding-top-5">Parent & Teacher</option>
-                        <option class="padding-top-5">Admin</option>
-                        <option class="padding-top-5">Admin & Teacher</option>
-                        <option class="padding-top-5">All</option>
-                    </select>
+                <div class="col-33 border-bottom">
+                  <select class="item item-input item-select" ng-model="selectedBatch.batch" ng-options="batch.name for batch in batchList track by batch.id" ng-change="getClass(selectedBatch.batch.id)">
+                      <option value="" ng-disabled="true" ng-model="batchName">-{{batchName}}-</option>
+                  </select>
                 </div>
-                <div class="col-50 border-bottom">
-                    <select class="item item-input item-select border-bottom">
-                        <option selected class="padding-top-5">Batch</option>
-                        <option class="padding-top-5">Morning</option>
-                        <option class="padding-top-5">Afternoon</option>
-                        <option class="padding-top-5">Evening</option>
-                    </select>
+                <div class="col-33 border-right border-bottom">
+                  <select class="item item-input item-select" ng-model="selectedClass.class" ng-options="class.name for class in classList track by class.id" ng-change="getDivision(selectedClass.class.id)">
+                      <option value="" ng-disabled="true" ng-model="className">-{{className}}-</option>
+                  </select>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-50 border-right border-bottom">
-                    <select class="item item-input item-select border-bottom">
-                        <option selected class="padding-top-5">Class</option>
-                        <option class="padding-top-5">Class I</option>
-                        <option class="padding-top-5">Class II</option>
-                        <option class="padding-top-5">Class III</option>
-                    </select>
-                </div>
-                <div class="col-50 border-bottom">
-                    <select class="item item-input item-select">
-                        <option selected class="padding-top-5">Div</option>
-                        <option class="padding-top-5">Div A</option>
-                        <option class="padding-top-5">Div B</option>
-                        <option class="padding-top-5">Div C</option>
-                    </select>
+                <div class="col-33 border-bottom">
+                  <select class="item item-input item-select" ng-model="selectedDivision.division" ng-options="division.name for division in divisionsList track by division.id" ng-change="getStudentList(selectedDivision.division.id)">
+                      <option value="" ng-disabled="true" ng-model="divisionName">-{{divisionName}}-</option>
+                  </select>
                 </div>
             </div>
             <label class="item item-input border-bottom">
-                <input type="text" placeholder="Title">
+                <input type="text" ng-model="title" placeholder="Title" ng-change="titlechange(title)">
             </label>
             <label class="item item-input">
-                <textarea placeholder="Description"></textarea>
+                <textarea placeholder="Description" ng-model="description" ng-change="descriptionchange(description)"></textarea>
             </label>
+            <label>
+            <span class="input-label">Priority</span>
+            <input type="range" ng-model="range" min="0" max="2" placeholder="Description" required="true" ng-change="priorityChange(range)">
+            </label>
+            <br>
+                <button class="button button-full" ng-click="getTeacherList()">Select Teacher</button>
+                <button class="button button-full" ng-click="getAdminList()">Select Admin</button>
         </div>
     </ion-content>
+    <script id = "my-modal.html" type = "text/ng-template">
+   <ion-modal-view>
+     <div class="bar bar-header bar-positive">
+     <h1 class="title">Select User</h1>
+     </div>
+      <ion-content class="has-header">
+        <h3><b>Select Student</b></h3>
+        <ion-item ng-if="item" class="contact-list" ng-repeat="item in contactList">
+            <div class="row" ng-click="toggleSelectionstudent(item.id)">
+                <div class="col-25">
+                    <ion-checkbox class="checkbox checkbox-assertive" ng-model="item.Selected" id="{{item.name}}" value="{{item.id}}" ng-checked="selectedList.indexOf(item.id) > -1">
+                    </ion-checkbox>
+                </div>
+                <div class="col-75 margin-top-5">
+                    <h2 class = "margin-top-10"><strong>{{item.name}}</strong></h2>
+                </div>
+            </div>
+        </ion-item>
+        <br>
+          <h3><b>Select Admin</b></h3>
+        <ion-item ng-if="item" class="contact-list" ng-repeat="item in adminList">
+          <div class="row" ng-click="toggleSelectionAdmin(item.id)">
+                <div class="col-25">
+                    <ion-checkbox class="checkbox checkbox-assertive" ng-model="item.SelectedAdmin" id="{{item.first_name}}" value="{{item.id}}" ng-checked="selectedList.indexOf(item.id) > -1">
+                    </ion-checkbox>
+                </div>
+                <div class="col-75 margin-top-5">
+                    <h2 class = "margin-top-10"><strong>{{item.first_name}}</strong></h2>
+                </div>
+            </div>
+        </ion-item>
+        <br>
+          <h3><b>Select Teacher</b></h3>
+        <ion-item ng-if="item" class="contact-list" ng-repeat="item in teacherList">
+            <h3><b>Select Teachers</b></h3>
+            <div class="row" ng-click="toggleSelectionTeacher(item.id)">
+                <div class="col-25">
+                    <ion-checkbox class="checkbox checkbox-assertive" ng-model="item.SelectedTeacher" id="{{item.first_name}}" value="{{item.id}}" ng-checked="selectedList.indexOf(item.id) > -1">
+                    </ion-checkbox>
+                </div>
+                <div class="col-75 margin-top-5">
+                    <h2 class = "margin-top-10"><strong>{{item.first_name}}</strong></h2>
+                </div>
+            </div>
+        </ion-item>
+        <br><br>
+
+          <button class="button button-block button-dark icon icon-left " ng-click = "submit()">Save</button>
+         <button class="button button-block button-dark icon icon-left ion-ios-close-outline" ng-click = "closeModal()">Close Modal</button>
+      </ion-content>
+   </ion-modal-view>
+</script>
 </ion-view>

@@ -108,9 +108,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
            'menuContent': {
                 templateUrl: 'templates/shared-notify.html',
                 controller: 'SharedNotificationCtrl'
-           }
-
-        }
+            },
+            'fabContent': {
+                template: '<button id="fab-new-event" ng-click="goToCreateAnnouncment()" class="button button-fab button-fab-bottom-right expanded fab-button-event  spin"><i class=""icon ion-edit"></i></button>',
+                controller: function ($timeout,$scope,$state) {
+                  $scope.goToCreateAnnouncment = function() {
+                      $state.go('app.createannouncement');
+                  };
+                    $timeout(function () {
+                        document.getElementById('fab-new-event').classList.toggle('on');
+                    }, 900);
+                }
+            }
+               }
     })
     .state('app.createannouncement', {
         url: '/createannouncement',
@@ -127,6 +137,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
             'menuContent': {
                templateUrl: 'templates/shared-achievement.html',
                controller: 'SharedAchievementCtrl'
+            },
+            'fabContent': {
+                template: '<button id="fab-new-event" ng-click="goToCreateAchievement()" class="button button-fab button-fab-bottom-right expanded fab-button-event spin pane on"><i class=""icon ion-edit"></i></button>',
+                controller: function ($timeout,$scope,$state) {
+                  $scope.goToCreateAchievement=function () {
+                        $state.go('app.createachievement');
+                  }
+                    $timeout(function () {
+                        document.getElementById('fab-new-event').classList.toggle('on');
+                    }, 900);
+                }
             }
          }
      })
@@ -228,7 +249,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                 }
             }
         })
-
         .state('app.attendancelanding', {
             url: '/attendancelanding',
             views: {
@@ -409,15 +429,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                 }
             }
         })
-        .state('app.announcedetails', {
-            url: '/announcedetails',
+        .state('app.achievementedit', {
+            url: '/achievementedit',
             views: {
                 'menuContent': {
-                    templateUrl: 'templates/announce-description.html',
-                    controller: 'DetailPageCtrl'
-                },
-                'fabContent': {
-                    template: ''
+                    templateUrl: 'templates/edit-achievement.html',
+                    controller: 'EditAchievementCtrl'
                 }
             }
         })
