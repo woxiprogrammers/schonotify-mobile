@@ -4,8 +4,8 @@ var db = null;
 angular.module('starter.controllers', ['naif.base64'])
 .constant('GLOBALS',{
 //baseUrl:'http://sspss.veza.co.in/api/v1/'
-//baseUrl:'http://test.woxi.co.in/api/v1/',
-baseUrl:'http://school_mit.schnotify.com/api/v1/'
+baseUrl:'http://test.woxi.co.in/api/v1/',
+//baseUrl:'http://school_mit.schnotify.com/api/v1/'
 //   http:'school_mit.schnotify.com/'
 })
 .factory('Data', function() {
@@ -31,55 +31,42 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
               userSessions.userSession.bodyId = bodyId;
             return true;
         };
-
-
-        this.ss = function(id){
+         this.ss = function(id){
            var retrievedData = localStorage.getItem("studentdata");
            var students = JSON.parse(retrievedData);
            var obj = students.filter(function ( obj )
            {
              return obj.student_id === userSessions.userSession.userId;
             })[0];
-              console.log(obj);
                return obj;
         };
-
         userSessions.setMsgCount = function(count){
             userSessions.userSession.msgcount = count;
             return true;
         };
-
         userSessions.setToken = function(id){
             userSessions.userSession.userToken = id;
             return true;
         };
-
         userSessions.setMsgCount_0 = function(){
             userSessions.userSession.msgcount = '';
             return true;
         };
 })
 .service('userData', function uData(){
-
         var userData = this;
-
         userData.data = [];
         console.log(userData.data);
-
         userData.setUserData = function(dataArray){
             userData.data = dataArray;
-
             return true;
         };
         userData.getUserData = function(){
-
             return userData.data;
         };
 })
 .service('chatHist', function chatDetail(){
-
         var chatHist = this;
-
         chatHist.data = [];
         chatHist.setChatHist = function(userId,from, to, title, title_id){
             chatHist.data.user_id = userId;
@@ -162,25 +149,22 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
               $http.get(url).success(function(response) {
               console.log(response['data']['Parent_student_relation']['Students']);
               localStorage.setItem("studentdata", JSON.stringify(response['data']['Parent_student_relation']['Students']));
-                $scope.studentdataswitch=(response['data']['Parent_student_relation']['Students']);
+              $scope.studentdataswitch=(response['data']['Parent_student_relation']['Students']);
                  })
                  .error(function(response)
                                {
                                    console.log("Error in Response: " +response);
                                });
-      }
+              }
                $scope.studentlistForSwitch();
-               $scope.studentclick=function(student_id,bodyId)
-                         {
+               $scope.studentclick=function(student_id,bodyId) {
                                $scope.gotodashboard();
                                return userSessions.setUserId(student_id,bodyId);
-                         }
-                $scope.gotodashboard=function()
-                            {
+               }
+               $scope.gotodashboard=function(){
                                 $state.go('app.dashboard');
-                            }
+               }
     $scope.loginData = {};
-    console.log("scasa:"+  $scope.loginData);
     $scope.isExpanded = false;
     $scope.hasHeaderFabLeft = false;
     $scope.hasHeaderFabRight = false;
@@ -191,19 +175,15 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
             current.classList.toggle('active');
         });
     }
-
     ////////////////////////////////////////
     // Layout Methods
     ////////////////////////////////////////
-
     $scope.hideNavBar = function() {
         document.getElementsByTagName('ion-nav-bar')[0].style.display = 'none';
     };
-
     $scope.showNavBar = function() {
         document.getElementsByTagName('ion-nav-bar')[0].style.display = 'block';
     };
-
     $scope.noHeader = function() {
         var content = document.getElementsByTagName('ion-content');
         for (var i = 0; i < content.length; i++) {
@@ -238,17 +218,14 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
         }
 
     };
-
     $scope.hideHeader = function() {
         $scope.hideNavBar();
         $scope.noHeader();
     };
-
     $scope.showHeader = function() {
         $scope.showNavBar();
         $scope.hasHeader();
     };
-
     $scope.clearFabs = function() {
         var fabs = document.getElementsByClassName('button-fab');
         if (fabs.length && fabs.length > 1) {
@@ -258,15 +235,20 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
     $scope.signOut = function() {
         console.log("User Logged out");
         userSessions.setToken (0);
+        window.localStorage.setItem( "token", 0 );
+        window.localStorage.setItem( "userDataArray", 0 );
+        window.localStorage.setItem( "studentlist", 0);
+        window.localStorage.setItem( "sessionUserRole", 0);
+        window.localStorage.setItem( "sessionId", 0 );
+        window.localStorage.setItem( "sessionBodyId", 0 );
+        window.localStorage.setItem( "messageCount",  0 );
         $state.go('login');
     };
     $scope.studToggle = true;
-
     $scope.toggleStudent = function() {
         console.log("Changing Student");
         $scope.studToggle = $scope.studToggle === false ? true: false;
         };
-
     $scope.toggleLeftSideMenu = function() {
       if(userSessions.userSession.userRole == "parent")
       {
@@ -291,23 +273,18 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
             $ionicSideMenuDelegate.toggleLeft();
       }
      };
-
         $scope.myGoBack = function() {
             $ionicHistory.goBack();
         };
-
         $scope.dashBoard = function() {
             $state.go('app.dashboard');
         };
-
         $scope.composeHw = function() {
             $state.go('app.hwcompose');
         };
-
          $scope.createLeave = function() {
             $state.go('app.leavecreate');
         };
-
         $scope.composeMsg = function() {
                 if(userSessions.userSession.userRole == "parent"){
                         $state.go('app.parentMsgcompose');
@@ -316,27 +293,21 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
                         $state.go('app.msgcompose');
                 }
         };
-
         $scope.createAnnouncement = function() {
             $state.go('app.createannouncement');
         };
-
         $scope.createAchievement = function() {
             $state.go('app.createachievement');
         };
-
         $scope.announceDetails = function() {
             $state.go('app.announcedetails');
         };
-
         $scope.achievementDetail = function() {
             $state.go('app.achievementdetails');
         };
-
         $scope.notifyDetail = function() {
             $state.go('app.notificationdetails');
         };
-
         $scope.homeworkView = function (){
             if(userSessions.userSession.userRole == "parent"){
                  $state.go('app.parenthomework');
@@ -362,66 +333,65 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
         $scope.approveLeaveDetails = function() {
             $state.go('app.approvedleavedetails');
         };
-
         $scope.homeworkEdit = function() {
                $state.go('app.homeworkedit');
         };
-
         $scope.unPublishList = function() {
             $state.go('app.edithomeworklisting');
         };
-
         $scope.detailEvent = function() {
             $state.go('app.eventsLanding');
         };
-
         $scope.eventDetails = function() {
             $state.go('app.eventdetails');
         };
-
         $scope.eventEdit = function() {
             $state.go('app.eventedit');
         };
-
         $scope.resultView = function() {
             $state.go('app.resultview');
         };
-
         $scope.signIn = function() {
             $state.go('app.dashboard');
         };
-
         $scope.msgDetail = function() {
             $state.go('app.chatmsg');
         };
-
         $scope.viewMessagesList = function(){
                $state.go('app.message');
         };
+})
+.controller('tokencheckCtrl', function(myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
 
 })
 .controller('LoginCtrl', function(myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
     $scope.data = [];
     ionicMaterialInk.displayEffect();
-        $scope.submit = function(email,password){
+    $scope.submit = function(email,password){
             $scope.sessionId = '';
             $scope.sessionToken = '';
             $scope.sessionUserRole = '';
                     var url= GLOBALS.baseUrl+"user/auth";
-                    console.log(url);
                     $http.post(url, { email: email, password: password }).success(function(res) {
-                    $scope.Switchstudentlist=(res['data']['Students']);
                     console.log(res);
+                    var query = "INSERT INTO auth_details (token, userDataArray, studentlist,sessionUserRole ,sessionId ,sessionBodyId ,messageCount) VALUES (?,?,?,?,?,?,?)";
+                    var q= $cordovaSQLite.execute(db,query,[res['data']['users']['token'],res['data']['users'],res['data']['Students'],res['data']['users']['role_type'],res['data']['Badge_count']['user_id'],res['data']['Badge_count']['body_id'],res['data']['Badge_count']['message_count']]);
+                    window.localStorage.setItem( "token", res['data']['users']['token'] );
+                    window.localStorage.setItem( "userDataArray", res['data']['users'] );
+                    window.localStorage.setItem( "studentlist", res['data']['Students']);
+                    window.localStorage.setItem( "sessionUserRole", res['data']['users']['role_type']);
+                    window.localStorage.setItem( "sessionId", res['data']['Badge_count']['user_id'] );
+                    window.localStorage.setItem( "sessionBodyId", res['data']['Badge_count']['body_id'] );
+                    window.localStorage.setItem( "messageCount",  res['data']['Badge_count']['message_count'] );
+                    $scope.Switchstudentlist=(res['data']['Students']);
                     $scope.data.message = res['message'];
-                    console.log("Status: "+res['status']);
                        if(res['status'] == 200){
                           $scope.studentlist=(res.data['users']);
-                          console.log($scope.studentlist);
                             $scope.userDataArray = userData.setUserData(res['data']['users']);
                             $scope.sessionToken = res['data']['users']['token'];
                             $scope.sessionUserRole = res['data']['users']['role_type'];
                             $scope.sessionId = res['data']['Badge_count']['user_id'];
-                              $scope.sessionBodyId = res['data']['Badge_count']['body_id'];
+                            $scope.sessionBodyId = res['data']['Badge_count']['body_id'];
                             $scope.messageCount = res['data']['Badge_count']['message_count'];
                             var  userSet = false;
                             var idSet = false;
@@ -451,7 +421,6 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
             }, 3000);
         };
 })
-
 .controller('DashboardCtrl', function($scope, $state,$ionicLoading,$ionicPopup, $timeout, GLOBALS, $http, ionicMaterialInk, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData) {
   $scope.$on("$ionicView.beforeEnter", function(event, data){
   //
@@ -459,7 +428,6 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
          template: 'Loading...',
          duration: 3000
        })
-
        $scope.showAlert = function() {
    var alertPopup = $ionicPopup.alert({
      title: 'Under construction!',
@@ -734,12 +702,12 @@ $scope.hide = function(){
            $scope.aclMessage = "Access Denied";
            $scope.showAlertsucess(message);
        });
-     };
-     $scope.showAlertsucess = function(message) {
-       var alertPopup = $ionicPopup.alert({
+       };
+         $scope.showAlertsucess = function(message) {
+           var alertPopup = $ionicPopup.alert({
            title: '<img src="img/alert.jpg" height="60px" width="60px">',
            template: message
-      })
+         })
          }
          $scope.getDivision = function(classType){
            var url= GLOBALS.baseUrl+"user/get-divisions/"+classType+"?token="+userSessions.userSession.userToken;
@@ -764,7 +732,6 @@ $scope.hide = function(){
             $scope.closeModal = function() {
             $scope.modal.hide();
             };
-
 })
 .controller('EditAchievementCtrl',function($ionicPopup,userSessions,$state,$ionicLoading, GLOBALS, $http,$scope,$rootScope){
         $scope.editAchievments=$rootScope.DetailAchievemtns;
@@ -831,9 +798,6 @@ $scope.hide = function(){
               template: message
          })
        }
-
-
-
 })
 .controller('SharedAchievementCtrl', function($rootScope,userSessions,GLOBALS,  $http,$scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate,  $ionicLoading) {
         $scope.$parent.clearFabs();
@@ -914,7 +878,6 @@ $scope.hide = function(){
         $scope.onLoad = function (e, reader, file, fileList, fileOjects, fileObj){
             $scope.image.push(fileObj.base64);
         }
-
         $scope.create=function(){
           console.log($scope.image);
                $ionicLoading.show();
@@ -938,10 +901,6 @@ $scope.hide = function(){
                template: message
           })
         }
-
-
-
-
 })
 .controller('HomeworkCtrl', function($scope, $state, $ionicPopup, hwDetails, userSessions, $http, GLOBALS, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.$parent.clearFabs();
