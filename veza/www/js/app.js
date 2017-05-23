@@ -1,29 +1,25 @@
-// Ionic Starter App
+ // Ionic Starter App
 //Creator: Shantanu Acharya
 var db = null;
-angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-material', 'highcharts-ng', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate'])
+angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCordova', 'ionic-material', 'highcharts-ng', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate'])
 .run(function($rootScope, $ionicPlatform,$cordovaSQLite, $cordovaSplashscreen,$state,userSessions) {
     $ionicPlatform.ready(function() {
       $rootScope.AuthToken=window.localStorage.getItem( "token" );
       $rootScope.userDataArray=window.localStorage.getItem( "userDataArray" );
-          $rootScope.studentlist=window.localStorage.getItem( "studentlist" );
-            $rootScope.sessionUserRole=window.localStorage.getItem( "sessionUserRole" );
-              $rootScope.sessionId=window.localStorage.getItem( "sessionId" );
-                $rootScope.sessionBodyId=window.localStorage.getItem( "sessionBodyId" );
-                  $rootScope.messageCount=window.localStorage.getItem( "messageCount" );
-         alert($rootScope.AuthToken);
+      $rootScope.studentlist=window.localStorage.getItem( "studentlist" );
+      $rootScope.sessionUserRole=window.localStorage.getItem( "sessionUserRole" );
+      $rootScope.sessionId=window.localStorage.getItem( "sessionId" );
+      $rootScope.sessionBodyId=window.localStorage.getItem( "sessionBodyId" );
+      $rootScope.messageCount=window.localStorage.getItem( "messageCount" );
          if($rootScope.AuthToken != 0 || $rootScope.AuthToken != null){
-           alert("here");
            var  userSet = false;
            var idSet = false;
            userSet = userSessions.setSession($rootScope.AuthToken, $rootScope.sessionUserRole, $rootScope.messageCount);
            idSet = userSessions.setUserId($rootScope.sessionId,$rootScope.sessionBodyId);
             $state.go('app.dashboard');
           }else {
-            alert("there");
              $state.go('login');
           }
-
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -38,8 +34,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
              $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS auth_details (id integer primary key, token text , userDataArray text, studentlist text, sessionUserRole text, sessionId text , sessionBodyId text, messageCount text)");
     });
  })
-.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, $translateProvider) {
+.config(function($stateProvider,$ionicCloudProvider, $urlRouterProvider, $ionicConfigProvider, $translateProvider) {
     // Turn off caching for demo simplicity's sake
+    $ionicCloudProvider.init({
+    "core": {
+      "app_id": "39687151"
+    },
+    "push": {
+      "sender_id": "149076824517",
+      "pluginConfig": {
+        "ios": {
+          "badge": true,
+          "sound": true
+        },
+        "android": {
+          "iconColor": "#343434"
+        }
+      }
+    }
+  });
     $ionicConfigProvider.views.maxCache(0);
     /*
     // Turn off back button text
@@ -93,7 +106,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
                 }
             }
         })
-
     .state('app.dashboard', {
         url: '/dashboard',
         views: {
@@ -660,5 +672,5 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ngCordova', 'ionic-m
             }
         });
    // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/login');
+    $urlRouterProvider.otherwise('/tokencheck');
 });

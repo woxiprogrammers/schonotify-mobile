@@ -1,7 +1,7 @@
 /* global angular, document, window */
 'use strict';
 var db = null;
-angular.module('starter.controllers', ['naif.base64'])
+angular.module('starter.controllers', ['naif.base64','ionic.cloud'])
 .constant('GLOBALS',{
 //baseUrl:'http://sspss.veza.co.in/api/v1/'
 baseUrl:'http://test.woxi.co.in/api/v1/',
@@ -25,7 +25,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             userSessions.userSession.bodyId = bodyid;
             return true;
         };
-
         userSessions.setUserId = function(id,bodyId){
            userSessions.userSession.userId = id;
               userSessions.userSession.bodyId = bodyId;
@@ -205,7 +204,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             case 'right':
                 hasHeaderFabRight = true;
                 break;
-        }
+    }
         $scope.hasHeaderFabLeft = hasHeaderFabLeft;
         $scope.hasHeaderFabRight = hasHeaderFabRight;
     };
@@ -363,8 +362,9 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
 })
 .controller('tokencheckCtrl', function(myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
 
+
 })
-.controller('LoginCtrl', function(myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
+.controller('LoginCtrl', function($rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
     $scope.data = [];
     ionicMaterialInk.displayEffect();
     $scope.submit = function(email,password){
@@ -373,19 +373,25 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             $scope.sessionUserRole = '';
                     var url= GLOBALS.baseUrl+"user/auth";
                     $http.post(url, { email: email, password: password }).success(function(res) {
-                    console.log(res);
-                    var query = "INSERT INTO auth_details (token, userDataArray, studentlist,sessionUserRole ,sessionId ,sessionBodyId ,messageCount) VALUES (?,?,?,?,?,?,?)";
-                    var q= $cordovaSQLite.execute(db,query,[res['data']['users']['token'],res['data']['users'],res['data']['Students'],res['data']['users']['role_type'],res['data']['Badge_count']['user_id'],res['data']['Badge_count']['body_id'],res['data']['Badge_count']['message_count']]);
-                    window.localStorage.setItem( "token", res['data']['users']['token'] );
-                    window.localStorage.setItem( "userDataArray", res['data']['users'] );
-                    window.localStorage.setItem( "studentlist", res['data']['Students']);
-                    window.localStorage.setItem( "sessionUserRole", res['data']['users']['role_type']);
-                    window.localStorage.setItem( "sessionId", res['data']['Badge_count']['user_id'] );
-                    window.localStorage.setItem( "sessionBodyId", res['data']['Badge_count']['body_id'] );
-                    window.localStorage.setItem( "messageCount",  res['data']['Badge_count']['message_count'] );
                     $scope.Switchstudentlist=(res['data']['Students']);
                     $scope.data.message = res['message'];
-                       if(res['status'] == 200){
+                    $scope.register=function(){
+                      $ionicPush.register().then(function(t) {
+                              $rootScope.pushToken=t.token;
+                              $scope.saveToken();
+                              return $ionicPush.saveToken(t);
+                      }).then(function(t) {
+                             console.log('Token saved:', t.token);
+                      })
+                    }
+                    $scope.saveToken=function(){
+                          var url= GLOBALS.baseUrl+"user/save-push?token="+res['data']['users']['token'];
+                          $http.post(url, {pushToken:$rootScope.pushToken,user_id:res['data']['Badge_count']['user_id']}).success(function(response){
+                          }).error(function(err) {
+                          });
+                    }
+                    if(res['status'] == 200){
+                      $scope.register();
                           $scope.studentlist=(res.data['users']);
                             $scope.userDataArray = userData.setUserData(res['data']['users']);
                             $scope.sessionToken = res['data']['users']['token'];
@@ -421,7 +427,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             }, 3000);
         };
 })
-.controller('DashboardCtrl', function($scope, $state,$ionicLoading,$ionicPopup, $timeout, GLOBALS, $http, ionicMaterialInk, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData) {
+.controller('DashboardCtrl', function($ionicPush,$scope, $state,$ionicLoading,$ionicPopup, $timeout, GLOBALS, $http, ionicMaterialInk, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData) {
   $scope.$on("$ionicView.beforeEnter", function(event, data){
   //
        $ionicLoading.show({
@@ -445,7 +451,10 @@ $scope.hide = function(){
     }else if(  userSessions.userSession.bodyId == 2){
        $scope.title="Ganesh English Medium School";
     }
-
+    $scope.$on('cloud:push:notification', function(event, data) {
+           var msg = data.message;
+               console.log(msg.title + ': ' + msg.text);
+                });
          $scope.feelanding=function(){
            if(userSessions.userSession.userRole == "parent"){
              $state.go('app.feelanding');
@@ -456,8 +465,6 @@ $scope.hide = function(){
              });
            }
         }
-
-
         $scope.eventlanding=function(){
           if(userSessions.userSession.userRole == "parent"){
                $state.go('app.eventlandingparent');
@@ -470,13 +477,10 @@ $scope.hide = function(){
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
-
         // Set Header
         $scope.$parent.hideHeader();
-
         // Set Ink
         ionicMaterialInk.displayEffect();
-
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.msgCount = '';
@@ -500,20 +504,15 @@ $scope.hide = function(){
         }
 })
 .controller('NotificationCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
-
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
-
         // Set Header
         $scope.$parent.hideHeader();
-
         // Set Ink
         ionicMaterialInk.displayEffect();
-
         //Side-Menu
-
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.checkAll = function () {
             if ($scope.selectedAll) {
@@ -524,7 +523,6 @@ $scope.hide = function(){
             angular.forEach($scope.nmessages, function (nmsg) {
                 nmsg.Selected = $scope.selectedAll;
             });
-
         };
 })
 .controller('SharedNotificationCtrl', function(  $ionicActionSheet , $ionicLoading,  $http,userSessions,GLOBALS,$scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
@@ -562,8 +560,6 @@ $scope.hide = function(){
                        nmsg.Selected = $scope.selectedAll;
               });
         };
-
-
 })
 .controller('CreateAnnouncementCtrl', function($ionicPopup,$window,$ionicModal,userSessions,$http,GLOBALS,$scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.$parent.clearFabs();
