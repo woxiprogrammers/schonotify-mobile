@@ -13,7 +13,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
 })
 .service('myservice', function() {
      this.Switchstudentlist = "yyy";
-   })
+})
 .service('userSessions', function Usersession(){
         var userSessions = this;
         userSessions.userSession = [];
