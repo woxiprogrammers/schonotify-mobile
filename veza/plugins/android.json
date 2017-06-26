@@ -1,0 +1,46 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "com-badrit-base64": {
+            "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+        },
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+        },
+        "cordova-plugin-image-picker": {
+            "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+        },
+        "cordova-sqlite-storage": {
+            "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+        },
+        "phonegap-plugin-push": {
+            "SENDER_ID": "750487257563",
+            "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+        }
+    },
+    "dependent_plugins": {}
+}
