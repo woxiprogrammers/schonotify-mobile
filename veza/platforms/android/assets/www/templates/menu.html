@@ -7,7 +7,7 @@
     </ion-side-menu-content>
     <ion-side-menu side="left" id="left-menu">
         <ion-content>
-          <div style="height:200px;background-color:#b1bdd1;position:relative;padding:8px" ng-show="check" >
+          <div style="height:200px;background-color:#edf3ff;position:relative;padding:8px" ng-show="check" >
                    <div><br><br>
                         <h3 style="text-align:center">{{userData.firstname}} &nbsp{{userData.lastname}}</h3>
                         <h4 style="text-align:center"><span style="color:black"> <b>{{userData.email}}</b></h4>
@@ -27,29 +27,24 @@
           </div>
           <div class="box on" ng-show="toggle" ng-animate="'box'">
             <ion-list ng-show="studToggle">
-                <ion-item nav-clear menu-close class="sm-item-border" ng-repeat="student in studentdataswitch" ng-click="studentclick(student.student_id)">
+                <ion-item nav-clear menu-close class="sm-item-border" ng-repeat="student in studentdataswitch" ng-click="studentclick(student.student_id,student.body_id)">
                   <div style="color:green;font-size:10;"> {{student.student_name}} &nbsp {{student.last_name}}</div>
                 </ion-item>
                 </ion-list>
-
           </div>
           <div class="box off" ng-hide="toggle" ng-animate="'box'">
-            <div class="list">
-                        <div class="item item-icon-left" ng-click="showAlert()">
+                <div class="list">
+                          <div class="item item-icon-left" ng-click="showAlert()">
                           <i class="icon ion-man"></i>About us</div>
                           <div class="item item-icon-left" ng-click="showAlert()">
-                            <i class="icon ion-ios-telephone"></i>Contact us</div>
-                              <div class="item item-icon-left" ng-click="showAlert()">
-                                <i class="icon ion-clipboard"></i>Terms and conditions</div>
-                         <div class="item item-divider" style="height:10px;"></div>
-                         <div class="item item-icon-left" ng-click="showAlert()">
-                           <i class="icon ion-settings"></i>Settings</div>
-                             <div class="item item-icon-left" ng-click="signOut()">
-                               <i class="icon ion-power"></i>Logout</div>
-             </div>
-
+                          <i class="icon ion-ios-telephone"></i>Contact us</div>
+                          <div class="item item-icon-left" ng-click="showAlert()">
+                          <i class="icon ion-clipboard"></i>Terms and conditions</div>
+                          <div class="item item-divider" style="height:5px;"></div>
+                          <div class="item item-icon-left" ng-click="signOut()">
+                          <i class="icon ion-power"></i>Logout</div>
+                </div>
           </div>
-
         </ion-content>
     </ion-side-menu-content>
    </ion-side-menu>

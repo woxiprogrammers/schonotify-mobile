@@ -4,6 +4,14 @@ var db = null;
 angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCordova', 'ionic-material', 'highcharts-ng', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate'])
 .run(function($rootScope, $ionicPlatform,$cordovaSQLite, $cordovaSplashscreen,$state,userSessions) {
     $ionicPlatform.ready(function() {
+      $ionicPlatform.registerBackButtonAction(function (event) {
+             if($state.current.name=="app.dashboard" || $state.current.name=="login"){
+                  window.plugins.appMinimize.minimize();
+             }
+             else {
+                  navigator.app.backHistory();
+              }
+      }, 100);
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -14,6 +22,7 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
+
       db = window.openDatabase("test", "1.0", "Test DB", 1000000);
              $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS auth_details (id integer primary key, token text , userDataArray text, studentlist text, sessionUserRole text, sessionId text , sessionBodyId text, messageCount text)");
     });
@@ -22,7 +31,7 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
     // Turn off caching for demo simplicity's sake
     $ionicCloudProvider.init({
     "core": {
-      "app_id": "8bdd3923"
+      "app_id": "7c6f7241"
     },
     "push": {
       "sender_id": "750487257563",
@@ -32,7 +41,7 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
           "sound": true
         },
         "android": {
-          "iconColor": "#343434"
+          "iconColor": "#a0c4ff"
         }
       }
     }
@@ -63,7 +72,6 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
             FRIDAY: 'Friday',
             SATURDAY: 'Saturday'
         });
-
         $translateProvider.preferredLanguage('en');
         $translateProvider.useSanitizeValueStrategy('escape');
     $stateProvider
@@ -134,7 +142,7 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
                 controller: 'SharedNotificationCtrl'
             },
             'fabContent': {
-                template: '<button id="fab-new-event" ng-click="goToCreateAnnouncment()" class="button button-fab button-fab-bottom-right expanded fab-button-event  spin"><i class=""icon ion-edit"></i></button>',
+                template: '<button id="fab-new-event" ng-click="goToCreateAnnouncment()" class="button button-fab button-fab-bottom-right expanded fab-button-event  spin"><i class="icon ion-plus-circled"></i></button>',
                 controller: function ($timeout,$scope,$state) {
                   $scope.goToCreateAnnouncment = function() {
                       $state.go('app.createannouncement');
@@ -154,7 +162,6 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
                controller: 'CreateAnnouncementCtrl'
           },
           'fabContent': {
-              template: '<button id="fab-new-event" ng-click="goToCreateAnnouncment()" class="button button-fab button-fab-bottom-right expanded fab-button-event  spin"><i class=""icon ion-edit"></i></button>',
               controller: function ($timeout,$scope,$state) {
                   $timeout(function () {
                       document.getElementById('fab-new-event').classList.toggle('off');
@@ -171,9 +178,13 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
                controller: 'SharedAchievementCtrl'
             },
             'fabContent': {
-                template: '<button id="fab-new-achievement" ng-click="goToCreateAchievement()" class="button button-fab button-fab-bottom-right expanded  on"  style="background-color:red"><i class=""icon ion-edit"></i></button>',
-                controller: function ($timeout,$scope,$state) {
+                template: '<button id="fab-new-achievement" ng-click="goToCreateAchievement()" class="button button-fab button-fab-bottom-right expanded fab-button-event"><i class="icon ion-plus-circled"></i></button>',
+                controller: function (GLOBALS,$timeout,$scope,$state,userSessions,$http) {
                   $scope.goToCreateAchievement=function () {
+                    var url= GLOBALS.baseUrl+"user/check-acl/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
+                    $http.get(url).success(function(response){
+                          console.log(response);
+                    })
                         $state.go('app.createachievement');
                   }
                     $timeout(function () {
@@ -245,6 +256,11 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
              'menuContent': {
                 templateUrl: 'templates/create-achievement.html',
                 controller: 'CreateAchievementCtrl'
+             },
+             'fabContent': {
+                 controller: function (GLOBALS,$timeout,$scope,$state,userSessions,$http) {
+                   
+                 }
              }
           }
      })

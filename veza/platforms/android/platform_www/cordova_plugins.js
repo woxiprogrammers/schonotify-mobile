@@ -34,27 +34,11 @@ module.exports = [
         ]
     },
     {
-        "id": "cordova-plugin-splashscreen.SplashScreen",
-        "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-        "pluginId": "cordova-plugin-splashscreen",
-        "clobbers": [
-            "navigator.splashscreen"
-        ]
-    },
-    {
         "id": "cordova-plugin-statusbar.statusbar",
         "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
         "pluginId": "cordova-plugin-statusbar",
         "clobbers": [
             "window.StatusBar"
-        ]
-    },
-    {
-        "id": "cordova-sqlite-storage.SQLitePlugin",
-        "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
-        "pluginId": "cordova-sqlite-storage",
-        "clobbers": [
-            "SQLitePlugin"
         ]
     },
     {
@@ -73,6 +57,22 @@ module.exports = [
         "clobbers": [
             "PushNotification"
         ]
+    },
+    {
+        "id": "cordova-plugin-splashscreen.SplashScreen",
+        "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+        "pluginId": "cordova-plugin-splashscreen",
+        "clobbers": [
+            "navigator.splashscreen"
+        ]
+    },
+    {
+        "id": "cordova-plugin-appminimize.AppMinimize",
+        "file": "plugins/cordova-plugin-appminimize/www/AppMinimize.js",
+        "pluginId": "cordova-plugin-appminimize",
+        "clobbers": [
+            "cordova.plugins.appMinimize"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -83,12 +83,13 @@ module.exports.metadata =
     "cordova-plugin-console": "1.0.5",
     "cordova-plugin-image-picker": "1.1.1",
     "cordova-plugin-inappbrowser": "1.7.2-dev",
-    "cordova-plugin-splashscreen": "4.0.0",
     "cordova-plugin-statusbar": "2.2.0",
     "cordova-plugin-whitelist": "1.3.0",
-    "cordova-sqlite-storage": "2.0.4",
     "ionic-plugin-keyboard": "2.2.1",
-    "phonegap-plugin-push": "1.10.5"
+    "phonegap-plugin-push": "1.10.5",
+    "cordova-plugin-splashscreen": "4.0.3",
+    "cordova-plugin-appminimize": "1.0",
+    "cordova-plugin-crosswalk-webview": "2.3.0"
 };
 // BOTTOM OF METADATA
 });

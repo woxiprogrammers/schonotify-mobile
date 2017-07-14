@@ -3,10 +3,9 @@
 var db = null;
 angular.module('starter.controllers', ['naif.base64','ionic.cloud','ionic-material'])
 .constant('GLOBALS',{
-//baseUrl:'http://sspss.veza.co.in/api/v1/'
-baseUrl:'http://test.woxi.co.in/api/v1/',
+baseUrl:'http://sspss.veza.co.in/api/v1/'
+//baseUrl:'http://test.woxi.co.in/api/v1/',
 //baseUrl:'http://school_mit.schnotify.com/api/v1/'
-//   http:'school_mit.schnotify.com/'
 })
 .factory('Data', function() {
     return {message}
@@ -55,7 +54,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
 .service('userData', function uData(){
         var userData = this;
         userData.data = [];
-        console.log(userData.data);
         userData.setUserData = function(dataArray){
             userData.data = dataArray;
             return true;
@@ -135,7 +133,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
   });
     if(userSessions.userSession.userRole == 'teacher'){
       $scope.check=true;
-      console.log(userData.getUserData());
       $scope.userData=userData.getUserData();
     }else{
       $scope.check=false;
@@ -183,7 +180,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
     $scope.hideNavBar = function() {
         document.getElementsByTagName('ion-nav-bar')[0].style.display = 'none';
     };
-    $scope.showNavBar = function() {
+    $scope.showNavBar = function(){
         document.getElementsByTagName('ion-nav-bar')[0].style.display = 'block';
     };
     $scope.noHeader = function() {
@@ -194,7 +191,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             }
         }
     };
-    $scope.setExpanded = function(bool) {
+    $scope.setExpanded = function(bool){
         $scope.isExpanded = bool;
     };
     $scope.setHeaderFab = function(location) {
@@ -218,7 +215,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                 content[i].classList.toggle('has-header');
             }
         }
-
     };
     $scope.hideHeader = function() {
         $scope.hideNavBar();
@@ -345,7 +341,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             $state.go('app.eventedit');
         };
         $scope.resultView = function() {
-            $state.go('app.resultview');
+            alert("To be released after exams.");
         };
         $scope.signIn = function() {
             $state.go('app.dashboard');
@@ -364,7 +360,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         $scope.sessionId = localStorage.getItem('sessionId');
         $scope.sessionBodyId = localStorage.getItem('sessionBodyId');
         $scope.userDataArray = localStorage.getItem('userDataArray');
-        if($scope.tokenData != 0){
+        if($scope.tokenData != null && $scope.tokenData != 0){
            userSessions.setToken(JSON.parse($scope.tokenData));
            userData.setUserData(JSON.parse($scope.userDataArray));
            userSessions.setSession(JSON.parse($scope.tokenData),JSON.parse($scope.sessionUserRole),JSON.parse($scope.messageCount));
@@ -382,8 +378,8 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                      console.log("Error in Response: " +response);
              });
           $state.go('app.dashboard');
-       }else{
-          $state.go('login');
+       }else {
+            $state.go('login');
     }
 
 })
@@ -404,7 +400,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                               $scope.saveToken();
                               return $ionicPush.saveToken(t);
                       }).then(function(t) {
-                             console.log('Token saved:', t.token);
+                             console.log(t.token);
                       })
                     }
                     $scope.saveToken=function(){
@@ -429,7 +425,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                             $scope.messageCount = res['data']['Badge_count']['message_count'];
                             var  userSet = false;
                             var idSet = false;
-                            console.log($scope.sessionToken);
                             userSet = userSessions.setSession($scope.sessionToken, $scope.sessionUserRole, $scope.messageCount);
                             idSet = userSessions.setUserId($scope.sessionId,$scope.sessionBodyId);
                             if(userSet == true && idSet == true){
@@ -440,7 +435,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                             console.log(err);
                             $scope.error=err['message'];
             });
-
         }
         $scope.showPopup = function() {
             // An elaborate, custom popup
@@ -458,34 +452,36 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             }, 3000);
         };
 })
-.controller('DashboardCtrl', function($ionicPush,$scope, $state,$ionicLoading,$ionicPopup, $timeout, GLOBALS, $http, ionicMaterialInk,ionicMaterialMotion, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData) {
+.controller('DashboardCtrl', function($ionicPlatform,$ionicPush,$scope, $state,$ionicLoading,$ionicPopup, $timeout, GLOBALS, $http, ionicMaterialInk,ionicMaterialMotion, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData) {
   $scope.$on("$ionicView.beforeEnter", function(event, data){
-  //
        $ionicLoading.show({
          template: 'Loading...',
-         duration: 3000
+         duration: 500
        })
        $scope.showAlert = function() {
-   var alertPopup = $ionicPopup.alert({
-     title: 'Under construction!',
-     template: 'To be released soon..! '
-   });
- }
-    $scope.hide = function(){
-       $ionicLoading.hide().then(function(){
-          console.log("The loading indicator is now hidden");
-       });
-     }
+         var alertPopup = $ionicPopup.alert({
+           title: 'Under construction!',
+           template: 'To be released soon..! '
+         });
+       }
+       $scope.resultAlert = function(){
+         alert("No student history found !");
+       }
+        $scope.hide = function(){
+              $ionicLoading.hide().then(function(){
+              console.log("The loading indicator is now hidden");
+           });
+         }
     });
-    if(  userSessions.userSession.bodyId == 1){
-             $scope.title="Ganesh International School";
-    }else if(  userSessions.userSession.bodyId == 2){
-       $scope.title="Ganesh English Medium School";
-    }
-    $scope.$on('cloud:push:notification', function(event, data) {
+        if(userSessions.userSession.bodyId == 1){
+                 $scope.title="Ganesh International School";
+        }else if(  userSessions.userSession.bodyId == 2){
+                 $scope.title="Ganesh English Medium School";
+        }
+        $scope.$on('cloud:push:notification', function(event, data) {
            var msg = data.message;
                console.log(msg.title + ': ' + msg.text);
-                });
+        });
          $scope.feelanding=function(){
            if(userSessions.userSession.userRole == "parent"){
              $state.go('app.feelanding');
@@ -497,20 +493,20 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
            }
         }
         $scope.eventlanding=function(){
-          if(userSessions.userSession.userRole == "parent"){
-               $state.go('app.eventlandingparent');
-          }
-          else{
-               $state.go('app.eventlandingteacher');
-          }
+                if(userSessions.userSession.userRole == "parent"){
+                     $state.go('app.eventlandingparent');
+                }
+                else{
+                     $state.go('app.eventlandingteacher');
+                }
         }
-          $scope.NoticeboardView = function() {
+        $scope.NoticeboardView = function() {
                 if(userSessions.userSession.userRole == "parent"){
                   $state.go('app.sharedNotifyParent');
                 }else{
                   $state.go('app.sharedNotification');
                 }
-          };
+        };
         $scope.$parent.clearFabs();
         $scope.isExpanded = true;
         $scope.$parent.setExpanded(true);
@@ -2447,7 +2443,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             });
         };
     })
-    .controller('MarkAttendanceCtrl', function($scope, $state, $timeout, $http, $ionicPopup, userSessions, GLOBALS, $filter, ionicMaterialInk, $log, $ionicSideMenuDelegate) {
+    .controller('MarkAttendanceCtrl', function($ionicHistory, $scope, $state, $timeout, $http, $ionicPopup, userSessions, GLOBALS, $filter, ionicMaterialInk, $log, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -2465,6 +2461,9 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         $scope.currentBatch = '';
         $scope.currentClass = '';
         $scope.currentDiv = '';
+        $scope.goback = function(){
+          $ionicHistory.goBack();
+        }
         $scope.getStudentList = function(){
             $scope.setDate = $filter('date')($scope.currentDate, "yyyy-MM-dd");
             var url = GLOBALS.baseUrl+"user/students-list?token="+userSessions.userSession.userToken;
@@ -2519,17 +2518,14 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                    changeClass.addClass('mark-0');
                 }
         };
-
         $scope.markAttendance = function(){
             $scope.setDate = $filter('date')($scope.currentDate, "yyyy-MM-dd");
             var url= GLOBALS.baseUrl+"user/mark-attendance?token="+userSessions.userSession.userToken;
-            $http.post(url, {date: $scope.setDate, student_id: $scope.absentList})
-            .success(function(response) {
+            $http.post(url, {date: $scope.setDate, student_id: $scope.absentList}).success(function(response) {
+              console.log(response);
                 if(response['status'] == 200){
                         $scope.msg = response['message'];
                         $scope.showPopup();
-
-
                 }
                 else{
                         $scope.msg = response['message'];
@@ -2537,17 +2533,11 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                 }
             })
             .error(function(response) {
-                console.log("Error in Response: " +response);
-                if(response.hasOwnProperty('status')){
-                    $scope.msg = response.message;
-                }
-                else{
+                console.log(response);
                     $scope.msg = "Access Denied";
-                }
                 $scope.showPopup();
             });
         }
-
         $scope.showPopup = function() {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
@@ -2566,7 +2556,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
     })
 
     .controller('ViewAttendanceCtrl', function($scope, $state, GLOBALS, $ionicPopup, $filter, $timeout, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
-
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -2760,14 +2749,13 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
              duration: 1500
            })
            $scope.showAlert = function() {
-       var alertPopup = $ionicPopup.alert({
-         title: 'Under construction!',
-         template: 'We are working on that.'
-       });
-     }
+           var alertPopup = $ionicPopup.alert({
+             title: 'Under construction!',
+             template: 'We are working on that.'
+           });
+           }
          $scope.hide = function(){
            $ionicLoading.hide().then(function(){
-              console.log("The loading indicator is now hidden");
            });
          }
        });
@@ -2785,10 +2773,9 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
               $ionicSideMenuDelegate.canDragContent(true);
 
               $scope.eventList = null;
-              $scope.recentEvent  = function() {
+            $scope.recentEvent  = function() {
               var url = GLOBALS.baseUrl+"user/view-top-five-event/?token="+userSessions.userSession.userToken;
               $http.get(url).success(function(response){
-                console.log("top five events response:"+response);
                    if(response['status'] == 200){
                          $scope.eventList = response['data'];
                          if($scope.eventList == ''){
@@ -2803,11 +2790,11 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                   $scope.aclMessage = "Access Denied";
                   $scope.showPopup();
               });
-            }
+          }
             $scope.selectedYear = null;
             $scope.yearMonthData = null;
             $scope.monthList = null;
-            $scope.eventYearMonth = function() {
+          $scope.eventYearMonth = function() {
               var url = GLOBALS.baseUrl+"user/get-year-month?token="+userSessions.userSession.userToken;
               $http.get(url).success(function(response){
                 if(response['status'] == 200){
@@ -2824,9 +2811,9 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                   $scope.aclMessage = "Data not found for this Instance!!!";
                   $scope.showPopup();
                 });
-            }
+          }
             $scope.eventYearMonth();
-            $scope.setMonth = function(year) {
+          $scope.setMonth = function(year) {
               $scope.monthList = null;
               angular.forEach($scope.yearMonthData, function(item) {
                 if (item.year === year) {
@@ -2835,7 +2822,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
               });
             }
             $scope.setMonth($scope.selectedYear);
-            $scope.eventByMonth  = function(month) {
+          $scope.eventByMonth  = function(month) {
             var url = GLOBALS.baseUrl+"user/view-months-event/"+$scope.selectedYear+"/"+month+"/?token="+userSessions.userSession.userToken;
             $http.get(url).success(function(response){
                 if(response['status'] == 200){
@@ -2866,7 +2853,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                 }
             });
           }
-              $scope.showPopup = function() {
+          $scope.showPopup = function() {
                   // An elaborate, custom popup
                   var myPopup = $ionicPopup.show({
                       template: '<div>'+$scope.aclMessage+'</div>',
@@ -2880,7 +2867,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                   $timeout(function() {
                       myPopup.close(); //close the popup after 3 seconds for some reason
                   }, 3000);
-              };
+          };
               $scope.recentEvent();
     })
 .controller('FeeDetailCntrl', function($stateParams,$rootScope,$ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
@@ -2950,6 +2937,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                 var url = GLOBALS.baseUrl+"user/get-student_fees/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
                 $http.get(url).success(function(response){
                    $scope.installments=response;
+                   console.log($scope.installments);
                    }).error(function(err) {
                       $ionicLoading.hide();
                       $scope.aclMessage = "Installment Not Found !!";
@@ -3125,7 +3113,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
           }
       });
     }
-
         $scope.showPopup = function() {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
@@ -3141,58 +3128,40 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                 myPopup.close(); //close the popup after 3 seconds for some reason
             }, 3000);
         };
-
         $scope.recentEvent();
     })
-
     .controller('DetailEventParentCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
-
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
-
         // Set Header
         $scope.$parent.hideHeader();
-
         // Set Ink
         ionicMaterialInk.displayEffect();
-
         //Side-Menu
-
         $ionicSideMenuDelegate.canDragContent(true);
-
         $scope.noticeBoard = function() {
             $state.go('app.sharedNotification');
         };
-
         $scope.startEventTime = new Date();
         $scope.endEventTime = new Date();
-
         $scope.eventdetailsList = $stateParams;
     })
-
     .controller('EventStatusTeacherCtrl', function($state, $scope, $http, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams, userSessions, GLOBALS, $ionicPopup , $ionicLoading) {
-
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
-
         // Set Header
         $scope.$parent.hideHeader();
-
         // Set Ink
         ionicMaterialInk.displayEffect();
-
         //Side-Menu
-
         $ionicSideMenuDelegate.canDragContent(true);
-
         $scope.noticeBoard = function() {
             $state.go('app.sharedNotification');
         };
-
         $scope.startEventTime = new Date();
         $scope.endEventTime = new Date();
         $scope.eventdetailsList = $stateParams;
@@ -3220,15 +3189,10 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
               $scope.showPopup();
           });
         }
-
         $scope.deleteEvent = function(eventId) {
-
-
           var url = GLOBALS.baseUrl+"user/delete-event?token="+userSessions.userSession.userToken;
-
           $http.post(url, {event_id: eventId, _method : 'PUT'})
           .success(function(response){
-
             console.log("deleteresponse:"+response);
               if(response['status'] == 200){
                          $scope.responseMessage = response['message'];
@@ -3243,11 +3207,9 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
               $scope.showPopup();
           });
         }
-
         $scope.editEvent = function() {
             $state.go('app.eventedit', {'obj' : $stateParams});
         }
-
         $scope.showPopup = function() {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
@@ -3264,9 +3226,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             }, 3000);
         }
     })
-
     .controller('EditEventCtrl', function( $ionicLoading ,$ionicPopup,GLOBALS,$http,userSessions,$scope, $state, $filter, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
-
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -3279,7 +3239,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         };
         $scope.onChange = function (e, fileList)
           {
-
           }
         $scope.onLoad = function (e, reader, file, fileList, fileOjects, fileObj)
           {
@@ -3341,7 +3300,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                 myPopup.close(); //close the popup after 3 seconds for some reason
             }, 3000);
         }
-
       $scope.updateEvent = function(statusEvent)
        {
          $ionicLoading.show({
@@ -3391,10 +3349,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
           $state.go('app.eventlandingteacher');
         }
       }
-
-
-
-
     })
     .controller('CreateEventCtrl', function( $ionicHistory,$ionicLoading,$filter, $scope, $state, GLOBALS, $timeout, $http, userSessions, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $cordovaActionSheet,$cordovaImagePicker, $ionicPlatform) {
       $scope.$on("$ionicView.beforeEnter", function(event, data){
@@ -3404,7 +3358,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
              template: 'Loading...',
              duration: 3000
            })
-
            $scope.showAlert = function() {
              var alertPopup = $ionicPopup.alert({
                  title: 'Under construction!',
@@ -3422,7 +3375,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
           });
         $scope.onChange = function (e, fileList)
           {
-
           }
         $scope.onLoad = function (e, reader, file, fileList, fileOjects, fileObj)
           {
@@ -3447,18 +3399,12 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
-
         // Set Header
         $scope.$parent.hideHeader();
-
         // Set Ink
         ionicMaterialInk.displayEffect();
-
         //Side-Menu
-
         $ionicSideMenuDelegate.canDragContent(true);
-
-
         $scope.noticeBoard = function() {
             $state.go('app.sharedNotification');
         };
@@ -3470,7 +3416,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         //$scope.eventImage = null;
         $scope.responseMessage = null;
         $scope.statusEvent = 0;
-
         $scope.setEventTitle = function(title){
           $scope.eventTitle = title;
         }
@@ -3483,8 +3428,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         $scope.setEventDetail = function(detail){
           $scope.eventDetail = detail;
         }
-
-
         $scope.image = null;
 
           $scope.showAlert = function(title, msg) {
@@ -3493,7 +3436,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
               template: msg
             });
           };
-
           $scope.loadImage = function() {
   var options = {
     title: 'Select Image Source',
@@ -3514,7 +3456,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
   });
 };
 $scope.selectPicture = function(sourceType) {
-
   var options = {
        quality: 50,
        destinationType: Camera.DestinationType.DATA_URL,
@@ -3527,7 +3468,6 @@ $scope.selectPicture = function(sourceType) {
        saveToPhotoAlbum: false,
  	  correctOrientation:true
      };
-
      $cordovaCamera.getPicture(options).then(function(imageData) {
 
        var image = document.getElementById('myImage');
@@ -3537,34 +3477,16 @@ $scope.selectPicture = function(sourceType) {
      }, function(err) {
        // error
      });
-
    }, false;
-
-
-
-
-
-
-
         $scope.publishEvent = function() {
           $scope.statusEvent = 1;
           $scope.craeteEventWithPublishAndDraft($scope.statusEvent); //ststus  = 0 => Draft
         }
-
-
-
-
-
-
         $scope.saveAsDraftEvent  = function() {
             $scope.statusEvent = 0;
             $scope.craeteEventWithPublishAndDraft($scope.statusEvent); //ststus  = 1 => Send for approval : pending
         }
-
-
       $scope.craeteEventWithPublishAndDraft = function(statusEvent) {
-
-
         if($scope.eventTitle == null || $scope.eventDetail == null || $scope.startEventTime == null || $scope.endEventTime == null){
                 if($scope.eventTitle == null){
                     $scope.responseMessage = "Fill mandatory fields";
@@ -3583,27 +3505,22 @@ $scope.selectPicture = function(sourceType) {
           $scope.startEventTime = $filter('date')($scope.startEventTime, "yyyy-MM-dd");
           $scope.endEventTime = $filter('date')($scope.endEventTime, "yyyy-MM-dd");
           var url = GLOBALS.baseUrl+"user/create-event?token="+userSessions.userSession.userToken;
-
           $http.post(url, {title: $scope.eventTitle, detail: $scope.eventDetail, start_date: $scope.startEventTime, end_date: $scope.endEventTime, img:$scope.image, status:statusEvent})
           .success(function(response){
               if(response['status'] == 200){
-
                          $scope.responseMessage = response['message'];
                          $scope.showPopup();
                         // $state.go(app.eventlandingteacher);
               } else {
-
                       $scope.responseMessage = response['message'];
                       $scope.showPopup();
               }
           }).error(function(err) {
-              $scope.responseMessage = "Something Went Worng!!!";
-              $scope.showPopup();
+              alert("You do not have permission !");
           });
           $scope.myGoBack();
         }
       }
-
       $scope.showPopup = function() {
           // An elaborate, custom popup
           var myPopup = $ionicPopup.show({
@@ -3626,15 +3543,11 @@ $scope.selectPicture = function(sourceType) {
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
-
         // Set Header
         $scope.$parent.hideHeader();
-
         // Set Ink
         ionicMaterialInk.displayEffect();
-
         //Side-Menu
-
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.options = {
             defaultDate: new Date(),

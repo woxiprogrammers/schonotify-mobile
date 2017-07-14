@@ -1,4 +1,8 @@
 {
   "name": "GEMS",
-  "app_id": "8bdd3923"
+  "app_id": "7c6f7241",
+  "type": "ionic1",
+  "watchPatterns": [
+    "scss/**/*"
+  ]
 }
