@@ -29,11 +29,12 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
               userSessions.userSession.bodyId = bodyId;
             return true;
         };
-         this.ss = function(id){
+        this.ss = function(id){
            var retrievedData = localStorage.getItem("studentdata");
            var students = JSON.parse(retrievedData);
            var obj = students.filter(function ( obj )
            {
+
              return obj.student_id === userSessions.userSession.userId;
             })[0];
                return obj;
