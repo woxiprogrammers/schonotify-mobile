@@ -5,7 +5,7 @@ angular.module('starter.controllers', ['naif.base64','ionic.cloud','ionic-materi
 .constant('GLOBALS',{
 //baseUrl:'http://sspss.veza.co.in/api/v1/'
 //baseUrl:'http://test.woxi.co.in/api/v1/',
-baseUrl:'http://school_mit.schnotify.com/api/v1/'
+//baseUrl:'http://school_mit.schnotify.com/api/v1/'
 })
 .factory('Data', function() {
     return {message}
@@ -34,7 +34,6 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
            var students = JSON.parse(retrievedData);
            var obj = students.filter(function ( obj )
            {
-
              return obj.student_id === userSessions.userSession.userId;
             })[0];
                return obj;
@@ -481,7 +480,7 @@ baseUrl:'http://school_mit.schnotify.com/api/v1/'
         }
         $scope.$on('cloud:push:notification', function(event, data) {
            var msg = data.message;
-               console.log(msg.title + ': ' + msg.text);
+               alert(msg.title);
         });
          $scope.feelanding=function(){
            if(userSessions.userSession.userRole == "parent"){
