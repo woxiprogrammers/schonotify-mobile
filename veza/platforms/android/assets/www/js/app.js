@@ -259,7 +259,7 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
              },
              'fabContent': {
                  controller: function (GLOBALS,$timeout,$scope,$state,userSessions,$http) {
-                   
+
                  }
              }
           }

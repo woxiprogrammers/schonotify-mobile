@@ -478,9 +478,52 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         }else if(  userSessions.userSession.bodyId == 2){
                  $scope.title="Ganesh English Medium School";
         }
-        $scope.$on('cloud:push:notification', function(event, data) {
-           var msg = data.message;
-               alert(msg.title);
+        $scope.$on('cloud:push:notification', function(event,data) {
+               alert("sss");
+               switch(data.message.payload.state){
+                 case "event":
+                 if(userSessions.userSession.userRole == "parent"){
+                   $state.go('app.eventlandingparent');
+                 }else{
+                   $state.go('app.eventlandingteacher');
+                 }
+                 break;
+                 case "attendance":
+                 if(userSessions.userSession.userRole == "parent"){
+                   $state.go('app.parentattendancelanding');
+                 }else{
+                 $state.go('app.attendancelanding');
+                 }
+                 break;
+                 case "leave":
+                 if(userSessions.userSession.userRole == "parent"){
+                   $state.go('app.parentattendancelanding');
+                 }else{
+                 $state.go('app.attendancelanding');
+                 }
+                 break;
+                 case "achievement":
+                 if(userSessions.userSession.userRole == "parent"){
+                   $state.go('app.sharedAchievementParent');
+                 }else{
+                   $state.go('app.sharedAchievement');
+                 }
+                 break;
+                 case "announcement":
+                 if(userSessions.userSession.userRole == "parent"){
+                   $state.go('app.sharedNotifyParent');
+                 }else{
+                 $state.go('app.sharedNotification');
+                 }
+                 break;
+                 case "attendance":
+                 if(userSessions.userSession.userRole == "parent"){
+                   $state.go('app.parentattendancelanding');
+                 }else{
+                 $state.go('app.attendancelanding');
+                 }
+                 break;
+               }
         });
          $scope.feelanding=function(){
            if(userSessions.userSession.userRole == "parent"){
