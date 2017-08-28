@@ -478,8 +478,8 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         }else if(  userSessions.userSession.bodyId == 2){
                  $scope.title="Ganesh English Medium School";
         }
+
         $scope.$on('cloud:push:notification', function(event,data) {
-               alert("sss");
                switch(data.message.payload.state){
                  case "event":
                  if(userSessions.userSession.userRole == "parent"){

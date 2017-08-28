@@ -1,5 +1,5 @@
  // Ionic Starter App
-//Creator: Shantanu Acharya
+//Creator: Shubham Chaudhari
 var db = null;
 angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCordova', 'ionic-material', 'highcharts-ng', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate'])
 .run(function($rootScope, $ionicPlatform,$cordovaSQLite, $cordovaSplashscreen,$state,userSessions) {
