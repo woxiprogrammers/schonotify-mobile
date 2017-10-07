@@ -3,8 +3,8 @@
 var db = null;
 angular.module('starter.controllers', ['naif.base64','ionic.cloud','ionic-material'])
 .constant('GLOBALS',{
-//baseUrl:'http://sspss.veza.co.in/api/v1/'
-baseUrl:'http://test.woxi.co.in/api/v1/',
+baseUrl:'http://sspss.veza.co.in/api/v1/'
+//baseUrl:'http://test.woxi.co.in/api/v1/',
 //baseUrl:'http://school_mit.schnotify.com/api/v1/'
 })
 .factory('Data', function() {
@@ -2948,6 +2948,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                  });
                 }
       });
+              $scope.bodyId = userSessions.userSession.bodyId;
               $scope.detail=function(id){
                  $state.go('app.feeDetail',{installment_id: id});
               }

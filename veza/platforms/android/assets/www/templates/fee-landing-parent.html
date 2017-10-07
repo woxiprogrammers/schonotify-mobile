@@ -34,7 +34,11 @@
                             <td style="background-color:white">{{installment.discount}} &nbsp <i class="icon ion-chevron-right" style="float:right"></i></td>
                             </tr>
                           </table></div>
-                          <center><a  href="#" onclick="window.open('http://sspss.veza.co.in/fees/billing-page', '_blank', 'location=no'); return false;">
+                          <center>
+                                  <a ng-if="bodyId == 1" href="#" onclick="window.open('http://sspss.veza.co.in/fees/billing-page', '_blank', 'location=no'); return false;">
+                                    <button class="button button-small button-balanced">Pay Fees</button>
+                                  </a>
+                                  <a ng-if="bodyId == 2" href="#" onclick="window.open('http://sspss.veza.co.in/fees/billing-page/gems', '_blank', 'location=no'); return false;">
                                      <button class="button button-small button-balanced">Pay Fees</button>
                                   </a>
                           </center>
