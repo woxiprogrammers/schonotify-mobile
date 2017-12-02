@@ -1,3 +1,4 @@
+
 /* global angular, document, window */
 'use strict';
 var db = null;
@@ -479,6 +480,21 @@ baseUrl:'http://sspss.veza.co.in/api/v1/'
                  $scope.title="Ganesh English Medium School";
         }
 
+        $scope.resultView = function(){
+          var url= GLOBALS.baseUrl+"user/check-fees/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
+              $http.get(url).success(function(response) {
+                   console.log(response);
+                   if(response == 0 && userSessions.userSession.userRole == "parent"){
+                     $state.go('app.result');
+                   }else{
+                     alert("Please pay fees to view result");
+                   }
+                  })
+                  .error(function(response) {
+                      console.log("Error in Response: " +response);
+                  });
+
+        }
         $scope.$on('cloud:push:notification', function(event,data) {
                switch(data.message.payload.state){
                  case "event":
@@ -1654,7 +1670,45 @@ baseUrl:'http://sspss.veza.co.in/api/v1/'
                 myPopup.close(); //close the popup after 8 seconds for some reason
             }, 3000);
         };
+    })
+    .controller('ResultCntrl', function($stateParams, $window, $rootScope,$scope, $state, $ionicPopup, $filter, $timeout, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal ,$cordovaImagePicker, $ionicPlatform ,$ionicLoading){
+          var url= GLOBALS.baseUrl+"user/get-exam-terms/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
+          $http.get(url).success(function(response){
+            $scope.subjects = response['data'];
+          })
+          .error(function(response) {
+                  console.log("Error in Response: " +response);
+          });
 
+          $scope.getSubjectDetails = function(id,subject_name){
+                var url= GLOBALS.baseUrl+"user/get-subject-details/"+id+"?token="+userSessions.userSession.userToken;
+                $http.get(url).success(function(response){
+                  $rootScope.subjectData = response['data'];
+                  $state.go('app.resultSubjectDetail',{"obj":subject_name});
+                })
+                .error(function(response) {
+                        console.log("Error in Response: " +response);
+                        alert("Something went wrong");
+                });
+          }
+    })
+    .controller('ResultSubjectDetailCntrl', function($stateParams, $window, $rootScope,$scope, $state, $ionicPopup, $filter, $timeout, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal ,$cordovaImagePicker, $ionicPlatform ,$ionicLoading){
+      $scope.terms = $rootScope.subjectData;
+      $scope.term_id = "";
+      $scope.subjectName = $state.params.obj;
+      $scope.getSubjectMarks = function(id){
+            var url= GLOBALS.baseUrl+"user/get-term-data/"+id+'/'+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
+            $http.get(url).success(function(response){
+                     $scope.termData = response['data']['term_data'];
+                     $scope.total = response['data']['total'];
+                     $scope.grade = response['data']['grade'];
+                     $scope.totalMarksObtained = response['data']['total_marks_obtained'];
+            })
+            .error(function(response) {
+                    console.log("Error in Response: " +response);
+                    alert("Something went wrong");
+            });
+      }
     })
     .controller('HwComposeCtrl', function( $window, $rootScope,$scope, $state, $ionicPopup, $filter, $timeout, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal ,$cordovaImagePicker, $ionicPlatform ,$ionicLoading)
     {
@@ -1721,16 +1775,12 @@ baseUrl:'http://sspss.veza.co.in/api/v1/'
         $scope.setTitle = function(title){
           $scope.hwTitle = title;
         };
-
         $scope.setDescription = function(message){
           $scope.description = message;
         };
-
-
         $scope.updateDueDate = function(newDate){
           $scope.dueDate = newDate;
         };
-
         $scope.toggleSelection = function(studentId) {
             var idx = $scope.selectedList.indexOf(studentId);
             if (idx > -1) {
