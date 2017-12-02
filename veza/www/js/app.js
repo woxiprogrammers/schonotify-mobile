@@ -112,6 +112,33 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
                 }
             }
         })
+        .state('app.result', {
+                url: '/result',
+                params: {
+                     obj: null
+                },
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/result.html',
+                        controller: 'ResultCntrl'
+                    },
+                    'fabContent': {
+                      template: ''
+                    }
+                }
+            })
+            .state('app.resultSubjectDetail', {
+                    url: '/resultSubjectDetail/:obj',
+                    views: {
+                        'menuContent': {
+                            templateUrl: 'templates/resultSubjectDetails.html',
+                            controller: 'ResultSubjectDetailCntrl'
+                        },
+                        'fabContent': {
+                          template: ''
+                        }
+                    }
+                })
     .state('app.dashboard', {
         url: '/dashboard',
         views: {
