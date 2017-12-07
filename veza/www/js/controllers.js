@@ -4,8 +4,8 @@
 var db = null;
 angular.module('starter.controllers', ['naif.base64','ionic.cloud','ionic-material'])
 .constant('GLOBALS',{
-baseUrl:'http://sspss.veza.co.in/api/v1/'
-//baseUrl:'http://test.woxi.co.in/api/v1/',
+//baseUrl:'http://sspss.veza.co.in/api/v1/'
+baseUrl:'http://test.woxi.co.in/api/v1/',
 //baseUrl:'http://school_mit.schnotify.com/api/v1/'
 })
 .factory('Data', function() {
@@ -232,11 +232,19 @@ baseUrl:'http://sspss.veza.co.in/api/v1/'
         }
     };
     $scope.signOut = function() {
-        console.log("User Logged out");
-        userSessions.setToken (0);
-        localStorage.setItem("appToken", JSON.stringify(0));
-        $state.go('login');
-    };
+              var url= GLOBALS.baseUrl+"user/logout/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
+              $http.get(url).success(function(response){
+                      console.log("User Logged out");
+                      userSessions.setToken (0);
+                      localStorage.setItem("appToken", JSON.stringify(0));
+                      $state.go('login');
+                      alert(response.message);
+              }).error(function(response)
+              {
+                       console.log("Error in Response: " +response);
+                       alert(response.message);
+              });
+      };
     $scope.studToggle = true;
     $scope.toggleStudent = function() {
         console.log("Changing Student");
