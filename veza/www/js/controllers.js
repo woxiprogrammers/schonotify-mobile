@@ -388,8 +388,24 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
              });
           $state.go('app.dashboard');
        }else {
-            $state.go('login');
+            $state.go('publicselectschool');
     }
+
+})
+.controller('PublicSelectSchoolCtr', function($rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+         $scope.getSchoolDetails =function (id){
+           alert(id);
+         }
+         $scope.goToLogin= function (){
+           $state.go('login');
+         }
+         $scope.goToPublicDashboard = function(){
+           $state.go("publicselectschool");
+         }
+         
+})
+.controller('PublicDashboardCtr', function($rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+         $scope.go('goToPublicDashboard');
 
 })
 .controller('LoginCtrl', function($rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {

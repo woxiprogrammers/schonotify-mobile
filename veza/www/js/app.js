@@ -80,10 +80,16 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
         templateUrl: 'templates/login.html',
         controller: 'LoginCtrl'
     })
+
     .state('tokencheck', {
         url: '/tokencheck',
         templateUrl: 'templates/tokencheck.html',
         controller: 'tokencheckCtr'
+    })
+    .state('publicselectschool', {
+        url: '/publicselectschool',
+        templateUrl: 'templates/public-select-school.html',
+        controller: 'PublicSelectSchoolCtr'
     })
     .state('app', {
         url: '/app',
