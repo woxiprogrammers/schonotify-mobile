@@ -91,6 +91,21 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
         templateUrl: 'templates/public-select-school.html',
         controller: 'PublicSelectSchoolCtr'
     })
+    .state('publicDashboard', {
+        url: '/publicDashboard',
+        templateUrl: 'templates/public-dashboard.html',
+        controller: 'PublicDashboardCtr'
+    })
+    .state('publicEvents', {
+        url: '/publicevents',
+        templateUrl: 'templates/public-event.html',
+        controller: 'PublicEventCtr'
+    })
+    .state('publicAchievement',{
+      url:'/publicAchievement',
+      templateUrl:'templates/public-event.html',
+      controller:'publicAchievementCtrl'
+    })
     .state('app', {
         url: '/app',
         templateUrl: 'templates/menu.html',

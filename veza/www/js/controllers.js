@@ -400,15 +400,21 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
            $state.go('login');
          }
          $scope.goToPublicDashboard = function(){
-           $state.go("publicselectschool");
+           $state.go('publicDashboard');
          }
-         
 })
-.controller('PublicDashboardCtr', function($rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
-         $scope.go('goToPublicDashboard');
-
+.controller('PublicDashboardCtr', function($ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.myGoBack = function() {
+          $ionicHistory.goBack();
+        };
+        $scope.publicEventsLanding = function(){
+          $state.go('publicEvents')
+        }
 })
-.controller('LoginCtrl', function($rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
+.controller('LoginCtrl', function($ionicHistory, $rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
+  $scope.myGoBack = function() {
+    $state.go('publicselectschool')
+  };
     $scope.data = [];
     ionicMaterialInk.displayEffect();
     $scope.submit = function(email,password){
@@ -2958,6 +2964,107 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                 $scope.aclMessage = "Event Not Found For This Instance!!!";
                 $scope.showPopup();
             });
+          }
+          $scope.getDetailsOfEvent = function(event_id){
+            var keepGoing = true;
+            angular.forEach($scope.eventList, function(item) {
+              if (keepGoing) {
+                if (item.id === event_id) {
+                    $state.go('app.eventstatusteacher', {obj:item});
+                    keepGoing = false;
+                  }
+                }
+            });
+          }
+          $scope.showPopup = function() {
+                  // An elaborate, custom popup
+                  var myPopup = $ionicPopup.show({
+                      template: '<div>'+$scope.aclMessage+'</div>',
+                      title: '',
+                      subTitle: '',
+                      scope: $scope
+                  });
+                  myPopup.then(function(res) {
+                      console.log('Tapped!', res);
+                  });
+                  $timeout(function() {
+                      myPopup.close(); //close the popup after 3 seconds for some reason
+                  }, 3000);
+          };
+              $scope.recentEvent();
+    })
+    .controller('PublicEventCtr', function($ionicHistory, $ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate,$ionicModal) {
+      $scope.hidden = true;
+      $scope.hiddenn = true;
+                $scope.myGoBack = function() {
+                    $ionicHistory.goBack();
+                  };
+              $scope.recentEvent  = function() {
+              // var url = GLOBALS.baseUrl+"user/view-top-five-event";
+              // $http.get(url).success(function(response){
+              //      if(response['status'] == 200){
+              //            $scope.eventList = response['data'];
+              //            if($scope.eventList == ''){
+              //                $scope.aclMessage = response['message'];
+              //                $scope.showPopup();
+              //            }
+              //     } else {
+              //             $scope.aclMessage = response['message'];
+              //             $scope.showPopup();
+              //     }
+              // }).error(function(err) {
+              //     $scope.aclMessage = "Access Denied";
+              //     $scope.showPopup();
+              // });
+          }
+
+          $scope.eventYearMonth = function() {
+              // var url = GLOBALS.baseUrl+"user/get-year-month";
+              // $http.get(url).success(function(response){
+              //   if(response['status'] == 200){
+              //          $scope.yearMonthData = response['data'];
+              //          if($scope.yearMonthData == ''){
+              //              $scope.aclMessage = response['message'];
+              //              $scope.showPopup();
+              //          }
+              //   } else {
+              //           $scope.aclMessage = response['message'];
+              //           $scope.showPopup();
+              //   }
+              //   }).error(function(err) {
+              //     $scope.aclMessage = "Data not found for this Instance!!!";
+              //     $scope.showPopup();
+              //   });
+          }
+            $scope.eventYearMonth();
+              $scope.setMonth = function(year) {
+              $scope.monthList = null;
+              angular.forEach($scope.yearMonthData, function(item) {
+                if (item.year === year) {
+                    $scope.monthList = item.month[0];
+                }
+              });
+            }
+            $scope.setMonth($scope.selectedYear);
+          $scope.eventByMonth  = function(month) {
+            // var url = GLOBALS.baseUrl+"user/view-months-event/"+$scope.selectedYear+"/"+month;
+            // $http.get(url).success(function(response){
+            //     if(response['status'] == 200){
+            //       console.log(response['data']);
+            //            $scope.eventList = response['data'];
+            //            console.log($scope.eventList);
+            //            if($scope.eventList == '') {
+            //                $scope.aclMessage = response['message'];
+            //                $scope.showPopup();
+            //            }
+            //     } else {
+            //             $scope.aclMessage = response['message'];
+            //             $scope.showPopup();
+            //     }
+            // }).error(function(err) {
+            //     $scope.aclMessage = "Event Not Found For This Instance!!!";
+            //     $scope.showPopup();
+            // });
           }
           $scope.getDetailsOfEvent = function(event_id){
             var keepGoing = true;
