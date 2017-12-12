@@ -101,11 +101,11 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
         templateUrl: 'templates/public-event.html',
         controller: 'PublicEventCtr'
     })
-    .state('publicAchievement',{
-      url:'/publicAchievement',
-      templateUrl:'templates/public-event.html',
-      controller:'publicAchievementCtrl'
-    })
+    // .state('publicAchievement',{
+    //   url:'/publicAchievement',
+    //   templateUrl:'templates/achievement-public.html',
+    //   controller:'PublicAchievementCtrl'
+    // })
     .state('app', {
         url: '/app',
         templateUrl: 'templates/menu.html',
@@ -260,6 +260,23 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
              }
           }
      })
+     .state('app.achievementpublic', {
+          url: '/sharedAchievementPublic',
+          views: {
+             'menuContent': {
+                templateUrl: 'templates/achievement-public.html',
+                controller: 'app.PublicAchievementCtrl'
+             },
+             'fabContent': {
+                 controller: function (GLOBALS,$timeout,$scope,$state,userSessions,$http) {
+                     $timeout(function () {
+                         document.getElementById('fab-new-achievement').classList.toggle('on');
+                     }, 900);
+                 }
+             }
+          }
+      })
+
      .state('app.achievementDetailParent', {
           url: '/sharedAchievementParent',
           views: {

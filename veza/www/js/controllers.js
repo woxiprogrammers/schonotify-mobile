@@ -410,6 +410,9 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         $scope.publicEventsLanding = function(){
           $state.go('publicEvents')
         }
+        $scope.publicAchievementLanding=function(){
+              $state.go('app.achievementpublic')
+        }
 })
 .controller('LoginCtrl', function($ionicHistory, $rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
   $scope.myGoBack = function() {
@@ -717,6 +720,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
               $scope.imageData=  $rootScope.imagesData;
 })
 .controller('sharedAchievementParentCtrl', function($rootScope,$ionicLoading,$ionicPopup,$window,$ionicModal,userSessions,$http,GLOBALS,$scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
+
               $ionicLoading.show({
                          template: 'Loading...',
               })
@@ -2992,6 +2996,62 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                   }, 3000);
           };
               $scope.recentEvent();
+    })
+    .controller('app.PublicAchievementCtrl', function($ionicHistory, $rootScope,userSessions,GLOBALS,  $http,$scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate,  $ionicLoading) {
+            $scope.myGoBack = function() {
+                $ionicHistory.goBack();
+            };
+            $scope.$parent.clearFabs();
+            $scope.isExpanded = false;
+            $scope.$parent.setExpanded(false);
+            $scope.$parent.setHeaderFab(false);
+            // Set Header
+            $scope.$parent.hideHeader();
+            // Set Ink
+            ionicMaterialInk.displayEffect();
+            $ionicLoading.show({
+              template: 'Loading...',
+           })
+           $ionicLoading.show();
+            //Side-Menu
+           $scope.achievementDetail = function(id){
+                  $rootScope.DetailAchievemtns=[];
+                  angular.forEach($scope.nmessages,function(data){
+                        if(data.id == id){
+                            $rootScope.DetailAchievemtns.push(data);
+                        }
+           })
+                  $rootScope.imagesData=[];
+                  angular.forEach($scope.imageData,function(dataa){
+                        angular.forEach(dataa,function(dataImage){
+                          if(dataImage.event_id == id){
+                               $rootScope.imagesData.push(dataImage);
+                          }
+                        })
+                  })
+                  $state.go('app.achievementdetails');
+            };
+            $ionicSideMenuDelegate.canDragContent(true);
+            var url= GLOBALS.baseUrl+"user/view-achievement/";
+                $http.get(url).success(function(response) {
+                        $ionicLoading.hide();
+                        $scope.nmessages=response['teacherAchievement'];
+                        $scope.imageData=response['imageData'];
+                })
+                .error(function(response) {
+                      $ionicLoading.hide();
+                        console.log("Error in Response: " +response);
+             });
+            $scope.checkAll = function(){
+                if ($scope.selectedAll) {
+                    $scope.selectedAll = true;
+                } else {
+                    $scope.selectedAll = false;
+                }
+                angular.forEach($scope.nmessages, function(nmsg){
+                    nmsg.Selected = $scope.selectedAll;
+                });
+            };
     })
     .controller('PublicEventCtr', function($ionicHistory, $ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate,$ionicModal) {
       $scope.hidden = true;
