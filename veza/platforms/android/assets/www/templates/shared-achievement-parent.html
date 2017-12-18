@@ -19,11 +19,11 @@
     </div>
     <div class="row padding-0">
         <div class="tabs tab-align-inner-inner tabs-striped tabs-light tabs-top tabs-icon-left">
-            <a class="tab-item padding-5 col-50" ui-sref="app.sharedNotifyParent">
+            <a class="tab-item padding-5 col-50" ui-sref="app.sharedNotification">
                 <i class="icon ion-annoncement"></i>
                 <span class="annoncement-text">Announcement</span>
             </a>
-            <a class="tab-item active-inner-black padding-5 col-50" ui-sref="app.sharedAchievementParent">
+            <a class="tab-item active-inner-black padding-5 col-50" ui-sref="app.sharedAchievement">
                 <i class="icon ion-achievement-active"></i>
                 <span class="achievement-text-active">Achievements</span>
             </a>
@@ -33,7 +33,7 @@
        <div style="height:50px">
        </div>
         <ion-list class="item item-text-wrap">
-            <ion-item class="card" style="background-color:white;padding:10px" ng-repeat="achievement in nMessages" ng-click="achievementDetailParent(achievement.id)">
+            <ion-item class="card" style="background-color:white;padding:10px" ng-repeat="achievement in nmessages" ng-click="achievementDetail(achievement.id)">
               <span class="pull-right" ng-if="achievement.status == 2">
                 <button  class="button button-balanced status-button" ng-disabled="clickStatus" >
                       Published

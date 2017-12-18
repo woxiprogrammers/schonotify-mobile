@@ -4,8 +4,8 @@
 var db = null;
 angular.module('starter.controllers', ['naif.base64','ionic.cloud','ionic-material'])
 .constant('GLOBALS',{
-baseUrl:'http://sspss.veza.co.in/api/v1/'
-//baseUrl:'http://test.woxi.co.in/api/v1/',
+//baseUrl:'http://sspss.veza.co.in/api/v1/'
+baseUrl:'http://test.woxi.co.in/api/v1/',
 //baseUrl:'http://school_mit.schnotify.com/api/v1/'
 })
 .factory('Data', function() {
@@ -232,11 +232,19 @@ baseUrl:'http://sspss.veza.co.in/api/v1/'
         }
     };
     $scope.signOut = function() {
-        console.log("User Logged out");
-        userSessions.setToken (0);
-        localStorage.setItem("appToken", JSON.stringify(0));
-        $state.go('login');
-    };
+              var url= GLOBALS.baseUrl+"user/logout/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
+              $http.get(url).success(function(response){
+                      console.log("User Logged out");
+                      userSessions.setToken (0);
+                      localStorage.setItem("appToken", JSON.stringify(0));
+                      $state.go('login');
+                      alert(response.message);
+              }).error(function(response)
+              {
+                       console.log("Error in Response: " +response);
+                       alert(response.message);
+              });
+      };
     $scope.studToggle = true;
     $scope.toggleStudent = function() {
         console.log("Changing Student");
@@ -380,11 +388,36 @@ baseUrl:'http://sspss.veza.co.in/api/v1/'
              });
           $state.go('app.dashboard');
        }else {
-            $state.go('login');
+            $state.go('publicselectschool');
     }
 
 })
-.controller('LoginCtrl', function($rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
+.controller('PublicSelectSchoolCtr', function($rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+         $scope.getSchoolDetails =function (id){
+           alert(id);
+         }
+         $scope.goToLogin= function (){
+           $state.go('login');
+         }
+         $scope.goToPublicDashboard = function(){
+           $state.go('publicDashboard');
+         }
+})
+.controller('PublicDashboardCtr', function($ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.myGoBack = function() {
+          $ionicHistory.goBack();
+        };
+        $scope.publicEventsLanding = function(){
+          $state.go('publicEvents')
+        }
+        $scope.publicAchievementLanding=function(){
+              $state.go('app.achievementpublic')
+        }
+})
+.controller('LoginCtrl', function($ionicHistory, $rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
+  $scope.myGoBack = function() {
+    $state.go('publicselectschool')
+  };
     $scope.data = [];
     ionicMaterialInk.displayEffect();
     $scope.submit = function(email,password){
@@ -687,6 +720,7 @@ baseUrl:'http://sspss.veza.co.in/api/v1/'
               $scope.imageData=  $rootScope.imagesData;
 })
 .controller('sharedAchievementParentCtrl', function($rootScope,$ionicLoading,$ionicPopup,$window,$ionicModal,userSessions,$http,GLOBALS,$scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
+
               $ionicLoading.show({
                          template: 'Loading...',
               })
@@ -2934,6 +2968,163 @@ baseUrl:'http://sspss.veza.co.in/api/v1/'
                 $scope.aclMessage = "Event Not Found For This Instance!!!";
                 $scope.showPopup();
             });
+          }
+          $scope.getDetailsOfEvent = function(event_id){
+            var keepGoing = true;
+            angular.forEach($scope.eventList, function(item) {
+              if (keepGoing) {
+                if (item.id === event_id) {
+                    $state.go('app.eventstatusteacher', {obj:item});
+                    keepGoing = false;
+                  }
+                }
+            });
+          }
+          $scope.showPopup = function() {
+                  // An elaborate, custom popup
+                  var myPopup = $ionicPopup.show({
+                      template: '<div>'+$scope.aclMessage+'</div>',
+                      title: '',
+                      subTitle: '',
+                      scope: $scope
+                  });
+                  myPopup.then(function(res) {
+                      console.log('Tapped!', res);
+                  });
+                  $timeout(function() {
+                      myPopup.close(); //close the popup after 3 seconds for some reason
+                  }, 3000);
+          };
+              $scope.recentEvent();
+    })
+    .controller('app.PublicAchievementCtrl', function($ionicHistory, $rootScope,userSessions,GLOBALS,  $http,$scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate,  $ionicLoading) {
+            $scope.myGoBack = function() {
+                $ionicHistory.goBack();
+            };
+            $scope.$parent.clearFabs();
+            $scope.isExpanded = false;
+            $scope.$parent.setExpanded(false);
+            $scope.$parent.setHeaderFab(false);
+            // Set Header
+            $scope.$parent.hideHeader();
+            // Set Ink
+            ionicMaterialInk.displayEffect();
+            $ionicLoading.show({
+              template: 'Loading...',
+           })
+           $ionicLoading.show();
+            //Side-Menu
+           $scope.achievementDetail = function(id){
+                  $rootScope.DetailAchievemtns=[];
+                  angular.forEach($scope.nmessages,function(data){
+                        if(data.id == id){
+                            $rootScope.DetailAchievemtns.push(data);
+                        }
+           })
+                  $rootScope.imagesData=[];
+                  angular.forEach($scope.imageData,function(dataa){
+                        angular.forEach(dataa,function(dataImage){
+                          if(dataImage.event_id == id){
+                               $rootScope.imagesData.push(dataImage);
+                          }
+                        })
+                  })
+                  $state.go('app.achievementdetails');
+            };
+            $ionicSideMenuDelegate.canDragContent(true);
+            var url= GLOBALS.baseUrl+"user/view-achievement/";
+                $http.get(url).success(function(response) {
+                        $ionicLoading.hide();
+                        $scope.nmessages=response['teacherAchievement'];
+                        $scope.imageData=response['imageData'];
+                })
+                .error(function(response) {
+                      $ionicLoading.hide();
+                        console.log("Error in Response: " +response);
+             });
+            $scope.checkAll = function(){
+                if ($scope.selectedAll) {
+                    $scope.selectedAll = true;
+                } else {
+                    $scope.selectedAll = false;
+                }
+                angular.forEach($scope.nmessages, function(nmsg){
+                    nmsg.Selected = $scope.selectedAll;
+                });
+            };
+    })
+    .controller('PublicEventCtr', function($ionicHistory, $ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate,$ionicModal) {
+      $scope.hidden = true;
+      $scope.hiddenn = true;
+                $scope.myGoBack = function() {
+                    $ionicHistory.goBack();
+                  };
+              $scope.recentEvent  = function() {
+              // var url = GLOBALS.baseUrl+"user/view-top-five-event";
+              // $http.get(url).success(function(response){
+              //      if(response['status'] == 200){
+              //            $scope.eventList = response['data'];
+              //            if($scope.eventList == ''){
+              //                $scope.aclMessage = response['message'];
+              //                $scope.showPopup();
+              //            }
+              //     } else {
+              //             $scope.aclMessage = response['message'];
+              //             $scope.showPopup();
+              //     }
+              // }).error(function(err) {
+              //     $scope.aclMessage = "Access Denied";
+              //     $scope.showPopup();
+              // });
+          }
+
+          $scope.eventYearMonth = function() {
+              // var url = GLOBALS.baseUrl+"user/get-year-month";
+              // $http.get(url).success(function(response){
+              //   if(response['status'] == 200){
+              //          $scope.yearMonthData = response['data'];
+              //          if($scope.yearMonthData == ''){
+              //              $scope.aclMessage = response['message'];
+              //              $scope.showPopup();
+              //          }
+              //   } else {
+              //           $scope.aclMessage = response['message'];
+              //           $scope.showPopup();
+              //   }
+              //   }).error(function(err) {
+              //     $scope.aclMessage = "Data not found for this Instance!!!";
+              //     $scope.showPopup();
+              //   });
+          }
+            $scope.eventYearMonth();
+              $scope.setMonth = function(year) {
+              $scope.monthList = null;
+              angular.forEach($scope.yearMonthData, function(item) {
+                if (item.year === year) {
+                    $scope.monthList = item.month[0];
+                }
+              });
+            }
+            $scope.setMonth($scope.selectedYear);
+          $scope.eventByMonth  = function(month) {
+            // var url = GLOBALS.baseUrl+"user/view-months-event/"+$scope.selectedYear+"/"+month;
+            // $http.get(url).success(function(response){
+            //     if(response['status'] == 200){
+            //       console.log(response['data']);
+            //            $scope.eventList = response['data'];
+            //            console.log($scope.eventList);
+            //            if($scope.eventList == '') {
+            //                $scope.aclMessage = response['message'];
+            //                $scope.showPopup();
+            //            }
+            //     } else {
+            //             $scope.aclMessage = response['message'];
+            //             $scope.showPopup();
+            //     }
+            // }).error(function(err) {
+            //     $scope.aclMessage = "Event Not Found For This Instance!!!";
+            //     $scope.showPopup();
+            // });
           }
           $scope.getDetailsOfEvent = function(event_id){
             var keepGoing = true;

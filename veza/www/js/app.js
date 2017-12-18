@@ -101,11 +101,6 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
         templateUrl: 'templates/public-event.html',
         controller: 'PublicEventCtr'
     })
-    // .state('publicAchievement',{
-    //   url:'/publicAchievement',
-    //   templateUrl:'templates/achievement-public.html',
-    //   controller:'PublicAchievementCtrl'
-    // })
     .state('app', {
         url: '/app',
         templateUrl: 'templates/menu.html',
@@ -619,7 +614,19 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
                 }
             }
         })
-        .state('app.notificationdetails', {
+        .state('app.achievementdetailspublic', {
+            url: '/achievementdetailspublic',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/achievement-description-public.html',
+                    controller: 'DetailPagePublicCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+      .state('app.notificationdetails', {
             url: '/notificationdetails',
             views: {
                 'menuContent': {

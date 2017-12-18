@@ -6,13 +6,10 @@
                 <i class="ion-arrow-left-c button-back-white" style="font-size:25px"></i>
             </button>
         </div>
-          <i class="icon ion-achievement-active"></i>
           <h1 class="title">ACHIEVEMENTS</h1>
         </div>
     </div>
     <ion-content ng-class="{expanded:$scope.isExpanded}" >
-       <div style="height:50px">
-       </div>
         <ion-list class="item item-text-wrap">
             <ion-item class="card" style="background-color:white;padding:10px" ng-repeat="achievement in nmessages" ng-click="achievementDetail(achievement.id)">
               <span class="pull-right" ng-if="achievement.status == 2">
