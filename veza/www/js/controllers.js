@@ -3138,7 +3138,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             angular.forEach($scope.eventList, function(item) {
               if (keepGoing) {
                 if (item.id === event_id) {
-                    $state.go('app.eventstatusteacher', {obj:item});
+                    $state.go('app.eventstatuspublic', {obj:item});
                     keepGoing = false;
                   }
                 }
@@ -3518,6 +3518,40 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             }, 3000);
         }
     })
+    .controller('EventStatusPublicCtrl', function($state, $scope, $http, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams, userSessions, GLOBALS, $ionicPopup , $ionicLoading) {
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+        // Set Header
+        $scope.$parent.hideHeader();
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+        //Side-Menu
+        $ionicSideMenuDelegate.canDragContent(false);
+        $scope.noticeBoard = function() {
+            $state.go('app.sharedNotification');
+        };
+        $scope.startEventTime = new Date();
+        $scope.endEventTime = new Date();
+        $scope.eventdetailsList = $stateParams;
+
+        $scope.showPopup = function() {
+            // An elaborate, custom popup
+            var myPopup = $ionicPopup.show({
+                template: '<div>'+$scope.responseMessage+'</div>',
+                title: '',
+                subTitle: '',
+                scope: $scope
+            });
+            myPopup.then(function(res) {
+                console.log('Tapped!', res);
+            });
+            $timeout(function() {
+                myPopup.close(); //close the popup after 3 seconds for some reason
+            }, 3000);
+        }
+    })
     .controller('EditEventCtrl', function( $ionicLoading ,$ionicPopup,GLOBALS,$http,userSessions,$scope, $state, $filter, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -3638,7 +3672,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
               $ionicLoading.hide();
               $scope.showPopup();
           });
-          $state.go('app.eventlandingteacher');
+          $state.go('app.eventlandingpublic');
         }
       }
     })
