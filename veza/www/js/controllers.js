@@ -3014,11 +3014,13 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             $scope.$parent.hideHeader();
             // Set Ink
             ionicMaterialInk.displayEffect();
+            //Side-Menu
+            $ionicSideMenuDelegate.canDragContent(false);
+
             $ionicLoading.show({
               template: 'Loading...',
            })
            $ionicLoading.show();
-            //Side-Menu
            $scope.achievementDetail = function(id){
                   $rootScope.DetailAchievemtns=[];
                   angular.forEach($scope.nmessages,function(data){
@@ -3036,8 +3038,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                   })
                   $state.go('app.achievementdetailspublic');
             };
-
-            $ionicSideMenuDelegate.canDragContent(true);
             var url= GLOBALS.baseUrl+"user/view-achievement-parent";
             $http.post(url, {body_id:$rootScope.organisationID, _method : 'POST'})
                 .success(function(response){
@@ -4316,10 +4316,15 @@ $scope.selectPicture = function(sourceType) {
             $scope.isExpanded = false;
             $scope.$parent.setExpanded(false);
             $scope.$parent.setHeaderFab(false);
+
             // Set Header
             $scope.$parent.hideHeader();
             // Set Ink
             ionicMaterialInk.displayEffect();
+
+            //Side-Menu
+            $ionicSideMenuDelegate.canDragContent(false);
+
             $scope.DetailAchievemtns=$rootScope.DetailAchievemtns;
             $scope.imageData=  $rootScope.imagesData;
             $scope.showAlertsucess = function(message) {
