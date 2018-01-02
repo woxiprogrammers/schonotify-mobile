@@ -238,7 +238,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                       userSessions.setToken (0);
                       localStorage.setItem("appToken", JSON.stringify(0));
                       $state.go('login');
-                      alert(response.message);
+                    //  alert(response.message);
               }).error(function(response)
               {
                        console.log("Error in Response: " +response);
@@ -394,25 +394,72 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
 })
 .controller('PublicSelectSchoolCtr', function($rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
          $scope.getSchoolDetails =function (id){
-           alert(id);
+           $rootScope.organisationID = id;
          }
          $scope.goToLogin= function (){
            $state.go('login');
          }
          $scope.goToPublicDashboard = function(){
-           $state.go('publicDashboard');
+           if(0<$rootScope.organisationID && $rootScope.organisationID<=2){
+             $state.go('publicDashboard');
+           }
+           else{
+             $scope.errorMessage='Please select a School'
+           }
          }
 })
 .controller('PublicDashboardCtr', function($ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
         $scope.myGoBack = function() {
-          $ionicHistory.goBack();
+          $state.go('publicselectschool')
         };
         $scope.publicEventsLanding = function(){
           $state.go('publicEvents')
         }
         $scope.publicAchievementLanding=function(){
-              $state.go('app.achievementpublic')
+          $state.go('app.achievementpublic')
         }
+        $scope.publicGalleryLanding=function(){
+          $state.go("publicGallary")
+        }
+})
+
+.controller('PublicGallaryCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.images = ['1.png', '2.jpg', '3.jpg', '4.png','5.jpg','6.png','7.jpg','8.jpg','9.jpg','10.jpg'];
+        $scope.zoomMin = 1;
+        $scope.myGoBack=function(){
+          $state.go('publicDashboard')
+        }
+
+        $scope.showImages = function(index) {
+          $scope.activeSlide = index;
+          $scope.showModal('templates/image-popover.html');
+        };
+        $scope.showModal = function(templateUrl) {
+      		$ionicModal.fromTemplateUrl(templateUrl, {
+            			scope: $scope,
+            			animation: 'slide-in-up'
+        		}).then(function(modal) {
+          			$scope.modal = modal;
+          			$scope.modal.show();
+          		});
+	        }
+      	// Close the modal
+      	$scope.closeModal = function() {
+      		$scope.modal.hide();
+      		$scope.modal.remove()
+      	};
+        $scope.updateSlideStatus = function(slide) {
+          var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).getScrollPosition().zoom;
+          if (zoomFactor == $scope.zoomMin) {
+            $ionicSlideBoxDelegate.enableSlide(true);
+          } else {
+            $ionicSlideBoxDelegate.enableSlide(false);
+          }
+        };
+      $scope.clipSrc = 'img/11.mp4';
+      $scope.playVideo = function() {
+      	$scope.showModal('templates/video-popover.html');
+      }
 })
 .controller('LoginCtrl', function($ionicHistory, $rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
   $scope.myGoBack = function() {
@@ -2999,7 +3046,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
     })
     .controller('app.PublicAchievementCtrl', function($ionicHistory, $rootScope,userSessions,GLOBALS,  $http,$scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate,  $ionicLoading) {
             $scope.myGoBack = function() {
-                $ionicHistory.goBack();
+              $state.go('publicDashboard')
             };
             $scope.$parent.clearFabs();
             $scope.isExpanded = false;
@@ -3009,11 +3056,13 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             $scope.$parent.hideHeader();
             // Set Ink
             ionicMaterialInk.displayEffect();
+            //Side-Menu
+            $ionicSideMenuDelegate.canDragContent(false);
+
             $ionicLoading.show({
               template: 'Loading...',
            })
            $ionicLoading.show();
-            //Side-Menu
            $scope.achievementDetail = function(id){
                   $rootScope.DetailAchievemtns=[];
                   angular.forEach($scope.nmessages,function(data){
@@ -3029,19 +3078,22 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                           }
                         })
                   })
-                  $state.go('app.achievementdetails');
+                  $state.go('app.achievementdetailspublic');
             };
-            $ionicSideMenuDelegate.canDragContent(true);
-            var url= GLOBALS.baseUrl+"user/view-achievement/";
-                $http.get(url).success(function(response) {
-                        $ionicLoading.hide();
-                        $scope.nmessages=response['teacherAchievement'];
-                        $scope.imageData=response['imageData'];
-                })
-                .error(function(response) {
-                      $ionicLoading.hide();
-                        console.log("Error in Response: " +response);
-             });
+            var url= GLOBALS.baseUrl+"user/view-achievement-parent";
+            $http.post(url, {body_id:$rootScope.organisationID, _method : 'POST'})
+                .success(function(response){
+                  if(response['status'] == 200){
+                    $ionicLoading.hide();
+                    $scope.nmessages = response['data'];
+                  } else {
+                          $scope.responseMessage = response['message'];
+                          $scope.showPopup();
+                  }
+              }).error(function(err) {
+                  $scope.responseMessage = "You do not have permission,please contact admin!!!";
+                  $scope.showPopup();
+              });
             $scope.checkAll = function(){
                 if ($scope.selectedAll) {
                     $scope.selectedAll = true;
@@ -3053,48 +3105,45 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                 });
             };
     })
-    .controller('PublicEventCtr', function($ionicHistory, $ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate,$ionicModal) {
-      $scope.hidden = true;
-      $scope.hiddenn = true;
-                $scope.myGoBack = function() {
-                    $ionicHistory.goBack();
-                  };
+    .controller('PublicEventCtr', function($rootScope,$ionicHistory, $ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate,$ionicModal) {
+              $scope.hidden = true;
+              $scope.hiddenn = true;
+              $scope.myGoBack = function() {
+                      $state.go('publicDashboard')
+              };
               $scope.recentEvent  = function() {
-              // var url = GLOBALS.baseUrl+"user/view-top-five-event";
-              // $http.get(url).success(function(response){
-              //      if(response['status'] == 200){
-              //            $scope.eventList = response['data'];
-              //            if($scope.eventList == ''){
-              //                $scope.aclMessage = response['message'];
-              //                $scope.showPopup();
-              //            }
-              //     } else {
-              //             $scope.aclMessage = response['message'];
-              //             $scope.showPopup();
-              //     }
-              // }).error(function(err) {
-              //     $scope.aclMessage = "Access Denied";
-              //     $scope.showPopup();
-              // });
+              var url = GLOBALS.baseUrl+"user/view-top-five-event-new";
+              $http.post(url, {body_id:$rootScope.organisationID, _method : 'POST'})
+                  .success(function(response){
+                    if(response['status'] == 200){
+                     $scope.eventList = response['data'];
+                    } else {
+                            $scope.responseMessage = response['message'];
+                            $scope.showPopup();
+                    }
+                }).error(function(err) {
+                    $scope.responseMessage = "You do not have permission,please contact admin!!!";
+                    $scope.showPopup();
+                });
           }
 
           $scope.eventYearMonth = function() {
-              // var url = GLOBALS.baseUrl+"user/get-year-month";
-              // $http.get(url).success(function(response){
-              //   if(response['status'] == 200){
-              //          $scope.yearMonthData = response['data'];
-              //          if($scope.yearMonthData == ''){
-              //              $scope.aclMessage = response['message'];
-              //              $scope.showPopup();
-              //          }
-              //   } else {
-              //           $scope.aclMessage = response['message'];
-              //           $scope.showPopup();
-              //   }
-              //   }).error(function(err) {
-              //     $scope.aclMessage = "Data not found for this Instance!!!";
-              //     $scope.showPopup();
-              //   });
+              var url = GLOBALS.baseUrl+"user/public-get-year-month";
+              $http.get(url).success(function(response){
+                if(response['status'] == 200){
+                       $scope.yearMonthData = response['data'];
+                       if($scope.yearMonthData == ''){
+                           $scope.aclMessage = response['message'];
+                           $scope.showPopup();
+                       }
+                } else {
+                        $scope.aclMessage = response['message'];
+                        $scope.showPopup();
+                }
+                }).error(function(err) {
+                  $scope.aclMessage = "Data not found for this Instance!!!";
+                  $scope.showPopup();
+                });
           }
             $scope.eventYearMonth();
               $scope.setMonth = function(year) {
@@ -3107,31 +3156,31 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             }
             $scope.setMonth($scope.selectedYear);
           $scope.eventByMonth  = function(month) {
-            // var url = GLOBALS.baseUrl+"user/view-months-event/"+$scope.selectedYear+"/"+month;
-            // $http.get(url).success(function(response){
-            //     if(response['status'] == 200){
-            //       console.log(response['data']);
-            //            $scope.eventList = response['data'];
-            //            console.log($scope.eventList);
-            //            if($scope.eventList == '') {
-            //                $scope.aclMessage = response['message'];
-            //                $scope.showPopup();
-            //            }
-            //     } else {
-            //             $scope.aclMessage = response['message'];
-            //             $scope.showPopup();
-            //     }
-            // }).error(function(err) {
-            //     $scope.aclMessage = "Event Not Found For This Instance!!!";
-            //     $scope.showPopup();
-            // });
+            var url = GLOBALS.baseUrl+"user/view-months-event/"+$scope.selectedYear+"/"+month;
+            $http.get(url).success(function(response){
+                if(response['status'] == 200){
+                  console.log(response['data']);
+                       $scope.eventList = response['data'];
+                       console.log($scope.eventList);
+                       if($scope.eventList == '') {
+                           $scope.aclMessage = response['message'];
+                           $scope.showPopup();
+                       }
+                } else {
+                        $scope.aclMessage = response['message'];
+                        $scope.showPopup();
+                }
+            }).error(function(err) {
+                $scope.aclMessage = "Event Not Found For This Instance!!!";
+                $scope.showPopup();
+            });
           }
           $scope.getDetailsOfEvent = function(event_id){
             var keepGoing = true;
             angular.forEach($scope.eventList, function(item) {
               if (keepGoing) {
                 if (item.id === event_id) {
-                    $state.go('app.eventstatusteacher', {obj:item});
+                    $state.go('app.eventstatuspublic', {obj:item});
                     keepGoing = false;
                   }
                 }
@@ -3511,6 +3560,21 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             }, 3000);
         }
     })
+    .controller('EventStatusPublicCtrl', function($state, $scope, $http, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams, userSessions, GLOBALS, $ionicPopup , $ionicLoading) {
+        $scope.$parent.clearFabs();
+        $scope.isExpanded = false;
+        $scope.$parent.setExpanded(false);
+        $scope.$parent.setHeaderFab(false);
+        // Set Header
+        $scope.$parent.hideHeader();
+        // Set Ink
+        ionicMaterialInk.displayEffect();
+        //Side-Menu
+        $ionicSideMenuDelegate.canDragContent(false);
+        $scope.startEventTime = new Date();
+        $scope.endEventTime = new Date();
+        $scope.eventdetailsList = $stateParams;
+    })
     .controller('EditEventCtrl', function( $ionicLoading ,$ionicPopup,GLOBALS,$http,userSessions,$scope, $state, $filter, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -3631,7 +3695,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
               $ionicLoading.hide();
               $scope.showPopup();
           });
-          $state.go('app.eventlandingteacher');
+          $state.go('app.eventlandingpublic');
         }
       }
     })
@@ -4270,6 +4334,57 @@ $scope.selectPicture = function(sourceType) {
         };
         $scope.selectedDate = new Date();
 })
+        .controller('DetailPagePublicCtrl', function(userSessions, GLOBALS,$ionicPopup,$rootScope,$scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal , $http ,$ionicLoading) {
+            $scope.$parent.clearFabs();
+            $scope.isExpanded = false;
+            $scope.$parent.setExpanded(false);
+            $scope.$parent.setHeaderFab(false);
+
+            // Set Header
+            $scope.$parent.hideHeader();
+            // Set Ink
+            ionicMaterialInk.displayEffect();
+
+            //Side-Menu
+            $ionicSideMenuDelegate.canDragContent(false);
+
+            $scope.DetailAchievemtns=$rootScope.DetailAchievemtns;
+            $scope.imageData=  $rootScope.imagesData;
+            $scope.showAlertsucess = function(message) {
+              console.log(message);
+           }
+           $scope.achievementDetailParent = function(id){
+                  $rootScope.DetailAchievemtns=[];
+                  angular.forEach($scope.nMessages,function(data){
+                        if(data.id == id){
+                            $rootScope.DetailAchievemtns.push(data);
+                        }
+           })
+                  $rootScope.imagesData=[];
+                  console.log($scope.imagesData);
+                  angular.forEach($scope.imagesData,function(dataa){
+                        angular.forEach(dataa,function(dataImage){
+                          if(dataImage.event_id == id){
+                               $rootScope.imagesData.push(dataImage);
+                          }
+                        })
+                  })
+                  $state.go('app.achievementDetailParent');
+           };
+            $scope.openModal = function() {
+                $scope.modal.show();
+            }
+            $scope.closeModal = function() {
+                $scope.modal.hide();
+            };
+            $scope.$on('$destroy', function() {
+               // $scope.modal.remove();
+            });
+            $scope.noticeBoard = function() {
+                $state.go('app.sharedNotification');
+            };
+            $scope.selectedDate = new Date();
+        })
     .controller('TimeTableCtrl', function($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup, $filter, userSessions, GLOBALS, $http) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;

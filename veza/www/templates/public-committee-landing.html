@@ -1,0 +1,17 @@
+<ion-view view-title="public-about-us" align-title="left" class="touch-effect login-bg-col no-scroll">
+  <div class="bar bar-header bar-assertive">
+    <div class="col-10"  ng-click="myGoBack()">
+        <button class="button-clear">
+            <i class="ion-arrow-left-c button-back-white"></i>
+        </button>
+        <h1 class="title">Committee Members</h1>
+    </div>
+  </div>
+    <ion-content class="scroll direction:x" style="background: white;  margin-top:13%">
+      <ion-grid>
+        <div class="card"  style="padding:30px;text-align:center; border: 3px solid brown" ng-repeat="member in committeeMembers" ng-click='committeeDetail({{$index}})'>
+          Name: {{member.name}}
+        </div>
+      </ion-grid>
+    </ion-content>
+</ion-view>

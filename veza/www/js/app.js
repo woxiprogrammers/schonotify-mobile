@@ -80,7 +80,51 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
         templateUrl: 'templates/login.html',
         controller: 'LoginCtrl'
     })
-
+    .state('publicGallary', {
+        url: '/publicGallary',
+        templateUrl: 'templates/publicGallary.html',
+        controller: 'PublicGallaryCtrl'
+    })
+    .state('publicAboutUs', {
+        url: '/publicAboutUs',
+        templateUrl: 'templates/public-about-us.html',
+        controller: 'PublicAboutUsCtrl'
+    })
+    .state('publicFacultyInformation', {
+        url: '/publicFacultyInformation',
+        templateUrl: 'templates/public-faculty-information.html',
+        controller: 'PublicFacultyInformationCtrl'
+    })
+    .state('publicFacultyDetail', {
+        url: '/publicFacultyDetail',
+        templateUrl: 'templates/public-faculty-detail.html',
+        controller: 'PublicFacultyDetailCtrl'
+    })
+    .state('publicHeadingDetail', {
+        url: '/publicHeadingDetail',
+        templateUrl: 'templates/public-heading-detail.html',
+        controller: 'PublicHeadingDetailCtrl'
+    })
+    .state('publicGallaryLanding', {
+        url: '/publicGallaryLanding',
+        templateUrl: 'templates/public-gallery-landing.html',
+        controller: 'PublicGallaryLandingCtrl'
+    })
+    .state('imagePopover', {
+        url: '/publicGallarypublicGallary',
+        templateUrl: 'templates/image-popover.html',
+        controller: 'ImagePopoverCtrl'
+    })
+    .state('publicCommitteeLanding', {
+        url: '/publicCommitteeLanding',
+        templateUrl: 'templates/public-committee-landing.html',
+        controller: 'PublicCommitteeLandingCtrl'
+    })
+    .state('publicCommitteeDetail', {
+        url: '/publicCommitteeDetail',
+        templateUrl: 'templates/public-committee-detail.html',
+        controller: 'PublicCommitteeDetailCtrl'
+    })
     .state('tokencheck', {
         url: '/tokencheck',
         templateUrl: 'templates/tokencheck.html',
@@ -100,6 +144,13 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
         url: '/publicevents',
         templateUrl: 'templates/public-event.html',
         controller: 'PublicEventCtr'
+    })
+    .state('eventstatuspublic', {
+        url: '/eventstatusteacher',
+        templateUrl: 'templates/event-status-public.html',
+        controller: 'EventStatusPublicCtrl'
+
+
     })
     .state('app', {
         url: '/app',

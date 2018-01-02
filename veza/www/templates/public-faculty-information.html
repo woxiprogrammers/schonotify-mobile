@@ -1,0 +1,25 @@
+<ion-view view-title="heading-Details" align-title="left" class="touch-effect login-bg-col no-scroll">
+      <div class="bar bar-header bar-assertive">
+        <div class="col-10"  ng-click="myGoBack()">
+            <button class="button-clear">
+                <i class="ion-arrow-left-c button-back-white"></i>
+            </button>
+            <h1 class="title">Faculty Information</h1>
+        </div>
+      </div>
+        <ion-content class="scroll direction:y" style="background-color: white ; margin-top:13%">
+        <a>
+          <div class="card" style="border: 3px solid brown" ng-repeat=" faculty in faculties"  ng-click="facultyInformationLanding({{$index}})">
+            <div class="item item-divider" >
+              <font color="black" >{{faculty.post}}</font>
+            </div>
+            <div class="item item-divider" >
+              <font color="black">Name: {{faculty.name}}</font>
+            </div>
+          </div>
+        </a>
+          </ion-list>
+            </div>
+            </div>
+          </div>
+</ion-view>

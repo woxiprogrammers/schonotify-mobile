@@ -80,7 +80,16 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
         templateUrl: 'templates/login.html',
         controller: 'LoginCtrl'
     })
-
+    .state('publicGallary', {
+        url: '/publicGallarypublicGallary',
+        templateUrl: 'templates/publicGallary.html',
+        controller: 'PublicGallaryCtrl'
+    })
+    .state('imagePopover', {
+        url: '/publicGallarypublicGallary',
+        templateUrl: 'templates/image-popover.html',
+        controller: 'ImagePopoverCtrl'
+    })
     .state('tokencheck', {
         url: '/tokencheck',
         templateUrl: 'templates/tokencheck.html',
@@ -101,11 +110,13 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
         templateUrl: 'templates/public-event.html',
         controller: 'PublicEventCtr'
     })
-    // .state('publicAchievement',{
-    //   url:'/publicAchievement',
-    //   templateUrl:'templates/achievement-public.html',
-    //   controller:'PublicAchievementCtrl'
-    // })
+    .state('eventstatuspublic', {
+        url: '/eventstatusteacher',
+        templateUrl: 'templates/event-status-public.html',
+        controller: 'EventStatusPublicCtrl'
+
+
+    })
     .state('app', {
         url: '/app',
         templateUrl: 'templates/menu.html',
@@ -266,13 +277,6 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
              'menuContent': {
                 templateUrl: 'templates/achievement-public.html',
                 controller: 'app.PublicAchievementCtrl'
-             },
-             'fabContent': {
-                 controller: function (GLOBALS,$timeout,$scope,$state,userSessions,$http) {
-                     $timeout(function () {
-                         document.getElementById('fab-new-achievement').classList.toggle('on');
-                     }, 900);
-                 }
              }
           }
       })
@@ -499,6 +503,22 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
             }
 
         })
+        .state('app.eventstatuspublic', {
+            url: '/eventstatusteacher',
+            params: {
+              obj: null
+            },
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/event-status-public.html',
+                    controller: 'EventStatusPublicCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+
+        })
         .state('app.editevent', {
             url: '/editevent',
             views: {
@@ -619,7 +639,19 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
                 }
             }
         })
-        .state('app.notificationdetails', {
+        .state('app.achievementdetailspublic', {
+            url: '/achievementdetails',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/achievement-description-public.html',
+                    controller: 'DetailPagePublicCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+      .state('app.notificationdetails', {
             url: '/notificationdetails',
             views: {
                 'menuContent': {

@@ -416,8 +416,122 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
           $state.go('publicEvents')
         }
         $scope.publicAchievementLanding=function(){
-              $state.go('app.achievementpublic')
+          $state.go('app.achievementpublic')
         }
+        $scope.publicGalleryLanding=function(){
+          $state.go("publicGallary")
+        }
+        $scope.publicAboutUsLanding=function(){
+          $state.go("publicAboutUs")
+        }
+})
+.controller('PublicAboutUsCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.myGoBack=function(){
+          $state.go('publicDashboard')
+        }
+        $rootScope.header=['header ','header 2'];
+        $scope.headingLandingpage=function(id){
+           $rootScope.headerID = id;
+           $state.go("publicHeadingDetail")
+        }
+        $scope.publicFacultyInformationLanding=function(){
+          $state.go("publicFacultyInformation")
+        }
+        $scope.publicCommitteeLanding=function(){
+          $state.go("publicCommitteeLanding")
+        }
+})
+.controller('PublicCommitteeLandingCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.myGoBack=function(){
+          $state.go('publicAboutUs')
+        }
+        $rootScope.committeeMembers=[{id:1, name:"Committee 1",number:132465789},
+                                  {id:2, name:"Committee 2",number:132465789},
+                                  {id:3, name:"Committee 3",number:132465789},
+                                  {id:4, name:"Committee 4",number:132465789}];
+        $scope.committeeDetail=function(index){
+          $rootScope.indexOfCommitteeMember=index;
+          $state.go('publicCommitteeDetail')
+        }
+
+})
+.controller('PublicCommitteeDetailCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.myGoBack=function(){
+          $state.go('publicCommitteeLanding')
+        }
+})
+.controller('PublicHeadingDetailCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.myGoBack=function(){
+          $state.go('publicAboutUs')
+        }
+})
+.controller('PublicFacultyInformationCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $rootScope.faculties=[{id:1, post:"Principal", name:"Principal Name"},
+                              {id:2, post:"Vice Principal", name:"Vice Principal Name"},
+                              {id:3, post:"HR", name:"HR Name"},
+                              {id:4, id:"1", post:"Teacher 1", name:"Teacher Name 1"},
+                              {id:5, post:"Teacher 2", name:"Teacher Name 2"}]
+
+        $scope.myGoBack=function(){
+          $state.go('publicAboutUs')
+        }
+        $scope.facultyInformationLanding=function(indexOfFaculty){
+          $rootScope.facultyID = indexOfFaculty;
+          // alert("id is :"+id)
+          $state.go("publicFacultyDetail")
+        }
+
+})
+.controller('PublicFacultyDetailCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.myGoBack=function(){
+          $state.go('publicFacultyInformation')
+        }
+        $scope.facultyDetail=$rootScope.faculties[$rootScope.facultyID]
+})
+.controller('PublicGallaryLandingCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.images = ['1.png', '2.jpg', '3.jpg', '4.png','5.jpg','6.png','7.jpg','8.jpg','9.jpg','10.jpg'];
+        $scope.myGoBack=function(){
+          $state.go('publicDashboard')
+        }
+})
+
+.controller('PublicGallaryCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.images = ['1.png', '2.jpg', '3.jpg', '4.png','5.jpg','6.png','7.jpg','8.jpg','9.jpg','10.jpg'];
+        $scope.zoomMin = 1;
+        $scope.myGoBack=function(){
+          $state.go('publicDashboard')
+        }
+
+        $scope.showImages = function(index) {
+          $scope.activeSlide = index;
+          $scope.showModal('templates/image-popover.html');
+        };
+        $scope.showModal = function(templateUrl) {
+      		$ionicModal.fromTemplateUrl(templateUrl, {
+            			scope: $scope,
+            			animation: 'slide-in-up'
+        		}).then(function(modal) {
+          			$scope.modal = modal;
+          			$scope.modal.show();
+          		});
+	        }
+      	// Close the modal
+      	$scope.closeModal = function() {
+      		$scope.modal.hide();
+      		$scope.modal.remove()
+      	};
+        $scope.updateSlideStatus = function(slide) {
+          var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).getScrollPosition().zoom;
+          if (zoomFactor == $scope.zoomMin) {
+            $ionicSlideBoxDelegate.enableSlide(true);
+          } else {
+            $ionicSlideBoxDelegate.enableSlide(false);
+          }
+        };
+      $scope.clipSrc = 'img/11.mp4';
+      $scope.playVideo = function() {
+      	$scope.showModal('templates/video-popover.html');
+      }
 })
 .controller('LoginCtrl', function($ionicHistory, $rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
   $scope.myGoBack = function() {
@@ -3529,28 +3643,9 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         ionicMaterialInk.displayEffect();
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(false);
-        $scope.noticeBoard = function() {
-            $state.go('app.sharedNotification');
-        };
         $scope.startEventTime = new Date();
         $scope.endEventTime = new Date();
-        $scope.eventdetailsList = $stateParams;
-
-        $scope.showPopup = function() {
-            // An elaborate, custom popup
-            var myPopup = $ionicPopup.show({
-                template: '<div>'+$scope.responseMessage+'</div>',
-                title: '',
-                subTitle: '',
-                scope: $scope
-            });
-            myPopup.then(function(res) {
-                console.log('Tapped!', res);
-            });
-            $timeout(function() {
-                myPopup.close(); //close the popup after 3 seconds for some reason
-            }, 3000);
-        }
+        $scope.eventdetailsList = $state
     })
     .controller('EditEventCtrl', function( $ionicLoading ,$ionicPopup,GLOBALS,$http,userSessions,$scope, $state, $filter, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
         $scope.$parent.clearFabs();
