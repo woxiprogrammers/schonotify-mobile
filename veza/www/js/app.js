@@ -82,7 +82,7 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
     })
     .state('publicGallary', {
         url: '/publicGallary',
-        templateUrl: 'templates/publicGallary.html',
+        templateUrl: 'templates/public-gallary.html',
         controller: 'PublicGallaryCtrl'
     })
     .state('publicAboutUs', {
@@ -109,11 +109,6 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
         url: '/publicGallaryLanding',
         templateUrl: 'templates/public-gallery-landing.html',
         controller: 'PublicGallaryLandingCtrl'
-    })
-    .state('imagePopover', {
-        url: '/publicGallarypublicGallary',
-        templateUrl: 'templates/image-popover.html',
-        controller: 'ImagePopoverCtrl'
     })
     .state('publicCommitteeLanding', {
         url: '/publicCommitteeLanding',

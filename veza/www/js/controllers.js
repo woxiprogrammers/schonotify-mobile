@@ -488,20 +488,13 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         }
         $scope.facultyDetail=$rootScope.faculties[$rootScope.facultyID]
 })
-.controller('PublicGallaryLandingCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
-        $scope.images = ['1.png', '2.jpg', '3.jpg', '4.png','5.jpg','6.png','7.jpg','8.jpg','9.jpg','10.jpg'];
-        $scope.myGoBack=function(){
-          $state.go('publicDashboard')
-        }
-})
 
-.controller('PublicGallaryCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+.controller('PublicGallaryLandingCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
         $scope.images = ['1.png', '2.jpg', '3.jpg', '4.png','5.jpg','6.png','7.jpg','8.jpg','9.jpg','10.jpg'];
         $scope.zoomMin = 1;
         $scope.myGoBack=function(){
           $state.go('publicDashboard')
         }
-
         $scope.showImages = function(index) {
           $scope.activeSlide = index;
           $scope.showModal('templates/image-popover.html');
@@ -532,6 +525,20 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
       $scope.playVideo = function() {
       	$scope.showModal('templates/video-popover.html');
       }
+})
+
+.controller('PublicGallaryCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.images = ['1.png', '2.jpg', '3.jpg', '4.png','5.jpg','6.png','7.jpg','8.jpg','9.jpg','10.jpg'];
+        $scope.zoomMin = 1;
+        $scope.myGoBack=function(){
+          $state.go('publicDashboard')
+        }
+        $scope.galleryFolder=function(folderIndex){
+          $rootScope.folderIndex= folderIndex;
+          $state.go("publicGallaryLanding")
+        }
+
+
 })
 .controller('LoginCtrl', function($ionicHistory, $rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
   $scope.myGoBack = function() {
@@ -3330,7 +3337,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                               $ionicLoading.hide();
                               $scope.aclMessage = res['message'];
                      }
-                     } else {
+                    } else {
                            $scope.aclMessage = response['message'];
                     }
                }).error(function(err) {
