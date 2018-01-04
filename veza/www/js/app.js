@@ -29,6 +29,7 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
  })
 .config(function($stateProvider,$ionicCloudProvider, $urlRouterProvider, $ionicConfigProvider, $translateProvider) {
     // Turn off caching for demo simplicity's sake
+    $ionicConfigProvider.scrolling.jsScrolling(true);
     $ionicCloudProvider.init({
     "core": {
       "app_id": "7c6f7241"
