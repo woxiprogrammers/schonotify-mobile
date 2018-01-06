@@ -1,16 +1,11 @@
-<body>
-  <ion-content>
-    <div class="modal image-modal transparent" on-swipe-down="closeModal()">
-      <ion-slide-box on-slide-changed="slideChanged(index)" active-slide="activeSlide">
-          <ion-slide ng-repeat="image in images">
-            <ion-scroll zooming="true" overflow-scroll="false"!important direction="xy" delegate-handle="zoom-pane" class="zoom-pane"
-            min-zoom={{zoomMin}} scrollbar-x="false" scrollbar-y="false"
-            on-scroll="updateSlideStatus(activeSlide)" on-release="updateSlideStatus(activeSlide)">
-              <div class="image" style="background-image: url( img/trial/{{image}} )"></div>
-          </ion-scroll>
-          <video poster="img/ionic.png" class="image-list-thumb" ng-click="playVideo()"/>
-        </ion-slide>
-    </ion-slide-box>
-    </div>
-  </ion-content>
-</body>
+<div class="modal image-modal transparent" on-swipe-down="closeModal()">
+  <ion-slide-box on-slide-changed="slideChanged(index)" active-slide="activeSlide">
+    <ion-slide ng-repeat="image in images" loop="true">
+          <!-- <div class="image" style="background-image: url( img/trial/{{image}} )" width="100%"></div> -->
+          <div class="mayur" >
+            <img ng-src='img/trial/{{image}}' zoom-src="img/trial/{{image}}" zoom-view />
+          </div>
+    </ion-scroll>
+  </ion-slide>
+</ion-slide-box>
+</div>

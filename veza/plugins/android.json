@@ -48,6 +48,9 @@
     "phonegap-plugin-push": {
       "SENDER_ID": "750487257563",
       "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "com-sarriaroman-photoviewer": {
+      "PACKAGE_NAME": "io.ionic.starter"
     }
   },
   "dependent_plugins": {}

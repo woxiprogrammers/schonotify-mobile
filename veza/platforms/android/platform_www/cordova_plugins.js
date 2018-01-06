@@ -65,6 +65,14 @@ module.exports = [
     "clobbers": [
       "PushNotification"
     ]
+  },
+  {
+    "id": "com-sarriaroman-photoviewer.PhotoViewer",
+    "file": "plugins/com-sarriaroman-photoviewer/www/PhotoViewer.js",
+    "pluginId": "com-sarriaroman-photoviewer",
+    "clobbers": [
+      "PhotoViewer"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -81,7 +89,8 @@ module.exports.metadata =
   "cordova-plugin-statusbar": "2.2.0",
   "cordova-plugin-whitelist": "1.3.0",
   "ionic-plugin-keyboard": "2.2.1",
-  "phonegap-plugin-push": "1.10.5"
+  "phonegap-plugin-push": "1.10.5",
+  "com-sarriaroman-photoviewer": "1.1.11"
 };
 // BOTTOM OF METADATA
 });

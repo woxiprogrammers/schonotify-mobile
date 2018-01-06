@@ -466,11 +466,20 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         }
 })
 .controller('PublicFacultyInformationCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $ionicLoading.show({
+          template: 'Loading...',
+          duration: 1500
+        })
         $rootScope.faculties=[{id:1, post:"Principal", name:"Principal Name"},
                               {id:2, post:"Vice Principal", name:"Vice Principal Name"},
                               {id:3, post:"HR", name:"HR Name"},
                               {id:4, id:"1", post:"Teacher 1", name:"Teacher Name 1"},
-                              {id:5, post:"Teacher 2", name:"Teacher Name 2"}]
+                              {id:5, post:"Teacher 2", name:"Teacher Name 2"},
+                              {id:6, post:"Principal 02", name:"Principal Name"},
+                              {id:7, post:"Vice Principal 02", name:"Vice Principal Name"},
+                              {id:8, post:"HR", name:"HR Name"},
+                              {id:9, id:"1", post:"Teacher 3", name:"Teacher Name 2"},
+                              {id:10, post:"Teacher 4", name:"Teacher Name 4"}]
 
         $scope.myGoBack=function(){
           $state.go('publicAboutUs')
@@ -489,11 +498,11 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         $scope.facultyDetail=$rootScope.faculties[$rootScope.facultyID]
 })
 
-.controller('PublicGallaryLandingCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+.controller('PublicGallaryLandingCtrl', function($ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
         $scope.images = ['1.png', '2.jpg', '3.jpg', '4.png','5.jpg','6.png','7.jpg','8.jpg','9.jpg','10.jpg'];
         $scope.zoomMin = 1;
         $scope.myGoBack=function(){
-          $state.go('publicDashboard')
+          $state.go('publicGallary')
         }
         $scope.showImages = function(index) {
           $scope.activeSlide = index;

@@ -1,7 +1,7 @@
  // Ionic Starter App
 //Creator: Shubham Chaudhari
 var db = null;
-angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCordova', 'ionic-material', 'highcharts-ng', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate'])
+angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCordova', 'ionic-material', 'highcharts-ng', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate','ionic-zoom-view'])
 .run(function($rootScope, $ionicPlatform,$cordovaSQLite, $cordovaSplashscreen,$state,userSessions) {
     $ionicPlatform.ready(function() {
       $ionicPlatform.registerBackButtonAction(function (event) {
@@ -29,6 +29,7 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
  })
 .config(function($stateProvider,$ionicCloudProvider, $urlRouterProvider, $ionicConfigProvider, $translateProvider) {
     // Turn off caching for demo simplicity's sake
+    $ionicConfigProvider.scrolling.jsScrolling(true);
     $ionicCloudProvider.init({
     "core": {
       "app_id": "7c6f7241"
@@ -81,14 +82,44 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
         controller: 'LoginCtrl'
     })
     .state('publicGallary', {
-        url: '/publicGallarypublicGallary',
-        templateUrl: 'templates/publicGallary.html',
+        url: '/publicGallary',
+        templateUrl: 'templates/public-gallary.html',
         controller: 'PublicGallaryCtrl'
     })
-    .state('imagePopover', {
-        url: '/publicGallarypublicGallary',
-        templateUrl: 'templates/image-popover.html',
-        controller: 'ImagePopoverCtrl'
+    .state('publicAboutUs', {
+        url: '/publicAboutUs',
+        templateUrl: 'templates/public-about-us.html',
+        controller: 'PublicAboutUsCtrl'
+    })
+    .state('publicFacultyInformation', {
+        url: '/publicFacultyInformation',
+        templateUrl: 'templates/public-faculty-information.html',
+        controller: 'PublicFacultyInformationCtrl'
+    })
+    .state('publicFacultyDetail', {
+        url: '/publicFacultyDetail',
+        templateUrl: 'templates/public-faculty-detail.html',
+        controller: 'PublicFacultyDetailCtrl'
+    })
+    .state('publicHeadingDetail', {
+        url: '/publicHeadingDetail',
+        templateUrl: 'templates/public-heading-detail.html',
+        controller: 'PublicHeadingDetailCtrl'
+    })
+    .state('publicGallaryLanding', {
+        url: '/publicGallaryLanding',
+        templateUrl: 'templates/public-gallery-landing.html',
+        controller: 'PublicGallaryLandingCtrl'
+    })
+    .state('publicCommitteeLanding', {
+        url: '/publicCommitteeLanding',
+        templateUrl: 'templates/public-committee-landing.html',
+        controller: 'PublicCommitteeLandingCtrl'
+    })
+    .state('publicCommitteeDetail', {
+        url: '/publicCommitteeDetail',
+        templateUrl: 'templates/public-committee-detail.html',
+        controller: 'PublicCommitteeDetailCtrl'
     })
     .state('tokencheck', {
         url: '/tokencheck',

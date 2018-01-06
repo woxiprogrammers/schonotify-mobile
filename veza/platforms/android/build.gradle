@@ -94,6 +94,7 @@ ext {
 // PLUGIN GRADLE EXTENSIONS START
 apply from: "cordova-plugin-crosswalk-webview/starter-xwalk.gradle"
 apply from: "phonegap-plugin-push/starter-push.gradle"
+apply from: "com-sarriaroman-photoviewer/starter-photoviewer.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()

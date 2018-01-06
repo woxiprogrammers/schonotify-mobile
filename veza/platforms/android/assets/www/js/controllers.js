@@ -421,15 +421,89 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         $scope.publicGalleryLanding=function(){
           $state.go("publicGallary")
         }
+        $scope.publicAboutUsLanding=function(){
+          $state.go("publicAboutUs")
+        }
 })
-
-.controller('PublicGallaryCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
-        $scope.images = ['1.png', '2.jpg', '3.jpg', '4.png','5.jpg','6.png','7.jpg','8.jpg','9.jpg','10.jpg'];
-        $scope.zoomMin = 1;
+.controller('PublicAboutUsCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
         $scope.myGoBack=function(){
           $state.go('publicDashboard')
         }
+        $rootScope.header=['header ','header 2'];
+        $scope.headingLandingpage=function(id){
+           $rootScope.headerID = id;
+           $state.go("publicHeadingDetail")
+        }
+        $scope.publicFacultyInformationLanding=function(){
+          $state.go("publicFacultyInformation")
+        }
+        $scope.publicCommitteeLanding=function(){
+          $state.go("publicCommitteeLanding")
+        }
+})
+.controller('PublicCommitteeLandingCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.myGoBack=function(){
+          $state.go('publicAboutUs')
+        }
+        $rootScope.committeeMembers=[{id:1, name:"Committee 1",number:132465789},
+                                  {id:2, name:"Committee 2",number:132465789},
+                                  {id:3, name:"Committee 3",number:132465789},
+                                  {id:4, name:"Committee 4",number:132465789}];
+        $scope.committeeDetail=function(index){
+          $rootScope.indexOfCommitteeMember=index;
+          $state.go('publicCommitteeDetail')
+        }
 
+})
+.controller('PublicCommitteeDetailCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.myGoBack=function(){
+          $state.go('publicCommitteeLanding')
+        }
+})
+.controller('PublicHeadingDetailCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.myGoBack=function(){
+          $state.go('publicAboutUs')
+        }
+})
+.controller('PublicFacultyInformationCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $ionicLoading.show({
+          template: 'Loading...',
+          duration: 1500
+        })
+        $rootScope.faculties=[{id:1, post:"Principal", name:"Principal Name"},
+                              {id:2, post:"Vice Principal", name:"Vice Principal Name"},
+                              {id:3, post:"HR", name:"HR Name"},
+                              {id:4, id:"1", post:"Teacher 1", name:"Teacher Name 1"},
+                              {id:5, post:"Teacher 2", name:"Teacher Name 2"},
+                              {id:6, post:"Principal 02", name:"Principal Name"},
+                              {id:7, post:"Vice Principal 02", name:"Vice Principal Name"},
+                              {id:8, post:"HR", name:"HR Name"},
+                              {id:9, id:"1", post:"Teacher 3", name:"Teacher Name 2"},
+                              {id:10, post:"Teacher 4", name:"Teacher Name 4"}]
+
+        $scope.myGoBack=function(){
+          $state.go('publicAboutUs')
+        }
+        $scope.facultyInformationLanding=function(indexOfFaculty){
+          $rootScope.facultyID = indexOfFaculty;
+          // alert("id is :"+id)
+          $state.go("publicFacultyDetail")
+        }
+
+})
+.controller('PublicFacultyDetailCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.myGoBack=function(){
+          $state.go('publicFacultyInformation')
+        }
+        $scope.facultyDetail=$rootScope.faculties[$rootScope.facultyID]
+})
+
+.controller('PublicGallaryLandingCtrl', function($ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.images = ['1.png', '2.jpg', '3.jpg', '4.png','5.jpg','6.png','7.jpg','8.jpg','9.jpg','10.jpg'];
+        $scope.zoomMin = 1;
+        $scope.myGoBack=function(){
+          $state.go('publicGallary')
+        }
         $scope.showImages = function(index) {
           $scope.activeSlide = index;
           $scope.showModal('templates/image-popover.html');
@@ -460,6 +534,20 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
       $scope.playVideo = function() {
       	$scope.showModal('templates/video-popover.html');
       }
+})
+
+.controller('PublicGallaryCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.images = ['1.png', '2.jpg', '3.jpg', '4.png','5.jpg','6.png','7.jpg','8.jpg','9.jpg','10.jpg'];
+        $scope.zoomMin = 1;
+        $scope.myGoBack=function(){
+          $state.go('publicDashboard')
+        }
+        $scope.galleryFolder=function(folderIndex){
+          $rootScope.folderIndex= folderIndex;
+          $state.go("publicGallaryLanding")
+        }
+
+
 })
 .controller('LoginCtrl', function($ionicHistory, $rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
   $scope.myGoBack = function() {
@@ -3258,7 +3346,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                               $ionicLoading.hide();
                               $scope.aclMessage = res['message'];
                      }
-                     } else {
+                    } else {
                            $scope.aclMessage = response['message'];
                     }
                }).error(function(err) {
@@ -3573,7 +3661,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         $ionicSideMenuDelegate.canDragContent(false);
         $scope.startEventTime = new Date();
         $scope.endEventTime = new Date();
-        $scope.eventdetailsList = $stateParams;
+        $scope.eventdetailsList = $state
     })
     .controller('EditEventCtrl', function( $ionicLoading ,$ionicPopup,GLOBALS,$http,userSessions,$scope, $state, $filter, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
         $scope.$parent.clearFabs();
