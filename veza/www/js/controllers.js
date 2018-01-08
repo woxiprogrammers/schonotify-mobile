@@ -32,6 +32,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         };
         this.ss = function(id){
            var retrievedData = localStorage.getItem("studentdata");
+           console.log(retrievedData);
            var students = JSON.parse(retrievedData);
            var obj = students.filter(function ( obj )
            {
@@ -483,9 +484,11 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
          }
     });
         if(userSessions.userSession.bodyId == 1){
-                 $scope.title="Ganesh International School";
+                 $scope.title="Ganesh International School, Chikhali";
         }else if(  userSessions.userSession.bodyId == 2){
-                 $scope.title="Ganesh English Medium School";
+                 $scope.title="Ganesh English Medium School, Dapodi";
+        }else if(  userSessions.userSession.bodyId == 3){
+                 $scope.title="Ganesh English Medium School, Chinchwad";
         }
 
         $scope.resultView = function(){
@@ -3034,19 +3037,32 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
              });
            }else{
               //Parent View
-              $scope.getFeesStudent=function () {
-                $ionicLoading.show();
-                var url = GLOBALS.baseUrl+"user/get-student_fees/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
-                $http.get(url).success(function(response){
-                   $scope.installments=response;
-                   console.log($scope.installments);
-                   }).error(function(err) {
-                      $ionicLoading.hide();
-                      $scope.aclMessage = "Installment Not Found !!";
-                    });
-                      $scope.show="show";
-                      $scope.abc="50%";
-                    }
+              // $scope.getFeesStudent=function () {
+              //   $ionicLoading.show();
+              //   var url = GLOBALS.baseUrl+"user/get-student_fees/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
+              //   $http.get(url).success(function(response){
+              //      $scope.installments=response;
+              //      console.log($scope.installments);
+              //      }).error(function(err) {
+              //         $ionicLoading.hide();
+              //         $scope.aclMessage = "Installment Not Found !!";
+              //       });
+              //         $scope.show="show";
+              //         $scope.abc="50%";
+              //       }
+                    $scope.getFeesStudent=function () {
+                      $ionicLoading.show();
+                      var url = "http://www.mocky.io/v2/5a5368c2300000e8211ebf3a";
+                      $http.get(url).success(function(response){
+                         $scope.installments=response;
+                         console.log($scope.installments);
+                         }).error(function(err) {
+                            $ionicLoading.hide();
+                            $scope.aclMessage = "Installment Not Found !!";
+                          });
+                            $scope.show="show";
+                            $scope.abc="50%";
+                          }
              $scope.getFees=function () {
                $ionicLoading.show();
                var url = GLOBALS.baseUrl+"user/get-student_fees_details/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
