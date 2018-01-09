@@ -23,40 +23,38 @@
            <div ng-repeat="structure in structures">
              <span><h4><b>Year: {{structure.year}}</b></h4></span>
              <div ng-show="show=='show'" style="overflow-x: hidden;height:auto; " ><table>
-                          <div class="card" >
-                           <table style="width:100%">
+                <div class="card" >
+                   <table style="width:100%">
                             <tr style="background-color:#edf3fc">
-                            <th><b>No<b></th>
-                            <th><b>Due Date</b></th>
-                            <th><b>Amount</b></th>
+                              <th><b>No<b></th>
+                              <th><b>Due Date</b></th>
+                              <th><b>Amount</b></th>
                             </tr>
                             <tr ng-repeat="installment in structure.installments" ng-click="detail(installment.installment_id)">
-                            <td style="background-color:white">{{installment.installment_id}}</td>
-                            <td style="background-color:white">{{installment.due_date}}</td>
-                            <td style="background-color:white">{{installment.discount}} &nbsp <i class="icon ion-chevron-right" style="float:right"></i></td>
+                              <td style="background-color:white">{{installment.installment_id}}</td>
+                              <td style="background-color:white">{{installment.due_date}}</td>
+                              <td style="background-color:white">{{installment.discount}} &nbsp <i class="icon ion-chevron-right" style="float:right"></i></td>
                             </tr>
-                          </table><br>
-                        </div>
-                          <center ng-if="structure.show_payment=='true'" style="margin-top:5px">
-                              <a ng-if="bodyId == 1" href="#" onclick="window.open('http://sspss.veza.co.in/fees/billing-page', '_blank', 'location=no'); return false;">
-                                <button class="button button-small button-balanced">Pay Fees</button>
-                              </a><br>
-                              <a ng-if="bodyId == 2" href="#" onclick="window.open('http://sspss.veza.co.in/fees/billing-page/gems', '_blank', 'location=no'); return false;">
-                               <button class="button button-small button-balanced">Pay Fees</button>
-                              </a>
-                              <br>
-                              <hr>
-                          </center>
-                          <center ng-if="structure.show_payment=='false'"  style="margin-top:5px">
-                                 <div class="speech3" style="width:100%">
-                                     <font color="white">PLEASE PAY THE PREVIOUS PENDING FEES</font>
-                                 </div>
-                                 <br>
-
-                          </center>
+                    </table><br>
+                  </div>
+                  <center ng-if="structure.show_payment=='true'" style="margin-top:5px">
+                      <a ng-if="bodyId == 1" href="#" onclick="window.open('http://sspss.veza.co.in/fees/billing-page', '_blank', 'location=no'); return false;">
+                          <button class="button button-small button-balanced">Pay Fees</button>
+                      </a><br>
+                      <a ng-if="bodyId == 2" href="#" onclick="window.open('http://sspss.veza.co.in/fees/billing-page/gems', '_blank', 'location=no'); return false;">
+                           <button class="button button-small button-balanced">Pay Fees</button>
+                      </a>
+                      <br>
+                      <hr>
+                  </center>
+                  <center ng-if="structure.show_payment=='false'"  style="margin-top:5px">
+                      <div class="speech3" style="width:100%">
+                           <font color="white">PLEASE PAY THE PREVIOUS PENDING FEES</font>
+                      </div>
+                      <br>
+                  </center>
              </div>
            </div>
-
          </div>
              <div ng-show="clickOn=='con2'" style="height:100%;width:100%;">
                    <div style="float:left;">
