@@ -2991,7 +2991,7 @@
       }
       $scope.getPerticulars($stateParams.installment_id);
     })
-    .controller('FeeLandingParentCntrl', function($rootScope,$ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('FeeLandingParentCntrl', function($rootScope,$ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate,$ionicScrollDelegate) {
       $scope.$on("$ionicView.beforeEnter", function(event, data){
         $ionicLoading.show({
           template: 'Loading...',
@@ -3083,6 +3083,7 @@
           $scope.bold2="";
         }
         else{
+          $ionicScrollDelegate.scrollTop();
           $scope.color1="underline";
           $scope.color="";
           $scope.side="right";
