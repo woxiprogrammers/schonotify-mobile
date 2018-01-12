@@ -21,10 +21,8 @@ apply plugin: 'com.android.application'
 
 buildscript {
     repositories {
+        mavenCentral()
         jcenter()
-        maven {
-            url "https://maven.google.com"
-        }
     }
 
     // Switch the Android Gradle plugin version requirement depending on the
@@ -32,17 +30,15 @@ buildscript {
     // http://tools.android.com/tech-docs/new-build-system/version-compatibility
     // and https://issues.apache.org/jira/browse/CB-8143
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:2.2.1'
     }
 }
 
 // Allow plugins to declare Maven dependencies via build-extras.gradle.
 allprojects {
     repositories {
+        mavenCentral();
         jcenter()
-        maven {
-            url "https://maven.google.com"
-        }
     }
 }
 
@@ -92,9 +88,9 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
-apply from: "cordova-plugin-crosswalk-webview/starter-xwalk.gradle"
-apply from: "phonegap-plugin-push/starter-push.gradle"
-apply from: "com-sarriaroman-photoviewer/starter-photoviewer.gradle"
+apply from: "phonegap-plugin-push/vezaandroid-push.gradle"
+apply from: "cordova-plugin-crosswalk-webview/vezaandroid-xwalk.gradle"
+apply from: "com-sarriaroman-photoviewer/vezaandroid-photoviewer.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()
@@ -276,7 +272,7 @@ def promptForReleaseKeyPassword() {
 
 gradle.taskGraph.whenReady { taskGraph ->
     taskGraph.getAllTasks().each() { task ->
-        if (task.name == 'validateReleaseSigning' || task.name == 'validateSigningRelease') {
+        if (task.name == 'validateReleaseSigning') {
             promptForReleaseKeyPassword()
         }
     }

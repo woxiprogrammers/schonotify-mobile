@@ -1,11 +1,10 @@
-<div class="modal image-modal transparent" on-swipe-down="closeModal()">
-  <ion-slide-box on-slide-changed="slideChanged(index)" active-slide="activeSlide">
-    <ion-slide ng-repeat="image in images" loop="true">
-          <!-- <div class="image" style="background-image: url( img/trial/{{image}} )" width="100%"></div> -->
-          <div class="mayur" >
-            <img ng-src='img/trial/{{image}}' zoom-src="img/trial/{{image}}" zoom-view />
-          </div>
-    </ion-scroll>
-  </ion-slide>
+<div class="modal image-modal transparent" on-swipe-down="closeModal()" ng-repeat="image in images">
+  <ion-slide-box on-slide-changed="slideChanged(index)" active-slide="activeSlide" >
+      <ion-slide ng-repeat="photo in image.photos">
+            <div class="centered">
+              <img ng-src='{{image.photos[$index].photo_url}}' zoom-src="{{image.photos[$index].photo_url}}" zoom-view  width="100%  "/>
+            </div>
+      </ion-scroll>
+    </ion-slide>
 </ion-slide-box>
 </div>

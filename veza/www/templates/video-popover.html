@@ -1,5 +1,5 @@
 <ion-content>
-  <div class="modal transparent fullscreen-player" on-swipe-down="closeModal()">
-    <video src="{{clipSrc}}" class="centerme" controls="controls" autoplay ></video>
+  <div class="modal transparent fullscreen-player" ng-click="closeModal()">
+    <video ng-src={{clipSrc.src}} class="centerme" autoplay controls="controls" ></video>
 </div>
 </ion-content>

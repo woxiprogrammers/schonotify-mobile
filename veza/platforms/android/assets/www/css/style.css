@@ -1,5 +1,11 @@
 /*trial start*/
-
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%)
+}
 .image-list-thumb {
     padding: 2px 2px 2px 2px;
     height: 150px;

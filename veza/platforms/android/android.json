@@ -9,6 +9,42 @@
         "parents": {
           "/*": [
             {
+              "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Base64\"><param name=\"android-package\" value=\"com.badrit.Base64.Base64Plugin\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"ImagePicker\"><param name=\"android-package\" value=\"com.synconset.ImagePicker\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"Keyboard\"><param name=\"android-package\" value=\"io.ionic.keyboard.IonicKeyboard\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"PushNotification\"><param name=\"android-package\" value=\"com.adobe.phonegap.push.PushPlugin\" /></feature>",
+              "count": 1
+            },
+            {
+              "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+              "count": 1
+            },
+            {
               "xml": "<feature name=\"AppMinimize\"><param name=\"android-package\" value=\"tomloprod.AppMinimize\" /></feature>",
               "count": 1
             },
@@ -41,38 +77,6 @@
               "count": 1
             },
             {
-              "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"ImagePicker\"><param name=\"android-package\" value=\"com.synconset.ImagePicker\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"Keyboard\"><param name=\"android-package\" value=\"io.ionic.keyboard.IonicKeyboard\" /><param name=\"onload\" value=\"true\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"PushNotification\"><param name=\"android-package\" value=\"com.adobe.phonegap.push.PushPlugin\" /></feature>",
-              "count": 1
-            },
-            {
               "xml": "<feature name=\"PhotoViewer\"><param name=\"android-package\" value=\"com.sarriaroman.PhotoViewer.PhotoViewer\" /></feature>",
               "count": 1
             }
@@ -81,16 +85,6 @@
       },
       "AndroidManifest.xml": {
         "parents": {
-          "/*": [
-            {
-              "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
-              "count": 1
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
-              "count": 1
-            }
-          ],
           "/manifest/application": [
             {
               "xml": "<activity android:label=\"@string/multi_app_name\" android:name=\"com.synconset.MultiImageChooserActivity\" android:theme=\"@android:style/Theme.Holo.Light\"></activity>",
@@ -127,14 +121,6 @@
           ],
           "/manifest": [
             {
-              "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-              "count": 2
-            },
-            {
-              "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
-              "count": 2
-            },
-            {
               "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
               "count": 1
             },
@@ -167,7 +153,25 @@
               "count": 1
             },
             {
+              "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
+              "count": 1
+            },
+            {
               "xml": "<uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />",
+              "count": 1
+            }
+          ],
+          "/*": [
+            {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+              "count": 1
+            },
+            {
+              "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
               "count": 1
             }
           ]
@@ -186,11 +190,39 @@
     }
   },
   "installed_plugins": {
-    "cordova-plugin-appminimize": {
-      "PACKAGE_NAME": "io.ionic.starter"
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
+    "com-badrit-base64": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
     "cordova-plugin-console": {
-      "PACKAGE_NAME": "io.ionic.starter"
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
+    "cordova-plugin-image-picker": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
+    "ionic-plugin-keyboard": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
+    "phonegap-plugin-push": {
+      "SENDER_ID": "750487257563",
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
+    "cordova-plugin-appminimize": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
     "cordova-plugin-crosswalk-webview": {
       "XWALK_VERSION": "23+",
@@ -198,56 +230,31 @@
       "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
       "XWALK_MODE": "embedded",
       "XWALK_MULTIPLEAPK": "true",
-      "PACKAGE_NAME": "io.ionic.starter"
-    },
-    "cordova-plugin-device": {
-      "PACKAGE_NAME": "io.ionic.starter"
-    },
-    "cordova-plugin-image-picker": {
-      "PACKAGE_NAME": "io.ionic.starter"
-    },
-    "cordova-plugin-inappbrowser": {
-      "PACKAGE_NAME": "io.ionic.starter"
-    },
-    "cordova-plugin-ionic-webview": {
-      "PACKAGE_NAME": "io.ionic.starter"
-    },
-    "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "io.ionic.starter"
-    },
-    "cordova-plugin-statusbar": {
-      "PACKAGE_NAME": "io.ionic.starter"
-    },
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "io.ionic.starter"
-    },
-    "ionic-plugin-keyboard": {
-      "PACKAGE_NAME": "io.ionic.starter"
-    },
-    "phonegap-plugin-push": {
-      "SENDER_ID": "750487257563",
-      "PACKAGE_NAME": "io.ionic.starter"
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
     "com-sarriaroman-photoviewer": {
-      "PACKAGE_NAME": "io.ionic.starter"
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
+    "cordova-plugin-ionic-webview": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     }
   },
   "dependent_plugins": {},
   "modules": [
-    {
-      "id": "cordova-plugin-appminimize.AppMinimize",
-      "file": "plugins/cordova-plugin-appminimize/www/AppMinimize.js",
-      "pluginId": "cordova-plugin-appminimize",
-      "clobbers": [
-        "cordova.plugins.appMinimize"
-      ]
-    },
     {
       "id": "cordova-plugin-device.device",
       "file": "plugins/cordova-plugin-device/www/device.js",
       "pluginId": "cordova-plugin-device",
       "clobbers": [
         "device"
+      ]
+    },
+    {
+      "id": "com-badrit-base64.Base64",
+      "file": "plugins/com-badrit-base64/www/Base64.js",
+      "pluginId": "com-badrit-base64",
+      "clobbers": [
+        "navigator.Base64"
       ]
     },
     {
@@ -265,14 +272,6 @@
       "clobbers": [
         "cordova.InAppBrowser.open",
         "window.open"
-      ]
-    },
-    {
-      "id": "cordova-plugin-splashscreen.SplashScreen",
-      "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-      "pluginId": "cordova-plugin-splashscreen",
-      "clobbers": [
-        "navigator.splashscreen"
       ]
     },
     {
@@ -301,6 +300,22 @@
       ]
     },
     {
+      "id": "cordova-plugin-splashscreen.SplashScreen",
+      "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+      "pluginId": "cordova-plugin-splashscreen",
+      "clobbers": [
+        "navigator.splashscreen"
+      ]
+    },
+    {
+      "id": "cordova-plugin-appminimize.AppMinimize",
+      "file": "plugins/cordova-plugin-appminimize/www/AppMinimize.js",
+      "pluginId": "cordova-plugin-appminimize",
+      "clobbers": [
+        "cordova.plugins.appMinimize"
+      ]
+    },
+    {
       "id": "com-sarriaroman-photoviewer.PhotoViewer",
       "file": "plugins/com-sarriaroman-photoviewer/www/PhotoViewer.js",
       "pluginId": "com-sarriaroman-photoviewer",
@@ -310,18 +325,19 @@
     }
   ],
   "plugin_metadata": {
-    "cordova-plugin-appminimize": "1.0",
-    "cordova-plugin-console": "1.0.5",
-    "cordova-plugin-crosswalk-webview": "2.3.0",
     "cordova-plugin-device": "1.1.3",
+    "com-badrit-base64": "0.2.0",
+    "cordova-plugin-console": "1.0.5",
     "cordova-plugin-image-picker": "1.1.1",
     "cordova-plugin-inappbrowser": "1.7.2-dev",
-    "cordova-plugin-ionic-webview": "1.1.16",
-    "cordova-plugin-splashscreen": "4.0.3",
     "cordova-plugin-statusbar": "2.2.0",
     "cordova-plugin-whitelist": "1.3.0",
     "ionic-plugin-keyboard": "2.2.1",
     "phonegap-plugin-push": "1.10.5",
-    "com-sarriaroman-photoviewer": "1.1.11"
+    "cordova-plugin-splashscreen": "4.0.3",
+    "cordova-plugin-appminimize": "1.0",
+    "cordova-plugin-crosswalk-webview": "2.3.0",
+    "com-sarriaroman-photoviewer": "1.1.11",
+    "cordova-plugin-ionic-webview": "1.1.16"
   }
 }

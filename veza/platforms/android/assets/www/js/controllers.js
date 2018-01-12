@@ -498,9 +498,16 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         $scope.facultyDetail=$rootScope.faculties[$rootScope.facultyID]
 })
 
-.controller('PublicGallaryLandingCtrl', function($ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
-        $scope.images = ['1.png', '2.jpg', '3.jpg', '4.png','5.jpg','6.png','7.jpg','8.jpg','9.jpg','10.jpg'];
-        $scope.zoomMin = 1;
+.controller('PublicGallaryLandingCtrl', function($ionicPlatform, $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        var url = "http://www.mocky.io/v2/5a58ab302d00007f1fd2e5d2"
+        $http.get(url).success(function(response){
+          $rootScope.images = response;
+          console.log($scope.images);
+        })
+        $ionicLoading.show({
+          template: 'Loading...',
+          duration: 1500
+        })
         $scope.myGoBack=function(){
           $state.go('publicGallary')
         }
@@ -519,31 +526,37 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
 	        }
       	// Close the modal
       	$scope.closeModal = function() {
-      		$scope.modal.hide();
+          $scope.modal.hide();
       		$scope.modal.remove()
       	};
-        $scope.updateSlideStatus = function(slide) {
-          var zoomFactor = $ionicScrollDelegate.$getByHandle('scrollHandle' + slide).getScrollPosition().zoom;
-          if (zoomFactor == $scope.zoomMin) {
-            $ionicSlideBoxDelegate.enableSlide(true);
-          } else {
-            $ionicSlideBoxDelegate.enableSlide(false);
-          }
-        };
-      $scope.clipSrc = 'img/11.mp4';
-      $scope.playVideo = function() {
+        $ionicPlatform.onHardwareBackButton(function() {
+          $scope.modal.hide();
+          $scope.modal.remove()
+        });
+
+      $scope.playVideo = function(videoSrc) {
+        $rootScope.clipSrc = videoSrc;
+        console.log($rootScope.clipSrc);
       	$scope.showModal('templates/video-popover.html');
       }
+
 })
 
 .controller('PublicGallaryCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
-        $scope.images = ['1.png', '2.jpg', '3.jpg', '4.png','5.jpg','6.png','7.jpg','8.jpg','9.jpg','10.jpg'];
-        $scope.zoomMin = 1;
+        $ionicLoading.show({
+          template: 'Loading...',
+          duration: 1500
+        })
+        var url="http://www.mocky.io/v2/5a5606072f0000ea28beec2e";
+        $http.get(url).success(function(response){
+          $scope.folders=response;
+        }).error(function(err) {
+          });
         $scope.myGoBack=function(){
           $state.go('publicDashboard')
         }
-        $scope.galleryFolder=function(folderIndex){
-          $rootScope.folderIndex= folderIndex;
+        $scope.galleryFolder=function(folderName){
+          $rootScope.folderName= folderName;
           $state.go("publicGallaryLanding")
         }
 
