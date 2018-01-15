@@ -6,9 +6,9 @@
           </button>
       </div>
       <ion-grid>
-        <div class="card" style="padding:30px;text-align:center; background:#3cba54;word-wrap: break-word" ng-repeat="heading in header"  ng-click=headingLandingpage({{$index}})>
+        <!-- <div class="card" style="padding:30px;text-align:center; background:#3cba54;word-wrap: break-word" ng-repeat="heading in header">
           <span style='font-size:20px;color:#fff;font-weight:bold'>{{header[$index]}}</span>
-        </div>
+        </div> -->
         <div class="card" style="padding:30px;text-align:center; background:#f4c20d "ng-click="publicFacultyInformationLanding()">
           <div class="item ">
             <span style='font-size:20px;color:#fff;font-weight:bold'>Faculty Information</span>
@@ -19,11 +19,13 @@
             <span style='font-size:20px;color:#fff;font-weight:bold'>Committee Members</span>
           </div>
         </div>
-          <a  onclick="window.open('http://www.ganeshinternationalschool.com/contact.php', '_blank', 'location=no'); return false;">
-        <div class="card" style="padding:30px;text-align:center; background:#4885ed">
-          <div class="item">
-            <span style='font-size:20px;color:#fff;font-weight:bold'>Contact Us</span>
-          </div>
+        <div ng-repeat="head in aboutUs">
+           <a  ng-click="openWebView('{{head.header_url}}')"> 
+            <div class="card" style="padding:30px;text-align:center; background:#4885ed">
+              <div class="item">
+                <span style='font-size:20px;color:#fff;font-weight:bold'>{{head.header_title}}</span>
+              </div>
+            </div>
           </a>
         </div>
       </ion-grid>

@@ -9,8 +9,8 @@
   </div>
     <ion-content class="scroll direction:x" style="background: white;  margin-top:13%">
       <ion-grid>
-        <div class="card"  style="padding:30px;text-align:center; border: 3px solid brown" ng-repeat="member in committeeMembers" ng-click='committeeDetail({{$index}})'>
-          Name: {{member.name}}
+        <div class="card"  style="padding:30px;text-align:center; border: 3px solid brown" ng-repeat="member in committeeMembers" ng-click='openWebView("{{member.committee_url}}")'>
+          {{member.committee_name}}
         </div>
       </ion-grid>
     </ion-content>

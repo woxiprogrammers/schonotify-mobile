@@ -426,6 +426,16 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         }
 })
 .controller('PublicAboutUsCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        var url = "http://www.mocky.io/v2/5a5c4f1a2e00009b049f821b"
+        $http.get(url).success(function(response){
+          $scope.aboutUs = response;
+        })
+
+        $scope.openWebView=function (url) {
+          window.open(url,'_blank','location=no');
+          return false;
+        }
+
         $scope.myGoBack=function(){
           $state.go('publicDashboard')
         }
@@ -486,7 +496,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         }
         $scope.facultyInformationLanding=function(indexOfFaculty){
           $rootScope.facultyID = indexOfFaculty;
-          // alert("id is :"+id)
           $state.go("publicFacultyDetail")
         }
 
@@ -498,11 +507,12 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         $scope.facultyDetail=$rootScope.faculties[$rootScope.facultyID]
 })
 
-.controller('PublicGallaryLandingCtrl', function($ionicPlatform, $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+.controller('PublicGallaryLandingCtrl', function($sce, $ionicPlatform, $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
         var url = "http://www.mocky.io/v2/5a58ab302d00007f1fd2e5d2"
         $http.get(url).success(function(response){
           $rootScope.images = response;
-          console.log($scope.images);
+          $rootScope.video_url=$rootScope.images[0].video[0].video_url;
+          $scope.movie = {src:$rootScope.video_url}
         })
         $ionicLoading.show({
           template: 'Loading...',
@@ -533,11 +543,11 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
           $scope.modal.hide();
           $scope.modal.remove()
         });
-
-      $scope.playVideo = function(videoSrc) {
-        $rootScope.clipSrc = videoSrc;
-        console.log($rootScope.clipSrc);
-      	$scope.showModal('templates/video-popover.html');
+        $scope.trustSrc = function(src) {
+            return $sce.trustAsResourceUrl(src);
+          };
+      $scope.playVideo = function() {
+      	  $scope.showModal('templates/video-popover.html');
       }
 
 })
