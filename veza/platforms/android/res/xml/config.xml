@@ -54,6 +54,13 @@
     <allow-navigation href="http://192.168.2.18:8100" />
     <allow-navigation href="http://192.168.2.11:8101" />
     <allow-navigation href="http://192.168.2.11:8102" />
+    <allow-navigation href="http://192.168.2.15:8101" />
+    <allow-navigation href="http://192.168.2.15:8102" />
+    <allow-navigation href="http://192.168.2.15:8103" />
+    <allow-navigation href="http://192.168.2.15:8104" />
+    <allow-navigation href="http://192.168.2.15:8105" />
+    <allow-navigation href="http://192.168.2.15:8106" />
+    <allow-navigation href="http://192.168.2.15:8107" />
     <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
     <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
     <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />

@@ -46,6 +46,13 @@
     <allow-navigation href="http://192.168.2.18:8100" />
     <allow-navigation href="http://192.168.2.11:8101" />
     <allow-navigation href="http://192.168.2.11:8102" />
+    <allow-navigation href="http://192.168.2.15:8101" />
+    <allow-navigation href="http://192.168.2.15:8102" />
+    <allow-navigation href="http://192.168.2.15:8103" />
+    <allow-navigation href="http://192.168.2.15:8104" />
+    <allow-navigation href="http://192.168.2.15:8105" />
+    <allow-navigation href="http://192.168.2.15:8106" />
+    <allow-navigation href="http://192.168.2.15:8107" />
     <engine name="android" spec="^6.3.0" />
     <plugin name="cordova-plugin-console" spec="~1.0.4" />
     <plugin name="cordova-plugin-device" spec="~1.1.3" />

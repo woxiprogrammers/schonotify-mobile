@@ -426,6 +426,10 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         }
 })
 .controller('PublicAboutUsCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $ionicLoading.show({
+          template: 'Loading...',
+          duration: 1500
+        })
         var url = "http://www.mocky.io/v2/5a5c4f1a2e00009b049f821b"
         $http.get(url).success(function(response){
           $scope.aboutUs = response;
@@ -452,22 +456,17 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         }
 })
 .controller('PublicCommitteeLandingCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
-        $scope.myGoBack=function(){
-          $state.go('publicAboutUs')
-        }
-        $rootScope.committeeMembers=[{id:1, name:"Committee 1",number:132465789},
-                                  {id:2, name:"Committee 2",number:132465789},
-                                  {id:3, name:"Committee 3",number:132465789},
-                                  {id:4, name:"Committee 4",number:132465789}];
-        $scope.committeeDetail=function(index){
-          $rootScope.indexOfCommitteeMember=index;
-          $state.go('publicCommitteeDetail')
+        var url ="http://www.mocky.io/v2/5a5c92012e0000e3109f8352";
+        $http.get(url).success(function(response){
+          $scope.committeeMembers = response;
+        })
+        $scope.openWebView=function (url) {
+          window.open(url,'_blank','location=no');
+          return false;
         }
 
-})
-.controller('PublicCommitteeDetailCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
         $scope.myGoBack=function(){
-          $state.go('publicCommitteeLanding')
+          $state.go('publicAboutUs')
         }
 })
 .controller('PublicHeadingDetailCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
@@ -480,22 +479,16 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
           template: 'Loading...',
           duration: 1500
         })
-        $rootScope.faculties=[{id:1, post:"Principal", name:"Principal Name"},
-                              {id:2, post:"Vice Principal", name:"Vice Principal Name"},
-                              {id:3, post:"HR", name:"HR Name"},
-                              {id:4, id:"1", post:"Teacher 1", name:"Teacher Name 1"},
-                              {id:5, post:"Teacher 2", name:"Teacher Name 2"},
-                              {id:6, post:"Principal 02", name:"Principal Name"},
-                              {id:7, post:"Vice Principal 02", name:"Vice Principal Name"},
-                              {id:8, post:"HR", name:"HR Name"},
-                              {id:9, id:"1", post:"Teacher 3", name:"Teacher Name 2"},
-                              {id:10, post:"Teacher 4", name:"Teacher Name 4"}]
+        var url = "http://www.mocky.io/v2/5a5c792e2e00001d089f82c9";
+        $http.get(url).success(function(response){
+          $scope.faculties=response;
+        })
 
         $scope.myGoBack=function(){
           $state.go('publicAboutUs')
         }
-        $scope.facultyInformationLanding=function(indexOfFaculty){
-          $rootScope.facultyID = indexOfFaculty;
+        $scope.facultyInformationLanding=function(facultyID){
+          $rootScope.facultyID = facultyID;
           $state.go("publicFacultyDetail")
         }
 
@@ -504,11 +497,19 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         $scope.myGoBack=function(){
           $state.go('publicFacultyInformation')
         }
-        $scope.facultyDetail=$rootScope.faculties[$rootScope.facultyID]
+        var url="http://www.mocky.io/v2/5a5c7f5c2e0000aa039f82e5"
+        $http.get(url).success(function(response){
+          $scope.facultyInfo = response;
+        })
+        // $scope.facultyDetail=$rootScope.faculties[$rootScope.facultyID]
 })
 
 .controller('PublicGallaryLandingCtrl', function($sce, $ionicPlatform, $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
         var url = "http://www.mocky.io/v2/5a58ab302d00007f1fd2e5d2"
+        $ionicLoading.show({
+          template: 'Loading...',
+          duration: 1500
+        });
         $http.get(url).success(function(response){
           $rootScope.images = response;
           $rootScope.video_url=$rootScope.images[0].video[0].video_url;
@@ -553,10 +554,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
 })
 
 .controller('PublicGallaryCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
-        $ionicLoading.show({
-          template: 'Loading...',
-          duration: 1500
-        })
         var url="http://www.mocky.io/v2/5a5606072f0000ea28beec2e";
         $http.get(url).success(function(response){
           $scope.folders=response;
@@ -3638,7 +3635,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
           var url = GLOBALS.baseUrl+"user/delete-event?token="+userSessions.userSession.userToken;
           $http.post(url, {event_id: eventId, _method : 'PUT'})
           .success(function(response){
-            console.log("deleteresponse:"+response);
               if(response['status'] == 200){
                          $scope.responseMessage = response['message'];
                          $scope.showPopup();

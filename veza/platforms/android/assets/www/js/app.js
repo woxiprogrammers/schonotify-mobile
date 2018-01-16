@@ -116,11 +116,11 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
         templateUrl: 'templates/public-committee-landing.html',
         controller: 'PublicCommitteeLandingCtrl'
     })
-    .state('publicCommitteeDetail', {
-        url: '/publicCommitteeDetail',
-        templateUrl: 'templates/public-committee-detail.html',
-        controller: 'PublicCommitteeDetailCtrl'
-    })
+    // .state('publicCommitteeDetail', {
+    //     url: '/publicCommitteeDetail',
+    //     templateUrl: 'templates/public-committee-detail.html',
+    //     controller: 'PublicCommitteeDetailCtrl'
+    // })
     .state('tokencheck', {
         url: '/tokencheck',
         templateUrl: 'templates/tokencheck.html',
