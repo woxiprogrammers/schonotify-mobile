@@ -9,12 +9,13 @@
       </div>
         <ion-content class="scroll direction:y" style="background-color: white ; margin-top:13%">
         <a>
-          <div class="card" style="border: 3px solid brown" ng-repeat=" faculty in faculties"  ng-click="facultyInformationLanding({{faculties[$index].faculty_id}})">
-            <div class="item item-thumbnail-left" >
+          <div class="card" style="border: 1px solid #a2a2a2; height: 13%;" ng-repeat=" faculty in faculties"  ng-click="facultyInformationLanding({{faculties[$index].faculty_id}})">
+            <div class="item item-avatar-left" >
               <img ng-src="{{faculty.faculty_image}}" alt="">
-              <font color="black" >{{faculty.faculty_designation}}</font>
+              <font size="3" color="black"><b>{{faculty.faculty_name}}</b></font>
               <br>
-              <font color="black">Name: {{faculty.faculty_name}}</font>
+              <font color="black" >{{faculty.faculty_designation}}</font>
+
             </div>
           </div>
         </a>

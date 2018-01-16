@@ -1,26 +1,26 @@
 <div class="bar bar-header bar-assertive">
   <div class="col-10"  ng-click="myGoBack()">
       <button class="button-clear">
-          <i class="ion-arrow-left-c button-back-white"></i>
+        <div align="center">
+            <i class="ion-arrow-left-c button-back-white"></i>
+        </div>
       </button>
       <h1 class="title">Faculty Detail Information</h1>
   </div>
 </div>
   <ion-content style="background-color: white ; margin-top:23%">
     <div ng-repeat="faculty in facultyInfo">
-      <div align="center">
-        <img ng-src="{{faculty.faculty_image}}" width="200px" hight="200px">
+      <div align="center" >
+        <img style="border-radius: 80%;" ng-src="{{faculty.faculty_image}}" width="200px" hight="200px">
       </div>
-      <div>
-        <div class="item item-divider" >
-          <font color="black">Designation: {{faculty.faculty_designation}}</font>
+      <div align="center">
+        <div class="item " >
+          <font size="5" color="#e42112font">{{faculty.faculty_name}}</font>
+          <br>
+          <font size="4" color="black">{{faculty.faculty_designation}}</font>
         </div>
-        <div class="item item-divider" >
-          <font color="black">Name: {{faculty.faculty_name}}</font>
-        </div>
-        <div class="item item-text-wrap">
-          <font color="black"><b>Description:</b></font><br>
-            <p style="color: #111;">{{faculty.faculty_description}}</p>
+        <div class="card item-text-wrap" align="left">
+            <font size ="2" style="color: #111;">{{faculty.faculty_description}}</font>
         </div>
       </div>
     </div>
