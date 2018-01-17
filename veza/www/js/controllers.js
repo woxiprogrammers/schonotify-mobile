@@ -3667,7 +3667,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             }, 3000);
         }
     })
-    .controller('EventStatusPublicCtrl', function($state, $scope, $http, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams, userSessions, GLOBALS, $ionicPopup , $ionicLoading) {
+    .controller('EventStatusPublicCtrl', function($state, $scope, $http, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams, userSessions, GLOBALS, $ionicPopup , $ionicLoading,   $ionicHistory) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -3680,7 +3680,10 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         $ionicSideMenuDelegate.canDragContent(false);
         $scope.startEventTime = new Date();
         $scope.endEventTime = new Date();
-        $scope.eventdetailsList = $state
+        $scope.eventdetailsList = $stateParams;
+        $scope.myGoBack=function () {
+            $ionicHistory.goBack();
+        }
     })
     .controller('EditEventCtrl', function( $ionicLoading ,$ionicPopup,GLOBALS,$http,userSessions,$scope, $state, $filter, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
         $scope.$parent.clearFabs();

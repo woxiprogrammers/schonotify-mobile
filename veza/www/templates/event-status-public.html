@@ -1,15 +1,16 @@
 <ion-view view-title="Event" name="event" class="touch-effect">
     <div class="bar bar-header bar-assertive">
         <iion-item class="row">
-            <div class="row" ng-repeat="event in eventdetailsList">
+
                 <div class="col col-10">
-                    <button class="button-clear" ng-click="myGoBack()">
+                    <button class="button-clear" ng-click="myGoBack()" >
                         <i class="ion-arrow-left-c button-back-white"></i>
                     </button>
                 </div>
                 <div class="col col-50 margin-top-5">
                     <span class="inner-header">Events Details</span>
                 </div>
+                <div class="row" ng-repeat="event in eventdetailsList">
                 <div class="col-20" ng-if="event.status == 'Draft'">
                   <a ng-click="draftEventForPublish(event.id)"><button class="button-balanced header-approve" >
                      Publish

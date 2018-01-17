@@ -142,7 +142,7 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
         controller: 'PublicEventCtr'
     })
     .state('eventstatuspublic', {
-        url: '/eventstatusteacher',
+        url: '/eventstatuspublic',
         templateUrl: 'templates/event-status-public.html',
         controller: 'EventStatusPublicCtrl'
 
@@ -535,7 +535,7 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
 
         })
         .state('app.eventstatuspublic', {
-            url: '/eventstatusteacher',
+            url: '/eventstatuspublic',
             params: {
               obj: null
             },
@@ -543,12 +543,8 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
                 'menuContent': {
                     templateUrl: 'templates/event-status-public.html',
                     controller: 'EventStatusPublicCtrl'
-                },
-                'fabContent': {
-                    template: ''
                 }
             }
-
         })
         .state('app.editevent', {
             url: '/editevent',
@@ -671,7 +667,7 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
             }
         })
         .state('app.achievementdetailspublic', {
-            url: '/achievementdetails',
+            url: '/achievementdetailspublic',
             views: {
                 'menuContent': {
                     templateUrl: 'templates/achievement-description-public.html',
