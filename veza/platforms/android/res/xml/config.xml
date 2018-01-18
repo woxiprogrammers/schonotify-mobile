@@ -37,6 +37,9 @@
     <feature name="PhotoViewer">
         <param name="android-package" value="com.sarriaroman.PhotoViewer.PhotoViewer" />
     </feature>
+    <feature name="CDVOrientation">
+        <param name="android-package" value="cordova.plugins.screenorientation.CDVOrientation" />
+    </feature>
     <name>S S P Shikshan Sanstha</name>
     <description>
         An Ionic Framework and Cordova project.
@@ -44,7 +47,7 @@
     <author email="woxiprogrammers@gmail.com" href="http://woxiprogrammers.com/">
       WOXI SOFTWARE LLP
     </author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.2.15:8101" />
     <access origin="*" />
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <allow-navigation href="http://192.168.2.13:8100" />

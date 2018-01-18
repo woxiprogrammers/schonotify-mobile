@@ -6,27 +6,25 @@
         <h1 class="title">{{folderName}}</h1>
     </div>
   </div>
-  <ion-content style="margin-top:15%" >
+  <ion-content style="margin-top:15%; padding:0% 1% 0% 1%" >
     <div ng-repeat="image in images">
-        PHOTOS:
-      <div class="row " ng-repeat="photo in image.photos" ng-if="$index % 3 === 0" >
-          <div class="col col-33" ng-if="$index < image.photos.length">
-              <img ng-src="{{image.photos[$index].photo_url}}" width="100%" ng-click="showImages({{$index}})"/>
-          </div>
-          <div class="col col-33" ng-if="$index + 1 < image.photos.length">
-            <img ng-src="{{image.photos[$index+1].photo_url}}" width="100%" ng-click="showImages({{$index+1}})"/>
-          </div>
-          <div class="col col-33" ng-if="$index + 2 < image.photos.length">
-              <img ng-src="{{image.photos[$index+2].photo_url}}" width="100%" ng-click="showImages({{$index+2}})"/>
-          </div>
-      </div>
-       VIDEO:
-      <div class="row">
-      <div  class="col col-33" ng-repeat="video in image.video"  ng-if="$index==0">
-        <video width="100%" height="100%" poster="{{image.video[0].video_thumbnail}}" ng-click="playVideo()" >
-        </video>
+          <b>PHOTOS:</b>
+        <div class="row " ng-repeat="photo in image.photos" ng-if="$index % 3 === 0" >
+            <div class="col col-33" ng-if="$index < image.photos.length">
+                <img ng-src="{{image.photos[$index].photo_url}}" width="100%" ng-click="showImages({{$index}})"/>
+            </div>
+            <div class="col col-33" ng-if="$index + 1 < image.photos.length">
+              <img ng-src="{{image.photos[$index+1].photo_url}}" width="100%" ng-click="showImages({{$index+1}})"/>
+            </div>
+            <div class="col col-33" ng-if="$index + 2 < image.photos.length">
+                <img ng-src="{{image.photos[$index+2].photo_url}}" width="100%" ng-click="showImages({{$index+2}})"/>
+            </div>
+        </div>
+         <b>VIDEO:</b>
+        <div class="row">
+        <div  class="col col-33" ng-repeat="video in image.video" >
+          <img width="100%" height="100%" ng-src="{{image.video[0].video_thumbnail}}" ng-click="playVideo()" />
+        </div>
       </div>
     </div>
-</div>
-
 </ion-content>

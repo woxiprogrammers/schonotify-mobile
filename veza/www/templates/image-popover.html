@@ -1,8 +1,11 @@
 <div class="modal image-modal transparent" on-swipe-down="closeModal()" ng-repeat="image in images">
   <ion-slide-box on-slide-changed="slideChanged(index)" active-slide="activeSlide" >
       <ion-slide ng-repeat="photo in image.photos">
+        <ion-scroll direction="xy" scrollbar-x="false" scrollbar-y="false"
+          zooming="true" min-zoom="{{zomMin}}" style="width: 100%; height: 100%"
+          delegate-handle="scrollHandle{{$index}}">
             <div class="centered">
-              <img ng-src='{{image.photos[$index].photo_url}}' zoom-src="{{image.photos[$index].photo_url}}" zoom-view  width="100%  "/>
+              <img ng-src='{{image.photos[$index].photo_url}}' zoom-src="{{image.photos[$index].photo_url}}" width="100%"/>
             </div>
       </ion-scroll>
     </ion-slide>

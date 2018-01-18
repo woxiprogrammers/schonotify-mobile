@@ -81,6 +81,20 @@ module.exports = [
         "clobbers": [
             "PhotoViewer"
         ]
+    },
+    {
+        "id": "es6-promise-plugin.Promise",
+        "file": "plugins/es6-promise-plugin/www/promise.js",
+        "pluginId": "es6-promise-plugin",
+        "runs": true
+    },
+    {
+        "id": "cordova-plugin-screen-orientation.screenorientation",
+        "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.js",
+        "pluginId": "cordova-plugin-screen-orientation",
+        "clobbers": [
+            "cordova.plugins.screenorientation"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -99,7 +113,9 @@ module.exports.metadata =
     "cordova-plugin-appminimize": "1.0",
     "cordova-plugin-crosswalk-webview": "2.3.0",
     "com-sarriaroman-photoviewer": "1.1.11",
-    "cordova-plugin-ionic-webview": "1.1.16"
+    "cordova-plugin-ionic-webview": "1.1.16",
+    "es6-promise-plugin": "4.2.2",
+    "cordova-plugin-screen-orientation": "3.0.1"
 };
 // BOTTOM OF METADATA
 });

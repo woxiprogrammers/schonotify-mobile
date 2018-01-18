@@ -1,5 +1,5 @@
 <ion-content>
-  <div class="modal transparent fullscreen-player" ng-click="closeModal()">
-    <iframe class="youtube-player centered" ng-src="{{trustSrc(movie.src)}}" width="100%"></iframe>
+  <div class="modal transparent fullscreen-player" on-swipe-down="closeModal()" data-tap-disable="true">
+    <iframe controls class="centered" ng-src="{{trustSrc(movie.src)}}" height=100% width="100%"></iframe>
 </div>
 </ion-content>

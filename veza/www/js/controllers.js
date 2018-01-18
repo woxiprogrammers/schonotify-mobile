@@ -505,6 +505,8 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
 })
 
 .controller('PublicGallaryLandingCtrl', function($sce, $ionicPlatform, $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        screen.orientation.unlock();
+         $ionicScrollDelegate.scrollTop();
         var url = "http://www.mocky.io/v2/5a58ab302d00007f1fd2e5d2"
         $ionicLoading.show({
           template: 'Loading...',
@@ -548,9 +550,10 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             return $sce.trustAsResourceUrl(src);
           };
       $scope.playVideo = function() {
-      	  $scope.showModal('templates/video-popover.html');
+        $ionicScrollDelegate.scrollTop();
+      	$scope.showModal('templates/video-popover.html');
       }
-
+      $scope.zoomMin=1;
 })
 
 .controller('PublicGallaryCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){

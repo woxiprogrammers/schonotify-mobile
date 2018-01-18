@@ -505,6 +505,8 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
 })
 
 .controller('PublicGallaryLandingCtrl', function($sce, $ionicPlatform, $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        screen.orientation.unlock();
+         $ionicScrollDelegate.scrollTop();
         var url = "http://www.mocky.io/v2/5a58ab302d00007f1fd2e5d2"
         $ionicLoading.show({
           template: 'Loading...',
@@ -548,7 +550,8 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             return $sce.trustAsResourceUrl(src);
           };
       $scope.playVideo = function() {
-      	  $scope.showModal('templates/video-popover.html');
+        $ionicScrollDelegate.scrollTop();
+      	$scope.showModal('templates/video-popover.html');
       }
 
 })
@@ -3667,7 +3670,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
             }, 3000);
         }
     })
-    .controller('EventStatusPublicCtrl', function($state, $scope, $http, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams, userSessions, GLOBALS, $ionicPopup , $ionicLoading) {
+    .controller('EventStatusPublicCtrl', function($state, $scope, $http, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams, userSessions, GLOBALS, $ionicPopup , $ionicLoading,   $ionicHistory) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -3680,7 +3683,10 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         $ionicSideMenuDelegate.canDragContent(false);
         $scope.startEventTime = new Date();
         $scope.endEventTime = new Date();
-        $scope.eventdetailsList = $state
+        $scope.eventdetailsList = $stateParams;
+        $scope.myGoBack=function () {
+            $ionicHistory.goBack();
+        }
     })
     .controller('EditEventCtrl', function( $ionicLoading ,$ionicPopup,GLOBALS,$http,userSessions,$scope, $state, $filter, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
         $scope.$parent.clearFabs();
