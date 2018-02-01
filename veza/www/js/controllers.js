@@ -3128,7 +3128,6 @@
       $scope.recentEvent  = function() {
         var url = GLOBALS.baseUrl+"user/view-top-five-event/?token="+userSessions.userSession.userToken;
         $http.get(url).success(function(response){
-          console.log(response);
           if(response['status'] == 200){
             $scope.eventList = response['data'];
             if($scope.eventList == ''){
