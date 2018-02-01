@@ -32,7 +32,6 @@
     };
     this.ss = function(id){
       var retrievedData = localStorage.getItem("studentdata");
-      console.log(retrievedData);
       var students = JSON.parse(retrievedData);
       var obj = students.filter(function ( obj )
       {
@@ -148,7 +147,6 @@
     $scope.studentlistForSwitch=function(){
       var url= GLOBALS.baseUrl+"user/get-switching-details?token="+userSessions.userSession.userToken;
       $http.get(url).success(function(response) {
-        console.log(response['data']['Parent_student_relation']['Students']);
         localStorage.setItem("studentdata", JSON.stringify(response['data']['Parent_student_relation']['Students']));
         $scope.studentdataswitch=(response['data']['Parent_student_relation']['Students']);
       })
@@ -257,10 +255,8 @@
         $scope.studentlistForSwitch=function(){
           var url= GLOBALS.baseUrl+"user/get-switching-details?token="+userSessions.userSession.userToken;
           $http.get(url).success(function(response) {
-            console.log(response['data']['Parent_student_relation']['Students']);
             localStorage.setItem("studentdata", JSON.stringify(response['data']['Parent_student_relation']['Students']));
             $scope.studentdataswitch=(response['data']['Parent_student_relation']['Students']);
-            console.log($scope.studentdataswitch);
           })
           .error(function(response)
           {
@@ -3039,10 +3035,10 @@
         //Parent View
         $scope.getFeesStudent=function () {
           $ionicLoading.show();
-          //   var url = GLOBALS.baseUrl+"user/get-student_fees/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
-          var url = "http://www.mocky.io/v2/5a547d272d000044165b1c07";
+          var url = GLOBALS.baseUrl+"user/get-student_fees/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
+          // var url = "http://www.mocky.io/v2/5a547d272d000044165b1c07";
           $http.get(url).success(function(response){
-            $scope.structures=response;
+            $scope.studentFee=response.data;
           }).error(function(err) {
             $ionicLoading.hide();
             $scope.aclMessage = "Installment Not Found !!";
@@ -3052,11 +3048,12 @@
         }
         $scope.getFees=function () {
           $ionicLoading.show();
-          var url = GLOBALS.baseUrl+"user/get-student_fees_details/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
+          // var url = GLOBALS.baseUrl+"user/get-student_fees_details/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
+          var url="http://www.mocky.io/v2/5a72c703310000e307a1d2f3"
           $http.get(url).success(function(response){
-            $scope.fees=response['transactions'];
-            $scope.fee=response.fees['fee'];
-            $scope.pending_fee=response.pending_fees['pending_fee'];
+            if (response['status']==200) {
+              $scope.myFees=response.data;
+            }
           }).error(function(err) {
             $ionicLoading.hide();
             $scope.aclMessage = "Installment Not Found !!";
