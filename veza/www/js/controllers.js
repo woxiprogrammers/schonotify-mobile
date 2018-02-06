@@ -3034,7 +3034,7 @@
         //Parent View
         $scope.getFeesStudent=function () {
           $ionicLoading.show();
-          var url = GLOBALS.baseUrl+"user/get-student_fees/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
+          var url = GLOBALS.baseUrl+"user/get-fee/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
           $http.get(url).success(function(response){
             $scope.studentFee=response.data;
           }).error(function(err) {
@@ -3046,7 +3046,7 @@
         }
         $scope.getFees=function () {
           $ionicLoading.show();
-          var url = GLOBALS.baseUrl+"user/get-student_fees_details/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
+          var url = GLOBALS.baseUrl+"user/get-fee_details/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
           $http.get(url).success(function(response){
             if (response['status']==200) {
               $scope.myFees=response.data;
