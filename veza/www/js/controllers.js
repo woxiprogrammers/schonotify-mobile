@@ -2978,7 +2978,6 @@
           if(response['status'] == 200){
             $ionicLoading.hide();
             $scope.feeDetails = response['data'];
-            console.log($scope.feeDetails);
             $ionicLoading.hide();
           }
         }).error(function(err) {
@@ -3036,7 +3035,6 @@
         $scope.getFeesStudent=function () {
           $ionicLoading.show();
           var url = GLOBALS.baseUrl+"user/get-student_fees/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
-          // var url = "http://www.mocky.io/v2/5a547d272d000044165b1c07";
           $http.get(url).success(function(response){
             $scope.studentFee=response.data;
           }).error(function(err) {
@@ -3048,8 +3046,7 @@
         }
         $scope.getFees=function () {
           $ionicLoading.show();
-          // var url = GLOBALS.baseUrl+"user/get-student_fees_details/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
-          var url="http://www.mocky.io/v2/5a72c703310000e307a1d2f3"
+          var url = GLOBALS.baseUrl+"user/get-student_fees_details/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
           $http.get(url).success(function(response){
             if (response['status']==200) {
               $scope.myFees=response.data;
