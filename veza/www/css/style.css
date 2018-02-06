@@ -34,6 +34,20 @@ div.speech {
   -moz-box-shadow: 2px 2px 4px #888;
   box-shadow: 2px 2px 4px #888;
 }
+div.speech3 {
+  text-align: center;
+  padding:3px;
+
+  position: relative;
+  width: 170px;
+  height: 45px;
+
+  line-height: 30px;
+  background-color: #33cd5f;
+  -webkit-box-shadow: 2px 2px 4px #888;
+  -moz-box-shadow: 2px 2px 4px #888;
+  box-shadow: 2px 2px 4px #888;
+}
 p{
   font-family: "Lucida Sans Unicode","Lucida Grande",sans-serif;
   font-size: 1.2rem;
