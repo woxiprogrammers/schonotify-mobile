@@ -4,8 +4,8 @@
 var db = null;
 angular.module('starter.controllers', ['naif.base64','ionic.cloud','ionic-material'])
 .constant('GLOBALS',{
-baseUrl:'http://sspss.veza.co.in/api/v1/'
-//baseUrl:'http://test.woxi.co.in/api/v1/',
+// baseUrl:'http://sspss.veza.co.in/api/v1/'
+baseUrl:'http://test.woxi.co.in/api/v1/',
 //baseUrl:'http://school_mit.schnotify.com/api/v1/'
 })
 .factory('Data', function() {
@@ -172,7 +172,7 @@ baseUrl:'http://sspss.veza.co.in/api/v1/'
     var navIcons = document.getElementsByClassName('ion-navicon');
     for (var i = 0; i < navIcons.length; i++) {
         navIcons.addEventListener('click', function() {
-            current.classList.toggle('active');
+            current.classList.toggle('active');test
         });
     }
     ////////////////////////////////////////
