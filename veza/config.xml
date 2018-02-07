@@ -54,4 +54,5 @@
     </plugin>
     <allow-navigation href="http://192.168.2.10:8105" />
     <engine name="android" spec="~6.3.0" />
+    <allow-navigation href="http://192.168.2.11:8101" />
 </widget>
