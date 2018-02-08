@@ -4,8 +4,8 @@
   var db = null;
   angular.module('starter.controllers', ['naif.base64','ionic.cloud','ionic-material'])
   .constant('GLOBALS',{
-    //baseUrl:'http://sspss.veza.co.in/api/v1/'
-    baseUrl:'http://test.woxi.co.in/api/v1/',
+    baseUrl:'http://sspss.veza.co.in/api/v1/'
+    // baseUrl:'http://test.woxi.co.in/api/v1/',
     //baseUrl:'http://school_mit.schnotify.com/api/v1/'
   })
   .factory('Data', function() {
@@ -3049,7 +3049,8 @@
           var url = GLOBALS.baseUrl+"user/get-fee_details/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
           $http.get(url).success(function(response){
             if (response['status']==200) {
-              $scope.myFees=response.data;
+              $scope.myFees=response.data.structures;
+              $scope.transactions=response.data.transaction;
             }
           }).error(function(err) {
             $ionicLoading.hide();
