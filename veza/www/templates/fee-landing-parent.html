@@ -65,7 +65,7 @@
                    <h5> {{myFee.discount}}  INR</h5>
                  </div>
                </div>
-               <div style="float:right;">
+               <div style="float:right;" >
                   <div class="speech"><h4>Due Fee</h4>
                     <h5> {{myFee.pending_fee}}  INR</h5>
                   </div>
@@ -74,8 +74,25 @@
                   <hr>
                </div>
              </div>
-          </div>
-
+          <!-- </div> -->
+          <ion-list>
+            <div class="item card-item" ng-repeat="item in transactions">
+              <div  class="card stable-bg ink ink-dark">
+                <h2 style="text-align:left;color:black;padding:5px"> <b> {{item.id}}</b> {{item.structure_name}}</h2>
+                <div class="item item-avatar item-text-wrap">
+                  {{item.transaction_amount}}
+                  <div class="card-footer text-right">
+                    {{item.transaction_type}}:
+                    {{item.transaction_detail}}
+                    <div class="pull-left">
+                      <i class="icon ion-clock"></i> {{item.date}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ion-list>
+        </div>
    </ion-content>
     <ion-footer-bar align-title="center" style="border-top:2px solid grey">
       <div class="" ng-click="showCon('con1')" style="height:60px;width:{{abc}};text-decoration:{{color}};color:#04a021;font-weight: {{bold1}};font-size:100%;text-align:center;border-right:1px solid grey;padding:6px">View Fee Structure</div>
