@@ -470,6 +470,11 @@
             template: 'To be released soon..! '
           });
         }
+
+        $scope.goToGallery=function(){
+          $state.go('app.gallery')
+        }
+
         $scope.resultAlert = function(){
           alert("No student history found !");
         }
@@ -689,6 +694,72 @@
         });
       };
     })
+    .controller('GalleryCtrl', function(  $rootScope, $ionicPopup,  $ionicActionSheet , $ionicLoading,  $http,userSessions,GLOBALS,$scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
+      var url="http://www.mocky.io/v2/5a978a753000000e005c1ddc";
+      $http.get(url).success(function(response){
+        $scope.folders=response.data.folder_list;
+      }).error(function(err) {
+        });
+      $scope.myGoBack=function(){
+        $state.go('app.dashboard')
+      }
+      $scope.galleryFolder=function(folderID){
+         $state.go('app.galleryFolder', {obj : folderID});
+      }
+    })
+    .controller('GallaryLandingCtrl', function($stateParams, $sce, $ionicPlatform, $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.GetfolderID = $stateParams.obj;
+        screen.orientation.unlock();
+        $ionicScrollDelegate.scrollTop();
+        var url = "http://www.mocky.io/v2/5a9795f430000047005c1e09"
+        $ionicLoading.show({
+          template: 'Loading...',
+          duration: 1500
+        });
+        $http.get(url).success(function(response){
+         $scope.folderName= response.data.name;
+         $scope.images = response.data.photos;
+         $scope.video = response.data.video;
+        })
+        $ionicLoading.show({
+          template: 'Loading...',
+          duration: 1500
+        })
+        $scope.myGoBack=function(){
+          $state.go('app.gallery')
+        }
+        $scope.showImages = function(index) {
+          $scope.activeSlide = index;
+          $scope.showModal('templates/image-popover.html');
+        };
+        $scope.showModal = function(templateUrl) {
+      		$ionicModal.fromTemplateUrl(templateUrl, {
+            			scope: $scope,
+            			animation: 'slide-in-up'
+        		}).then(function(modal) {
+          			$scope.modal = modal;
+          			$scope.modal.show();
+          		});
+	        }
+      	// Close the modal
+      	$scope.closeModal = function() {
+          $scope.modal.hide();
+      		$scope.modal.remove()
+      	};
+        $ionicPlatform.onHardwareBackButton(function() {
+          $scope.modal.hide();
+          $scope.modal.remove()
+        });
+        $scope.trustSrc = function(src) {
+            return $sce.trustAsResourceUrl(src);
+          };
+      $scope.playVideo = function() {
+        $ionicScrollDelegate.scrollTop();
+      	$scope.showModal('templates/video-popover.html');
+      }
+      $scope.zoomMin=1;
+})
+
     .controller('achievementDetailParentCtrl', function($rootScope,$ionicLoading,$ionicPopup,$window,$ionicModal,userSessions,$http,GLOBALS,$scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
       $scope.DetailAchievemtns=$rootScope.DetailAchievemtns;
       $scope.imageData=  $rootScope.imagesData;
@@ -1280,7 +1351,6 @@
       .success(function(response) {
         if(response['status'] == 200){
           $scope.homeworksListing = response['data'];
-          console.log($scope.homeworksListing);
           if($scope.homeworksListing == ''){
             $scope.errorMessage = response['message'];
             $scope.showPopup();

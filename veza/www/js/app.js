@@ -150,6 +150,36 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
             }
         }
     })
+    .state('app.gallery', {
+        url: '/gallery',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/gallery.html',
+                controller: 'GalleryCtrl',
+            },'fabContent': {
+                template: ''
+            }
+        }
+        
+    })
+    .state('app.galleryFolder', {
+        url: '/galleryFolder',
+        params: {
+            'obj' : null
+        },
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/gallery-folder.html',
+                controller: 'GallaryLandingCtrl',
+            },
+            'fabContent': {
+                template: ''
+            },
+            params: {
+                obj: null
+            }
+        }
+    })
     .state('app.notification', {
         url: '/notification',
         views: {
@@ -448,7 +478,7 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
         .state('app.eventstatusteacher', {
             url: '/eventstatusteacher',
             params: {
-              obj: null
+              'obj': null
             },
             views: {
                 'menuContent': {
