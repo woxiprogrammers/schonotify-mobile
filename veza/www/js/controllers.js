@@ -5,8 +5,12 @@
   angular.module('starter.controllers', ['naif.base64','ionic.cloud','ionic-material'])
   .constant('GLOBALS',{
     //baseUrl:'http://sspss.veza.co.in/api/v1/'
+    //baseUrlImage: 'http://sspss.veza.co.in/'
+
      baseUrl:'http://test.woxi.co.in/api/v1/',
+     baseUrlImage:'http://test.woxi.co.in/'
     //baseUrl:'http://school_mit.schnotify.com/api/v1/'
+
   })
   .factory('Data', function() {
     return {message}
@@ -675,7 +679,7 @@
         });
       }
       $ionicSideMenuDelegate.canDragContent(true);
-      var url= GLOBALS.baseUrl+"user/view-announcement/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
+      var url= GLOBALS.baseUrlImage+"user/view-announcement/"+userSessions.userSession.userId+"?token="+userSessions.userSession.userToken;
       $http.get(url).success(function(response) {
         $scope.nMessages=response;
         $ionicLoading.hide();
@@ -692,14 +696,33 @@
         angular.forEach($scope.nmessages, function (nmsg) {
           nmsg.Selected = $scope.selectedAll;
         });
-      };
+      };``
     })
     .controller('GalleryCtrl', function(  $rootScope, $ionicPopup,  $ionicActionSheet , $ionicLoading,  $http,userSessions,GLOBALS,$scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
-      var url="http://www.mocky.io/v2/5a978a753000000e005c1ddc";
+      // var url="http://www.mocky.io/v2/5a978a753000000e005c1ddc";
+      $rootScope.baseImageURL= GLOBALS.baseUrlImage
+      var url= GLOBALS.baseUrl+"user/folder-first-image/"+userSessions.userSession.bodyId+"?token="+userSessions.userSession.userToken;
       $http.get(url).success(function(response){
-        $scope.folders=response.data.folder_list;
+      if(response['status'] == 200){
+        console.log(response);
+        $scope.folders_size=response.data.folder_list.length;
+        if ($scope.folders_size>0) {
+          $scope.folders=response.data.folder_list;
+          console.log($scope.folders);
+        } else {
+          $scope.showAlertsucess("No data found")
+        }
+      }
+      else {
+        $scope.showAlertsucess("No data found")
+      }
       }).error(function(err) {
         });
+        $scope.showAlertsucess = function(message) {
+          var alertPopup = $ionicPopup.alert({
+            template:'<center>'+ message+ '<center>'
+          })
+        }
       $scope.myGoBack=function(){
         $state.go('app.dashboard')
       }
@@ -708,19 +731,30 @@
       }
     })
     .controller('GallaryLandingCtrl', function($stateParams, $sce, $ionicPlatform, $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
-        $scope.GetfolderID = $stateParams.obj;
+        $scope.folderID = $stateParams.obj;
         screen.orientation.unlock();
         $ionicScrollDelegate.scrollTop();
-        var url = "http://www.mocky.io/v2/5a9795f430000047005c1e09"
         $ionicLoading.show({
           template: 'Loading...',
           duration: 1500
         });
+        // var url = "http://www.mocky.io/v2/5a9795f430000047005c1e09"
+        var url= GLOBALS.baseUrl+"user/gallery-image/"+$scope.folderID+"?token="+userSessions.userSession.userToken
         $http.get(url).success(function(response){
-         $scope.folderName= response.data.name;
-         $scope.images = response.data.photos;
-         $scope.video = response.data.video;
+          if (response['status'] == 200) {
+            console.log(response);
+            $scope.folderName= response.data.name;
+            $scope.images = response.data.photos;
+            $scope.video = response.data.video;
+          } else {
+                $scope.showAlertsucess('No Data found')
+          }
         })
+        $scope.showAlertsucess = function(message) {
+          var alertPopup = $ionicPopup.alert({
+            template:'<center>'+ message+ '<center>'
+          })
+        }
         $ionicLoading.show({
           template: 'Loading...',
           duration: 1500
