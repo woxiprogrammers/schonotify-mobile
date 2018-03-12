@@ -700,15 +700,13 @@
     })
     .controller('GalleryCtrl', function(  $rootScope, $ionicPopup,  $ionicActionSheet , $ionicLoading,  $http,userSessions,GLOBALS,$scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
       // var url="http://www.mocky.io/v2/5a978a753000000e005c1ddc";
-      $rootScope.baseImageURL= GLOBALS.baseUrlImage
+      $scope.baseImageURL= GLOBALS.baseUrlImage
       var url= GLOBALS.baseUrl+"user/folder-first-image/"+userSessions.userSession.bodyId+"?token="+userSessions.userSession.userToken;
       $http.get(url).success(function(response){
-      if(response['status'] == 200){
-        console.log(response);
+      if(response.status== 200){
         $scope.folders_size=response.data.folder_list.length;
         if ($scope.folders_size>0) {
           $scope.folders=response.data.folder_list;
-          console.log($scope.folders);
         } else {
           $scope.showAlertsucess("No data found")
         }
@@ -731,6 +729,7 @@
       }
     })
     .controller('GallaryLandingCtrl', function($stateParams, $sce, $ionicPlatform, $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.baseImageURL= GLOBALS.baseUrlImage
         $scope.folderID = $stateParams.obj;
         screen.orientation.unlock();
         $ionicScrollDelegate.scrollTop();
@@ -742,10 +741,15 @@
         var url= GLOBALS.baseUrl+"user/gallery-image/"+$scope.folderID+"?token="+userSessions.userSession.userToken
         $http.get(url).success(function(response){
           if (response['status'] == 200) {
-            console.log(response);
-            $scope.folderName= response.data.name;
-            $scope.images = response.data.photos;
-            $scope.video = response.data.video;
+            $scope.folderName= response.data[0].name;
+            $scope.imagesLength = response.data[0].photos.length
+            $scope.videoLength = response.data[0].videos.length
+            if ($scope.imagesLength > 0) {
+              $scope.images  = response.data[0].photos;
+            }
+            if ($scope.videoLength > 0) {
+              $scope.video = response.data[0].videos
+            }
           } else {
                 $scope.showAlertsucess('No Data found')
           }
@@ -785,7 +789,7 @@
           $scope.modal.remove()
         });
         $scope.trustSrc = function(src) {
-            return $sce.trustAsResourceUrl(src);
+            return $sce.trustAsResourceUrl($scope.baseImageURL+src);
           };
       $scope.playVideo = function() {
         $ionicScrollDelegate.scrollTop();
