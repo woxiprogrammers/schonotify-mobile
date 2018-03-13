@@ -553,7 +553,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         $ionicScrollDelegate.scrollTop();
       	$scope.showModal('templates/video-popover.html');
       }
-
+      $scope.zoomMin=1;
 })
 
 .controller('PublicGallaryCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){

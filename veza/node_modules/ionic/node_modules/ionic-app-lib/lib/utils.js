@@ -1,5 +1,4 @@
-require('colors');
-
+var chalk = require('chalk');
 var fs = require('fs');
 var archiver = require('archiver');
 var ConfigXml = require('./config-xml');
@@ -36,6 +35,17 @@ Utils.retrieveCsrfToken = function retrieveCsrfToken(jar) {
     }
   }
   return csrftoken;
+};
+
+/**
+ * Utils.getProxy will return a string that represents a HTTP proxy server
+ * setup by the user in their environment variables.
+ *
+ * No parameters are required
+ * @return {String} or null if no proxy has been setup
+ */
+Utils.getProxy = function() {
+  return process.env.PROXY || process.env.HTTP_PROXY || process.env.http_proxy || process.env.proxy || null;
 };
 
 /**
@@ -97,22 +107,22 @@ Utils.fetchArchive = function fetchArchive(targetPath, archiveUrl, isGui) {
   var tmpFolder = os.tmpdir();
   var tempZipFilePath = path.join(tmpFolder, 'ionic-starter-' + new Date().getTime() + '.zip');
 
-  var proxy = process.env.PROXY || process.env.http_proxy || null;
+  var proxy = Utils.getProxy();
   var request = require('request');
   request({ url: archiveUrl, rejectUnauthorized: false, encoding: null, proxy: proxy }, function(err, res, body) {
     if (err) {
       return q.reject(err);
     }
     if (!res) {
-      log.error('Invalid response:'.red.bold, archiveUrl);
+      log.error(chalk.red.bold('Invalid response:'), archiveUrl);
       return q.reject('Unable to fetch response: ' + archiveUrl);
     }
     if (parseInt(res.statusCode, 10) !== 200) {
       if (parseInt(res.statusCode, 10) === 404 || parseInt(res.statusCode, 10) === 406) {
-        log.error('Not found:'.red.bold, archiveUrl, '(' + res.statusCode + ')');
-        log.error('Please verify the url and try again.'.red.bold);
+        log.error(chalk.red.bold('Not found:'), archiveUrl, '(' + res.statusCode + ')');
+        log.error(chalk.red.bold('Please verify the url and try again.'));
       } else {
-        log.error('Invalid response status:'.red.bold, archiveUrl, '(' + res.statusCode + ')');
+        log.error(chalk.red.bold('Invalid response status:'), archiveUrl, '(' + res.statusCode + ')');
       }
       q.reject(res);
       return;
@@ -127,23 +137,6 @@ Utils.fetchArchive = function fetchArchive(targetPath, archiveUrl, isGui) {
       q.reject(e);
     }
   }).on('response', function(res) {
-
-    // Add default flag for CLI - have it attach multibar and upgrade its progress for
-    // simultaneous downloading bars (crosswalk).
-    if (!isGui) {
-      var bar = Multibar.newBar('[:bar]  :percent  :etas', {
-        complete: '=',
-        incomplete: ' ',
-        width: 30,
-        total: parseInt(res.headers['content-length'], 10)
-      });
-
-      res.on('data', function(chunk) {
-        try {
-          bar.tick(chunk.length);
-        } catch (e) {} // eslint-disable-line no-empty
-      });
-    }
   });
 
   return q.promise;
@@ -303,10 +296,10 @@ Utils.gulpInstalledGlobally = function gulpInstalledGlobally() {
 
 Utils.cordovaInstalled = function cordovaInstalled() {
   var Info = require('./info');
-  var info = {};
-  Info.getCordovaInfo(info);
 
-  return info.cordova !== 'Not installed';
+  return Info.gatherInfo().then(function(info) {
+    return info.cordova !== 'Not installed';
+  });
 };
 
 Utils.findIonicRoot = function findIonicRoot(dir) {
@@ -361,4 +354,20 @@ Utils.cdIonicRoot = function cdIonicRoot() {
   process.chdir(rootDir);
 
   return rootDir;
+};
+
+Utils.promisify = function promisify(func) {
+  return function() {
+    var deferred = Q.defer();
+    var args = Array.prototype.slice.call(arguments);
+
+    func.apply(null, args.concat(function(err, response) {
+      if (err) {
+        return deferred.reject(err);
+      }
+      deferred.resolve(response);
+    }));
+
+    return deferred.promise;
+  };
 };

@@ -1,5 +1,4 @@
-require('colors');
-
+var chalk = require('chalk');
 var fs = require('fs');
 var os = require('os');
 var request = require('request');
@@ -44,25 +43,19 @@ var V2_STARTERS = {
   tabs: { repoName: 'ionic2-starter-tabs' },
   sidemenu: { repoName: 'ionic2-starter-sidemenu' },
   conference: { repoName: 'ionic-conference-app' },
-  tutorial: { repoName: 'ionic2-starter-tutorial' }
+  tutorial: { repoName: 'ionic2-starter-tutorial' },
+  super: { repoName: 'ionic-starter-super' }
 };
 
 Start.runSpawnCommand = function runSpawnCommand(cmd, args) {
   var q = Q.defer();
   var command = cmd + args.join(' ');
-  var spawn = require('cross-spawn-async');
+  var spawn = require('cross-spawn');
 
   log.debug('Running exec command:', command);
-
-  var spawned = spawn(cmd, args);
+  var spawned = spawn(cmd, args, { stdio: 'ignore' });
   spawned.on('error', function(err) {
     Utils.fail('Unable to run spawn command' + err);
-  });
-  spawned.stdout.on('data', function(data) {
-    log.debug(data.toString());
-  });
-  spawned.stderr.on('data', function(data) {
-    log.debug(data.toString());
   });
   spawned.on('exit', function(code) {
     log.debug('Spawn command completed');
@@ -95,8 +88,8 @@ Start.startApp = function startApp(options) {
 
   ioLib.warnMissingData();
 
-  var createMessage = ['Creating Ionic app in folder ', options.targetPath, ' based on ',
-    options.template.bold, ' project'].join('');
+  var createMessage = ['Creating an Ionic', options.v2 ? ' 2.x' : '', ' app in ', options.targetPath, ' based on the ',
+    chalk.bold(options.template), ' template.\n'].join('');
   var errorWithStart = false;
 
   log.info(createMessage);
@@ -107,7 +100,7 @@ Start.startApp = function startApp(options) {
   })
   .then(function() {
     if (!options.skipNpm) {
-      log.info('Installing npm packages...');
+      log.info('Installing npm packages (may take a minute or two)...');
       return Start.runSpawnCommand('npm', ['install']);
     }
   })
@@ -162,7 +155,7 @@ Start.addDefaultPlatforms = function addDefaultPlatforms(options) {
   var currOs = os.type().toLowerCase();
 
   if (currOs === 'darwin') {
-    log.info('\nAdding in iOS application by default');
+    //log.info('\nAdding in iOS application by default');
 
     // Try to install default platform
     return Cordova.addPlatform(options.targetPath, 'ios', true)
@@ -302,11 +295,11 @@ Start.fetchCreatorApp = function(options) {
                                                         '/download-start/cordova?sid=' + sessionId);
     var wwwPath = path.join(options.targetPath, 'www/');
 
-    log.info('\nDownloading Creator Project:'.bold, downloadUrl);
+    log.info(chalk.bold('\nDownloading Creator Project:'), downloadUrl);
 
     var q = Q.defer();
 
-    var proxy = process.env.PROXY || null;
+    var proxy = Utils.getProxy();
 
     request({ url: downloadUrl, proxy: proxy, encoding: null }, function(err, res, body) {
       if (!err && res && parseInt(res.statusCode, 10) === 200) {
@@ -475,7 +468,7 @@ Start.fetchLocalStarter = function(options) {
       return q.promise;
     }
 
-    log.info('\nCopying files to www from:'.bold, localStarterPath);
+    log.info(chalk.bold('\nCopying files to www from:'), localStarterPath);
 
     // Move the content of this repo into the www folder
     shelljs.cp('-Rf', path.join(localStarterPath, '*'), path.join(options.targetPath, 'www'));
@@ -511,6 +504,31 @@ Start.fetchIonicStarter = function(options) {
   return Start.fetchGithubStarter(options, repoUrl);
 };
 
+Start.mergePackageJson = function(starterPackageJson, targetPath) {
+  // Merge
+  function mergeDeps(target, source) {
+    var deps = source["dependencies"] || {};
+    var devDeps = source["devDependencies"] || {};
+
+    for(var k in deps) {
+      target["dependencies"][k] = deps[k];
+    }
+    for(var k in devDeps) {
+      target["devDependencies"][k] = devDeps[k];
+    }
+  }
+  if (fs.existsSync(starterPackageJson)) {
+    var starterPJ, targetPJ;
+    try {
+      starterPJ = JSON.parse(fs.readFileSync(starterPackageJson));
+      targetPJ = JSON.parse(fs.readFileSync(targetPath + '/package.json'));
+      mergeDeps(targetPJ, starterPJ);
+      fs.writeFileSync(targetPath + '/package.json', JSON.stringify(targetPJ));
+    } catch (e) {
+      log.error('package.json parse error: %s', e, {});
+    }
+  }
+}
 
 Start.fetchGithubStarter = function(options, repoUrl) {
   var q = Q.defer();
@@ -540,8 +558,8 @@ Start.fetchGithubStarter = function(options, repoUrl) {
     try {
       if (options.v2) {
         shelljs.cp('-R', options.targetPath + '/' + repoFolderName + '/.', options.targetPath);
+        Start.mergePackageJson(options.targetPath + '/' + repoFolderName + '/package.json', options.targetPath);
       } else {
-
         // Move the content of this repo into the www folder
         shelljs.cp('-Rf', options.targetPath + '/' + repoFolderName + '/.', 'www');
       }
@@ -569,7 +587,7 @@ Start.fetchZipStarter = function fetchZipStarter(options) {
   var q = Q.defer();
   var repoFolderName = 'zipFileDownload';
 
-  log.info('Fetching ZIP from url:', options.zipFileDownload.bold, 'to: ', options.targetPath);
+  log.info('Fetching ZIP from url:', chalk.bold(options.zipFileDownload), 'to: ', options.targetPath);
 
   Utils.fetchArchive(options.targetPath, options.zipFileDownload)
   .then(function() {
@@ -663,7 +681,7 @@ Start.fetchPlnkr = function fetchPlnkr(options) {
 Start.initCordovaFromGui = function initCordovaFromGui(options, appSetup) {
   var q = Q.defer();
 
-  log.debug('Initializing Cordova for Gui');
+  //log.debug('Initializing Cordova for Gui');
 
   try {
     if (options.isCordovaProject) {
@@ -687,7 +705,7 @@ Start.initCordovaFromGui = function initCordovaFromGui(options, appSetup) {
         promises.push(Cordova.addPlatform(options.targetPath, 'ios', true));
       }
 
-      log.info('Initializing cordova project');
+      //log.info('Initializing cordova project');
 
       Q.all(promises)
       .then(function() {
@@ -732,7 +750,7 @@ Start.initCordovaNoCli = function initCordova(options, appSetup) {
       promises.push(Cordova.addPlatform(options.targetPath, 'ios', true));
     }
 
-    log.info('Initializing cordova project without CLI');
+    //log.info('Initializing cordova project without CLI');
     return Q.all(promises);
 
   } catch (ex) {
@@ -741,27 +759,29 @@ Start.initCordovaNoCli = function initCordova(options, appSetup) {
 };
 
 Start.initCordova = function(options, appSetup) {
-  var q;
-  try {
-    if (!options.isCordovaProject) {
-      log.info('not a cordova project, no cordova options to initialize');
-      return Q.resolve();
-    }
+  if (!options.isCordovaProject) {
+    log.info('not a cordova project, no cordova options to initialize');
+    return Q.resolve();
+  }
 
-    Hooks.setHooksPermission(options.targetPath);
+  Hooks.setHooksPermission(options.targetPath);
 
-    log.info('\nAdding initial native plugins');
+  //log.info('\nAdding initial native plugins');
 
-    appSetup.bower = appSetup.bower ? appSetup.bower : [];
+  appSetup.bower = appSetup.bower ? appSetup.bower : [];
 
-    if (!Utils.cordovaInstalled()) {
-
-      // console.log('utils cordova not installed');
+  return Utils.cordovaInstalled().then(function(isCordovaInstalled) {
+    if (isCordovaInstalled) {
       return Start.initCordovaNoCli(options, appSetup);
     }
+    return rInitCordova(options, appSetup);
+  });
+};
 
-    q = Q.defer();
+function rInitCordova(options, appSetup) {
+  var q = Q.defer();
 
+  try {
     var cmds = [];
 
     // add plugins
@@ -823,7 +843,7 @@ Start.initCordova = function(options, appSetup) {
   }
 
   return q.promise;
-};
+}
 
 Start.updateConfigXml = function(targetPath, packageName, appName) {
   var q = Q.defer();
@@ -1023,22 +1043,18 @@ Start.promptLogin = function() {
     // Check if we already asked
     var didPrompt = ionicConfig.get('accountPrompt');
     if (didPrompt === 'y') {
-      log.info('\n' + 'New!'.green.bold +
-          ' Add push notifications, live app updates, and more with Ionic Cloud!'.bold);
-      log.info('  ' + IONIC_DASH + '/signup\n');
       return;
     }
     ionicConfig.set('accountPrompt', 'y');
     ionicConfig.save();
   }
 
-  log.info('\nCreate an Ionic Cloud account to add features like User Authentication, ' +
-           'Push Notifications, Live Updating, iOS builds, and more?');
+  log.info('\nCreate a free Ionic account to share and test apps with Ionic View?');
 
   var promptProperties = {
     shouldCreate: {
       name: 'shouldCreate',
-      description: '(Y/n):'.yellow.bold
+      description: chalk.yellow.bold('(Y/n):')
     }
   };
 
@@ -1144,22 +1160,20 @@ Start.finalize = function(options) {
 
 };
 
-Start.printQuickHelp = function(options) {
-  log.info('\n♬ ♫ ♬ ♫  Your Ionic app is ready to go! ♬ ♫ ♬ ♫'.bold);
-  log.info('\nSome helpful tips:'.bold);
-  log.info('\nRun your app in the browser (great for initial development):'.bold);
+Start.printQuickHelp = function() {
+  log.info(chalk.bold('\n♬ ♫ ♬ ♫  Your Ionic app is ready to go! ♬ ♫ ♬ ♫'));
+  log.info(chalk.bold('\nSome helpful tips:'));
+  log.info(chalk.bold('\nRun your app in the browser (great for initial development):'));
   log.info('  ionic serve');
-  log.info('\nRun on a device or simulator:'.bold);
+  log.info(chalk.bold('\nRun on a device or simulator:'));
   log.info('  ionic run ios[android,browser]');
-  log.info('\nTest and share your app on device with Ionic View:'.bold);
+  log.info(chalk.bold('\nShare your app with testers, and test on device easily with the Ionic View companion app:'));
   log.info('  http://view.ionic.io');
-  log.info('\nBuild better Enterprise apps with expert Ionic support:'.bold);
-  log.info('  http://ionic.io/enterprise');
 };
 
 Start.promptForOverwrite = function promptForOverwrite(targetPath) {
   var q = Q.defer();
-  log.warn('Directory already exists:', targetPath.cyan);
+  log.warn('Directory already exists:', chalk.cyan(targetPath));
   log.info('Would you like to overwrite the directory with this new project?');
   var promptProperties = {
     areYouSure: {
@@ -1197,4 +1211,3 @@ Start.promptForOverwrite = function promptForOverwrite(targetPath) {
 
   return q.promise;
 };
-

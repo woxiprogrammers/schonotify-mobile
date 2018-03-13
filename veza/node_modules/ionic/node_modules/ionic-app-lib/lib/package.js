@@ -12,6 +12,7 @@ var IonicResources = require('./resources');
 var Utils = require('./utils');
 var settings = require('./settings');
 var log = require('./logging').logger;
+var chalk = require('chalk');
 
 var Package = module.exports;
 
@@ -61,7 +62,7 @@ Package.listBuilds = function(appId, jar) {
     url: settings.IONIC_DASH_API + 'apps/' + appId + '/package/builds/',
     qs: { app_id: appId }, // eslint-disable-line camelcase
     useQuerystring: true,
-    proxy: process.env.PROXY || process.env.http_proxy || null,
+    proxy: Utils.getProxy(),
     headers: {
       cookie: jar.map(function(c) {
         return c.key + '=' + encodeURIComponent(c.value);
@@ -94,7 +95,7 @@ Package.getBuild = function(appId, jar, buildId, extraQueryParams) {
     url: settings.IONIC_DASH_API + 'apps/' + appId + '/package/builds/' + buildId,
     qs: _.extend({ app_id: appId }, extraQueryParams), // eslint-disable-line camelcase
     useQuerystring: true,
-    proxy: process.env.PROXY || process.env.http_proxy || null,
+    proxy: Utils.getProxy(),
     headers: {
       cookie: jar.map(function(c) {
         return c.key + '=' + encodeURIComponent(c.value);
@@ -308,7 +309,7 @@ function build(appDirectory, jar, appId, profileTag, formDataExtra, options) {
       var buildId = body.data.id;
 
       events.emit('package-post-submit');
-      log.info('Your app has been successfully submitted to Ionic Package!'.green);
+      log.info(chalk.green('Your app has been successfully submitted to Ionic Package!'));
       log.info('Build ID:', buildId);
       log.info('We are now packaging your app.');
 
@@ -325,7 +326,7 @@ function sendProjectZip(appId, jar) {
     url: settings.IONIC_DASH_API + 'apps/' + appId + '/package/projects/',
     qs: { app_id: appId }, // eslint-disable-line camelcase
     useQuerystring: true,
-    proxy: process.env.PROXY || process.env.http_proxy || null,
+    proxy: Utils.getProxy(),
     headers: {
       cookie: jar.map(function(c) {
         return c.key + '=' + encodeURIComponent(c.value);
@@ -360,7 +361,7 @@ function uploadProjectZip(url, formData, projectZipPath) {
   request.post({
     url: url,
     formData: formData,
-    proxy: process.env.PROXY || process.env.http_proxy || null
+    proxy: Utils.getProxy()
   }, function(err, response, body) {
     if (err) {
       log.error('Error:', err);
@@ -386,7 +387,7 @@ function sendToPackageService(appId, jar, formData) {
     qs: { app_id: appId }, // eslint-disable-line camelcase
     useQuerystring: true,
     formData: formData,
-    proxy: process.env.PROXY || process.env.http_proxy || null,
+    proxy: Utils.getProxy(),
     headers: {
       cookie: jar.map(function(c) {
         return c.key + '=' + encodeURIComponent(c.value);

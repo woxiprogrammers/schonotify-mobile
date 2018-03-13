@@ -1,16 +1,26 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.ionicframework.vezaandroid" version="1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="PhotoViewer">
+        <param name="android-package" value="com.sarriaroman.PhotoViewer.PhotoViewer" />
+    </feature>
+    <feature name="AppMinimize">
+        <param name="android-package" value="tomloprod.AppMinimize" />
+    </feature>
     <feature name="Device">
         <param name="android-package" value="org.apache.cordova.device.Device" />
-    </feature>
-    <feature name="Base64">
-        <param name="android-package" value="com.badrit.Base64.Base64Plugin" />
     </feature>
     <feature name="ImagePicker">
         <param name="android-package" value="com.synconset.ImagePicker" />
     </feature>
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
+    <feature name="CDVOrientation">
+        <param name="android-package" value="cordova.plugins.screenorientation.CDVOrientation" />
+    </feature>
+    <feature name="SplashScreen">
+        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
+        <param name="onload" value="true" />
     </feature>
     <feature name="StatusBar">
         <param name="android-package" value="org.apache.cordova.statusbar.StatusBar" />
@@ -27,19 +37,6 @@
     <feature name="PushNotification">
         <param name="android-package" value="com.adobe.phonegap.push.PushPlugin" />
     </feature>
-    <feature name="SplashScreen">
-        <param name="android-package" value="org.apache.cordova.splashscreen.SplashScreen" />
-        <param name="onload" value="true" />
-    </feature>
-    <feature name="AppMinimize">
-        <param name="android-package" value="tomloprod.AppMinimize" />
-    </feature>
-    <feature name="PhotoViewer">
-        <param name="android-package" value="com.sarriaroman.PhotoViewer.PhotoViewer" />
-    </feature>
-    <feature name="CDVOrientation">
-        <param name="android-package" value="cordova.plugins.screenorientation.CDVOrientation" />
-    </feature>
     <name>S S P Shikshan Sanstha</name>
     <description>
         An Ionic Framework and Cordova project.
@@ -47,7 +44,7 @@
     <author email="woxiprogrammers@gmail.com" href="http://woxiprogrammers.com/">
       WOXI SOFTWARE LLP
     </author>
-    <content original-src="index.html" src="http://192.168.2.15:8101" />
+    <content src="index.html" />
     <access origin="*" />
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <allow-navigation href="http://192.168.2.13:8100" />

@@ -36,6 +36,9 @@
     "cordova-plugin-ionic-webview": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
+    "cordova-plugin-screen-orientation": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
     "cordova-plugin-splashscreen": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
@@ -50,9 +53,6 @@
     },
     "phonegap-plugin-push": {
       "SENDER_ID": "750487257563",
-      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
-    },
-    "cordova-plugin-screen-orientation": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     }
   },

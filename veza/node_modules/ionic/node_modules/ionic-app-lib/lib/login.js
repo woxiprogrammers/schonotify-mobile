@@ -1,3 +1,4 @@
+var chalk = require('chalk');
 var request = require('request');
 var argv = require('optimist').argv;
 var prompt = require('prompt');
@@ -69,18 +70,18 @@ Login.run = function(ionic, callback) {
     var schema = [{
       name: 'email',
       pattern: /^[A-z0-9!#$%&'*+\/=?\^_{|}~\-]+(?:\.[A-z0-9!#$%&'*+\/=?\^_{|}~\-]+)*@(?:[A-z0-9](?:[A-z0-9\-]*[A-z0-9])?\.)+[A-z0-9](?:[A-z0-9\-]*[A-z0-9])?$/, // eslint-disable-line max-len
-      description: 'Email:'.yellow.bold,
+      description: chalk.yellow.bold('Email:'),
       required: true
     }, {
       name: 'password',
-      description: 'Password:'.yellow.bold,
+      description: chalk.yellow.bold('Password:'),
       hidden: true,
       required: true
     }];
 
     // prompt for log
     log.info('\nTo continue, please login to your Ionic account.');
-    log.info('Don\'t have one? Create a one at: '.bold + (settings.IONIC_DASH + '/signup').bold + '\n');
+    log.info(chalk.bold('Don\'t have one? Create a one at: ') + chalk.bold(settings.IONIC_DASH + '/signup') + '\n');
 
     prompt.override = argv;
     prompt.message = '';
@@ -122,14 +123,54 @@ Login.requestLogIn = function requestLogin(email, password, saveCookies) {
       username: email.toString(),
       password: password
     },
-    proxy: process.env.PROXY || process.env.http_proxy || null
+    proxy: Utils.getProxy()
   }, function(err, response) {
     if (err) {
       return q.reject('Error logging in: ' + err);
     }
 
     if (parseInt(response.statusCode, 10) !== 200) {
-      return q.reject('Email or Password incorrect. Please visit ' + settings.IONIC_DASH.white + ' for help.'.red);
+      return q.reject('Email or Password incorrect.');
+    }
+
+    if (saveCookies) {
+      transformedCookies = Login.saveCookies(jar);
+    } else {
+      try {
+        var jsonString = JSON.stringify(jar.getCookies(settings.IONIC_DASH, null, 2));
+        transformedCookies = JSON.parse(jsonString);
+      } catch (ex) {
+        log.error('Invalid cookies from jar.getCookies');
+      }
+    }
+
+    q.resolve(transformedCookies);
+  });
+  return q.promise;
+};
+
+Login.requestSignup = function requestLogin(fields, saveCookies) {
+  var q = Q.defer();
+  var transformedCookies = null;
+
+  var url = [settings.IONIC_DASH_API, 'signup'].join('');
+  console.log("Sign up URL", url);
+
+  var jar = request.jar();
+
+  request({
+    method: 'POST',
+    url: url,
+    jar: jar,
+    form: fields,
+    proxy: Utils.getProxy()
+  }, function(err, response, body) {
+    if (err) {
+      return q.reject([err, body]);
+    }
+
+    if (parseInt(response.statusCode, 10) !== 200) {
+      return q.reject([response, body]);
     }
 
     if (saveCookies) {
@@ -193,7 +234,7 @@ Login.getUserInfo = function getUserInfo(jar) {
         return c.key + '=' + encodeURIComponent(c.value);
       }).join('; ')
     },
-    proxy: process.env.PROXY || process.env.http_proxy || null
+    proxy: Utils.getProxy()
   }, function(err, response, body) {
     if (err) {
       return q.reject('Error logging in: ' + err);
@@ -228,7 +269,7 @@ Login.getUserApps = function getUserApps(jar) {
         return c.key + '=' + encodeURIComponent(c.value);
       }).join('; ')
     },
-    proxy: process.env.PROXY || process.env.http_proxy || null
+    proxy: Utils.getProxy()
   }, function(err, response, body) {
     if (err) {
       return q.reject('Error logging in: ' + err);
@@ -261,7 +302,7 @@ Login.getDownloadLink = function getDownloadLink(jar, appId) {
         return c.key + '=' + encodeURIComponent(c.value);
       }).join('; ')
     },
-    proxy: process.env.PROXY || process.env.http_proxy || null
+    proxy: Utils.getProxy()
   }, function(err, response, body) {
     if (err) {
       return q.reject('Error logging in: ' + err);

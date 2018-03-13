@@ -9,6 +9,7 @@ var crc = require('crc');
 var shelljs = require('shelljs');
 var Utils = require('./utils');
 var log = require('./logging').logger;
+var chalk = require('chalk');
 
 var appDirectory;
 var tmpDir = os.tmpdir();
@@ -36,7 +37,7 @@ var Settings = {
   configFile: 'config.xml',
   generateThrottle: 4,
   defaultMaxIconSize: 96,
-  cacheImages: true
+  cacheImages: false
 };
 
 var Platforms = {
@@ -244,7 +245,10 @@ function generate(dir, options) {
       .then(loadSourceImages)
       .then(generateResourceImages)
       .then(loadResourceImages)
-      .then(updateConfigData);
+      .then(updateConfigData)
+      .catch(function(err) {
+        console.error('Unable to generate images due to an error', err);
+      });
 
   });
 }
@@ -403,6 +407,7 @@ function queueResTypeImages(resType) {
                 } else {
                   loadCachedSourceImageData(sourceFile);
 
+                  /*
                   if (sourceFile.cachedData && !sourceFile.cachedData.vector &&
                       (sourceFile.cachedData.width < image.width || sourceFile.cachedData.height < image.height)) {
                     image.skip = true;
@@ -412,9 +417,10 @@ function queueResTypeImages(resType) {
                               sourceFile.cachedData.height + ') too small');
 
                   } else {
+                  */
                     sourceFile.upload = true;
                     generateQueue.push(image);
-                  }
+                  //}
                 }
               }
             });
@@ -447,7 +453,7 @@ function loadSourceImages() {
         image_id: sourceFile.imageId, // eslint-disable-line camelcase
         src: fs.createReadStream(sourceFile.filePath)
       },
-      proxy: process.env.PROXY || null
+      proxy: Utils.getProxy()
     };
 
     request.post(postData, function(err, httpResponse, body) {
@@ -606,7 +612,7 @@ function generateResourceImage(image) {
         crop: 'center',
         encoding: 'png'
       },
-      proxy: process.env.PROXY || null
+      proxy: Utils.getProxy()
     };
 
     var wr = fs.createWriteStream(image.tmpPath, { flags: 'w' });
@@ -911,7 +917,7 @@ function addIonicIcons(appDirectory, platform, forceAddResources) {
     .then(function(data) {
       if (!data.widget.platform ||
           (data.widget.platform.length === 1 && data.widget.platform[0]['$'].name !== platform)) {
-        log.debug('Adding icons for platform:'.blue.bold, platform.green);
+        log.debug(chalk.blue.bold('Adding icons for platform:'), chalk.green(platform));
         addPlatformIcons(platform, data);
 
         addSplashScreenPreferences(data);
@@ -942,23 +948,17 @@ function copyIconFilesIntoResources(appDirectory, forceAddResources) {
   var unzipPath = path.join(appDirectory, 'resources');
 
   if (hasExistingResources(appDirectory) && !forceAddResources) {
-
-    // log.info('Not copying over default resources, the resources directory already exist.
-    // Please pass the --force argument to overwrite that folder'.red.bold);
     return Q();
   }
 
   var ionicResourcesUrl = 'https://github.com/driftyco/ionic-default-resources/archive/master.zip';
   log.debug('uzip to: ', unzipPath);
 
-  // log.info('Downloading Default Ionic Resources'.yellow);
   return Utils.fetchArchive(unzipPath, ionicResourcesUrl)
     .then(function() {
       shelljs.config.silent = true;
       shelljs.mv('resources/ionic-default-resources-master/*', 'resources');
       shelljs.rm('-rf', 'resources/ionic-default-resources-master');
-
-      // log.info('Done adding default Ionic resources'.yellow);
     });
 }
 
