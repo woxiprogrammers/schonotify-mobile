@@ -81,79 +81,47 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
         templateUrl: 'templates/login.html',
         controller: 'LoginCtrl'
     })
-    .state('publicGallary', {
-        url: '/publicGallary',
-        templateUrl: 'templates/public-gallary.html',
-        controller: 'PublicGallaryCtrl'
-    })
-    .state('publicAboutUs', {
-        url: '/publicAboutUs',
-        templateUrl: 'templates/public-about-us.html',
-        controller: 'PublicAboutUsCtrl'
-    })
-    .state('publicFacultyInformation', {
-        url: '/publicFacultyInformation',
-        templateUrl: 'templates/public-faculty-information.html',
-        controller: 'PublicFacultyInformationCtrl'
-    })
-    .state('publicFacultyDetail', {
-        url: '/publicFacultyDetail',
-        templateUrl: 'templates/public-faculty-detail.html',
-        controller: 'PublicFacultyDetailCtrl'
-    })
-    .state('publicHeadingDetail', {
-        url: '/publicHeadingDetail',
-        templateUrl: 'templates/public-heading-detail.html',
-        controller: 'PublicHeadingDetailCtrl'
-    })
-    .state('publicGallaryLanding', {
-        url: '/publicGallaryLanding',
-        templateUrl: 'templates/public-gallery-landing.html',
-        controller: 'PublicGallaryLandingCtrl'
-    })
-    .state('publicCommitteeLanding', {
-        url: '/publicCommitteeLanding',
-        templateUrl: 'templates/public-committee-landing.html',
-        controller: 'PublicCommitteeLandingCtrl'
-    })
-    // .state('publicCommitteeDetail', {
-    //     url: '/publicCommitteeDetail',
-    //     templateUrl: 'templates/public-committee-detail.html',
-    //     controller: 'PublicCommitteeDetailCtrl'
-    // })
+
     .state('tokencheck', {
         url: '/tokencheck',
         templateUrl: 'templates/tokencheck.html',
         controller: 'tokencheckCtr'
     })
-    .state('publicselectschool', {
-        url: '/publicselectschool',
-        templateUrl: 'templates/public-select-school.html',
-        controller: 'PublicSelectSchoolCtr'
-    })
-    .state('publicDashboard', {
-        url: '/publicDashboard',
-        templateUrl: 'templates/public-dashboard.html',
-        controller: 'PublicDashboardCtr'
-    })
-    .state('publicEvents', {
-        url: '/publicevents',
-        templateUrl: 'templates/public-event.html',
-        controller: 'PublicEventCtr'
-    })
-    .state('eventstatuspublic', {
-        url: '/eventstatuspublic',
-        templateUrl: 'templates/event-status-public.html',
-        controller: 'EventStatusPublicCtrl'
 
-
-    })
     .state('app', {
         url: '/app',
         templateUrl: 'templates/menu.html',
         abstract: true,
         controller: 'AppCtrl'
     })
+    .state('app.gallery', {
+    url: '/gallery',
+    views: {
+        'menuContent': {
+            templateUrl: 'templates/gallery.html',
+            controller: 'GalleryCtrl',
+        },'fabContent': {
+            template: ''
+        }
+    }
+
+})
+.state('app.galleryLanding', {
+url: '/galleryLanding',
+params: {
+            'obj' : null
+        },
+views: {
+    'menuContent': {
+        templateUrl: 'templates/gallery-landing.html',
+        controller: 'GallaryLandingCtrl',
+    },'fabContent': {
+        template: ''
+    }
+}
+
+})
+
     .state('app.feeDetail', {
             url: '/feeDetail/:installment_id',
             views: {

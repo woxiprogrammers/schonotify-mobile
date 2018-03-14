@@ -4,9 +4,12 @@
 var db = null;
 angular.module('starter.controllers', ['naif.base64','ionic.cloud','ionic-material'])
 .constant('GLOBALS',{
-//baseUrl:'http://sspss.veza.co.in/api/v1/'
-baseUrl:'http://test.woxi.co.in/api/v1/',
-//baseUrl:'http://school_mit.schnotify.com/api/v1/'
+      baseUrl:'http://sspss.veza.co.in/api/v1/',
+      baseUrlImage: 'http://sspss.veza.co.in/'
+       
+       // baseUrl:'http://test.woxi.co.in/api/v1/',
+       // baseUrlImage:'http://test.woxi.co.in/'
+     //baseUrl:'http://school_mit.schnotify.com/api/v1/'
 })
 .factory('Data', function() {
     return {message}
@@ -147,7 +150,6 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
     $scope.studentlistForSwitch=function(){
           var url= GLOBALS.baseUrl+"user/get-switching-details?token="+userSessions.userSession.userToken;
               $http.get(url).success(function(response) {
-              console.log(response['data']['Parent_student_relation']['Students']);
               localStorage.setItem("studentdata", JSON.stringify(response['data']['Parent_student_relation']['Students']));
               $scope.studentdataswitch=(response['data']['Parent_student_relation']['Students']);
                  })
@@ -256,10 +258,8 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
         $scope.studentlistForSwitch=function(){
             var url= GLOBALS.baseUrl+"user/get-switching-details?token="+userSessions.userSession.userToken;
                   $http.get(url).success(function(response) {
-                  console.log(response['data']['Parent_student_relation']['Students']);
                   localStorage.setItem("studentdata", JSON.stringify(response['data']['Parent_student_relation']['Students']));
                     $scope.studentdataswitch=(response['data']['Parent_student_relation']['Students']);
-                    console.log($scope.studentdataswitch);
                      })
                      .error(function(response)
                                    {
@@ -387,142 +387,84 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                      console.log("Error in Response: " +response);
              });
           $state.go('app.dashboard');
-       }else {
-            $state.go('publicselectschool');
+       }
+       else {
+            $state.go('login');
     }
 
 })
-.controller('PublicSelectSchoolCtr', function($rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
-         $scope.getSchoolDetails =function (id){
-           $rootScope.organisationID = id;
-         }
-         $scope.goToLogin= function (){
-           $state.go('login');
-         }
-         $scope.goToPublicDashboard = function(){
-           if(0<$rootScope.organisationID && $rootScope.organisationID<=2){
-             $state.go('publicDashboard');
-           }
-           else{
-             $scope.errorMessage='Please select a School'
-           }
-         }
-})
-.controller('PublicDashboardCtr', function($ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
-        $scope.myGoBack = function() {
-          $state.go('publicselectschool')
-        };
-        $scope.publicEventsLanding = function(){
-          $state.go('publicEvents')
+.controller('GalleryCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+  $scope.baseImageURL= GLOBALS.baseUrlImage
+  var url= GLOBALS.baseUrl+"user/folder-first-image/"+userSessions.userSession.bodyId+"?token="+userSessions.userSession.userToken;
+  $http.get(url).success(function(response){
+    if(response.status== 200){
+        $scope.folders_size=response.data.folder_list.length;
+        if ($scope.folders_size > 0) {
+          $scope.folders=response.data.folder_list;
+        } else {
+          $scope.showAlertsucess("No data found")
         }
-        $scope.publicAchievementLanding=function(){
-          $state.go('app.achievementpublic')
-        }
-        $scope.publicGalleryLanding=function(){
-          $state.go("publicGallary")
-        }
-        $scope.publicAboutUsLanding=function(){
-          $state.go("publicAboutUs")
-        }
-})
-.controller('PublicAboutUsCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
-        $ionicLoading.show({
-          template: 'Loading...',
-          duration: 1500
-        })
-        var url = "http://www.mocky.io/v2/5a5c4f1a2e00009b049f821b"
-        $http.get(url).success(function(response){
-          $scope.aboutUs = response;
-        })
+    }else{
+        $scope.showAlertsucess("No data found")
+    }
 
-        $scope.openWebView=function (url) {
-          window.open(url,'_blank','location=no');
-          return false;
-        }
-
-        $scope.myGoBack=function(){
-          $state.go('publicDashboard')
-        }
-        $rootScope.header=['header ','header 2'];
-        $scope.headingLandingpage=function(id){
-           $rootScope.headerID = id;
-           $state.go("publicHeadingDetail")
-        }
-        $scope.publicFacultyInformationLanding=function(){
-          $state.go("publicFacultyInformation")
-        }
-        $scope.publicCommitteeLanding=function(){
-          $state.go("publicCommitteeLanding")
-        }
-})
-.controller('PublicCommitteeLandingCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
-        var url ="http://www.mocky.io/v2/5a5c92012e0000e3109f8352";
-        $http.get(url).success(function(response){
-          $scope.committeeMembers = response;
-        })
-        $scope.openWebView=function (url) {
-          window.open(url,'_blank','location=no');
-          return false;
-        }
-
-        $scope.myGoBack=function(){
-          $state.go('publicAboutUs')
-        }
-})
-.controller('PublicHeadingDetailCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
-        $scope.myGoBack=function(){
-          $state.go('publicAboutUs')
-        }
-})
-.controller('PublicFacultyInformationCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
-        $ionicLoading.show({
-          template: 'Loading...',
-          duration: 1500
-        })
-        var url = "http://www.mocky.io/v2/5a5c792e2e00001d089f82c9";
-        $http.get(url).success(function(response){
-          $scope.faculties=response;
-        })
-
-        $scope.myGoBack=function(){
-          $state.go('publicAboutUs')
-        }
-        $scope.facultyInformationLanding=function(facultyID){
-          $rootScope.facultyID = facultyID;
-          $state.go("publicFacultyDetail")
-        }
-
-})
-.controller('PublicFacultyDetailCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
-        $scope.myGoBack=function(){
-          $state.go('publicFacultyInformation')
-        }
-        var url="http://www.mocky.io/v2/5a5c7f5c2e0000aa039f82e5"
-        $http.get(url).success(function(response){
-          $scope.facultyInfo = response;
-        })
-        // $scope.facultyDetail=$rootScope.faculties[$rootScope.facultyID]
+  }).error(function(err) {
+  });
+  $scope.showAlertsucess = function(message) {
+    var alertPopup = $ionicPopup.alert({
+      template:'<center>'+ message+ '<center>'
+    })
+  }
+  $scope.myGoBack=function(){
+    $state.go('app.dashboard')
+  }
+  $scope.galleryFolder=function(folderID){
+    $state.go('app.galleryLanding', {obj : folderID});
+  }
 })
 
-.controller('PublicGallaryLandingCtrl', function($sce, $ionicPlatform, $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+.controller('GallaryLandingCtrl', function($stateParams, $sce, $ionicPlatform, $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+        $scope.baseImageURL= GLOBALS.baseUrlImage
+        $scope.folderID = $stateParams.obj;
         screen.orientation.unlock();
-         $ionicScrollDelegate.scrollTop();
-        var url = "http://www.mocky.io/v2/5a58ab302d00007f1fd2e5d2"
+        $ionicScrollDelegate.scrollTop();
         $ionicLoading.show({
           template: 'Loading...',
           duration: 1500
         });
+        // var url = "http://www.mocky.io/v2/5a9795f430000047005c1e09"
+        var url= GLOBALS.baseUrl+"user/gallery-image/"+$scope.folderID+"?token="+userSessions.userSession.userToken
         $http.get(url).success(function(response){
-          $rootScope.images = response;
-          $rootScope.video_url=$rootScope.images[0].video[0].video_url;
-          $scope.movie = {src:$rootScope.video_url}
+          if (response['status'] == 200) {
+            $scope.folderName= response.data[0].name;
+            $scope.imagesLength = response.data[0].photos.length
+            $scope.videoLength = response.data[0].videos.length
+            if ($scope.imagesLength > 0) {
+              $scope.images  = response.data[0].photos;
+            }
+            if ($scope.videoLength > 0) {
+              $scope.video = response.data[0].videos
+            }
+            if($scope.imagesLength == 0 && $scope.videoLength == 0){
+              $timeout(function () {
+                $scope.showAlertsucess('No Data Uploaded yet')
+              }, 1500);
+            }
+          } else {
+            $scope.showAlertsucess('No Data found')
+          }
         })
+        $scope.showAlertsucess = function(message) {
+          var alertPopup = $ionicPopup.alert({
+            template:'<center>'+ message+ '<center>'
+          })
+        }
         $ionicLoading.show({
           template: 'Loading...',
           duration: 1500
         })
         $scope.myGoBack=function(){
-          $state.go('publicGallary')
+          $state.go('app.gallery')
         }
         $scope.showImages = function(index) {
           $scope.activeSlide = index;
@@ -539,15 +481,17 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
 	        }
       	// Close the modal
       	$scope.closeModal = function() {
+          $scope.modal.remove();
           $scope.modal.hide();
-      		$scope.modal.remove()
+
       	};
         $ionicPlatform.onHardwareBackButton(function() {
+          $scope.modal.remove();
           $scope.modal.hide();
-          $scope.modal.remove()
+
         });
         $scope.trustSrc = function(src) {
-            return $sce.trustAsResourceUrl(src);
+            return $sce.trustAsResourceUrl($scope.baseImageURL+src);
           };
       $scope.playVideo = function() {
         $ionicScrollDelegate.scrollTop();
@@ -556,22 +500,7 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
       $scope.zoomMin=1;
 })
 
-.controller('PublicGallaryCtrl', function( $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
-        var url="http://www.mocky.io/v2/5a5606072f0000ea28beec2e";
-        $http.get(url).success(function(response){
-          $scope.folders=response;
-        }).error(function(err) {
-          });
-        $scope.myGoBack=function(){
-          $state.go('publicDashboard')
-        }
-        $scope.galleryFolder=function(folderName){
-          $rootScope.folderName= folderName;
-          $state.go("publicGallaryLanding")
-        }
 
-
-})
 .controller('LoginCtrl', function($ionicHistory, $rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
   $scope.myGoBack = function() {
     $state.go('publicselectschool')
@@ -650,6 +579,9 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
          template: 'Loading...',
          duration: 500
        })
+       $scope.goToGallery = function (){
+         $state.go("app.gallery")
+       }
        $scope.showAlert = function() {
          var alertPopup = $ionicPopup.alert({
            title: 'Under construction!',
@@ -3331,106 +3263,106 @@ baseUrl:'http://test.woxi.co.in/api/v1/',
                }
                $scope.getPerticulars($stateParams.installment_id);
 })
-.controller('FeeLandingParentCntrl', function($rootScope,$ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
-      $scope.$on("$ionicView.beforeEnter", function(event, data){
-             $ionicLoading.show({
-             template: 'Loading...',
-             duration: 1500
-             })
-               $scope.showAlert = function() {
-                var alertPopup = $ionicPopup.alert({
-                 title: 'Under construction!',
-                 template: 'We are working on that.'
-                });
-               }
-               $scope.hide = function(){
-                 $ionicLoading.hide().then(function(){
-                    console.log("The loading indicator is now hidden");
-                 });
-                }
+.controller('FeeLandingParentCntrl', function($ionicScrollDelegate, $rootScope,$ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
+  $scope.$on("$ionicView.beforeEnter", function(event, data){
+    $ionicLoading.show({
+      template: 'Loading...',
+      duration: 1500
+    })
+    $scope.showAlert = function() {
+      var alertPopup = $ionicPopup.alert({
+        title: 'Under construction!',
+        template: 'We are working on that.'
       });
-              $scope.bodyId = userSessions.userSession.bodyId;
-              $scope.detail=function(id){
-                 $state.go('app.feeDetail',{installment_id: id});
-              }
-             $ionicLoading.show({
-               template: 'Loading...',
-             })
-           if(userSessions.userSession.userRole=="teacher"){
-              $scope.show="showw";
-              $scope.abc="100%";
-              $ionicLoading.show();
-              var url = GLOBALS.baseUrl+"user/get-batches-teacher?"+"token="+userSessions.userSession.userToken;
-              $http.get(url).success(function(response){
-              if(response['status'] == 200){
-                     $ionicLoading.hide();
-                     $scope.TeacherBatch = response['data'];
-                     if($scope.TeacherBatch == '') {
-                              $ionicLoading.hide();
-                              $scope.aclMessage = res['message'];
-                     }
-                    } else {
-                           $scope.aclMessage = response['message'];
-                    }
-               }).error(function(err) {
-                   $scope.aclMessage = "Batch Not Found !!";
-             });
-           }else{
-              //Parent View
-              $scope.getFeesStudent=function () {
-                $ionicLoading.show();
-                var url = GLOBALS.baseUrl+"user/get-student_fees/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
-                $http.get(url).success(function(response){
-                   $scope.installments=response;
-                   console.log($scope.installments);
-                   }).error(function(err) {
-                      $ionicLoading.hide();
-                      $scope.aclMessage = "Installment Not Found !!";
-                    });
-                      $scope.show="show";
-                      $scope.abc="50%";
-                    }
-             $scope.getFees=function () {
-               $ionicLoading.show();
-               var url = GLOBALS.baseUrl+"user/get-student_fees_details/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
-               $http.get(url).success(function(response){
-                  $scope.fees=response['transactions'];
-                  console.log($scope.fees);
-                  $scope.fee=response.fees['fee'];
-                  $scope.pending_fee=response.pending_fees['pending_fee'];
-                   }).error(function(err) {
-                     $ionicLoading.hide();
-                     $scope.aclMessage = "Installment Not Found !!";
-                   });
-                     $scope.show="show";
-                     $scope.abc="50%";
-            }
-             $scope.getFeesStudent();
-              $scope.getFees();
-             $scope.color="underline";
-             $scope.clickOn="con1";
-             $scope.side="left";
-             $scope.bold1="bold";
-       }
-    $scope.showCon=function(con)
-         {
-           $scope.clickOn=con;
-                  if(con=="con1")
-                      {
-                           $scope.color="underline";
-                           $scope.color1="";
-                           $scope.side="left";
-                           $scope.bold1="bold";
-                           $scope.bold2="";
-                      }
-                  else{
-                          $scope.color1="underline";
-                          $scope.color="";
-                          $scope.side="right";
-                          $scope.bold2="bold";
-                          $scope.bold1="";
-                      }
-                }
+    }
+    $scope.hide = function(){
+      $ionicLoading.hide().then(function(){
+        console.log("The loading indicator is now hidden");
+      });
+    }
+  });
+  $scope.bodyId = userSessions.userSession.bodyId;
+  $scope.detail=function(id){
+    $state.go('app.feeDetail',{installment_id: id});
+  }
+  $ionicLoading.show({
+    template: 'Loading...',
+  })
+  if(userSessions.userSession.userRole=="teacher"){
+    $scope.show="showw";
+    $scope.abc="100%";
+    $ionicLoading.show();
+    var url = GLOBALS.baseUrl+"user/get-batches-teacher?"+"token="+userSessions.userSession.userToken;
+    $http.get(url).success(function(response){
+      if(response['status'] == 200){
+        $ionicLoading.hide();
+        $scope.TeacherBatch = response['data'];
+        if($scope.TeacherBatch == '') {
+          $ionicLoading.hide();
+          $scope.aclMessage = res['message'];
+        }
+      } else {
+        $scope.aclMessage = response['message'];
+      }
+    }).error(function(err) {
+      $scope.aclMessage = "Batch Not Found !!";
+    });
+  }else{
+    //Parent View
+    $scope.getFeesStudent=function () {
+      $ionicLoading.show();
+      var url = GLOBALS.baseUrl+"user/get-fee/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
+      $http.get(url).success(function(response){
+        $scope.studentFee=response.data;
+      }).error(function(err) {
+        $ionicLoading.hide();
+        $scope.aclMessage = "Installment Not Found !!";
+      });
+      $scope.show="show";
+      $scope.abc="50%";
+    }
+    $scope.getFees=function () {
+      $ionicLoading.show();
+      var url = GLOBALS.baseUrl+"user/get-fee_details/"+userSessions.userSession.userId+"/?token="+userSessions.userSession.userToken;
+      $http.get(url).success(function(response){
+        if (response['status']==200) {
+          $scope.myFees=response.data.structures;
+          $scope.transactions=response.data.transaction;
+        }
+      }).error(function(err) {
+        $ionicLoading.hide();
+        $scope.aclMessage = "Installment Not Found !!";
+      });
+      $scope.show="show";
+      $scope.abc="50%";
+    }
+    $scope.getFeesStudent();
+    $scope.getFees();
+    $scope.color="underline";
+    $scope.clickOn="con1";
+    $scope.side="left";
+    $scope.bold1="bold";
+  }
+  $scope.showCon=function(con)
+  {
+    $scope.clickOn=con;
+    if(con=="con1")
+    {
+      $scope.color="underline";
+      $scope.color1="";
+      $scope.side="left";
+      $scope.bold1="bold";
+      $scope.bold2="";
+    }
+    else{
+      $ionicScrollDelegate.scrollTop();
+      $scope.color1="underline";
+      $scope.color="";
+      $scope.side="right";
+      $scope.bold2="bold";
+      $scope.bold1="";
+    }
+  }
     })
 .controller('LandingEventParentCtrl', function($ionicLoading,$scope, $state, $timeout, GLOBALS, userSessions ,$ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
       $scope.$on("$ionicView.beforeEnter", function(event, data){
