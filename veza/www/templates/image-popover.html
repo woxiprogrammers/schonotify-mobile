@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div class="modal image-modal transparent" >
   <ion-slide-box on-slide-changed="slideChanged(index)" active-slide="activeSlide" >
       <ion-slide ng-repeat="photo in images">
@@ -8,5 +9,16 @@
             </div>
       </ion-scroll>
     </ion-slide>
+=======
+<div class="modal image-modal transparent" on-swipe-down="closeModal()">
+  <ion-slide-box on-slide-changed="slideChanged(index)" active-slide="activeSlide">
+    <ion-slide ng-repeat="image in images" loop="true">
+          <!-- <div class="image" style="background-image: url( img/trial/{{image}} )" width="100%"></div> -->
+          <div class="mayur" >
+            <img ng-src='img/trial/{{image}}' zoom-src="img/trial/{{image}}" zoom-view />
+          </div>
+    </ion-scroll>
+  </ion-slide>
+>>>>>>> develop
 </ion-slide-box>
 </div>

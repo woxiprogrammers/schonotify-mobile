@@ -77,7 +77,7 @@ div.speech {
   padding:3px;
 
   position: relative;
-  width: 170px;
+  width: 140px;
   height: 90px;
 
   line-height: 30px;
@@ -86,6 +86,20 @@ div.speech {
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius: 20px;
+  -webkit-box-shadow: 2px 2px 4px #888;
+  -moz-box-shadow: 2px 2px 4px #888;
+  box-shadow: 2px 2px 4px #888;
+}
+div.speech3 {
+  text-align: center;
+  padding:3px;
+
+  position: relative;
+  width: 170px;
+  height: 45px;
+
+  line-height: 30px;
+  background-color: #33cd5f;
   -webkit-box-shadow: 2px 2px 4px #888;
   -moz-box-shadow: 2px 2px 4px #888;
   box-shadow: 2px 2px 4px #888;
@@ -139,7 +153,7 @@ div.speech1 {
   padding:3px;
 
   position: relative;
-  width: 170px;
+  width: 140px;
   height: 90px;
 
   line-height: 30px;
