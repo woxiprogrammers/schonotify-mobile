@@ -1,7 +1,7 @@
  // Ionic Starter App
 //Creator: Shubham Chaudhari
 var db = null;
-angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCordova', 'ionic-material', 'highcharts-ng', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate'])
+angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCordova', 'ionic-material', 'highcharts-ng', 'flexcalendar', 'eventcalendar', 'pascalprecht.translate','ionic-zoom-view'])
 .run(function($rootScope, $ionicPlatform,$cordovaSQLite, $cordovaSplashscreen,$state,userSessions) {
     $ionicPlatform.ready(function() {
       $ionicPlatform.registerBackButtonAction(function (event) {
@@ -29,6 +29,7 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
  })
 .config(function($stateProvider,$ionicCloudProvider, $urlRouterProvider, $ionicConfigProvider, $translateProvider) {
     // Turn off caching for demo simplicity's sake
+    $ionicConfigProvider.scrolling.jsScrolling(true);
     $ionicCloudProvider.init({
     "core": {
       "app_id": "7c6f7241"
@@ -80,17 +81,47 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
         templateUrl: 'templates/login.html',
         controller: 'LoginCtrl'
     })
+
     .state('tokencheck', {
         url: '/tokencheck',
         templateUrl: 'templates/tokencheck.html',
         controller: 'tokencheckCtr'
     })
+
     .state('app', {
         url: '/app',
         templateUrl: 'templates/menu.html',
         abstract: true,
         controller: 'AppCtrl'
     })
+    .state('app.gallery', {
+    url: '/gallery',
+    views: {
+        'menuContent': {
+            templateUrl: 'templates/gallery.html',
+            controller: 'GalleryCtrl',
+        },'fabContent': {
+            template: ''
+        }
+    }
+
+})
+.state('app.galleryLanding', {
+url: '/galleryLanding',
+params: {
+            'obj' : null
+        },
+views: {
+    'menuContent': {
+        templateUrl: 'templates/gallery-landing.html',
+        controller: 'GallaryLandingCtrl',
+    },'fabContent': {
+        template: ''
+    }
+}
+
+})
+
     .state('app.feeDetail', {
             url: '/feeDetail/:installment_id',
             views: {
@@ -239,6 +270,16 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
              }
           }
      })
+     .state('app.achievementpublic', {
+          url: '/sharedAchievementPublic',
+          views: {
+             'menuContent': {
+                templateUrl: 'templates/achievement-public.html',
+                controller: 'app.PublicAchievementCtrl'
+             }
+          }
+      })
+
      .state('app.achievementDetailParent', {
           url: '/sharedAchievementParent',
           views: {
@@ -461,6 +502,18 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
             }
 
         })
+        .state('app.eventstatuspublic', {
+            url: '/eventstatuspublic',
+            params: {
+              obj: null
+            },
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/event-status-public.html',
+                    controller: 'EventStatusPublicCtrl'
+                }
+            }
+        })
         .state('app.editevent', {
             url: '/editevent',
             views: {
@@ -581,7 +634,19 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
                 }
             }
         })
-        .state('app.notificationdetails', {
+        .state('app.achievementdetailspublic', {
+            url: '/achievementdetailspublic',
+            views: {
+                'menuContent': {
+                    templateUrl: 'templates/achievement-description-public.html',
+                    controller: 'DetailPagePublicCtrl'
+                },
+                'fabContent': {
+                    template: ''
+                }
+            }
+        })
+      .state('app.notificationdetails', {
             url: '/notificationdetails',
             views: {
                 'menuContent': {
