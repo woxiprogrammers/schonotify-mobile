@@ -22,6 +22,12 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
+        window.FirebasePlugin.getToken(function(token) {
+            // save this server-side and use it to push notifications to this device
+            console.log("FCM TOKEN----->>>>"+token);
+        }, function(error) {
+            console.error(error);
+        });
 
       db = window.openDatabase("test", "1.0", "Test DB", 1000000);
              $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS auth_details (id integer primary key, token text , userDataArray text, studentlist text, sessionUserRole text, sessionId text , sessionBodyId text, messageCount text)");
@@ -29,24 +35,7 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
  })
 .config(function($stateProvider,$ionicCloudProvider, $urlRouterProvider, $ionicConfigProvider, $translateProvider) {
     // Turn off caching for demo simplicity's sake
-    $ionicConfigProvider.scrolling.jsScrolling(true);
-    $ionicCloudProvider.init({
-    "core": {
-      "app_id": "7c6f7241"
-    },
-    "push": {
-      "sender_id": "750487257563",
-      "pluginConfig": {
-        "ios": {
-          "badge": true,
-          "sound": true
-        },
-        "android": {
-          "iconColor": "#a0c4ff"
-        }
-      }
-    }
-  });
+
     $ionicConfigProvider.views.maxCache(0);
     /*
     // Turn off back button text

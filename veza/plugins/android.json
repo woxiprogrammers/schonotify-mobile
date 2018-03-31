@@ -51,8 +51,7 @@
     "ionic-plugin-keyboard": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
-    "phonegap-plugin-push": {
-      "SENDER_ID": "750487257563",
+    "cordova-plugin-firebase": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     }
   },
