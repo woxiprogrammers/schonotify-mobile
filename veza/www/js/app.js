@@ -288,17 +288,17 @@ angular.module('starter', ['ionic', 'ionic.cloud', 'starter.controllers', 'ngCor
                         templateUrl: 'templates/shared-notify-parent.html',
                         controller: 'sharedNotifyParentCtrl'
                     },
-                    'fabContent': {
-                        template: '',
-                        controller: function ($timeout, $scope, $state) {
-                            $scope.goToCreateAchievement = function () {
-                                $state.go('app.createachievement');
-                            }
-                            $timeout(function () {
-                                document.getElementById('fab-new-achievement').classList.toggle('off');
-                            }, 500);
-                        }
-                    }
+                    // 'fabContent': {
+                    //     template: '',
+                    //     controller: function ($timeout, $scope, $state) {
+                    //         $scope.goToCreateAchievement = function () {
+                    //             $state.go('app.createachievement');
+                    //         }
+                    //         $timeout(function () {
+                    //             document.getElementById('fab-new-achievement').classList.toggle('off');
+                    //         }, 500);
+                    //     }
+                    // }
                 }
             })
             .state('app.createachievement', {

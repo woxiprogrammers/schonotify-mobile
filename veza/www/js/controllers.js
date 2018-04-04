@@ -519,7 +519,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     //   })
                     window.FirebasePlugin.getToken(function (token) {
                         // save this server-side and use it to push notifications to this device
-                        console.log("FCM TOKEN----->>>>" + token);
                         $rootScope.pushToken = token;
                         $scope.saveToken();
                     }, function (error) {
@@ -811,10 +810,12 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
     })
     .controller('achievementDetailParentCtrl', function ($rootScope, $ionicLoading, $ionicPopup, $window, $ionicModal, userSessions, $http, GLOBALS, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.DetailAchievemtns = $rootScope.DetailAchievemtns;
+        console.log("Detail Achivement------" + $rootScope.DetailAchievemtns)
         $scope.imageData = $rootScope.imagesData;
+        console.log("Detail Achivement imagesData------" + $rootScope.imagesData)
     })
-    .controller('sharedAchievementParentCtrl', function ($rootScope, $ionicLoading, $ionicPopup, $window, $ionicModal, userSessions, $http, GLOBALS, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
+    .controller('sharedAchievementParentCtrl', function ($rootScope, $ionicLoading, $ionicPopup, $window, $ionicModal, userSessions, $http, GLOBALS, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $ionicLoading.show({
             template: 'Loading...',
         })
@@ -851,8 +852,8 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $ionicLoading.show({
             template: 'Loading...',
         })
-        $ionicLoading.show();
         var url = GLOBALS.baseUrl + "user/view-announcement-parent/?token=" + userSessions.userSession.userToken;
+        $ionicLoading.show();
         $http.get(url).success(function (response) {
             $scope.nMessages = response;
             $ionicLoading.hide();
