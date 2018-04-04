@@ -22,12 +22,12 @@ angular.module('starter', ['ionic','ionic.cloud', 'starter.controllers', 'ngCord
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
-        window.FirebasePlugin.getToken(function(token) {
-            // save this server-side and use it to push notifications to this device
-            console.log("FCM TOKEN----->>>>"+token);
-        }, function(error) {
-            console.error(error);
-        });
+        // window.FirebasePlugin.getToken(function(token) {
+        //     // save this server-side and use it to push notifications to this device
+        //     console.log("FCM TOKEN----->>>>"+token);
+        // }, function(error) {
+        //     console.error(error);
+        // });
 
       db = window.openDatabase("test", "1.0", "Test DB", 1000000);
              $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS auth_details (id integer primary key, token text , userDataArray text, studentlist text, sessionUserRole text, sessionId text , sessionBodyId text, messageCount text)");
