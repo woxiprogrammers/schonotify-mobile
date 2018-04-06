@@ -3256,7 +3256,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 if (response['status'] == 200) {
                     $ionicLoading.hide();
                     $scope.feeDetails = response['data'];
-                    console.log($scope.feeDetails);
                     $ionicLoading.hide();
                 }
             }).error(function (err) {
