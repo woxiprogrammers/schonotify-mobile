@@ -12,14 +12,16 @@
                     <i class="icon ion-homie"></i>
                 </a>
                 <a class="tab-item margin-top-10" ui-sref="app.message">
-                    <i class="icon ion-message"><span class="badge badge-assertive"></span></i>
+                    <i class="icon ion-message">
+                        <span class="badge badge-assertive"></span>
+                    </i>
                 </a>
             </div>
         </div>
     </div>
     <div class="row padding-0">
         <div class="tabs tab-align-inner-inner tabs-striped tabs-light tabs-top tabs-icon-left">
-            <a class="tab-item padding-5 col-50" ui-sref="app.sharedNotification">
+            <a class="tab-item padding-5 col-50" ui-sref="app.sharedNotifyParent">
                 <i class="icon ion-annoncement"></i>
                 <span class="annoncement-text">Announcement</span>
             </a>
@@ -29,32 +31,42 @@
             </a>
         </div>
     </div>
-    <ion-content ng-class="{expanded:$scope.isExpanded}" >
-       <div style="height:50px">
-       </div>
+    <ion-content ng-class="{expanded:$scope.isExpanded}">
+        <div style="height:50px">
+        </div>
         <ion-list class="item item-text-wrap">
-            <ion-item class="card" style="background-color:white;padding:10px" ng-repeat="achievement in nmessages" ng-click="achievementDetail(achievement.id)">
-              <span class="pull-right" ng-if="achievement.status == 2">
-                <button  class="button button-balanced status-button" ng-disabled="clickStatus" >
-                      Published
-                </button>
-              </span>
-              <span class="pull-right" ng-if="achievement.status == 1">
-                <button  class="button button-assertive status-button" ng-disabled="clickStatus" >
-                      Pending
-                </button>
-              </span>
-              <span class="pull-right" ng-if="achievement.status == 0">
-                <button  class="button button-energized status-button" ng-disabled="clickStatus" >
-                     Draft
-                </button>
-              </span><br>
-                    <center><h2 style="color:#8e2a2a;text-transform: capitalize;">{{achievement.title}}</h2></center>
-                    <hr>
-                    <p><h4>{{achievement.detail}}</h4></p><br>
-                    <h4><span style="color:#8e2a2a;">Created By :</span> {{achievement.createdBy['first_name']}}  {{achievement.createdBy['last_name']}}<span style="color:#8e2a2a;"> On</span> {{achievement.created_at}}</h4>
-                    <h4><span style="color:#8e2a2a;">Published By :</span> {{achievement.publishedBy['first_name']}}  {{achievement.publishedBy['last_name']}}</h4>
+            <ion-item class="card" style="background-color:white;padding:10px" ng-repeat="achievement in nMessages" ng-click="achievementDetail(achievement.id)">
+                <span class="pull-right" ng-if="achievement.status == 2">
+                    <button class="button button-balanced status-button" ng-disabled="clickStatus">
+                        Published
+                    </button>
+                </span>
+                <span class="pull-right" ng-if="achievement.status == 1">
+                    <button class="button button-assertive status-button" ng-disabled="clickStatus">
+                        Pending
+                    </button>
+                </span>
+                <span class="pull-right" ng-if="achievement.status == 0">
+                    <button class="button button-energized status-button" ng-disabled="clickStatus">
+                        Draft
+                    </button>
+                </span>
+                <br>
+                <center>
+                    <h2 style="color:#8e2a2a;text-transform: capitalize;">{{achievement.title}}</h2>
+                </center>
+                <hr>
+                <p>
+                    <h4>{{achievement.detail}}</h4>
+                </p>
+                <br>
+                <h4>
+                    <span style="color:#8e2a2a;">Created By :</span> {{achievement.createdBy['first_name']}} {{achievement.createdBy['last_name']}}
+                    <span
+                        style="color:#8e2a2a;"> On</span> {{achievement.created_at}}</h4>
+                <h4>
+                    <span style="color:#8e2a2a;">Published By :</span> {{achievement.publishedBy['first_name']}} {{achievement.publishedBy['last_name']}}</h4>
             </ion-item>
-      </ion-list>
+        </ion-list>
     </ion-content>
 </ion-view>
