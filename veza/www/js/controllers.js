@@ -3234,7 +3234,8 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
     .controller('FeeDetailCntrl', function ($stateParams, $rootScope, $ionicLoading, $scope, $state, $timeout, GLOBALS, userSessions, $ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.getPerticulars = function (installment_id) {
             var id = installment_id;
-            var url = GLOBALS.baseUrl + "/user/student-fee-installment/" + id + "/" + userSessions.userSession.userId + "/?token=" + userSessions.userSession.userToken;
+            // var url = GLOBALS.baseUrl + "/user/student-fee-installment/" + id + "/" + userSessions.userSession.userId + "/?token=" + userSessions.userSession.userToken;
+            var url ='http://www.mocky.io/v2/5ac766f73100005200a574c0'
             $http.get(url).success(function (response) {
                 if (response['status'] == 200) {
                     $ionicLoading.hide();
@@ -3295,7 +3296,8 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             //Parent View
             $scope.getFeesStudent = function () {
                 $ionicLoading.show();
-                var url = GLOBALS.baseUrl + "user/get-fee/" + userSessions.userSession.userId + "/?token=" + userSessions.userSession.userToken;
+                // var url = GLOBALS.baseUrl + "user/get-fee/" + userSessions.userSession.userId + "/?token=" + userSessions.userSession.userToken;
+                var url = "http://www.mocky.io/v2/5ac7614d3100005000a574a1"
                 $http.get(url).success(function (response) {
                     $scope.studentFee = response.data;
                 }).error(function (err) {
