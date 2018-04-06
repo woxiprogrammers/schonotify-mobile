@@ -510,13 +510,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 $scope.Switchstudentlist = (res['data']['Students']);
                 $scope.data.message = res['message'];
                 $scope.register = function () {
-                    //   $ionicPush.register().then(function(t){
-                    //           $rootScope.pushToken=t.token;
-                    //           $scope.saveToken();
-                    //           return $ionicPush.saveToken(t);
-                    //   }).then(function(t) {
-                    //          console.log(t.token);
-                    //   })
                     window.FirebasePlugin.getToken(function (token) {
                         // save this server-side and use it to push notifications to this device
                         $rootScope.pushToken = token;
@@ -609,7 +602,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.resultView = function () {
             var url = GLOBALS.baseUrl + "user/check-fees/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
             $http.get(url).success(function (response) {
-                console.log(response);
                 if (response == 0 && userSessions.userSession.userRole == "parent") {
                     $state.go('app.result');
                 } else {
@@ -810,9 +802,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
     })
     .controller('achievementDetailParentCtrl', function ($rootScope, $ionicLoading, $ionicPopup, $window, $ionicModal, userSessions, $http, GLOBALS, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.DetailAchievemtns = $rootScope.DetailAchievemtns;
-        console.log("Detail Achivement------" + $rootScope.DetailAchievemtns)
         $scope.imageData = $rootScope.imagesData;
-        console.log("Detail Achivement imagesData------" + $rootScope.imagesData)
     })
 
     .controller('sharedAchievementParentCtrl', function ($rootScope, $ionicLoading, $ionicPopup, $window, $ionicModal, userSessions, $http, GLOBALS, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
@@ -837,7 +827,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 }
             })
             $rootScope.imagesData = [];
-            console.log($scope.imagesData);
             angular.forEach($scope.imagesData, function (dataa) {
                 angular.forEach(dataa, function (dataImage) {
                     if (dataImage.event_id == id) {
@@ -896,7 +885,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $http.get(url)
                 .success(function (response) {
                     $scope.contactList = response['data']['studentList'];
-                    console.log($scope.contactList);
                     $scope.openModal();
                 })
                 .error(function (response) {
@@ -908,7 +896,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $http.get(url)
                 .success(function (response) {
                     $scope.adminList = response;
-                    console.log($scope.adminList);
                     $scope.openModal();
                 })
                 .error(function (response) {
@@ -920,7 +907,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $http.get(url)
                 .success(function (response) {
                     $scope.teacherList = response;
-                    console.log($scope.teacherList);
                     $scope.openModal();
                 })
                 .error(function (response) {
@@ -1170,7 +1156,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $scope.image.push(fileObj.base64);
         }
         $scope.create = function () {
-            console.log($scope.image);
             $ionicLoading.show();
             var url = GLOBALS.baseUrl + "user/create-achievement?token=" + userSessions.userSession.userToken;
             $http.post(url, { image: $scope.image, status: 0, title: $scope.title, detail: $scope.detail, user_id: userSessions.userSession.userId }).success(function (response) {
@@ -1402,7 +1387,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             .success(function (response) {
                 if (response['status'] == 200) {
                     $scope.homeworksListing = response['data'];
-                    console.log($scope.homeworksListing);
                     if ($scope.homeworksListing == '') {
                         $scope.errorMessage = response['message'];
                         $scope.showPopup();
@@ -1461,7 +1445,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.hwrkDetail = hwDetails.getHwView();
-        console.log($scope.hwrkDetail);
         $scope.hwId = $scope.hwrkDetail.homework_id;
 
         var url = GLOBALS.baseUrl + "user/view-detail-homework/" + $scope.hwId + "?token=" + userSessions.userSession.userToken;
@@ -2021,7 +2004,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
 
 
         $scope.sendTo = function () {
-            console.log($scope.selectedList);
             $scope.recipient = $scope.selectedList.length + " Student selected";
             $scope.closeModal();
         };
