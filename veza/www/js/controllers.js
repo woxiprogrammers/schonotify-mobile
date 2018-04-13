@@ -4,11 +4,12 @@
 var db = null;
 angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-material'])
     .constant('GLOBALS', {
-        //baseUrl:'http://sspss.veza.co.in/api/v1/',
-        //baseUrlImage: 'http://sspss.veza.co.in/'
+        // baseUrl:'http://sspss.veza.co.in/api/v1/',
+        // baseUrlImage: 'http://sspss.veza.co.in/'
 
         baseUrl: 'http://test.woxi.co.in/api/v1/',
         baseUrlImage: 'http://test.woxi.co.in/'
+        
         //baseUrl:'http://school_mit.schnotify.com/api/v1/'
     })
     .factory('Data', function () {
@@ -233,7 +234,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.signOut = function () {
             var url = GLOBALS.baseUrl + "user/logout/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
             $http.get(url).success(function (response) {
-                console.log("User Logged out");
                 userSessions.setToken(0);
                 localStorage.setItem("appToken", JSON.stringify(0));
                 $state.go('login');
@@ -426,7 +426,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             template: 'Loading...',
             duration: 1500
         });
-        // var url = "http://www.mocky.io/v2/5a9795f430000047005c1e09"
         var url = GLOBALS.baseUrl + "user/gallery-image/" + $scope.folderID + "?token=" + userSessions.userSession.userToken
         $http.get(url).success(function (response) {
             if (response['status'] == 200) {
@@ -509,6 +508,8 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $http.post(url, { email: email, password: password }).success(function (res) {
                 $scope.Switchstudentlist = (res['data']['Students']);
                 $scope.data.message = res['message'];
+                
+                // FCM Token is generated here
                 $scope.register = function () {
                     window.FirebasePlugin.getToken(function (token) {
                         // save this server-side and use it to push notifications to this device
@@ -523,6 +524,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     var url = GLOBALS.baseUrl + "user/save-push?token=" + res['data']['users']['token'];
                     $http.post(url, { pushToken: $rootScope.pushToken, user_id: res['data']['Badge_count']['user_id'] }).success(function (response) {
                     }).error(function (err) {
+                        
                     });
                 }
                 if (res['status'] == 200) {
@@ -3235,6 +3237,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.getPerticulars = function (installment_id) {
             var id = installment_id;
             var url = GLOBALS.baseUrl + "/user/student-fee-installment/" + id + "/" + userSessions.userSession.userId + "/?token=" + userSessions.userSession.userToken;
+            // var url ='http://www.mocky.io/v2/5ac766f73100005200a574c0'
             $http.get(url).success(function (response) {
                 if (response['status'] == 200) {
                     $ionicLoading.hide();
@@ -3296,6 +3299,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $scope.getFeesStudent = function () {
                 $ionicLoading.show();
                 var url = GLOBALS.baseUrl + "user/get-fee/" + userSessions.userSession.userId + "/?token=" + userSessions.userSession.userToken;
+                // var url = "http://www.mocky.io/v2/5ac7614d3100005000a574a1"
                 $http.get(url).success(function (response) {
                     $scope.studentFee = response.data;
                 }).error(function (err) {
