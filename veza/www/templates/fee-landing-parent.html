@@ -63,7 +63,7 @@
               </tr>
             </table>
           </div>
-          <center ng-if="structure.show_payment==true" style="margin-top:5px">
+          <center ng-if="structure.show_payment==true && LcStatus == false" style="margin-top:5px">
             <a ng-if="bodyId == 1" href="#" onclick="window.open('http://sspss.veza.co.in/fees/billing-page', '_blank', 'location=no'); return false;">
               <button class="button button-small button-balanced">Pay Fees</button>
             </a>
@@ -74,7 +74,8 @@
             <br>
             <hr>
           </center>
-          <center ng-if="structure.show_payment==false" style="margin-top:5px">
+          <hr>
+          <center ng-if="structure.show_payment==false && LcStatus == false" style="margin-top:5px">
             <div class="speech3" style="width:100%">
               <font color="white">PLEASE PAY THE PREVIOUS PENDING FEES</font>
             </div>

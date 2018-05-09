@@ -9,7 +9,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
 
         baseUrl: 'http://test.woxi.co.in/api/v1/',
         baseUrlImage: 'http://test.woxi.co.in/'
-        
+
         //baseUrl:'http://school_mit.schnotify.com/api/v1/'
     })
     .factory('Data', function () {
@@ -38,6 +38,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             var retrievedData = localStorage.getItem("studentdata");
             var students = JSON.parse(retrievedData);
             var obj = students.filter(function (obj) {
+
                 return obj.student_id === userSessions.userSession.userId;
             })[0];
             return obj;
@@ -508,7 +509,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $http.post(url, { email: email, password: password }).success(function (res) {
                 $scope.Switchstudentlist = (res['data']['Students']);
                 $scope.data.message = res['message'];
-                
+
                 // FCM Token is generated here
                 $scope.register = function () {
                     window.FirebasePlugin.getToken(function (token) {
@@ -524,7 +525,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     var url = GLOBALS.baseUrl + "user/save-push?token=" + res['data']['users']['token'];
                     $http.post(url, { pushToken: $rootScope.pushToken, user_id: res['data']['Badge_count']['user_id'] }).success(function (response) {
                     }).error(function (err) {
-                        
+
                     });
                 }
                 if (res['status'] == 200) {
@@ -572,6 +573,17 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         };
     })
     .controller('DashboardCtrl', function ($ionicPlatform, $ionicPush, $scope, $state, $ionicLoading, $ionicPopup, $timeout, GLOBALS, $http, ionicMaterialInk, ionicMaterialMotion, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData) {
+
+        // //check if LC is created
+        // var LcUrl = GLOBALS.baseUrl + "user/lc_generated/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
+        // $http.get(LcUrl).success(function (response) {
+        //     if (response.status == 200) {
+        //         if (response.is_lc_generated == false) {
+        //             $scope.LcStatus = response.is_lc_generated
+        //         } 
+        //     }
+        // })
+
         $scope.$on("$ionicView.beforeEnter", function (event, data) {
             $ionicLoading.show({
                 template: 'Loading...',
@@ -579,6 +591,24 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             })
             $scope.goToGallery = function () {
                 $state.go("app.gallery")
+            }
+
+            $scope.goToTimetable = function () {
+                //check if LC is created
+                var LcUrl = GLOBALS.baseUrl + "user/lc_generated/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
+                $http.get(LcUrl).success(function (response) {
+                    if (response.status == 200) {
+                        if (response.is_lc_generated) {
+                            $scope.LcStatus = response.is_lc_generated
+                            var alertPopup = $ionicPopup.alert({
+                                title: 'LC has been generated for this student',
+                                template: '  For any information please contact the school'
+                            });
+                        } else {
+                            $state.go("app.timetable")
+                        }
+                    }
+                })
             }
             $scope.showAlert = function () {
                 var alertPopup = $ionicPopup.alert({
@@ -1383,6 +1413,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         if (userSessions.userSession.userToken == 0) {
             $state.go('login');
         }
+
         $scope.clickStatus = false;
         var url = GLOBALS.baseUrl + "user/view-homework-parent/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
         $http.get(url)
@@ -2099,7 +2130,10 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
-
+        $scope.flag = true;
+        // if($scope.flag == true){
+        //     document.getElementById('fab-new-message').hide();
+        // }
         // Set Header
         $scope.$parent.hideHeader();
 
@@ -2436,6 +2470,22 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
 
         $ionicSideMenuDelegate.canDragContent(true);
 
+        //check if LC is created
+        var LcUrl = GLOBALS.baseUrl + "user/lc_generated/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
+        $http.get(LcUrl).success(function (response) {
+            if (response.status == 200) {
+                if (response.is_lc_generated) {
+                    $scope.LcStatus = response.is_lc_generated
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'LC has been generated for this student',
+                        template: '  For any information please contact the school'
+                    });
+                } else {
+                    $scope.LcStatus = response.is_lc_generated
+                }
+            }
+        })
+
         var url = GLOBALS.baseUrl + "user/get-acl-details?token=" + userSessions.userSession.userToken;
         $http.get(url).success(function (response) {
             $scope.data = response['Data']['Acl_Modules'];
@@ -2453,6 +2503,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         if (userSessions.userSession.userToken == 0) {
             $state.go('login');
         }
+
         var url = GLOBALS.baseUrl + "user/get-teachers-list/" + userSessions.userSession.userId + "/?token=" + userSessions.userSession.userToken;
         $http.get(url)
             .success(function (response) {
@@ -3237,7 +3288,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.getPerticulars = function (installment_id) {
             var id = installment_id;
             var url = GLOBALS.baseUrl + "/user/student-fee-installment/" + id + "/" + userSessions.userSession.userId + "/?token=" + userSessions.userSession.userToken;
-            // var url ='http://www.mocky.io/v2/5ac766f73100005200a574c0'
             $http.get(url).success(function (response) {
                 if (response['status'] == 200) {
                     $ionicLoading.hide();
@@ -3251,6 +3301,23 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.getPerticulars($stateParams.installment_id);
     })
     .controller('FeeLandingParentCntrl', function ($ionicScrollDelegate, $rootScope, $ionicLoading, $scope, $state, $timeout, GLOBALS, userSessions, $ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
+
+        //check if LC is created
+        var LcUrl = GLOBALS.baseUrl + "user/lc_generated/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
+        $http.get(LcUrl).success(function (response) {
+            if (response.status == 200) {
+                if (response.is_lc_generated) {
+                    $scope.LcStatus = response.is_lc_generated
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'LC has been generated for this student',
+                        template: '  For any information please contact the school'
+                    });
+                } else {
+                    $scope.LcStatus = response.is_lc_generated
+                }
+            }
+        })
+
         $scope.$on("$ionicView.beforeEnter", function (event, data) {
             $ionicLoading.show({
                 template: 'Loading...',
@@ -3299,7 +3366,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $scope.getFeesStudent = function () {
                 $ionicLoading.show();
                 var url = GLOBALS.baseUrl + "user/get-fee/" + userSessions.userSession.userId + "/?token=" + userSessions.userSession.userToken;
-                // var url = "http://www.mocky.io/v2/5ac7614d3100005000a574a1"
                 $http.get(url).success(function (response) {
                     $scope.studentFee = response.data;
                 }).error(function (err) {
@@ -3334,6 +3400,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.showCon = function (con) {
             $scope.clickOn = con;
             if (con == "con1") {
+                $ionicScrollDelegate.scrollTop();
                 $scope.color = "underline";
                 $scope.color1 = "";
                 $scope.side = "left";
@@ -3973,6 +4040,23 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.$parent.hideHeader();
         // Set Ink
         ionicMaterialInk.displayEffect();
+
+        //check if LC is created
+        var LcUrl = GLOBALS.baseUrl + "user/lc_generated/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
+        $http.get(LcUrl).success(function (response) {
+            if (response.status == 200) {
+                if (response.is_lc_generated) {
+                    $scope.LcStatus = response.is_lc_generated
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'LC has been generated for this student',
+                        template: '  For any information please contact the school'
+                    });
+                } else {
+                    $scope.LcStatus = response.is_lc_generated
+                }
+            }
+        })
+
         var url = GLOBALS.baseUrl + "user/get-acl-details?token=" + userSessions.userSession.userToken;
         $http.get(url).success(function (response) {
             $scope.data = response['Data']['Acl_Modules'];
