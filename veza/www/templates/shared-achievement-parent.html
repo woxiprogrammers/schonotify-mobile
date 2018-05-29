@@ -35,7 +35,7 @@
         <div style="height:50px">
         </div>
         <ion-list class="item item-text-wrap">
-            <ion-item class="card" style="background-color:white;padding:10px" ng-repeat="achievement in nMessages" ng-click="achievementDetail(achievement.id)">
+            <ion-item class="card" style="background-color:white;padding:10px" ng-repeat="achievement in nMessages" ng-click="achievementDetailParent(achievement.id)">
                 <span class="pull-right" ng-if="achievement.status == 2">
                     <button class="button button-balanced status-button" ng-disabled="clickStatus">
                         Published
