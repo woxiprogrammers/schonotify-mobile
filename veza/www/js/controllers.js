@@ -4,11 +4,11 @@
 var db = null;
 angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-material'])
     .constant('GLOBALS', {
-        // baseUrl:'http://sspss.veza.co.in/api/v1/',
-        // baseUrlImage: 'http://sspss.veza.co.in/'
+        baseUrl:'http://sspss.veza.co.in/api/v1/',
+        baseUrlImage: 'http://sspss.veza.co.in/'
 
-        baseUrl: 'http://test.woxi.co.in/api/v1/',
-        baseUrlImage: 'http://test.woxi.co.in/'
+        // baseUrl: 'http://test.woxi.co.in/api/v1/',
+        // baseUrlImage: 'http://test.woxi.co.in/'
 
         //baseUrl:'http://school_mit.schnotify.com/api/v1/'
     })
@@ -529,7 +529,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     });
                 }
                 if (res['status'] == 200) {
-                    $scope.register();
+                   // $scope.register();
                     $scope.studentlist = (res.data['users']);
                     localStorage.setItem('appToken', JSON.stringify($scope.studentlist['token']));
                     $scope.userDataArray = userData.setUserData(res['data']['users']);
@@ -1124,6 +1124,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         //Side-Menu
         $scope.achievementDetail = function (id) {
             $rootScope.DetailAchievemtns = [];
+            console.log($scope.nmessages)
             angular.forEach($scope.nmessages, function (data) {
                 if (data.id == id) {
                     $rootScope.DetailAchievemtns.push(data);
