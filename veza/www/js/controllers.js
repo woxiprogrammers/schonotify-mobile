@@ -529,7 +529,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     });
                 }
                 if (res['status'] == 200) {
-                   // $scope.register();
+                    $scope.register();
                     $scope.studentlist = (res.data['users']);
                     localStorage.setItem('appToken', JSON.stringify($scope.studentlist['token']));
                     $scope.userDataArray = userData.setUserData(res['data']['users']);
@@ -573,17 +573,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         };
     })
     .controller('DashboardCtrl', function ($ionicPlatform, $ionicPush, $scope, $state, $ionicLoading, $ionicPopup, $timeout, GLOBALS, $http, ionicMaterialInk, ionicMaterialMotion, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData) {
-
-        // //check if LC is created
-        // var LcUrl = GLOBALS.baseUrl + "user/lc_generated/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
-        // $http.get(LcUrl).success(function (response) {
-        //     if (response.status == 200) {
-        //         if (response.is_lc_generated == false) {
-        //             $scope.LcStatus = response.is_lc_generated
-        //         } 
-        //     }
-        // })
-
         $scope.$on("$ionicView.beforeEnter", function (event, data) {
             $ionicLoading.show({
                 template: 'Loading...',
