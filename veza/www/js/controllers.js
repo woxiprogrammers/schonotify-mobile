@@ -4,11 +4,11 @@
 var db = null;
 angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-material'])
     .constant('GLOBALS', {
-        baseUrl:'http://sspss.veza.co.in/api/v1/',
-        baseUrlImage: 'http://sspss.veza.co.in/'
+        // baseUrl:'http://sspss.veza.co.in/api/v1/',
+        // baseUrlImage: 'http://sspss.veza.co.in/'
 
-        // baseUrl: 'http://test.woxi.co.in/api/v1/',
-        // baseUrlImage: 'http://test.woxi.co.in/'
+        baseUrl: 'http://test.woxi.co.in/api/v1/',
+        baseUrlImage: 'http://test.woxi.co.in/'
 
         //baseUrl:'http://school_mit.schnotify.com/api/v1/'
     })
@@ -104,7 +104,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             return studentToggle.data;
         };
     })
-    .controller('AppCtrl', function (userData, myservice, GLOBALS, $scope, $state, $ionicPopup, $http, $ionicModal, $ionicPopover, $timeout, $ionicSideMenuDelegate, $ionicHistory, userSessions) {
+    .controller('AppCtrl', function ($rootScope, userData, myservice, GLOBALS, $scope, $state, $ionicPopup, $http, $ionicModal, $ionicPopover, $timeout, $ionicSideMenuDelegate, $ionicHistory, userSessions) {
         $scope.$on("$ionicView.beforeEnter", function (event, data) {
             var url = GLOBALS.baseUrl + "user/get-message-count/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
             $http.get(url).success(function (response) {
@@ -134,6 +134,16 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     });
             }
             $scope.studentlistForSwitch();
+            $scope.checkLcStatus = function () {
+                //check if LC is created
+                var LcUrl = GLOBALS.baseUrl + "user/lc_generated/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
+                $http.get(LcUrl).success(function (response) {
+                    if (response.status == 200) {
+                        $rootScope.lcStatus = response.is_lc_generated;
+                    }
+                })
+            }
+            $scope.checkLcStatus();
         });
         if (userSessions.userSession.userRole == 'teacher') {
             $scope.check = true;
@@ -516,6 +526,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                         // save this server-side and use it to push notifications to this device
                         $rootScope.pushToken = token;
                         $scope.saveToken();
+
                     }, function (error) {
                         console.error(error);
                     });
@@ -525,11 +536,11 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     var url = GLOBALS.baseUrl + "user/save-push?token=" + res['data']['users']['token'];
                     $http.post(url, { pushToken: $rootScope.pushToken, user_id: res['data']['Badge_count']['user_id'] }).success(function (response) {
                     }).error(function (err) {
-
+                        console.log(err)
                     });
                 }
                 if (res['status'] == 200) {
-                    $scope.register();
+                    // $scope.register();
                     $scope.studentlist = (res.data['users']);
                     localStorage.setItem('appToken', JSON.stringify($scope.studentlist['token']));
                     $scope.userDataArray = userData.setUserData(res['data']['users']);
@@ -556,6 +567,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     $scope.error = err['message'];
                 });
         }
+
         $scope.showPopup = function () {
             // An elaborate, custom popup
             var myPopup = $ionicPopup.show({
@@ -571,8 +583,9 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 myPopup.close(); //close the popup after 3 seconds for some reason
             }, 3000);
         };
+
     })
-    .controller('DashboardCtrl', function ($ionicPlatform, $ionicPush, $scope, $state, $ionicLoading, $ionicPopup, $timeout, GLOBALS, $http, ionicMaterialInk, ionicMaterialMotion, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData) {
+    .controller('DashboardCtrl', function ($rootScope, $ionicPlatform, $ionicPush, $scope, $state, $ionicLoading, $ionicPopup, $timeout, GLOBALS, $http, ionicMaterialInk, ionicMaterialMotion, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData) {
         $scope.$on("$ionicView.beforeEnter", function (event, data) {
             $ionicLoading.show({
                 template: 'Loading...',
@@ -584,20 +597,15 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
 
             $scope.goToTimetable = function () {
                 //check if LC is created
-                var LcUrl = GLOBALS.baseUrl + "user/lc_generated/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
-                $http.get(LcUrl).success(function (response) {
-                    if (response.status == 200) {
-                        if (response.is_lc_generated) {
-                            $scope.LcStatus = response.is_lc_generated
-                            var alertPopup = $ionicPopup.alert({
-                                title: 'LC has been generated for this student',
-                                template: '  For any information please contact the school'
-                            });
-                        } else {
-                            $state.go("app.timetable")
-                        }
-                    }
-                })
+                if ($rootScope.lcStatus) {
+                    $scope.LcStatus = $rootScope.lcStatus
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'LC has been generated for this student',
+                        template: '  For any information please contact the school'
+                    });
+                } else {
+                    $state.go("app.timetable")
+                }
             }
             $scope.showAlert = function () {
                 var alertPopup = $ionicPopup.alert({
@@ -682,7 +690,14 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         });
         $scope.feelanding = function () {
             if (userSessions.userSession.userRole == "parent") {
-                $state.go('app.feelanding');
+                if ($rootScope.lcStatus) {
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'LC has been generated for this student',
+                        template: '  For any information please contact the school'
+                    });
+                } else {
+                    $state.go('app.feelanding');
+                }
             } else {
                 var alertPopup = $ionicPopup.alert({
                     title: 'Access Denied !',
@@ -692,7 +707,16 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         }
         $scope.eventlanding = function () {
             if (userSessions.userSession.userRole == "parent") {
-                $state.go('app.eventlandingparent');
+                //Check Lc status
+                if ($rootScope.lcStatus) {
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'LC has been generated for this student',
+                        template: '  For any information please contact the school'
+                    });
+                } else {
+                    $state.go('app.eventlandingparent');
+                }
+
             }
             else {
                 $state.go('app.eventlandingteacher');
@@ -700,7 +724,15 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         }
         $scope.NoticeboardView = function () {
             if (userSessions.userSession.userRole == "parent") {
-                $state.go('app.sharedNotifyParent');
+                //Check Lc status
+                if ($rootScope.lcStatus) {
+                    var alertPopup = $ionicPopup.alert({
+                        title: 'LC has been generated for this student',
+                        template: '  For any information please contact the school'
+                    });
+                } else {
+                    $state.go('app.sharedNotifyParent');
+                }
             } else {
                 $state.go('app.sharedNotification');
             }
@@ -2443,7 +2475,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }, 3000);
         };
     })
-    .controller('ParentMsgComposeCtrl', function ($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $ionicHistory, $http, GLOBALS, userSessions, $ionicPopup) {
+    .controller('ParentMsgComposeCtrl', function ($rootScope, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $ionicHistory, $http, GLOBALS, userSessions, $ionicPopup) {
 
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -2461,20 +2493,15 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $ionicSideMenuDelegate.canDragContent(true);
 
         //check if LC is created
-        var LcUrl = GLOBALS.baseUrl + "user/lc_generated/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
-        $http.get(LcUrl).success(function (response) {
-            if (response.status == 200) {
-                if (response.is_lc_generated) {
-                    $scope.LcStatus = response.is_lc_generated
-                    var alertPopup = $ionicPopup.alert({
-                        title: 'LC has been generated for this student',
-                        template: '  For any information please contact the school'
-                    });
-                } else {
-                    $scope.LcStatus = response.is_lc_generated
-                }
-            }
-        })
+        if ($rootScope.lcStatus) {
+            $scope.LcStatus = $rootScope.lcStatus
+            var alertPopup = $ionicPopup.alert({
+                title: 'LC has been generated for this student',
+                template: '  For any information please contact the school'
+            });
+        } else {
+            $scope.LcStatus = $rootScope.lcStatus
+        }
 
         var url = GLOBALS.baseUrl + "user/get-acl-details?token=" + userSessions.userSession.userToken;
         $http.get(url).success(function (response) {
@@ -3292,22 +3319,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
     })
     .controller('FeeLandingParentCntrl', function ($ionicScrollDelegate, $rootScope, $ionicLoading, $scope, $state, $timeout, GLOBALS, userSessions, $ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
 
-        //check if LC is created
-        var LcUrl = GLOBALS.baseUrl + "user/lc_generated/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
-        $http.get(LcUrl).success(function (response) {
-            if (response.status == 200) {
-                if (response.is_lc_generated) {
-                    $scope.LcStatus = response.is_lc_generated
-                    var alertPopup = $ionicPopup.alert({
-                        title: 'LC has been generated for this student',
-                        template: '  For any information please contact the school'
-                    });
-                } else {
-                    $scope.LcStatus = response.is_lc_generated
-                }
-            }
-        })
-
         $scope.$on("$ionicView.beforeEnter", function (event, data) {
             $ionicLoading.show({
                 template: 'Loading...',
@@ -4019,7 +4030,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }
         };
     })
-    .controller('CreateLeaveCtrl', function ($scope, $state, $timeout, $filter, ionicMaterialInk, $ionicPopup, $ionicSideMenuDelegate, GLOBALS, $http, userSessions) {
+    .controller('CreateLeaveCtrl', function ($rootScope, $scope, $state, $timeout, $filter, ionicMaterialInk, $ionicPopup, $ionicSideMenuDelegate, GLOBALS, $http, userSessions) {
         // handle event
         //$scope.fromDate=$filter('fromDate')('yyyy dd mm');
         $scope.$parent.clearFabs();
@@ -4032,20 +4043,15 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         ionicMaterialInk.displayEffect();
 
         //check if LC is created
-        var LcUrl = GLOBALS.baseUrl + "user/lc_generated/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
-        $http.get(LcUrl).success(function (response) {
-            if (response.status == 200) {
-                if (response.is_lc_generated) {
-                    $scope.LcStatus = response.is_lc_generated
-                    var alertPopup = $ionicPopup.alert({
-                        title: 'LC has been generated for this student',
-                        template: '  For any information please contact the school'
-                    });
-                } else {
-                    $scope.LcStatus = response.is_lc_generated
-                }
-            }
-        })
+        if ($rootScope.lcStatus) {
+            $scope.LcStatus = $rootScope.lcStatus
+            var alertPopup = $ionicPopup.alert({
+                title: 'LC has been generated for this student',
+                template: '  For any information please contact the school'
+            });
+        } else {
+            $scope.LcStatus = $rootScope.lcStatus
+        }
 
         var url = GLOBALS.baseUrl + "user/get-acl-details?token=" + userSessions.userSession.userToken;
         $http.get(url).success(function (response) {
