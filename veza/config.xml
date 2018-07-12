@@ -70,8 +70,5 @@
     <allow-navigation href="http://192.168.2.20:8101" />
     <allow-navigation href="http://192.168.2.20:8104" />
     <allow-navigation href="http://192.168.2.11:8100" />
-    <allow-navigation href="http://192.168.2.11:8103" />
-    <allow-navigation href="http://192.168.2.11:8104" />
-    <allow-navigation href="http://192.168.2.11:8105" />
     <engine name="android" spec="~6.3.0" />
 </widget>
