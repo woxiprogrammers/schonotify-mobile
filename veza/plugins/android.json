@@ -27,6 +27,9 @@
     "cordova-plugin-device": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
+    "cordova-plugin-firebase": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
     "cordova-plugin-image-picker": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
@@ -51,7 +54,8 @@
     "ionic-plugin-keyboard": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
-    "cordova-plugin-firebase": {
+    "phonegap-plugin-push": {
+      "SENDER_ID": "85075801930",
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     }
   },

@@ -394,7 +394,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $state.go('app.dashboard');
         }
         else {
-            $state.go('login');
+            $state.go('selectschool');
         }
 
     })
@@ -506,8 +506,8 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
 
 
     .controller('LoginCtrl', function ($ionicHistory, $rootScope, $ionicPush, myservice, $scope, $state, $ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
-        $scope.myGoBack = function () {
-            $state.go('publicselectschool')
+        $scope.goBackToSelectSchool = function () {
+            $state.go('selectschool')
         };
         $scope.data = [];
         ionicMaterialInk.displayEffect();
@@ -3142,7 +3142,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         };
         $scope.recentEvent();
     })
-    .controller('app.PublicAchievementCtrl', function ($ionicHistory, $rootScope, userSessions, GLOBALS, $http, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicLoading) {
+    .controller('app.PublicNoticeboard', function ($ionicHistory, $rootScope, userSessions, GLOBALS, $http, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicLoading) {
         $scope.myGoBack = function () {
             $state.go('publicDashboard')
         };
@@ -3203,104 +3203,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             });
         };
     })
-    .controller('PublicEventCtr', function ($rootScope, $ionicHistory, $ionicLoading, $scope, $state, $timeout, GLOBALS, userSessions, $ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
-        $scope.hidden = true;
-        $scope.hiddenn = true;
-        $scope.myGoBack = function () {
-            $state.go('publicDashboard')
-        };
-        $scope.recentEvent = function () {
-            var url = GLOBALS.baseUrl + "user/view-top-five-event-new";
-            $http.post(url, { body_id: $rootScope.organisationID, _method: 'POST' })
-                .success(function (response) {
-                    if (response['status'] == 200) {
-                        $scope.eventList = response['data'];
-                    } else {
-                        $scope.responseMessage = response['message'];
-                        $scope.showPopup();
-                    }
-                }).error(function (err) {
-                    $scope.responseMessage = "You do not have permission,please contact admin!!!";
-                    $scope.showPopup();
-                });
-        }
 
-        $scope.eventYearMonth = function () {
-            var url = GLOBALS.baseUrl + "user/public-get-year-month";
-            $http.get(url).success(function (response) {
-                if (response['status'] == 200) {
-                    $scope.yearMonthData = response['data'];
-                    if ($scope.yearMonthData == '') {
-                        $scope.aclMessage = response['message'];
-                        $scope.showPopup();
-                    }
-                } else {
-                    $scope.aclMessage = response['message'];
-                    $scope.showPopup();
-                }
-            }).error(function (err) {
-                $scope.aclMessage = "Data not found for this Instance!!!";
-                $scope.showPopup();
-            });
-        }
-        $scope.eventYearMonth();
-        $scope.setMonth = function (year) {
-            $scope.monthList = null;
-            angular.forEach($scope.yearMonthData, function (item) {
-                if (item.year === year) {
-                    $scope.monthList = item.month[0];
-                }
-            });
-        }
-        $scope.setMonth($scope.selectedYear);
-        $scope.eventByMonth = function (month) {
-            var url = GLOBALS.baseUrl + "user/view-months-event/" + $scope.selectedYear + "/" + month;
-            $http.get(url).success(function (response) {
-                if (response['status'] == 200) {
-                    console.log(response['data']);
-                    $scope.eventList = response['data'];
-                    console.log($scope.eventList);
-                    if ($scope.eventList == '') {
-                        $scope.aclMessage = response['message'];
-                        $scope.showPopup();
-                    }
-                } else {
-                    $scope.aclMessage = response['message'];
-                    $scope.showPopup();
-                }
-            }).error(function (err) {
-                $scope.aclMessage = "Event Not Found For This Instance!!!";
-                $scope.showPopup();
-            });
-        }
-        $scope.getDetailsOfEvent = function (event_id) {
-            var keepGoing = true;
-            angular.forEach($scope.eventList, function (item) {
-                if (keepGoing) {
-                    if (item.id === event_id) {
-                        $state.go('app.eventstatuspublic', { obj: item });
-                        keepGoing = false;
-                    }
-                }
-            });
-        }
-        $scope.showPopup = function () {
-            // An elaborate, custom popup
-            var myPopup = $ionicPopup.show({
-                template: '<div>' + $scope.aclMessage + '</div>',
-                title: '',
-                subTitle: '',
-                scope: $scope
-            });
-            myPopup.then(function (res) {
-                console.log('Tapped!', res);
-            });
-            $timeout(function () {
-                myPopup.close(); //close the popup after 3 seconds for some reason
-            }, 3000);
-        };
-        $scope.recentEvent();
-    })
     .controller('FeeDetailCntrl', function ($stateParams, $rootScope, $ionicLoading, $scope, $state, $timeout, GLOBALS, userSessions, $ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.getPerticulars = function (installment_id) {
             var id = installment_id;
@@ -3655,24 +3558,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }, 3000);
         }
     })
-    .controller('EventStatusPublicCtrl', function ($state, $scope, $http, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams, userSessions, GLOBALS, $ionicPopup, $ionicLoading, $ionicHistory) {
-        $scope.$parent.clearFabs();
-        $scope.isExpanded = false;
-        $scope.$parent.setExpanded(false);
-        $scope.$parent.setHeaderFab(false);
-        // Set Header
-        $scope.$parent.hideHeader();
-        // Set Ink
-        ionicMaterialInk.displayEffect();
-        //Side-Menu
-        $ionicSideMenuDelegate.canDragContent(false);
-        $scope.startEventTime = new Date();
-        $scope.endEventTime = new Date();
-        $scope.eventdetailsList = $stateParams;
-        $scope.myGoBack = function () {
-            $ionicHistory.goBack();
-        }
-    })
+
     .controller('EditEventCtrl', function ($ionicLoading, $ionicPopup, GLOBALS, $http, userSessions, $scope, $state, $filter, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -4434,57 +4320,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         };
         $scope.selectedDate = new Date();
     })
-    .controller('DetailPagePublicCtrl', function (userSessions, GLOBALS, $ionicPopup, $rootScope, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $http, $ionicLoading) {
-        $scope.$parent.clearFabs();
-        $scope.isExpanded = false;
-        $scope.$parent.setExpanded(false);
-        $scope.$parent.setHeaderFab(false);
 
-        // Set Header
-        $scope.$parent.hideHeader();
-        // Set Ink
-        ionicMaterialInk.displayEffect();
-
-        //Side-Menu
-        $ionicSideMenuDelegate.canDragContent(false);
-
-        $scope.DetailAchievemtns = $rootScope.DetailAchievemtns;
-        $scope.imageData = $rootScope.imagesData;
-        $scope.showAlertsucess = function (message) {
-            console.log(message);
-        }
-        $scope.achievementDetailParent = function (id) {
-            $rootScope.DetailAchievemtns = [];
-            angular.forEach($scope.nMessages, function (data) {
-                if (data.id == id) {
-                    $rootScope.DetailAchievemtns.push(data);
-                }
-            })
-            $rootScope.imagesData = [];
-            console.log($scope.imagesData);
-            angular.forEach($scope.imagesData, function (dataa) {
-                angular.forEach(dataa, function (dataImage) {
-                    if (dataImage.event_id == id) {
-                        $rootScope.imagesData.push(dataImage);
-                    }
-                })
-            })
-            $state.go('app.achievementDetailParent');
-        };
-        $scope.openModal = function () {
-            $scope.modal.show();
-        }
-        $scope.closeModal = function () {
-            $scope.modal.hide();
-        };
-        $scope.$on('$destroy', function () {
-            // $scope.modal.remove();
-        });
-        $scope.noticeBoard = function () {
-            $state.go('app.sharedNotification');
-        };
-        $scope.selectedDate = new Date();
-    })
     .controller('TimeTableCtrl', function ($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup, $filter, userSessions, GLOBALS, $http) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -4999,4 +4835,335 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
 
         };
 
+    })
+    .controller('SelectSchoolCtr',
+        function (
+            $rootScope,
+            $scope,
+            $ionicPopup,
+            $state
+        ) {
+            $scope.showSelectSchoolAlert = function () {
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Please select a School'
+                });
+            }
+            $scope.getSchoolDetails = function (id) {
+                $rootScope.organisationID = id;
+            }
+            $scope.goToLogin = function () {
+                $state.go('login');
+            }
+            $scope.goToPublicDashboard = function () {
+                if (0 < $rootScope.organisationID && $rootScope.organisationID <= 2) {
+                    $state.go('publicDashboard');
+                }
+                else {
+                    $scope.showSelectSchoolAlert();
+                }
+            }
+        })
+
+    .controller('PublicDashboardCtr',
+        function (
+            $scope,
+            $state
+        ) {
+            $scope.goBackToSelectSchool = function () {
+                $state.go('selectschool')
+            };
+            $scope.goToPublicEventsLanding = function () {
+                $state.go('publicEvents')
+            }
+            $scope.goToPublicAchievementLanding = function () {
+                $state.go('app.achievementpublic')
+            }
+            $scope.goToPublicGalleryLanding = function () {
+                $state.go("publicGallary")
+            }
+            $scope.goToPublicAboutUsLanding = function () {
+                $state.go("publicAboutUs")
+            }
+        })
+
+    .controller('PublicEventCtr',
+        function (
+            $rootScope,
+            $scope,
+            $state,
+            $timeout,
+            GLOBALS,
+            $ionicPopup,
+            $http,
+        ) {
+            $scope.hidden = true;
+            $scope.hiddenn = true;
+            $scope.goBackToPublicDashboard = function () {
+                $state.go('publicDashboard')
+            };
+            $scope.recentEvent = function () {
+                var url = GLOBALS.baseUrl + "user/view-top-five-event-new";
+                $http.post(url, { body_id: $rootScope.organisationID, _method: 'POST' })
+                    .success(function (response) {
+                        if (response['status'] == 200) {
+                            $scope.eventList = response['data'];
+                        } else {
+                            $scope.responseMessage = response['message'];
+                            $scope.showPopup();
+                        }
+                    }).error(function (err) {
+                        $scope.responseMessage = "You do not have permission,please contact admin!!!";
+                        $scope.showPopup();
+                    });
+            }
+
+            $scope.eventYearMonth = function () {
+                var url = GLOBALS.baseUrl + "user/public-get-year-month";
+                $http.get(url).success(function (response) {
+                    if (response['status'] == 200) {
+                        $scope.yearMonthData = response['data'];
+                        if ($scope.yearMonthData == '') {
+                            $scope.aclMessage = response['message'];
+                            $scope.showPopup();
+                        }
+                    } else {
+                        $scope.aclMessage = response['message'];
+                        $scope.showPopup();
+                    }
+                }).error(function (err) {
+                    $scope.aclMessage = "Data not found for this Instance!!!";
+                    $scope.showPopup();
+                });
+            }
+            $scope.eventYearMonth();
+            $scope.setMonth = function (year) {
+                $scope.monthList = null;
+                angular.forEach($scope.yearMonthData, function (item) {
+                    if (item.year === year) {
+                        $scope.monthList = item.month[0];
+                    }
+                });
+            }
+            $scope.setMonth($scope.selectedYear);
+            $scope.eventByMonth = function (month) {
+                var url = GLOBALS.baseUrl + "user/view-months-event/" + $scope.selectedYear + "/" + month;
+                $http.get(url).success(function (response) {
+                    if (response['status'] == 200) {
+                        console.log(response['data']);
+                        $scope.eventList = response['data'];
+                        console.log($scope.eventList);
+                        if ($scope.eventList == '') {
+                            $scope.aclMessage = response['message'];
+                            $scope.showPopup();
+                        }
+                    } else {
+                        $scope.aclMessage = response['message'];
+                        $scope.showPopup();
+                    }
+                }).error(function (err) {
+                    $scope.aclMessage = "Event Not Found For This Instance!!!";
+                    $scope.showPopup();
+                });
+            }
+            $scope.getDetailsOfEvent = function (event_id) {
+                var keepGoing = true;
+                angular.forEach($scope.eventList, function (item) {
+                    if (keepGoing) {
+                        if (item.id === event_id) {
+                            $state.go('app.eventstatuspublic', { obj: item });
+                            keepGoing = false;
+                        }
+                    }
+                });
+            }
+            $scope.showPopup = function () {
+                // An elaborate, custom popup
+                var myPopup = $ionicPopup.show({
+                    template: '<div>' + $scope.aclMessage + '</div>',
+                    title: '',
+                    subTitle: '',
+                    scope: $scope
+                });
+                myPopup.then(function (res) {
+                    console.log('Tapped!', res);
+                });
+                $timeout(function () {
+                    myPopup.close(); //close the popup after 3 seconds for some reason
+                }, 3000);
+            };
+            $scope.recentEvent();
+        })
+    .controller('EventStatusPublicCtrl',
+        function (
+            $scope,
+            ionicMaterialInk,
+            $ionicSideMenuDelegate,
+            $stateParams,
+            $ionicHistory
+        ) {
+            $scope.$parent.clearFabs();
+            $scope.isExpanded = false;
+            $scope.$parent.setExpanded(false);
+            $scope.$parent.setHeaderFab(false);
+            // Set Header
+            $scope.$parent.hideHeader();
+            // Set Ink
+            ionicMaterialInk.displayEffect();
+            //Side-Menu
+            $ionicSideMenuDelegate.canDragContent(false);
+            $scope.startEventTime = new Date();
+            $scope.endEventTime = new Date();
+            $scope.eventdetailsList = $stateParams;
+            $scope.myGoBack = function () {
+                $ionicHistory.goBack();
+            }
+        })
+
+    .controller('PublicAchievementDetail',
+        function (
+            $rootScope,
+            $scope,
+            $state,
+            ionicMaterialInk,
+            $ionicSideMenuDelegate,
+        ) {
+            $scope.$parent.clearFabs();
+            $scope.isExpanded = false;
+            $scope.$parent.setExpanded(false);
+            $scope.$parent.setHeaderFab(false);
+
+            // Set Header
+            $scope.$parent.hideHeader();
+            // Set Ink
+            ionicMaterialInk.displayEffect();
+
+            //Side-Menu
+            $ionicSideMenuDelegate.canDragContent(false);
+
+            $scope.DetailAchievemtns = $rootScope.DetailAchievemtns;
+            $scope.imageData = $rootScope.imagesData;
+            $scope.showAlertsucess = function (message) {
+                console.log(message);
+            }
+            $scope.achievementDetailParent = function (id) {
+                $rootScope.DetailAchievemtns = [];
+                angular.forEach($scope.nMessages, function (data) {
+                    if (data.id == id) {
+                        $rootScope.DetailAchievemtns.push(data);
+                    }
+                })
+                $rootScope.imagesData = [];
+                console.log($scope.imagesData);
+                angular.forEach($scope.imagesData, function (dataa) {
+                    angular.forEach(dataa, function (dataImage) {
+                        if (dataImage.event_id == id) {
+                            $rootScope.imagesData.push(dataImage);
+                        }
+                    })
+                })
+                $state.go('app.achievementDetailParent');
+            };
+            $scope.openModal = function () {
+                $scope.modal.show();
+            }
+            $scope.closeModal = function () {
+                $scope.modal.hide();
+            };
+            $scope.$on('$destroy', function () {
+                // $scope.modal.remove();
+            });
+            $scope.noticeBoard = function () {
+                $state.go('app.sharedNotification');
+            };
+            $scope.selectedDate = new Date();
+        })
+    .controller('PublicGallaryCtrl',
+        function (
+            $rootScope,
+            $scope,
+            $state,
+            $http,
+            GLOBALS
+        ) {
+            $scope.baseImageURL = GLOBALS.baseUrlImage
+            var url = GLOBALS.baseUrl + "user/folder-first-image/" + $rootScope.organisationID;
+            console.log(url)
+            $http.get(url).success(function (response) {
+                if (response.status == 200) {
+                    $scope.folders_size = response.data.folder_list.length;
+                    if ($scope.folders_size > 0) {
+                        $scope.folders = response.data.folder_list;
+                    } else {
+                        $scope.showAlertsucess("No data found")
+                    }
+                } else {
+                    $scope.showAlertsucess("No data found")
+                }
+    
+            }).error(function (err) {
+            });
+            $scope.showAlertsucess = function (message) {
+                var alertPopup = $ionicPopup.alert({
+                    template: '<center>' + message + '<center>'
+                })
+            }
+            
+            $scope.galleryFolder = function (folderID) {
+                $state.go('app.galleryLanding', { obj: folderID });
+            } 
+            $scope.myGoBack = function () {
+                $state.go('publicDashboard')
+            }
+            
+        })
+        .controller('PublicGallaryLandingCtrl', function($sce, $ionicPlatform, $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+            screen.orientation.unlock();
+             $ionicScrollDelegate.scrollTop();
+            var url = "http://www.mocky.io/v2/5a58ab302d00007f1fd2e5d2"
+            $ionicLoading.show({
+              template: 'Loading...',
+              duration: 1500
+            });
+            $http.get(url).success(function(response){
+              $rootScope.images = response;
+              $rootScope.video_url=$rootScope.images[0].video[0].video_url;
+              $scope.movie = {src:$rootScope.video_url}
+            })
+            $ionicLoading.show({
+              template: 'Loading...',
+              duration: 1500
+            })
+            $scope.myGoBack=function(){
+              $state.go('publicGallary')
+            }
+            $scope.showImages = function(index) {
+              $scope.activeSlide = index;
+              $scope.showModal('templates/image-popover.html');
+            };
+            $scope.showModal = function(templateUrl) {
+                  $ionicModal.fromTemplateUrl(templateUrl, {
+                            scope: $scope,
+                            animation: 'slide-in-up'
+                    }).then(function(modal) {
+                          $scope.modal = modal;
+                          $scope.modal.show();
+                      });
+                }
+              // Close the modal
+              $scope.closeModal = function() {
+              $scope.modal.hide();
+                  $scope.modal.remove()
+              };
+            $ionicPlatform.onHardwareBackButton(function() {
+              $scope.modal.hide();
+              $scope.modal.remove()
+            });
+            $scope.trustSrc = function(src) {
+                return $sce.trustAsResourceUrl(src);
+              };
+          $scope.playVideo = function() {
+            $ionicScrollDelegate.scrollTop();
+              $scope.showModal('templates/video-popover.html');
+          }
+          $scope.zoomMin=1;
     }); // end of Ctrl

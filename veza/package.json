@@ -19,7 +19,8 @@
     "gulp-rename": "^1.2.2",
     "ionic": "^2.1.0",
     "ionic-datetime-picker": "^1.1.1",
-    "ionic-plugin-keyboard": "~2.2.1"
+    "ionic-plugin-keyboard": "~2.2.1",
+    "phonegap-plugin-push": "~1.10.5"
   },
   "devDependencies": {
     "@ionic/cli-plugin-gulp": "1.0.1",
@@ -45,7 +46,10 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
       "com-sarriaroman-photoviewer": {},
-      "cordova-plugin-firebase": {}
+      "cordova-plugin-firebase": {},
+      "phonegap-plugin-push": {
+        "SENDER_ID": "750487257563"
+      }
     },
     "platforms": [
       "android"

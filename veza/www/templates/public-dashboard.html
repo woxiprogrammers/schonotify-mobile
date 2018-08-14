@@ -1,0 +1,31 @@
+<ion-view view-title="Login" align-title="left" class="touch-effect login-bg-col no-scroll">
+    <ion-content class="scroll" style="background: url(img/login.jpg) center; background-size: cover;">
+      <div class="col-10"  ng-click="goBackToSelectSchool()">
+          <button class="button-clear">
+              <i class="ion-arrow-left-c button-back-white"></i>
+          </button>
+      </div>
+      <ion-grid>
+        <div class="card" style="padding:50px;text-align:center; background:#3cba54" ng-click="goToPublicEventsLanding()">
+          <div class="item" >
+          <span style='font-size:22px;color:#fff;font-weight:bold'>EVENTS</span>
+          </div>
+        </div>
+        <div class="card" style="padding:50px;text-align:center; background:#f4c20d "ng-click="goToPublicAchievementLanding()">
+          <div class="item ">
+            <span style='font-size:22px;color:#fff;font-weight:bold'>NOTICE BOARD</span>
+          </div>
+        </div>
+        <div class="card" style="padding:50px;text-align:center; background:#db3236" ng-click="goToPublicGalleryLanding()">
+          <div class="item ">
+            <span style='font-size:22px;color:#fff;font-weight:bold'>GALLERY</span>
+          </div>
+        </div>
+        <!-- <div class="card" style="padding:50px;text-align:center; background:#4885ed" ng-click="goToPublicAboutUsLanding()">
+          <div class="item">
+            <span style='font-size:22px;color:#fff;font-weight:bold'>ABOUT US</span>
+          </div>
+        </div> -->
+      </ion-grid>
+    </ion-content>
+</ion-view>

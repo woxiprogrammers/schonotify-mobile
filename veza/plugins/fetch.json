@@ -134,11 +134,9 @@
   "phonegap-plugin-push": {
     "source": {
       "type": "registry",
-      "id": "phonegap-plugin-push@~1.10.5"
+      "id": "phonegap-plugin-push@2.0.0-rc4"
     },
     "is_top_level": true,
-    "variables": {
-      "SENDER_ID": "750487257563"
-    }
+    "variables": {}
   }
 }
