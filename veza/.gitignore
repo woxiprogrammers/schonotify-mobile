@@ -2,4 +2,5 @@
 # http://git-scm.com/docs/gitignore
 platforms
 .idea/
-node_modules
+node_modules/
+*.apk
