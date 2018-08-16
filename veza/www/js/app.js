@@ -97,6 +97,9 @@ angular.module('starter', ['ionic', 'ionic.cloud', 'starter.controllers', 'ngCor
 
             .state('publicGallaryLanding', {
                 url: '/publicGallaryLanding',
+                params:{
+                    'obj':null
+                },
                 templateUrl: 'templates/public-gallery-landing.html',
                 controller: 'PublicGallaryLandingCtrl'
             })

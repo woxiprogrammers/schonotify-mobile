@@ -4,13 +4,11 @@
 var db = null;
 angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-material'])
     .constant('GLOBALS', {
-        // baseUrl:'http://sspss.veza.co.in/api/v1/',
-        // baseUrlImage: 'http://sspss.veza.co.in/'
+        // baseUrl: 'http://sspss.veza.co.in/api/v1/',
+         //baseUrlImage: 'http://sspss.veza.co.in/',
 
         baseUrl: 'http://test.woxi.co.in/api/v1/',
         baseUrlImage: 'http://test.woxi.co.in/'
-
-        //baseUrl:'http://school_mit.schnotify.com/api/v1/'
     })
     .factory('Data', function () {
         return { message }
@@ -540,7 +538,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     });
                 }
                 if (res['status'] == 200) {
-                    // $scope.register();
+                    $scope.register();
                     $scope.studentlist = (res.data['users']);
                     localStorage.setItem('appToken', JSON.stringify($scope.studentlist['token']));
                     $scope.userDataArray = userData.setUserData(res['data']['users']);
@@ -4888,13 +4886,19 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
 
     .controller('PublicEventCtr',
         function (
-            $rootScope,
-            $scope,
-            $state,
-            $timeout,
-            GLOBALS,
-            $ionicPopup,
-            $http,
+            $ionicLoading,
+             $ionicPopup, 
+             GLOBALS, 
+             $http, 
+             userSessions,
+             $scope, 
+             $state, 
+             $filter, 
+             $timeout, 
+             ionicMaterialInk, 
+             $ionicSideMenuDelegate, 
+             $stateParams,
+             $rootScope
         ) {
             $scope.hidden = true;
             $scope.hiddenn = true;
@@ -5021,11 +5025,20 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
 
     .controller('PublicAchievementDetail',
         function (
+            $ionicScrollDelegate,
             $rootScope,
+            $ionicLoading,
+            $ionicPopup,
+            GLOBALS,
+            $http,
+            userSessions,
             $scope,
             $state,
+            $filter,
+            $timeout,
             ionicMaterialInk,
             $ionicSideMenuDelegate,
+            $stateParams
         ) {
             $scope.$parent.clearFabs();
             $scope.isExpanded = false;
@@ -5079,15 +5092,23 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         })
     .controller('PublicGallaryCtrl',
         function (
-            $rootScope,
-            $scope,
-            $state,
-            $http,
-            GLOBALS
+            $ionicScrollDelegate, 
+            $rootScope, 
+            $ionicLoading, 
+            $ionicPopup, 
+            GLOBALS, 
+            $http, 
+            userSessions, 
+            $scope, 
+            $state, 
+            $filter, 
+            $timeout, 
+            ionicMaterialInk, 
+            $ionicSideMenuDelegate, 
+            $stateParams
         ) {
             $scope.baseImageURL = GLOBALS.baseUrlImage
             var url = GLOBALS.baseUrl + "user/folder-first-image/" + $rootScope.organisationID;
-            console.log(url)
             $http.get(url).success(function (response) {
                 if (response.status == 200) {
                     $scope.folders_size = response.data.folder_list.length;
@@ -5099,7 +5120,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 } else {
                     $scope.showAlertsucess("No data found")
                 }
-    
+
             }).error(function (err) {
             });
             $scope.showAlertsucess = function (message) {
@@ -5107,63 +5128,105 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     template: '<center>' + message + '<center>'
                 })
             }
-            
+
             $scope.galleryFolder = function (folderID) {
-                $state.go('app.galleryLanding', { obj: folderID });
-            } 
+                $state.go('publicGallaryLanding', { obj: folderID });
+            }
             $scope.myGoBack = function () {
                 $state.go('publicDashboard')
             }
-            
+
         })
-        .controller('PublicGallaryLandingCtrl', function($sce, $ionicPlatform, $ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate,$ionicHistory,$rootScope,$ionicPush,myservice,$scope, $state,$ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData){
+    .controller('PublicGallaryLandingCtrl',
+        function (
+            $ionicScrollDelegate,
+             $ionicLoading,
+              $ionicPopup, 
+              GLOBALS, 
+              $http, 
+              userSessions, 
+              $scope, 
+              $state, 
+              $filter, 
+              $timeout, 
+              ionicMaterialInk, 
+              $ionicSideMenuDelegate, 
+              $stateParams,
+              $ionicPlatform,
+              $ionicModal,
+              $sce
+        ) {
+            $scope.baseImageURL = GLOBALS.baseUrlImage
+            $scope.folderID = $stateParams.obj;
             screen.orientation.unlock();
-             $ionicScrollDelegate.scrollTop();
-            var url = "http://www.mocky.io/v2/5a58ab302d00007f1fd2e5d2"
-            $ionicLoading.show({
-              template: 'Loading...',
-              duration: 1500
-            });
-            $http.get(url).success(function(response){
-              $rootScope.images = response;
-              $rootScope.video_url=$rootScope.images[0].video[0].video_url;
-              $scope.movie = {src:$rootScope.video_url}
-            })
-            $ionicLoading.show({
-              template: 'Loading...',
-              duration: 1500
-            })
-            $scope.myGoBack=function(){
-              $state.go('publicGallary')
-            }
-            $scope.showImages = function(index) {
-              $scope.activeSlide = index;
-              $scope.showModal('templates/image-popover.html');
-            };
-            $scope.showModal = function(templateUrl) {
-                  $ionicModal.fromTemplateUrl(templateUrl, {
-                            scope: $scope,
-                            animation: 'slide-in-up'
-                    }).then(function(modal) {
-                          $scope.modal = modal;
-                          $scope.modal.show();
-                      });
-                }
-              // Close the modal
-              $scope.closeModal = function() {
-              $scope.modal.hide();
-                  $scope.modal.remove()
-              };
-            $ionicPlatform.onHardwareBackButton(function() {
-              $scope.modal.hide();
-              $scope.modal.remove()
-            });
-            $scope.trustSrc = function(src) {
-                return $sce.trustAsResourceUrl(src);
-              };
-          $scope.playVideo = function() {
             $ionicScrollDelegate.scrollTop();
-              $scope.showModal('templates/video-popover.html');
-          }
-          $scope.zoomMin=1;
-    }); // end of Ctrl
+            $ionicLoading.show({
+                template: 'Loading...',
+                duration: 1500
+            });
+            var url = GLOBALS.baseUrl + "user/gallery-image/" + $scope.folderID;
+            $http.get(url).success(function (response) {
+                if (response['status'] == 200) {
+                    $scope.folderName = response.data[0].name;
+                    $scope.imagesLength = response.data[0].photos.length
+                    $scope.videoLength = response.data[0].videos.length
+                    if ($scope.imagesLength > 0) {
+                        $scope.images = response.data[0].photos;
+                    }
+                    if ($scope.videoLength > 0) {
+                        $scope.video = response.data[0].videos
+                    }
+                    if ($scope.imagesLength == 0 && $scope.videoLength == 0) {
+                        $timeout(function () {
+                            $scope.showAlertsucess('No Data Uploaded yet')
+                        }, 1500);
+                    }
+                } else {
+                    $scope.showAlertsucess('No Data found')
+                }
+            })
+            $scope.showAlertsucess = function (message) {
+                var alertPopup = $ionicPopup.alert({
+                    template: '<center>' + message + '<center>'
+                })
+            }
+            $ionicLoading.show({
+                template: 'Loading...',
+                duration: 1500
+            })
+            $scope.myGoBack = function () {
+                $state.go('publicGallary')
+            }
+            $scope.showImages = function (index) {
+                $scope.activeSlide = index;
+                $scope.showModal('templates/image-popover.html');
+            };
+            $scope.showModal = function (templateUrl) {
+                $ionicModal.fromTemplateUrl(templateUrl, {
+                    scope: $scope,
+                    animation: 'slide-in-up'
+                }).then(function (modal) {
+                    $scope.modal = modal;
+                    $scope.modal.show();
+                });
+            }
+            // Close the modal
+            $scope.closeModal = function () {
+                $scope.modal.remove();
+                $scope.modal.hide();
+
+            };
+            $ionicPlatform.onHardwareBackButton(function () {
+                $scope.modal.remove();
+                $scope.modal.hide();
+
+            });
+            $scope.trustSrc = function (src) {
+                return $sce.trustAsResourceUrl($scope.baseImageURL + src);
+            };
+            $scope.playVideo = function () {
+                $ionicScrollDelegate.scrollTop();
+                $scope.showModal('templates/video-popover.html');
+            }
+            $scope.zoomMin = 1;
+        }); // end of Ctrl
