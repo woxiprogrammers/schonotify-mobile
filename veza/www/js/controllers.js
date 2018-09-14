@@ -538,7 +538,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     });
                 }
                 if (res['status'] == 200) {
-                    $scope.register();
+                   // $scope.register();
                     $scope.studentlist = (res.data['users']);
                     localStorage.setItem('appToken', JSON.stringify($scope.studentlist['token']));
                     $scope.userDataArray = userData.setUserData(res['data']['users']);
@@ -2373,6 +2373,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.getStudentList = function (divType) {
             $scope.contactList.length = 0;
             var url = GLOBALS.baseUrl + "user/get-students-list/" + divType['id'] + "?token=" + userSessions.userSession.userToken;
+            console.log("user/get-students-list/  "+url)
             $http.get(url)
                 .success(function (response) {
                     $scope.contactList = response['data']['studentList'];
@@ -2751,7 +2752,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 }
             })
                 .error(function (response) {
-                    console.log("Error in Response: " + response);
+                    console.log("Error in Response: " + response.toString());
                     if (response.hasOwnProperty('status')) {
                         $scope.msg = response.message;
                         $scope.showPopup();
