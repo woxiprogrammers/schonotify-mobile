@@ -5,7 +5,7 @@ var db = null;
 angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-material'])
     .constant('GLOBALS', {
         // baseUrl: 'http://sspss.veza.co.in/api/v1/',
-         //baseUrlImage: 'http://sspss.veza.co.in/',
+        //  baseUrlImage: 'http://sspss.veza.co.in/',
 
         baseUrl: 'http://test.woxi.co.in/api/v1/',
         baseUrlImage: 'http://test.woxi.co.in/'
@@ -538,7 +538,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     });
                 }
                 if (res['status'] == 200) {
-                   // $scope.register();
+                    // $scope.register();
                     $scope.studentlist = (res.data['users']);
                     localStorage.setItem('appToken', JSON.stringify($scope.studentlist['token']));
                     $scope.userDataArray = userData.setUserData(res['data']['users']);
@@ -2082,30 +2082,41 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 } else {
                     var image = angular.toJson($scope.image);
                     var url = GLOBALS.baseUrl + "user/homework-create?token=" + userSessions.userSession.userToken;
-
-                    $http.post(url, { subject_id: $scope.SubjectId, title: $scope.hwTitle, batch_id: $scope.BatchId, class_id: $scope.classId, division_id: $scope.divId, due_date: $scope.dueDate, description: $scope.description, homework_type: $scope.hwTypeId, student_id: $scope.selectedList, image: $scope.image }).success(function (response) {
-                        if (response['status'] == 200) {
-                            $scope.msg = response['message'];
+                    console.log($scope.image);
+                    $http.post(url,{
+                            subject_id: $scope.SubjectId,
+                            title: $scope.hwTitle,
+                            batch_id: $scope.BatchId,
+                            class_id: $scope.classId,
+                            division_id: $scope.divId,
+                            due_date: $scope.dueDate,
+                            description: $scope.description,
+                            homework_type: $scope.hwTypeId,
+                            student_id: $scope.selectedList,
+                            image: $scope.image
+                        }).success(function (response) {
+                            if (response['status'] == 200) {
+                                $scope.msg = response['message'];
+                                $ionicLoading.hide();
+                                $scope.showPopup();
+                                $state.go('app.edithomeworklisting');
+                            }
+                            else {
+                                $scope.msg = response['message'];
+                                $ionicLoading.hide();
+                                $scope.showPopup();
+                            }
+                        }).error(function (response) {
+                            console.log("Error in Response: " + response);
+                            if (response.hasOwnProperty('status')) {
+                                $scope.msg = response.message;
+                            }
+                            else {
+                                $scope.msg = "Access Denied";
+                            }
                             $ionicLoading.hide();
                             $scope.showPopup();
-                            $state.go('app.edithomeworklisting');
-                        }
-                        else {
-                            $scope.msg = response['message'];
-                            $ionicLoading.hide();
-                            $scope.showPopup();
-                        }
-                    }).error(function (response) {
-                        console.log("Error in Response: " + response);
-                        if (response.hasOwnProperty('status')) {
-                            $scope.msg = response.message;
-                        }
-                        else {
-                            $scope.msg = "Access Denied";
-                        }
-                        $ionicLoading.hide();
-                        $scope.showPopup();
-                    });
+                        });
                 }
             } else {
                 $scope.msg = "Due Date should be greater than Current Date";
@@ -2373,7 +2384,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.getStudentList = function (divType) {
             $scope.contactList.length = 0;
             var url = GLOBALS.baseUrl + "user/get-students-list/" + divType['id'] + "?token=" + userSessions.userSession.userToken;
-            console.log("user/get-students-list/  "+url)
+            console.log("user/get-students-list/  " + url)
             $http.get(url)
                 .success(function (response) {
                     $scope.contactList = response['data']['studentList'];
@@ -4888,18 +4899,18 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
     .controller('PublicEventCtr',
         function (
             $ionicLoading,
-             $ionicPopup, 
-             GLOBALS, 
-             $http, 
-             userSessions,
-             $scope, 
-             $state, 
-             $filter, 
-             $timeout, 
-             ionicMaterialInk, 
-             $ionicSideMenuDelegate, 
-             $stateParams,
-             $rootScope
+            $ionicPopup,
+            GLOBALS,
+            $http,
+            userSessions,
+            $scope,
+            $state,
+            $filter,
+            $timeout,
+            ionicMaterialInk,
+            $ionicSideMenuDelegate,
+            $stateParams,
+            $rootScope
         ) {
             $scope.hidden = true;
             $scope.hiddenn = true;
@@ -5093,19 +5104,19 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         })
     .controller('PublicGallaryCtrl',
         function (
-            $ionicScrollDelegate, 
-            $rootScope, 
-            $ionicLoading, 
-            $ionicPopup, 
-            GLOBALS, 
-            $http, 
-            userSessions, 
-            $scope, 
-            $state, 
-            $filter, 
-            $timeout, 
-            ionicMaterialInk, 
-            $ionicSideMenuDelegate, 
+            $ionicScrollDelegate,
+            $rootScope,
+            $ionicLoading,
+            $ionicPopup,
+            GLOBALS,
+            $http,
+            userSessions,
+            $scope,
+            $state,
+            $filter,
+            $timeout,
+            ionicMaterialInk,
+            $ionicSideMenuDelegate,
             $stateParams
         ) {
             $scope.baseImageURL = GLOBALS.baseUrlImage
@@ -5141,21 +5152,21 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
     .controller('PublicGallaryLandingCtrl',
         function (
             $ionicScrollDelegate,
-             $ionicLoading,
-              $ionicPopup, 
-              GLOBALS, 
-              $http, 
-              userSessions, 
-              $scope, 
-              $state, 
-              $filter, 
-              $timeout, 
-              ionicMaterialInk, 
-              $ionicSideMenuDelegate, 
-              $stateParams,
-              $ionicPlatform,
-              $ionicModal,
-              $sce
+            $ionicLoading,
+            $ionicPopup,
+            GLOBALS,
+            $http,
+            userSessions,
+            $scope,
+            $state,
+            $filter,
+            $timeout,
+            ionicMaterialInk,
+            $ionicSideMenuDelegate,
+            $stateParams,
+            $ionicPlatform,
+            $ionicModal,
+            $sce
         ) {
             $scope.baseImageURL = GLOBALS.baseUrlImage
             $scope.folderID = $stateParams.obj;
