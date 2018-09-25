@@ -53,10 +53,19 @@
     },
     "cordova-plugin-firebase": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
+    "cordova-plugin-android-permissions": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     }
   },
   "dependent_plugins": {
     "es6-promise-plugin": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
+    "cordova-plugin-file": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     }
   }
