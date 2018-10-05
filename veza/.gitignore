@@ -4,3 +4,4 @@ platforms
 .idea/
 node_modules/
 *.apk
+plugins/*
