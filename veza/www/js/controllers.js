@@ -9,8 +9,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
 
         baseUrl: 'http://test.woxi.co.in/api/v1/',
         baseUrlImage: 'http://test.woxi.co.in/'
-
-        //baseUrl:'http://school_mit.schnotify.com/api/v1/'
     })
     .factory('Data', function () {
         return { message }
