@@ -526,7 +526,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     });
                 }
                 if (res['status'] == 200) {
-                    $scope.register();
+                    //$scope.register();
                     $scope.studentlist = (res.data['users']);
                     localStorage.setItem('appToken', JSON.stringify($scope.studentlist['token']));
                     $scope.userDataArray = userData.setUserData(res['data']['users']);
@@ -1178,7 +1178,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             })
         }
     })
-    .controller('HomeworkCtrl', function ($scope, $state, $ionicPopup, hwDetails, userSessions, $http, GLOBALS, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
+    .controller('HomeworkCtrl', function ($ionicLoading, $scope, $state, $ionicPopup, hwDetails, userSessions, $http, GLOBALS, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -1194,8 +1194,10 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         }
         $scope.clickStatus = false;
         var url = GLOBALS.baseUrl + "user/view-homework?token=" + userSessions.userSession.userToken;
+        $ionicLoading.show();
         $http.get(url)
             .success(function (response) {
+                $ionicLoading.hide();
                 if (response['status'] == 200) {
                     $scope.homeworksListing = response['data'];
                     if ($scope.homeworksListing == '') {
@@ -1844,16 +1846,13 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         }
 
         $scope.onLoad = function (e, reader, file, fileList, fileOjects, fileObj) {
-
             $scope.image = fileObj.base64;
-
+            $scope.fileType = fileObj.filetype;
             //alert('this is handler for file reader onload event!');
         }
 
         var uploadedCount = 0;
         $scope.files = [];
-
-
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -2044,6 +2043,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 } else {
                     var image = angular.toJson($scope.image);
                     var url = GLOBALS.baseUrl + "user/homework-create?token=" + userSessions.userSession.userToken;
+                    $ionicLoading.show();
                     $http.post(url, {
                         subject_id: $scope.SubjectId,
                         title: $scope.hwTitle,
@@ -2054,14 +2054,14 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                         description: $scope.description,
                         homework_type: $scope.hwTypeId,
                         student_id: $scope.selectedList,
-                        image: $scope.image
-                    })
-                        .success(function (response) {
+                        image: image,
+                        file_type: $scope.fileType
+                    }).success(function (response) {
+                            $ionicLoading.hide();
                             if (response['status'] == 200) {
                                 console.log("user/homework-create?token=")
                                 console.log(response)
                                 $scope.msg = response['message'];
-                                $ionicLoading.hide();
                                 $scope.showPopup();
                                 $state.go('app.edithomeworklisting');
                             }
@@ -2074,6 +2074,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                             console.log("Error in Response: " + response);
                             if (response.hasOwnProperty('status')) {
                                 $scope.msg = response.message;
+                                console.log($scope.msg)
                             }
                             else {
                                 $scope.msg = "Access Denied";
@@ -2727,10 +2728,8 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                         $scope.showPopup();
                         $state.go('app.attendancelanding');
                     }
-
                 });
         }
-
         $scope.getStudentList();
 
         $scope.toggleCheck = function (elementData, studentId) {
