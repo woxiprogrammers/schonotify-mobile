@@ -2,6 +2,6 @@
 # http://git-scm.com/docs/gitignore
 platforms
 .idea/
-node_modules
-plugins
+node_modules/
 *.apk
+plugins/*
