@@ -2,7 +2,7 @@
 /* global angular, document, window */
 'use strict';
 var db = null;
-angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-material','ngCordova'])
+angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-material', 'ngCordova'])
     .constant('GLOBALS', {
         // baseUrl:'http://sspss.veza.co.in/api/v1/',
         // baseUrlImage: 'http://sspss.veza.co.in/'
@@ -1524,7 +1524,53 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.hwrkDetail = hwDetails.getHwView();
+        console.log($scope.hwrkDetail)
         $scope.hwId = $scope.hwrkDetail.homework_id;
+        $scope.fileName = $scope.hwrkDetail.attachment_file.split('/').pop();
+        $scope.fileExtention = $scope.hwrkDetail.attachment_file.split('.').pop();
+        var permissions = cordova.plugins.permissions;
+
+        $scope.downloadDocument = function () {
+            var url = $scope.hwrkDetail.attachment_file;
+            var filename = url.split("/").pop();
+            var targetPath = cordova.file.externalRootDirectory + filename;
+            $cordovaFileTransfer.download(url, targetPath, {}, true).then(function (result) {
+                console.log('Success');
+                $scope.hasil = 'Save file on ' + targetPath + ' success!';
+                $scope.mywallpaper = targetPath;
+                alert('Your download is completed');
+            }, function (error) {
+                console.log('Error downloading file');
+                $scope.hasil = 'Error downloading file...';
+                alert('Your download has failed');
+                console.log(error)
+            }, function (progress) {
+                console.log('progress');
+                $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+                // var downcountString = $scope.downloadProgress.toFixed();
+                // console.log('downcountString');
+                // $scope.downloadCount = downcountString;
+            });
+        }
+        $scope.checkStoragePermissionAndDownload = function () {
+            permissions.checkPermission(permissions.READ_EXTERNAL_STORAGE, function (status) {
+                if (status.checkPermission) {
+                    $scope.downloadDocument();
+                }
+                else {
+                    permissions.requestPermission(permissions.WRITE_EXTERNAL_STORAGE, success, error);
+                    function error() {
+                        alert("App dosen't have storage permission");
+                    }
+
+                    function success(status) {
+                        if (!status.hasPermission) error();
+                        console.log("Permission Granted")
+                        $scope.downloadDocument();
+                    }
+                }
+            });
+        }
 
         var url = GLOBALS.baseUrl + "user/view-detail-homework/" + $scope.hwId + "?token=" + userSessions.userSession.userToken;
         $http.get(url).success(function (response) {
@@ -1560,8 +1606,8 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
-        
-        
+
+
         // Set Header
         $scope.$parent.hideHeader();
 
@@ -1574,49 +1620,47 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.fileName = $scope.hwrkDetail.attachment_file.split('/').pop();
         $scope.fileExtention = $scope.hwrkDetail.attachment_file.split('.').pop();
         var permissions = cordova.plugins.permissions;
-        
-        $scope.downloadDocument = function(){
+
+        $scope.downloadDocument = function () {
             var url = $scope.hwrkDetail.attachment_file;
-                  var filename = url.split("/").pop();
-                  var targetPath = cordova.file.externalRootDirectory + filename;
-                  $cordovaFileTransfer.download(url, targetPath, {}, true).then(function(result) {
-                      console.log('Success');
-                      $scope.hasil = 'Save file on ' + targetPath + ' success!';
-                      $scope.mywallpaper = targetPath;
-                      alert('Your download is completed');
-                  }, function(error) {
-                      console.log('Error downloading file');
-                      $scope.hasil = 'Error downloading file...';
-                      alert('Your download has failed');
-                      console.log(error)
-                  }, function(progress) {
-                      console.log('progress');
-                      $scope.downloadProgress = (progress.loaded / progress.total) * 100;
-                      // var downcountString = $scope.downloadProgress.toFixed();
-                      // console.log('downcountString');
-                      // $scope.downloadCount = downcountString;
-                  });
+            var filename = url.split("/").pop();
+            var targetPath = cordova.file.externalRootDirectory + filename;
+            $cordovaFileTransfer.download(url, targetPath, {}, true).then(function (result) {
+                console.log('Success');
+                $scope.hasil = 'Save file on ' + targetPath + ' success!';
+                $scope.mywallpaper = targetPath;
+                alert('Your download is completed');
+            }, function (error) {
+                console.log('Error downloading file');
+                $scope.hasil = 'Error downloading file...';
+                alert('Your download has failed');
+                console.log(error)
+            }, function (progress) {
+                console.log('progress');
+                $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+                // var downcountString = $scope.downloadProgress.toFixed();
+                // console.log('downcountString');
+                // $scope.downloadCount = downcountString;
+            });
         }
-        $scope.checkStoragePermissionAndDownload = function() {
-            permissions.checkPermission(permissions.READ_EXTERNAL_STORAGE, function( status ){
-                if ( status.checkPermission ) {
-                  $scope.downloadDocument();
+        $scope.checkStoragePermissionAndDownload = function () {
+            permissions.checkPermission(permissions.READ_EXTERNAL_STORAGE, function (status) {
+                if (status.checkPermission) {
+                    $scope.downloadDocument();
                 }
                 else {
-                  permissions.requestPermission(permissions.WRITE_EXTERNAL_STORAGE, success, error);
-                  function error() {
-                    alert("App dosen't have storage permission");
-                  }
-                   
-                  function success( status ) {
-                    if( !status.hasPermission ) error();
-                    console.log("Permission Granted")
-                    $scope.downloadDocument();
-                  }
-                }
-              });
+                    permissions.requestPermission(permissions.WRITE_EXTERNAL_STORAGE, success, error);
+                    function error() {
+                        alert("App dosen't have storage permission");
+                    }
 
-        
+                    function success(status) {
+                        if (!status.hasPermission) error();
+                        console.log("Permission Granted")
+                        $scope.downloadDocument();
+                    }
+                }
+            });
         }
     })
 
@@ -1978,8 +2022,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         }
 
         $scope.onLoad = function (e, reader, file, fileList, fileOjects, fileObj) {
-
-
             if (fileObj.filesize > 2e+6) {
                 var myPopup = $ionicPopup.show({
                     template: '',
@@ -1987,14 +2029,14 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     subTitle: 'File size must be less than 2 MB',
                 });
                 $timeout(function () {
-                    myPopup.close(); 
+                    myPopup.close();
                 }, 2000);
             } else {
                 $scope.image = fileObj.base64;
+                $scope.imageExtention = fileObj.filetype;
             }
-
         }
-        
+
 
         var uploadedCount = 0;
         $scope.files = [];
@@ -2188,17 +2230,18 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 } else {
                     var image = angular.toJson($scope.image);
                     var url = GLOBALS.baseUrl + "user/homework-create?token=" + userSessions.userSession.userToken;
-                    $http.post(url, { 
+                    $http.post(url, {
                         subject_id: $scope.SubjectId,
-                        title: $scope.hwTitle, 
-                        batch_id: $scope.BatchId, 
-                        class_id: $scope.classId, 
-                        division_id: $scope.divId, 
-                        due_date: $scope.dueDate, 
-                        description: $scope.description, 
-                        homework_type: $scope.hwTypeId, 
-                        student_id: $scope.selectedList, 
-                        image: $scope.image 
+                        title: $scope.hwTitle,
+                        batch_id: $scope.BatchId,
+                        class_id: $scope.classId,
+                        division_id: $scope.divId,
+                        due_date: $scope.dueDate,
+                        description: $scope.description,
+                        homework_type: $scope.hwTypeId,
+                        student_id: $scope.selectedList,
+                        image: $scope.image,
+                        file_type: $scope.imageExtention
                     }).success(function (response) {
                         if (response['status'] == 200) {
                             $scope.msg = response['message'];
@@ -2212,11 +2255,21 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                                 $state.go('app.edithomeworklisting');
                             }
                             else {
-                                $scope.msg = response['message'];
-                                $ionicLoading.hide();
-                                $scope.showPopup();
+                                // $scope.msg = response['message'];
+                                // $ionicLoading.hide();
+                                // $scope.showPopup();
+                                var myPopup = $ionicPopup.show({
+                                    template: '',
+                                    title: 'Something Went Wrong!!!',
+                                    subTitle: 'Please Try Again...',
+                                });
+                                $timeout(function () {
+                                    myPopup.close();
+                                }, 2000);
                             }
-                        }).error(function (response) {
+                        }
+                    })
+                        .error(function (response) {
                             console.log("Error in Response: " + response);
                             if (response.hasOwnProperty('status')) {
                                 $scope.msg = response.message;

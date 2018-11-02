@@ -45,11 +45,21 @@
                     <div class="row"><span><b class="bold">Due Date:</b> {{hwrkDetail.due_date}}</span></div>
                     <div class="row"><span><b class="bold">Homework Type:</b> {{hwrkDetail.homeworkType}}</span></div>
                     <div class="row"><span><b class="bold">Assigned To:</b> {{contactList.length}} Student</span></div>
-                  <!--<div class="row"><div class="col-90"><div class="margin-top-5"><b class="bold">Download: </b><b class="red-font"> Sci-Ch 04-05.pdf</b></div></div><i class="icon ion-android-download col-10 font-225"></i></div>-->
+                    <div class="row">
+                        <div class="col-90"><div class="margin-top-5">
+                            <b class="bold">Download: </b>
+                            <b class="red-font">{{fileName}}</b>
+                        </div>
+                    </div>
+                    </div>
                 </div>
+                <i class="icon ion-android-download col-10 font-225" ng-click="checkStoragePermissionAndDownload()"></i>
             </div>
                     <div class="row">
                         <p class="margin-top-36 description-font"><b class="bold">Description</b><br>{{hwrkDetail.description}}</p>
+                    </div>
+                    <div class="card" ng-if="fileExtention !='pdf'">
+                      <img ng-src="{{hwrkDetail.attachment_file}}" height="30%" width="90%">
                     </div>
         </div>
     </ion-content>
