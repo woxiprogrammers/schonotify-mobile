@@ -1509,7 +1509,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         };
     })
 
-    .controller('THWdetailCtrl', function ($scope, $state, hwDetails, userSessions, $timeout, GLOBALS, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
+    .controller('THWdetailCtrl', function ($cordovaFileTransfer, $ionicLoading, $scope, $state, hwDetails, userSessions, $timeout, GLOBALS, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -1535,11 +1535,13 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             var filename = url.split("/").pop();
             var targetPath = cordova.file.externalRootDirectory + filename;
             $cordovaFileTransfer.download(url, targetPath, {}, true).then(function (result) {
+                $ionicLoading.hide();
                 console.log('Success');
                 $scope.hasil = 'Save file on ' + targetPath + ' success!';
                 $scope.mywallpaper = targetPath;
                 alert('Your download is completed');
             }, function (error) {
+                $ionicLoading.hide();
                 console.log('Error downloading file');
                 $scope.hasil = 'Error downloading file...';
                 alert('Your download has failed');
@@ -1566,6 +1568,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     function success(status) {
                         if (!status.hasPermission) error();
                         console.log("Permission Granted")
+                        $ionicLoading.show();
                         $scope.downloadDocument();
                     }
                 }

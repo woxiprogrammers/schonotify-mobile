@@ -10,33 +10,22 @@
     "com-sarriaroman-photoviewer": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
-    "cordova-plugin-appminimize": {
+    "cordova-plugin-android-permissions": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
     "cordova-plugin-console": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
-    "cordova-plugin-crosswalk-webview": {
-      "XWALK_VERSION": "23+",
-      "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
-      "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
-      "XWALK_MODE": "embedded",
-      "XWALK_MULTIPLEAPK": "true",
-      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
-    },
     "cordova-plugin-device": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
-    "cordova-plugin-image-picker": {
+    "cordova-plugin-file-transfer": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
-    "cordova-plugin-inappbrowser": {
+    "cordova-plugin-firebase": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
     "cordova-plugin-ionic-webview": {
-      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
-    },
-    "cordova-plugin-screen-orientation": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
     "cordova-plugin-splashscreen": {
@@ -51,20 +40,12 @@
     "ionic-plugin-keyboard": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
-    "cordova-plugin-firebase": {
-      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
-    },
-    "cordova-plugin-file-transfer": {
-      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
-    },
-    "cordova-plugin-android-permissions": {
+    "phonegap-plugin-push": {
+      "SENDER_ID": "750487257563",
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     }
   },
   "dependent_plugins": {
-    "es6-promise-plugin": {
-      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
-    },
     "cordova-plugin-file": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     }
