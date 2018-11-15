@@ -1463,6 +1463,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         var url = GLOBALS.baseUrl + "user/view-homework-parent/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
         $http.get(url)
             .success(function (response) {
+                console.log(response);
                 if (response['status'] == 200) {
                     $scope.homeworksListing = response['data'];
                     if ($scope.homeworksListing == '') {
@@ -1524,7 +1525,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.hwrkDetail = hwDetails.getHwView();
-        console.log($scope.hwrkDetail)
         $scope.hwId = $scope.hwrkDetail.homework_id;
         $scope.fileName = $scope.hwrkDetail.attachment_file.split('/').pop();
         $scope.fileExtention = $scope.hwrkDetail.attachment_file.split('.').pop();
@@ -1577,7 +1577,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
 
         var url = GLOBALS.baseUrl + "user/view-detail-homework/" + $scope.hwId + "?token=" + userSessions.userSession.userToken;
         $http.get(url).success(function (response) {
-
+            console.log(response);
             $scope.contactList = response['data']['studentList'];
         })
             .error(function (response) {
@@ -1610,7 +1610,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.$parent.setExpanded(false);
         $scope.$parent.setHeaderFab(false);
 
-
         // Set Header
         $scope.$parent.hideHeader();
 
@@ -1620,6 +1619,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.hwrkDetail = hwDetails.getHwView();
+        console.log($scope.hwrkDetail);
         $scope.fileName = $scope.hwrkDetail.attachment_file.split('/').pop();
         $scope.fileExtention = $scope.hwrkDetail.attachment_file.split('.').pop();
         var permissions = cordova.plugins.permissions;
