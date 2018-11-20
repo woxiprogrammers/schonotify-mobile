@@ -72,5 +72,5 @@
     <allow-navigation href="http://192.168.2.11:8100" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.7.1" />
     <plugin name="cordova-plugin-android-permissions" spec="^1.0.0" />
-    <engine name="android" spec="~6.3.0" />
+    <engine name="android" spec="^6.4.0" />
 </widget>

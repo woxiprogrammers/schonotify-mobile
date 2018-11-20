@@ -2,7 +2,7 @@
   "cordova-plugin-console": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-console@^1.0.7"
+      "id": "cordova-plugin-console@^1.1.0"
     },
     "is_top_level": true,
     "variables": {}
@@ -18,7 +18,7 @@
   "cordova-plugin-statusbar": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-statusbar@^2.2.3"
+      "id": "cordova-plugin-statusbar@^2.4.2"
     },
     "is_top_level": true,
     "variables": {}
@@ -42,7 +42,7 @@
   "phonegap-plugin-push": {
     "source": {
       "type": "registry",
-      "id": "phonegap-plugin-push@^1.10.7"
+      "id": "phonegap-plugin-push@^1.11.1"
     },
     "is_top_level": true,
     "variables": {
@@ -52,7 +52,7 @@
   "cordova-plugin-splashscreen": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-splashscreen@^4.0.3"
+      "id": "cordova-plugin-splashscreen@^4.1.0"
     },
     "is_top_level": true,
     "variables": {}

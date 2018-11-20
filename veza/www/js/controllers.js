@@ -4,11 +4,11 @@
 var db = null;
 angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-material', 'ngCordova'])
     .constant('GLOBALS', {
-        baseUrl:'http://sspss.veza.co.in/api/v1/',
-        baseUrlImage: 'http://sspss.veza.co.in/',
+        // baseUrl:'http://sspss.veza.co.in/api/v1/',
+        // baseUrlImage: 'http://sspss.veza.co.in/',
         versionCode: 1.7,
-        // baseUrl: 'http://test.woxi.co.in/api/v1/',
-        // baseUrlImage: 'http://test.woxi.co.in/'
+        baseUrl: 'http://sspss_test.woxi.co.in/api/v1/',
+        baseUrlImage: 'http://sspss_test.woxi.co.in/'
     })
 
     .factory('Data', function () {
@@ -568,8 +568,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     });
                 }
                 if (res['status'] == 200) {
-                    // $scope.register();
-
+                    $scope.register();
                     $scope.studentlist = (res.data['users']);
                     localStorage.setItem('appToken', JSON.stringify($scope.studentlist['token']));
                     $scope.userDataArray = userData.setUserData(res['data']['users']);

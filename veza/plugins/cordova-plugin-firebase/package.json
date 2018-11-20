@@ -1,15 +1,35 @@
 {
+  "_from": "cordova-plugin-firebase@^0.1.25",
+  "_id": "cordova-plugin-firebase@0.1.25",
+  "_inBundle": false,
+  "_integrity": "sha1-fh+W2FiKGdIhi7Tbyg1cRC8eJlE=",
+  "_location": "/cordova-plugin-firebase",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "cordova-plugin-firebase@^0.1.25",
+    "name": "cordova-plugin-firebase",
+    "escapedName": "cordova-plugin-firebase",
+    "rawSpec": "^0.1.25",
+    "saveSpec": null,
+    "fetchSpec": "^0.1.25"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-firebase/-/cordova-plugin-firebase-0.1.25.tgz",
+  "_shasum": "7e1f96d8588a19d2218bb4dbca0d5c442f1e2651",
+  "_spec": "cordova-plugin-firebase@^0.1.25",
+  "_where": "/Users/mayurshelar/schonotify-mobile/veza",
   "author": {
     "name": "Robert Arnesson"
   },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/arnesson/cordova-plugin-firebase.git"
+  "bugs": {
+    "url": "https://github.com/arnesson/cordova-plugin-firebase/issues"
   },
-  "name": "cordova-plugin-firebase",
-  "version": "0.1.25",
-  "description": "Cordova plugin for Google Firebase",
+  "bundleDependencies": false,
   "cordova": {
     "id": "cordova-plugin-firebase",
     "platforms": [
@@ -18,6 +38,9 @@
       "browser"
     ]
   },
+  "deprecated": false,
+  "description": "Cordova plugin for Google Firebase",
+  "homepage": "https://github.com/arnesson/cordova-plugin-firebase#readme",
   "keywords": [
     "ecosystem:cordova",
     "cordova-android",
@@ -28,36 +51,11 @@
     "notifications",
     "phone auth"
   ],
-  "gitHead": "8fd7af76116bcd6bbfdbb8f5641b359c8a8ed62b",
-  "bugs": {
-    "url": "https://github.com/arnesson/cordova-plugin-firebase/issues"
+  "license": "MIT",
+  "name": "cordova-plugin-firebase",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arnesson/cordova-plugin-firebase.git"
   },
-  "homepage": "https://github.com/arnesson/cordova-plugin-firebase#readme",
-  "_id": "cordova-plugin-firebase@0.1.25",
-  "scripts": {},
-  "_shasum": "7e1f96d8588a19d2218bb4dbca0d5c442f1e2651",
-  "_from": "cordova-plugin-firebase@>=0.1.25 <0.2.0",
-  "_npmVersion": "3.10.9",
-  "_nodeVersion": "6.9.2",
-  "_npmUser": {
-    "name": "arnesson",
-    "email": "hello@arnesson.io"
-  },
-  "dist": {
-    "shasum": "7e1f96d8588a19d2218bb4dbca0d5c442f1e2651",
-    "tarball": "https://registry.npmjs.org/cordova-plugin-firebase/-/cordova-plugin-firebase-0.1.25.tgz"
-  },
-  "maintainers": [
-    {
-      "name": "arnesson",
-      "email": "hello@arnesson.io"
-    }
-  ],
-  "_npmOperationalInternal": {
-    "host": "s3://npm-registry-packages",
-    "tmp": "tmp/cordova-plugin-firebase-0.1.25.tgz_1512304629038_0.9391893355641514"
-  },
-  "directories": {},
-  "_resolved": "https://registry.npmjs.org/cordova-plugin-firebase/-/cordova-plugin-firebase-0.1.25.tgz",
-  "readme": "ERROR: No README data found!"
+  "version": "0.1.25"
 }
