@@ -375,11 +375,10 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
     })
 
     .controller('tokencheckCtr', function ($rootScope, $window, $ionicPopup, userData, $http, GLOBALS, $state, $scope, $stateParams, userSessions, $timeout, ionicMaterialInk, ionicMaterialMotion) {
-        // var url = GLOBALS.baseUrl + "minimum-supported-version";
-        var url = "http://www.mocky.io/v2/5bf371ac2f00000944cfa42c";
+        var url = GLOBALS.baseUrl + "user/minimum-supported-version";
         $http.get(url).success(function(response){
             $scope.data = response.data;
-            $rootScope.minimumAppVersion = $scope.data.minimum_version;
+            $rootScope.minimumAppVersion = $scope.data.minimum_app_version;
             if(GLOBALS.versionCode >= $scope.minimumAppVersion){
                 $scope.versionCode
                 $scope.tokenData = localStorage.getItem('appToken');
