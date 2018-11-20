@@ -4,11 +4,11 @@
 var db = null;
 angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-material', 'ngCordova'])
     .constant('GLOBALS', {
-        // baseUrl:'http://sspss.veza.co.in/api/v1/',
-        // baseUrlImage: 'http://sspss.veza.co.in/'
-
-        baseUrl: 'http://test.woxi.co.in/api/v1/',
-        baseUrlImage: 'http://test.woxi.co.in/'
+        baseUrl:'http://sspss.veza.co.in/api/v1/',
+        baseUrlImage: 'http://sspss.veza.co.in/',
+        versionCode: 1.7,
+        // baseUrl: 'http://test.woxi.co.in/api/v1/',
+        // baseUrlImage: 'http://test.woxi.co.in/'
     })
 
     .factory('Data', function () {
@@ -374,36 +374,55 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         };
     })
 
-    .controller('tokencheckCtr', function (userData, $http, GLOBALS, $state, $scope, $stateParams, userSessions, $timeout, ionicMaterialInk, ionicMaterialMotion) {
-        $scope.tokenData = localStorage.getItem('appToken');
-        $scope.sessionUserRole = localStorage.getItem('sessionUserRole');
-        $scope.messageCount = localStorage.getItem('messageCount');
-        $scope.sessionId = localStorage.getItem('sessionId');
-        $scope.sessionBodyId = localStorage.getItem('sessionBodyId');
-        $scope.userDataArray = localStorage.getItem('userDataArray');
-        if ($scope.tokenData != null && $scope.tokenData != 0) {
-            userSessions.setToken(JSON.parse($scope.tokenData));
-            userData.setUserData(JSON.parse($scope.userDataArray));
-            userSessions.setSession(JSON.parse($scope.tokenData), JSON.parse($scope.sessionUserRole), JSON.parse($scope.messageCount));
-            userSessions.setUserId(JSON.parse($scope.sessionId), JSON.parse($scope.sessionBodyId));
-            var url = GLOBALS.baseUrl + "user/get-message-count/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
-            $http.get(url).success(function (response) {
-                if (response['data']['Badge_count']['message_count'] > 0) {
-                    userSessions.setMsgCount(response['data']['Badge_count']['message_count']);
-                    $scope.msgCount = response['data']['Badge_count']['message_count'];
-                } else {
-                    $scope.msgCount = '';
+    .controller('tokencheckCtr', function ($rootScope, $window, $ionicPopup, userData, $http, GLOBALS, $state, $scope, $stateParams, userSessions, $timeout, ionicMaterialInk, ionicMaterialMotion) {
+        // var url = GLOBALS.baseUrl + "minimum-supported-version";
+        var url = "http://www.mocky.io/v2/5bf371ac2f00000944cfa42c";
+        $http.get(url).success(function(response){
+            $scope.data = response.data;
+            $rootScope.minimumAppVersion = $scope.data.minimum_version;
+            if(GLOBALS.versionCode >= $scope.minimumAppVersion){
+                $scope.versionCode
+                $scope.tokenData = localStorage.getItem('appToken');
+                $scope.sessionUserRole = localStorage.getItem('sessionUserRole');
+                $scope.messageCount = localStorage.getItem('messageCount');
+                $scope.sessionId = localStorage.getItem('sessionId');
+                $scope.sessionBodyId = localStorage.getItem('sessionBodyId');
+                $scope.userDataArray = localStorage.getItem('userDataArray');
+                if ($scope.tokenData != null && $scope.tokenData != 0) {
+                    userSessions.setToken(JSON.parse($scope.tokenData));
+                    userData.setUserData(JSON.parse($scope.userDataArray));
+                    userSessions.setSession(JSON.parse($scope.tokenData), JSON.parse($scope.sessionUserRole), JSON.parse($scope.messageCount));
+                    userSessions.setUserId(JSON.parse($scope.sessionId), JSON.parse($scope.sessionBodyId));
+                    var url = GLOBALS.baseUrl + "user/get-message-count/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
+                    $http.get(url).success(function (response) {
+                        if (response['data']['Badge_count']['message_count'] > 0) {
+                            userSessions.setMsgCount(response['data']['Badge_count']['message_count']);
+                            $scope.msgCount = response['data']['Badge_count']['message_count'];
+                        } else {
+                            $scope.msgCount = '';
+                        }
+                    })
+                        .error(function (response) {
+                            console.log("Error in Response: " + response);
+                        });
+                    $state.go('app.dashboard');
                 }
-            })
-                .error(function (response) {
-                    console.log("Error in Response: " + response);
-                });
-            $state.go('app.dashboard');
+                else {
+                    $state.go('login');
+                }
+            } else {
+                $state.go('login');
+                $scope.showAlert();
+            }
+        }).error(function(response){
+            console.log(response)
+        })
+        $scope.showAlert = function () {
+            var alertPopup = $ionicPopup.alert({
+                title: "You are on older version of the app",
+                template: 'Please update the app'
+            });
         }
-        else {
-            $state.go('login');
-        }
-
     })
 
     .controller('GalleryCtrl', function ($ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate, $ionicHistory, $rootScope, $ionicPush, myservice, $scope, $state, $ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
@@ -519,8 +538,10 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         };
         $scope.data = [];
         ionicMaterialInk.displayEffect();
+        
         $scope.submit = function (email, password) {
-            $scope.sessionId = '';
+            if(GLOBALS.versionCode >= $scope.minimumAppVersion){
+                $scope.sessionId = '';
             $scope.sessionToken = '';
             $scope.sessionUserRole = '';
             var url = GLOBALS.baseUrl + "user/auth";
@@ -575,6 +596,17 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     console.log(err);
                     $scope.error = err['message'];
                 });
+            } else {
+                $scope.showUpdateAppAlert()
+            }
+           
+        }
+
+        $scope.showUpdateAppAlert = function () {
+            var alertPopup = $ionicPopup.alert({
+                title: "You are on older version of the app",
+                template: 'Please update the app'
+            });
         }
 
         $scope.showPopup = function () {
