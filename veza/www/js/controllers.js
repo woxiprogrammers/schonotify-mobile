@@ -2,22 +2,23 @@
 /* global angular, document, window */
 'use strict';
 var db = null;
-angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-material'])
+angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-material', 'ngCordova'])
     .constant('GLOBALS', {
-        // baseUrl:'http://sspss.veza.co.in/api/v1/',
-        // baseUrlImage: 'http://sspss.veza.co.in/'
-
-        baseUrl: 'http://test.woxi.co.in/api/v1/',
-        baseUrlImage: 'http://test.woxi.co.in/'
-
-        //baseUrl:'http://school_mit.schnotify.com/api/v1/'
+        baseUrl:'http://sspss.veza.co.in/api/v1/',
+        baseUrlImage: 'http://sspss.veza.co.in/',
+        versionCode: 1.8,
+        // baseUrl: 'http://sspss_test.woxi.co.in//api/v1/',
+        // baseUrlImage: 'http://sspss_test.woxi.co.in/'
     })
+
     .factory('Data', function () {
         return { message }
     })
+
     .service('myservice', function () {
         this.Switchstudentlist = "yyy";
     })
+
     .service('userSessions', function Usersession() {
         var userSessions = this;
         userSessions.userSession = [];
@@ -56,6 +57,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             return true;
         };
     })
+
     .service('userData', function uData() {
         var userData = this;
         userData.data = [];
@@ -67,6 +69,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             return userData.data;
         };
     })
+
     .service('chatHist', function chatDetail() {
         var chatHist = this;
         chatHist.data = [];
@@ -82,6 +85,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             return chatHist.data;
         };
     })
+
     .service('hwDetails', function hmwDetail() {
         var hwDetails = this;
         hwDetails.data = [];
@@ -93,6 +97,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             return hwDetails.data;
         };
     })
+
     .service('studentToggle', function studentToggle() {
         var studentToggle = this;
         studentToggle.data = [];
@@ -104,6 +109,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             return studentToggle.data;
         };
     })
+
     .controller('AppCtrl', function ($rootScope, userData, myservice, GLOBALS, $scope, $state, $ionicPopup, $http, $ionicModal, $ionicPopover, $timeout, $ionicSideMenuDelegate, $ionicHistory, userSessions) {
         $scope.$on("$ionicView.beforeEnter", function (event, data) {
             var url = GLOBALS.baseUrl + "user/get-message-count/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
@@ -367,37 +373,57 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $state.go('app.message');
         };
     })
-    .controller('tokencheckCtr', function (userData, $http, GLOBALS, $state, $scope, $stateParams, userSessions, $timeout, ionicMaterialInk, ionicMaterialMotion) {
-        $scope.tokenData = localStorage.getItem('appToken');
-        $scope.sessionUserRole = localStorage.getItem('sessionUserRole');
-        $scope.messageCount = localStorage.getItem('messageCount');
-        $scope.sessionId = localStorage.getItem('sessionId');
-        $scope.sessionBodyId = localStorage.getItem('sessionBodyId');
-        $scope.userDataArray = localStorage.getItem('userDataArray');
-        if ($scope.tokenData != null && $scope.tokenData != 0) {
-            userSessions.setToken(JSON.parse($scope.tokenData));
-            userData.setUserData(JSON.parse($scope.userDataArray));
-            userSessions.setSession(JSON.parse($scope.tokenData), JSON.parse($scope.sessionUserRole), JSON.parse($scope.messageCount));
-            userSessions.setUserId(JSON.parse($scope.sessionId), JSON.parse($scope.sessionBodyId));
-            var url = GLOBALS.baseUrl + "user/get-message-count/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
-            $http.get(url).success(function (response) {
-                if (response['data']['Badge_count']['message_count'] > 0) {
-                    userSessions.setMsgCount(response['data']['Badge_count']['message_count']);
-                    $scope.msgCount = response['data']['Badge_count']['message_count'];
-                } else {
-                    $scope.msgCount = '';
-                }
-            })
-                .error(function (response) {
-                    console.log("Error in Response: " + response);
-                });
-            $state.go('app.dashboard');
-        }
-        else {
-            $state.go('login');
-        }
 
+    .controller('tokencheckCtr', function ($rootScope, $window, $ionicPopup, userData, $http, GLOBALS, $state, $scope, $stateParams, userSessions, $timeout, ionicMaterialInk, ionicMaterialMotion) {
+        var url = GLOBALS.baseUrl + "user/minimum-supported-version";
+        $http.get(url).success(function(response){
+            $scope.data = response.data;
+            $rootScope.minimumAppVersion = $scope.data.minimum_app_version;
+            if(GLOBALS.versionCode >= $scope.minimumAppVersion){
+                $scope.versionCode
+                $scope.tokenData = localStorage.getItem('appToken');
+                $scope.sessionUserRole = localStorage.getItem('sessionUserRole');
+                $scope.messageCount = localStorage.getItem('messageCount');
+                $scope.sessionId = localStorage.getItem('sessionId');
+                $scope.sessionBodyId = localStorage.getItem('sessionBodyId');
+                $scope.userDataArray = localStorage.getItem('userDataArray');
+                if ($scope.tokenData != null && $scope.tokenData != 0) {
+                    userSessions.setToken(JSON.parse($scope.tokenData));
+                    userData.setUserData(JSON.parse($scope.userDataArray));
+                    userSessions.setSession(JSON.parse($scope.tokenData), JSON.parse($scope.sessionUserRole), JSON.parse($scope.messageCount));
+                    userSessions.setUserId(JSON.parse($scope.sessionId), JSON.parse($scope.sessionBodyId));
+                    var url = GLOBALS.baseUrl + "user/get-message-count/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
+                    $http.get(url).success(function (response) {
+                        if (response['data']['Badge_count']['message_count'] > 0) {
+                            userSessions.setMsgCount(response['data']['Badge_count']['message_count']);
+                            $scope.msgCount = response['data']['Badge_count']['message_count'];
+                        } else {
+                            $scope.msgCount = '';
+                        }
+                    })
+                        .error(function (response) {
+                            console.log("Error in Response: " + response);
+                        });
+                    $state.go('app.dashboard');
+                }
+                else {
+                    $state.go('login');
+                }
+            } else {
+                $state.go('login');
+                $scope.showAlert();
+            }
+        }).error(function(response){
+            console.log(response)
+        })
+        $scope.showAlert = function () {
+            var alertPopup = $ionicPopup.alert({
+                title: "You are on older version of the app",
+                template: 'Please update the app'
+            });
+        }
     })
+
     .controller('GalleryCtrl', function ($ionicBackdrop, $ionicModal, $ionicSlideBoxDelegate, $ionicScrollDelegate, $ionicHistory, $rootScope, $ionicPush, myservice, $scope, $state, $ionicLoading, $http, $timeout, ionicMaterialInk, $cordovaSQLite, GLOBALS, $ionicPopup, userSessions, userData) {
         $scope.baseImageURL = GLOBALS.baseUrlImage
         var url = GLOBALS.baseUrl + "user/folder-first-image/" + userSessions.userSession.bodyId + "?token=" + userSessions.userSession.userToken;
@@ -511,8 +537,10 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         };
         $scope.data = [];
         ionicMaterialInk.displayEffect();
+        
         $scope.submit = function (email, password) {
-            $scope.sessionId = '';
+            if(GLOBALS.versionCode >= $scope.minimumAppVersion){
+                $scope.sessionId = '';
             $scope.sessionToken = '';
             $scope.sessionUserRole = '';
             var url = GLOBALS.baseUrl + "user/auth";
@@ -541,6 +569,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 }
                 if (res['status'] == 200) {
                     // $scope.register();
+
                     $scope.studentlist = (res.data['users']);
                     localStorage.setItem('appToken', JSON.stringify($scope.studentlist['token']));
                     $scope.userDataArray = userData.setUserData(res['data']['users']);
@@ -566,6 +595,17 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     console.log(err);
                     $scope.error = err['message'];
                 });
+            } else {
+                $scope.showUpdateAppAlert()
+            }
+           
+        }
+
+        $scope.showUpdateAppAlert = function () {
+            var alertPopup = $ionicPopup.alert({
+                title: "You are on older version of the app",
+                template: 'Please update the app'
+            });
         }
 
         $scope.showPopup = function () {
@@ -585,6 +625,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         };
 
     })
+
     .controller('DashboardCtrl', function ($rootScope, $ionicPlatform, $ionicPush, $scope, $state, $ionicLoading, $ionicPopup, $timeout, GLOBALS, $http, ionicMaterialInk, ionicMaterialMotion, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData) {
         $scope.$on("$ionicView.beforeEnter", function (event, data) {
             $ionicLoading.show({
@@ -774,6 +815,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $scope.msgCount = userSessions.userSession.msgcount;
         }
     })
+
     .controller('NotificationCtrl', function ($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -796,6 +838,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             });
         };
     })
+
     .controller('SharedNotificationCtrl', function ($ionicPopup, $ionicActionSheet, $ionicLoading, $http, userSessions, GLOBALS, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -853,6 +896,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             });
         };
     })
+
     .controller('achievementDetailParentCtrl', function ($rootScope, $ionicLoading, $ionicPopup, $window, $ionicModal, userSessions, $http, GLOBALS, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.DetailAchievemtns = $rootScope.DetailAchievemtns;
         $scope.imageData = $rootScope.imagesData;
@@ -890,6 +934,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $state.go('app.achievementDetailParent');
         };
     })
+
     .controller('sharedNotifyParentCtrl', function ($ionicLoading, $ionicPopup, $window, $ionicModal, userSessions, $http, GLOBALS, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $ionicLoading.show({
             template: 'Loading...',
@@ -904,6 +949,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 $ionicLoading.hide();
             });
     })
+
     .controller('CreateAnnouncementCtrl', function ($ionicPopup, $window, $ionicModal, userSessions, $http, GLOBALS, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -1063,6 +1109,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $scope.modal.hide();
         };
     })
+
     .controller('EditAchievementCtrl', function ($ionicPopup, userSessions, $state, $ionicLoading, GLOBALS, $http, $scope, $rootScope) {
         $scope.editAchievments = $rootScope.DetailAchievemtns;
         $scope.editAchievmentImages = $rootScope.imagesData;
@@ -1129,6 +1176,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             })
         }
     })
+
     .controller('SharedAchievementCtrl', function ($rootScope, userSessions, GLOBALS, $http, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicLoading) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -1183,6 +1231,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             });
         };
     })
+
     .controller('CreateAchievementCtrl', function ($ionicPopup, userSessions, $http, GLOBALS, $ionicLoading, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -1232,7 +1281,8 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             })
         }
     })
-    .controller('HomeworkCtrl', function ($scope, $state, $ionicPopup, hwDetails, userSessions, $http, GLOBALS, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
+
+    .controller('HomeworkCtrl', function ($ionicLoading, $scope, $state, $ionicPopup, hwDetails, userSessions, $http, GLOBALS, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -1248,8 +1298,10 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         }
         $scope.clickStatus = false;
         var url = GLOBALS.baseUrl + "user/view-homework?token=" + userSessions.userSession.userToken;
+        $ionicLoading.show();
         $http.get(url)
             .success(function (response) {
+                $ionicLoading.hide();
                 if (response['status'] == 200) {
                     $scope.homeworksListing = response['data'];
                     if ($scope.homeworksListing == '') {
@@ -1290,6 +1342,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }, 3000);
         };
     })
+
     .controller('UnpubHwListCtrl', function ($scope, $state, $ionicPopup, hwDetails, userSessions, $http, GLOBALS, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicLoading) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -1417,6 +1470,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }, 3000);
         };
     })
+
     .controller('ParentHomeworkCtrl', function ($scope, $state, $timeout, $http, $ionicPopup, hwDetails, GLOBALS, userSessions, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
@@ -1440,6 +1494,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         var url = GLOBALS.baseUrl + "user/view-homework-parent/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
         $http.get(url)
             .success(function (response) {
+                console.log(response);
                 if (response['status'] == 200) {
                     $scope.homeworksListing = response['data'];
                     if ($scope.homeworksListing == '') {
@@ -1485,7 +1540,8 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }, 3000);
         };
     })
-    .controller('THWdetailCtrl', function ($scope, $state, hwDetails, userSessions, $timeout, GLOBALS, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
+
+    .controller('THWdetailCtrl', function ($cordovaFileTransfer, $ionicLoading, $scope, $state, hwDetails, userSessions, $timeout, GLOBALS, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -1501,9 +1557,58 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.hwrkDetail = hwDetails.getHwView();
         $scope.hwId = $scope.hwrkDetail.homework_id;
+        $scope.fileName = $scope.hwrkDetail.attachment_file.split('/').pop();
+        $scope.fileExtention = $scope.hwrkDetail.attachment_file.split('.').pop();
+        var permissions = cordova.plugins.permissions;
+
+        $scope.downloadDocument = function () {
+            var url = $scope.hwrkDetail.attachment_file;
+            var filename = url.split("/").pop();
+            var targetPath = cordova.file.externalRootDirectory + filename;
+            $cordovaFileTransfer.download(url, targetPath, {}, true).then(function (result) {
+                $ionicLoading.hide();
+                console.log('Success');
+                $scope.hasil = 'Save file on ' + targetPath + ' success!';
+                $scope.mywallpaper = targetPath;
+                alert('Your download is completed');
+            }, function (error) {
+                $ionicLoading.hide();
+                console.log('Error downloading file');
+                $scope.hasil = 'Error downloading file...';
+                alert('Your download has failed');
+                console.log(error)
+            }, function (progress) {
+                console.log('progress');
+                $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+                // var downcountString = $scope.downloadProgress.toFixed();
+                // console.log('downcountString');
+                // $scope.downloadCount = downcountString;
+            });
+        }
+        $scope.checkStoragePermissionAndDownload = function () {
+            permissions.checkPermission(permissions.READ_EXTERNAL_STORAGE, function (status) {
+                if (status.checkPermission) {
+                    $scope.downloadDocument();
+                }
+                else {
+                    permissions.requestPermission(permissions.WRITE_EXTERNAL_STORAGE, success, error);
+                    function error() {
+                        alert("App dosen't have storage permission");
+                    }
+
+                    function success(status) {
+                        if (!status.hasPermission) error();
+                        console.log("Permission Granted")
+                        $ionicLoading.show();
+                        $scope.downloadDocument();
+                    }
+                }
+            });
+        }
 
         var url = GLOBALS.baseUrl + "user/view-detail-homework/" + $scope.hwId + "?token=" + userSessions.userSession.userToken;
         $http.get(url).success(function (response) {
+            console.log(response);
             $scope.contactList = response['data']['studentList'];
         })
             .error(function (response) {
@@ -1529,7 +1634,8 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $scope.modal.remove();
         });
     })
-    .controller('HWdetailCtrl', function ($scope, $state, hwDetails, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
+
+    .controller('HWdetailCtrl', function ($cordovaFileTransfer, $scope, $state, hwDetails, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -1544,8 +1650,54 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.hwrkDetail = hwDetails.getHwView();
+        console.log($scope.hwrkDetail);
+        $scope.fileName = $scope.hwrkDetail.attachment_file.split('/').pop();
+        $scope.fileExtention = $scope.hwrkDetail.attachment_file.split('.').pop();
+        var permissions = cordova.plugins.permissions;
 
+        $scope.downloadDocument = function () {
+            var url = $scope.hwrkDetail.attachment_file;
+            var filename = url.split("/").pop();
+            var targetPath = cordova.file.externalRootDirectory + filename;
+            $cordovaFileTransfer.download(url, targetPath, {}, true).then(function (result) {
+                console.log('Success');
+                $scope.hasil = 'Save file on ' + targetPath + ' success!';
+                $scope.mywallpaper = targetPath;
+                alert('Your download is completed');
+            }, function (error) {
+                console.log('Error downloading file');
+                $scope.hasil = 'Error downloading file...';
+                alert('Your download has failed');
+                console.log(error)
+            }, function (progress) {
+                console.log('progress');
+                $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+                // var downcountString = $scope.downloadProgress.toFixed();
+                // console.log('downcountString');
+                // $scope.downloadCount = downcountString;
+            });
+        }
+        $scope.checkStoragePermissionAndDownload = function () {
+            permissions.checkPermission(permissions.READ_EXTERNAL_STORAGE, function (status) {
+                if (status.checkPermission) {
+                    $scope.downloadDocument();
+                }
+                else {
+                    permissions.requestPermission(permissions.WRITE_EXTERNAL_STORAGE, success, error);
+                    function error() {
+                        alert("App dosen't have storage permission");
+                    }
+
+                    function success(status) {
+                        if (!status.hasPermission) error();
+                        console.log("Permission Granted")
+                        $scope.downloadDocument();
+                    }
+                }
+            });
+        }
     })
+
     .controller('EditHomeworkCtrl', function ($scope, $state, $ionicPopup, $timeout, $filter, hwDetails, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $ionicLoading) {
 
         $scope.$parent.clearFabs();
@@ -1620,6 +1772,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $scope.$digest();
 
         };
+
         var url = GLOBALS.baseUrl + "user/get-teachers-subjects?token=" + userSessions.userSession.userToken;
         $http.get(url)
             .success(function (response) {
@@ -1630,6 +1783,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             });
 
         var hwTypeurl = GLOBALS.baseUrl + "user/get-homework-types?token=" + userSessions.userSession.userToken;
+
         $http.get(hwTypeurl)
             .success(function (response) {
                 $scope.hwTypeList = response['data'];
@@ -1638,15 +1792,14 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 console.log("Error in Response: " + response);
             });
 
+
         $scope.getSelectedHwType = function (hwtype) {
             $scope.hwTypeId = hwtype['id'];
         };
 
-
         $scope.updateDueDate = function (newDate) {
             $scope.dueDate = newDate;
         }
-
 
         $scope.getSelectedSub = function (subject) {
             $scope.recipient = "Select Student";
@@ -1789,7 +1942,23 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     }
                     else {
                         var url = GLOBALS.baseUrl + "user/update-homework?token=" + userSessions.userSession.userToken;
-                        $http.post(url, { _method: 'PUT', homework_id: $scope.hwId, subject_id: $scope.SubjectId, title: $scope.hwTitle, batch_id: $scope.BatchId, class_id: $scope.classId, division_id: $scope.divId, due_date: $scope.dueDate, student: $scope.selectedList, description: $scope.description, homework_type: $scope.hwTypeId, attachment_file: '' }).success(function (response) {
+
+                        $http.post(url, {
+                            _method: 'PUT',
+                            homework_id: $scope.hwId,
+                            subject_id: $scope.SubjectId,
+                            title: $scope.hwTitle,
+                            batch_id: $scope.BatchId,
+                            class_id: $scope.classId,
+                            division_id: $scope.divId,
+                            due_date: $scope.dueDate,
+                            student: $scope.selectedList,
+                            description: $scope.description,
+                            homework_type: $scope.hwTypeId,
+                            attachment_file: ''
+                        }).success(function (response) {
+                            console.log("user/update-homework?token=")
+                            console.log(response)
                             if (response['status'] == 200) {
                                 $scope.msg = response['message'];
                                 $ionicLoading.hide();
@@ -1838,6 +2007,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }, 3000);
         };
     })
+
     .controller('ResultCntrl', function ($stateParams, $window, $rootScope, $scope, $state, $ionicPopup, $filter, $timeout, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $cordovaImagePicker, $ionicPlatform, $ionicLoading) {
         var url = GLOBALS.baseUrl + "user/get-exam-terms/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
         $http.get(url).success(function (response) {
@@ -1859,6 +2029,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 });
         }
     })
+
     .controller('ResultSubjectDetailCntrl', function ($stateParams, $window, $rootScope, $scope, $state, $ionicPopup, $filter, $timeout, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $cordovaImagePicker, $ionicPlatform, $ionicLoading) {
         $scope.terms = $rootScope.subjectData;
         $scope.term_id = "";
@@ -1877,23 +2048,32 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 });
         }
     })
-    .controller('HwComposeCtrl', function ($window, $rootScope, $scope, $state, $ionicPopup, $filter, $timeout, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $cordovaImagePicker, $ionicPlatform, $ionicLoading) {
+
+    .controller('HwComposeCtrl', function ($cordovaFileTransfer, $window, $rootScope, $scope, $state, $ionicPopup, $filter, $timeout, GLOBALS, userSessions, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $cordovaImagePicker, $ionicPlatform, $ionicLoading) {
 
         $scope.onChange = function (e, fileList) {
 
         }
 
         $scope.onLoad = function (e, reader, file, fileList, fileOjects, fileObj) {
-
-            $scope.image = fileObj.base64;
-
-            //alert('this is handler for file reader onload event!');
+            if (fileObj.filesize > 2e+6) {
+                var myPopup = $ionicPopup.show({
+                    template: '',
+                    title: 'File too large',
+                    subTitle: 'File size must be less than 2 MB',
+                });
+                $timeout(function () {
+                    myPopup.close();
+                }, 2000);
+            } else {
+                $scope.image = fileObj.base64;
+                $scope.imageExtention = fileObj.filetype;
+            }
         }
+
 
         var uploadedCount = 0;
         $scope.files = [];
-
-
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -2084,30 +2264,57 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 } else {
                     var image = angular.toJson($scope.image);
                     var url = GLOBALS.baseUrl + "user/homework-create?token=" + userSessions.userSession.userToken;
-
-                    $http.post(url, { subject_id: $scope.SubjectId, title: $scope.hwTitle, batch_id: $scope.BatchId, class_id: $scope.classId, division_id: $scope.divId, due_date: $scope.dueDate, description: $scope.description, homework_type: $scope.hwTypeId, student_id: $scope.selectedList, image: $scope.image }).success(function (response) {
+                    $http.post(url, {
+                        subject_id: $scope.SubjectId,
+                        title: $scope.hwTitle,
+                        batch_id: $scope.BatchId,
+                        class_id: $scope.classId,
+                        division_id: $scope.divId,
+                        due_date: $scope.dueDate,
+                        description: $scope.description,
+                        homework_type: $scope.hwTypeId,
+                        student_id: $scope.selectedList,
+                        image: $scope.image,
+                        file_type: $scope.imageExtention
+                    }).success(function (response) {
                         if (response['status'] == 200) {
                             $scope.msg = response['message'];
+
+                            $ionicLoading.hide();
+                            if (response['status'] == 200) {
+                                console.log("user/homework-create?token=")
+                                console.log(response)
+                                $scope.msg = response['message'];
+                                $scope.showPopup();
+                                $state.go('app.edithomeworklisting');
+                            }
+                            else {
+                                // $scope.msg = response['message'];
+                                // $ionicLoading.hide();
+                                // $scope.showPopup();
+                                var myPopup = $ionicPopup.show({
+                                    template: '',
+                                    title: 'Something Went Wrong!!!',
+                                    subTitle: 'Please Try Again...',
+                                });
+                                $timeout(function () {
+                                    myPopup.close();
+                                }, 2000);
+                            }
+                        }
+                    })
+                        .error(function (response) {
+                            console.log("Error in Response: " + response);
+                            if (response.hasOwnProperty('status')) {
+                                $scope.msg = response.message;
+                                console.log($scope.msg)
+                            }
+                            else {
+                                $scope.msg = "Access Denied";
+                            }
                             $ionicLoading.hide();
                             $scope.showPopup();
-                            $state.go('app.edithomeworklisting');
-                        }
-                        else {
-                            $scope.msg = response['message'];
-                            $ionicLoading.hide();
-                            $scope.showPopup();
-                        }
-                    }).error(function (response) {
-                        console.log("Error in Response: " + response);
-                        if (response.hasOwnProperty('status')) {
-                            $scope.msg = response.message;
-                        }
-                        else {
-                            $scope.msg = "Access Denied";
-                        }
-                        $ionicLoading.hide();
-                        $scope.showPopup();
-                    });
+                        });
                 }
             } else {
                 $scope.msg = "Due Date should be greater than Current Date";
@@ -2285,6 +2492,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }, 3000);
         };
     })
+
     .controller('MsgComposeCtrl', function ($scope, $state, $timeout, $ionicPopup, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, GLOBALS, userSessions, $http) {
 
         $scope.$parent.clearFabs();
@@ -2475,6 +2683,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }, 3000);
         };
     })
+
     .controller('ParentMsgComposeCtrl', function ($rootScope, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $ionicHistory, $http, GLOBALS, userSessions, $ionicPopup) {
 
         $scope.$parent.clearFabs();
@@ -2612,6 +2821,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }, 3000);
         };
     })
+
     .controller('MsgChatCtrl', function ($scope, $state, $timeout, ionicMaterialInk, $ionicScrollDelegate, $ionicPopup, $ionicSideMenuDelegate, GLOBALS, chatHist, $http, userSessions) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -2685,6 +2895,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }, 3000);
         };
     })
+
     .controller('AttendLandingCtrl', function ($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
@@ -2715,8 +2926,8 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             });
         };
     })
-    .controller('MarkAttendanceCtrl', function ($ionicHistory, $scope, $state, $timeout, $http, $ionicPopup, userSessions, GLOBALS, $filter, ionicMaterialInk, $log, $ionicSideMenuDelegate) {
 
+    .controller('MarkAttendanceCtrl', function ($ionicLoading, $ionicHistory, $scope, $state, $timeout, $http, $ionicPopup, userSessions, GLOBALS, $filter, ionicMaterialInk, $log, $ionicSideMenuDelegate) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -2739,8 +2950,14 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.getStudentList = function () {
             $scope.setDate = $filter('date')($scope.currentDate, "yyyy-MM-dd");
             var url = GLOBALS.baseUrl + "user/students-list?token=" + userSessions.userSession.userToken;
-            $http.post(url, { date: $scope.setDate, teacher_id: userSessions.userSession.userId }).success(function (response) {
+            $ionicLoading.show();
+            $http.post(url, {
+                date: $scope.setDate,
+                teacher_id: userSessions.userSession.userId
+            }).success(function (response) {
+                $ionicLoading.hide();
                 if (response['status'] == 200) {
+                    console.log(response)
                     $scope.studentList = response['data']['studentList'];
                     $scope.absentList = response['data']['absentList'];
                     $scope.currentBatch = response['data']['batchName'];
@@ -2760,14 +2977,11 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     }
                     else {
                         $scope.msg = "Access Denied";
-
                         $scope.showPopup();
                         $state.go('app.attendancelanding');
                     }
-
                 });
         }
-
         $scope.getStudentList();
 
         $scope.toggleCheck = function (elementData, studentId) {
@@ -2793,8 +3007,11 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.markAttendance = function () {
             $scope.setDate = $filter('date')($scope.currentDate, "yyyy-MM-dd");
             var url = GLOBALS.baseUrl + "user/mark-attendance?token=" + userSessions.userSession.userToken;
+            console.log($scope.absentList);
+            $ionicLoading.show();
             $http.post(url, { date: $scope.setDate, student_id: $scope.absentList }).success(function (response) {
                 console.log(response);
+                $ionicLoading.hide();
                 if (response['status'] == 200) {
                     $scope.msg = response['message'];
                     $scope.showPopup();
@@ -3013,6 +3230,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }, 3000);
         };
     })
+
     .controller('LandingEventTeacherCtrl', function ($ionicLoading, $scope, $state, $timeout, GLOBALS, userSessions, $ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
         $scope.$on("$ionicView.beforeEnter", function (event, data) {
             // handle event$scope.show = function() {
@@ -3142,6 +3360,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         };
         $scope.recentEvent();
     })
+
     .controller('app.PublicAchievementCtrl', function ($ionicHistory, $rootScope, userSessions, GLOBALS, $http, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicLoading) {
         $scope.myGoBack = function () {
             $state.go('publicDashboard')
@@ -3203,6 +3422,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             });
         };
     })
+
     .controller('PublicEventCtr', function ($rootScope, $ionicHistory, $ionicLoading, $scope, $state, $timeout, GLOBALS, userSessions, $ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal) {
         $scope.hidden = true;
         $scope.hiddenn = true;
@@ -3301,6 +3521,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         };
         $scope.recentEvent();
     })
+
     .controller('FeeDetailCntrl', function ($stateParams, $rootScope, $ionicLoading, $scope, $state, $timeout, GLOBALS, userSessions, $ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.getPerticulars = function (installment_id) {
             var id = installment_id;
@@ -3317,6 +3538,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         }
         $scope.getPerticulars($stateParams.installment_id);
     })
+
     .controller('FeeLandingParentCntrl', function ($ionicScrollDelegate, $rootScope, $ionicLoading, $scope, $state, $timeout, GLOBALS, userSessions, $ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$on("$ionicView.beforeEnter", function (event, data) {
@@ -3418,6 +3640,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }
         }
     })
+
     .controller('LandingEventParentCtrl', function ($ionicLoading, $scope, $state, $timeout, GLOBALS, userSessions, $ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
         $scope.$on("$ionicView.beforeEnter", function (event, data) {
 
@@ -3561,6 +3784,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         };
         $scope.recentEvent();
     })
+
     .controller('DetailEventParentCtrl', function ($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -3579,6 +3803,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.endEventTime = new Date();
         $scope.eventdetailsList = $stateParams;
     })
+
     .controller('EventStatusTeacherCtrl', function ($state, $scope, $http, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams, userSessions, GLOBALS, $ionicPopup, $ionicLoading) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -3655,6 +3880,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }, 3000);
         }
     })
+
     .controller('EventStatusPublicCtrl', function ($state, $scope, $http, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams, userSessions, GLOBALS, $ionicPopup, $ionicLoading, $ionicHistory) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -3673,6 +3899,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $ionicHistory.goBack();
         }
     })
+
     .controller('EditEventCtrl', function ($ionicLoading, $ionicPopup, GLOBALS, $http, userSessions, $scope, $state, $filter, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $stateParams) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -3792,6 +4019,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }
         }
     })
+
     .controller('CreateEventCtrl', function ($ionicHistory, $ionicLoading, $filter, $scope, $state, GLOBALS, $timeout, $http, userSessions, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup, $cordovaCamera, $cordovaFile, $cordovaFileTransfer, $cordovaDevice, $cordovaActionSheet, $cordovaImagePicker, $ionicPlatform) {
         $scope.$on("$ionicView.beforeEnter", function (event, data) {
 
@@ -3974,6 +4202,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }, 3000);
         }
     })
+
     .controller('ViewEventsCtrl', function ($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate) {
 
         $scope.$parent.clearFabs();
@@ -4030,6 +4259,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }
         };
     })
+
     .controller('CreateLeaveCtrl', function ($rootScope, $scope, $state, $timeout, $filter, ionicMaterialInk, $ionicPopup, $ionicSideMenuDelegate, GLOBALS, $http, userSessions) {
         // handle event
         //$scope.fromDate=$filter('fromDate')('yyyy dd mm');
@@ -4157,6 +4387,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }, 3000);
         };
     })
+
     .controller('ViewLeaveApprovalCtrl', function ($scope, $state, $timeout, ionicMaterialInk, $ionicPopup, $ionicSideMenuDelegate, hwDetails, GLOBALS, $http, userSessions) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -4244,6 +4475,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }, 3000);
         };
     })
+
     .controller('ViewLeaveApprovedCtrl', function ($scope, $state, $timeout, ionicMaterialInk, $ionicPopup, $ionicSideMenuDelegate, hwDetails, GLOBALS, $http, userSessions) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -4312,6 +4544,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }, 3000);
         };
     })
+
     .controller('LeaveDetailCtrl', function ($scope, $state, $timeout, $ionicPopup, ionicMaterialInk, userSessions, GLOBALS, $http, hwDetails, $ionicSideMenuDelegate, $ionicModal) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -4360,6 +4593,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             }, 3000);
         };
     })
+
     .controller('DetailPageCtrl', function (userSessions, GLOBALS, $ionicPopup, $rootScope, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $http, $ionicLoading) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -4434,6 +4668,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         };
         $scope.selectedDate = new Date();
     })
+
     .controller('DetailPagePublicCtrl', function (userSessions, GLOBALS, $ionicPopup, $rootScope, $scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $http, $ionicLoading) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -4485,6 +4720,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         };
         $scope.selectedDate = new Date();
     })
+
     .controller('TimeTableCtrl', function ($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicPopup, $filter, userSessions, GLOBALS, $http) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
@@ -4754,6 +4990,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             });
         };
     })
+
     .controller('ResultViewCntrl', function ($scope, $state, $timeout, ionicMaterialInk, $ionicSideMenuDelegate, $ionicModal, $ionicPopup) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;

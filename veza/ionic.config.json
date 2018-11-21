@@ -1,6 +1,9 @@
 {
   "name": "GEMS",
-  "app_id": "7c6f7241",
+  "integrations": {
+    "gulp": {},
+    "cordova": {}
+  },
   "type": "ionic1",
   "watchPatterns": [
     "scss/**/*",
@@ -8,8 +11,6 @@
     "!www/lib/**/*",
     "!www/**/*.map"
   ],
-  "integrations": {
-    "gulp": {},
-    "cordova": {}
-  }
+  "pro_id": "7c6f7241",
+  "app_id": ""
 }

@@ -12,7 +12,9 @@
                     <i class="icon ion-homie"></i>
                 </a>
                 <a class="tab-item margin-top-10" ui-sref="app.message">
-                    <i class="icon ion-message"><span class="badge badge-assertive"></span></i>
+                    <i class="icon ion-message">
+                        <span class="badge badge-assertive"></span>
+                    </i>
                 </a>
             </div>
         </div>
@@ -20,7 +22,7 @@
     <div class="bar bar-pink bar-header align-delete-bar">
         <iion-item class="row">
             <div class="row">
-                <div class="col-10"  ng-click="myGoBack()">
+                <div class="col-10" ng-click="myGoBack()">
                     <button class="button-clear">
                         <i class="ion-arrow-left-c button-back-white"></i>
                     </button>
@@ -34,25 +36,58 @@
     <ion-content ng-class="{expanded:$scope.isExpanded}" padding="true">
         <div class="list padding-l-r-5">
             <div class="row bold description-title-font">{{hwrkDetail.title}}</div>
-            <div class="row margin-top-5"><div class="bold creator-font">{{hwrkDetail.teacher_name}}</div></div>
-            <div class="row bold"><div class="creator-time-font">{{hwrkDetail.created_At}}</div></div>
+            <div class="row margin-top-5">
+                <div class="bold creator-font">{{hwrkDetail.teacher_name}}</div>
+            </div>
+            <div class="row bold">
+                <div class="creator-time-font">{{hwrkDetail.created_At}}</div>
+            </div>
             <div class="margin-top-36">
                 <div class="no-border">
                     <div class="row">
-                        <span><b class="bold">Subject: </b>{{hwrkDetail.subject_name}}</span>
+                        <span>
+                            <b class="bold">Subject: </b>{{hwrkDetail.subject_name}}</span>
                     </div>
-                    <div class="row"><span><b class="bold">Batch:</b> {{hwrkDetail.batch_name}}<b class="bold"> Class:</b> {{hwrkDetail.class_name}}<b class="bold"> Div:</b> {{hwrkDetail.division_name}}</span></div>
-                    <div class="row"><span><b class="bold">Due Date:</b> {{hwrkDetail.due_date}}</span></div>
-                    <div class="row"><span><b class="bold">Homework Type:</b> {{hwrkDetail.homeworkType}}</span></div>
-                    <!--<div class="row"><div class="col-90"><div class="margin-top-5"><b class="bold">Download: </b><b class="red-font"> Sci-Ch 04-05.pdf</b></div></div><i class="icon ion-android-download col-10 font-225"></i></div>-->
+                    <div class="row">
+                        <span>
+                            <b class="bold">Batch:</b> {{hwrkDetail.batch_name}}
+                            <b class="bold"> Class:</b> {{hwrkDetail.class_name}}
+                            <b class="bold"> Div:</b> {{hwrkDetail.division_name}}</span>
+                    </div>
+                    <div class="row">
+                        <span>
+                            <b class="bold">Due Date:</b> {{hwrkDetail.due_date}}</span>
+                    </div>
+                    <div class="row">
+                        <span>
+                            <b class="bold">Homework Type:</b> {{hwrkDetail.homeworkType}}</span>
+                    </div>
+                    <div class="row">
+                        <p class="description-font">
+                            <b class="bold">Description</b>
+                            <br>
+                            {{hwrkDetail.description}}
+                        </p>
+                    </div>
+                    <div ng-if="fileName.lengh!=0">
+                        <div class="row">
+                            <div class="col-90">
+                                <div class="margin-top-5">
+                                    <b class="bold">Download: </b>
+                                    <b class="red-font">{{fileName}}</b>
+                                </div>
+                            </div>
+                            <i class="icon ion-android-download col-10 font-225" ng-click="checkStoragePermissionAndDownload()"></i>
+                        </div>
+                        <!-- <div class="card" ng-if="fileExtention != 'pdf'">
+                            <img ng-src="{{hwrkDetail.attachment_file}}" height="30%" width="90%">
+                        </div> -->
+                    </div>
+
                 </div>
             </div>
-                    <div class="row">
-                        <p class="margin-top-36 description-font"><b class="bold">Description</b><br>{{hwrkDetail.description}}</p>
-                    </div>
-                    <div class="card">
-                      <img ng-src="{{hwrkDetail.attachment_file}}" height="30%" width="90%">
-                    </div>
+
+
         </div>
     </ion-content>
 </ion-view>

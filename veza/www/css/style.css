@@ -1256,7 +1256,7 @@ display: none;
    margin-top: 120px!important;
 }
 
-.mark-0{
+.mark-1{
     background: url('../img/attendance_true.png') center;
     clear: both;
     background-repeat: no-repeat;
@@ -1272,7 +1272,7 @@ display: none;
     border-radius: 4px;
 }
 
-.mark-1{
+.mark-0{
     background: url('../img/attendance_false.png') center;
     clear: both;
     background-repeat: no-repeat;
