@@ -48,7 +48,7 @@
               </tr>
               <tr ng-repeat="installment in structure.installments" ng-click="detail(installment.installment_id)">
                 <td style="background-color:white">
-                  {{installment.installment_id}}
+                  {{$index+1}}
                 </td>
                 <td style="background-color:white">
                   {{installment.due_date}}

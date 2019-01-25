@@ -4,11 +4,11 @@
 var db = null;
 angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-material', 'ngCordova'])
     .constant('GLOBALS', {
-        baseUrl:'http://sspss.veza.co.in/api/v1/',
-        baseUrlImage: 'http://sspss.veza.co.in/',
+        // baseUrl:'http://sspss.veza.co.in/api/v1/',
+        // baseUrlImage: 'http://sspss.veza.co.in/',
         versionCode: 1.8,
-        // baseUrl: 'http://sspss_test.woxi.co.in//api/v1/',
-        // baseUrlImage: 'http://sspss_test.woxi.co.in/'
+        baseUrl: 'http://sspss_test.woxi.co.in/api/v1/',
+        baseUrlImage: 'http://sspss_test.woxi.co.in/'
     })
 
     .factory('Data', function () {
@@ -3530,6 +3530,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 if (response['status'] == 200) {
                     $ionicLoading.hide();
                     $scope.feeDetails = response['data'];
+                    console.log( $scope.feeDetails)
                     $ionicLoading.hide();
                 }
             }).error(function (err) {
@@ -3544,7 +3545,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.$on("$ionicView.beforeEnter", function (event, data) {
             $ionicLoading.show({
                 template: 'Loading...',
-                duration: 1500
             })
             $scope.showAlert = function () {
                 var alertPopup = $ionicPopup.alert({
@@ -3590,6 +3590,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 $ionicLoading.show();
                 var url = GLOBALS.baseUrl + "user/get-fee/" + userSessions.userSession.userId + "/?token=" + userSessions.userSession.userToken;
                 $http.get(url).success(function (response) {
+                    $ionicLoading.hide();                    
                     $scope.studentFee = response.data;
                 }).error(function (err) {
                     $ionicLoading.hide();
@@ -3601,8 +3602,10 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $scope.getFees = function () {
                 $ionicLoading.show();
                 var url = GLOBALS.baseUrl + "user/get-fee_details/" + userSessions.userSession.userId + "/?token=" + userSessions.userSession.userToken;
+                console.log(url)
                 $http.get(url).success(function (response) {
                     if (response['status'] == 200) {
+                        console.log(response)
                         $scope.myFees = response.data.structures;
                         $scope.transactions = response.data.transaction;
                     }
