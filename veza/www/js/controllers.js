@@ -7,8 +7,8 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         // baseUrl: 'http://sspss.veza.co.in/api/v1/',
         //  baseUrlImage: 'http://sspss.veza.co.in/',
 
-        baseUrl: 'http://test.woxi.co.in/api/v1/',
-        baseUrlImage: 'http://test.woxi.co.in/'
+        baseUrl: 'http://sspss_test.woxi.co.in/api/v1/',
+        baseUrlImage: 'http://sspss_test.woxi.co.in/'
     })
     .factory('Data', function () {
         return { message }
@@ -4877,10 +4877,12 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
     .controller('PublicDashboardCtr',
         function (
             $scope,
-            $state
+            $state,
+            $rootScope
         ) {
             $scope.goBackToSelectSchool = function () {
-                $state.go('selectschool')
+                $rootScope.organisationID = 0;
+                $state.go('selectschool');
             };
             $scope.goToPublicEventsLanding = function () {
                 $state.go('publicEvents')
