@@ -554,7 +554,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                         // save this server-side and use it to push notifications to this device
                         $rootScope.pushToken = token;
                         $scope.saveToken();
-
                     }, function (error) {
                         console.error(error);
                     });
@@ -568,8 +567,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     });
                 }
                 if (res['status'] == 200) {
-                    // $scope.register();
-
+                    $scope.register();
                     $scope.studentlist = (res.data['users']);
                     localStorage.setItem('appToken', JSON.stringify($scope.studentlist['token']));
                     $scope.userDataArray = userData.setUserData(res['data']['users']);
@@ -3541,7 +3539,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
     })
 
     .controller('FeeLandingParentCntrl', function ($ionicScrollDelegate, $rootScope, $ionicLoading, $scope, $state, $timeout, GLOBALS, userSessions, $ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
-
+        $scope.LcStatus = $rootScope.lcStatus
         $scope.$on("$ionicView.beforeEnter", function (event, data) {
             $ionicLoading.show({
                 template: 'Loading...',
@@ -3590,7 +3588,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 $ionicLoading.show();
                 var url = GLOBALS.baseUrl + "user/get-fee/" + userSessions.userSession.userId + "/?token=" + userSessions.userSession.userToken;
                 $http.get(url).success(function (response) {
-                    $ionicLoading.hide();                    
+                    $ionicLoading.hide();   
                     $scope.studentFee = response.data;
                 }).error(function (err) {
                     $ionicLoading.hide();
@@ -3602,10 +3600,8 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $scope.getFees = function () {
                 $ionicLoading.show();
                 var url = GLOBALS.baseUrl + "user/get-fee_details/" + userSessions.userSession.userId + "/?token=" + userSessions.userSession.userToken;
-                console.log(url)
                 $http.get(url).success(function (response) {
                     if (response['status'] == 200) {
-                        console.log(response)
                         $scope.myFees = response.data.structures;
                         $scope.transactions = response.data.transaction;
                     }

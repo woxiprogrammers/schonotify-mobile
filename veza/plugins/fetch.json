@@ -65,14 +65,6 @@
     "is_top_level": true,
     "variables": {}
   },
-  "com-sarriaroman-photoviewer": {
-    "source": {
-      "type": "registry",
-      "id": "com-sarriaroman-photoviewer@^1.1.18"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
   "cordova-plugin-firebase": {
     "source": {
       "type": "registry",
@@ -101,6 +93,14 @@
     "source": {
       "type": "registry",
       "id": "cordova-plugin-android-permissions@^1.0.0"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "com-sarriaroman-photoviewer": {
+    "source": {
+      "type": "registry",
+      "id": "com-sarriaroman-photoviewer@1.1.18"
     },
     "is_top_level": true,
     "variables": {}

@@ -7,9 +7,6 @@
     "files": {}
   },
   "installed_plugins": {
-    "com-sarriaroman-photoviewer": {
-      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
-    },
     "cordova-plugin-android-permissions": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
@@ -42,6 +39,9 @@
     },
     "phonegap-plugin-push": {
       "SENDER_ID": "750487257563",
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
+    "com-sarriaroman-photoviewer": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     }
   },
