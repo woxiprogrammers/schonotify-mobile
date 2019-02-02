@@ -3556,6 +3556,18 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 });
             }
         });
+
+        $scope.openWebView = function (bodyId) {
+            console.log("about to open webview")
+            var paymentLink;
+            if(bodyId == 1) {
+                paymentLink = 'http://sspss.veza.co.in/fees/billing-page/';
+            } else if (bodyId == 2) {
+                paymentLink = 'http://sspss.veza.co.in/fees/billing-page/gems';
+            }
+            window.open(paymentLink, '_blank', 'location=no');
+            return true;
+        }
         $scope.bodyId = userSessions.userSession.bodyId;
         $scope.detail = function (id) {
             $state.go('app.feeDetail', { installment_id: id });

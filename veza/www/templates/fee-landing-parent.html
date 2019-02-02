@@ -19,44 +19,45 @@
       </div>
     </div>
   </div>
-  <ion-content overflow-scroll="false" padding="true" style="background-image:url('img/education-bg.jpg');">
+   <!-- <ion-content overflow-scroll="false" padding="true" style="background-image:url('img/education-bg.jpg');">  -->
+    <ion-content overflow-scroll="false" scroll="true" padding="true" style=" background-image: linear-gradient(#000428 ,  #004e92);"> 
     <div ng-show="clickOn=='con1'" style="height:100%;width:100%">
-      <button class="button button-full button-balanced" style="margin-bottom:0px">Installment Structure</button>
+      <button class="button button-full button-balanced " style="margin-bottom:0px;">Installment Structure</button>
       <div ng-repeat="structure in studentFee">
         <span>
           <h4>
-            <b>Year: {{structure.fee_name}}</b>
+            <b style="color: #edf3fc">Year: {{structure.fee_name}}</b>
           </h4>
         </span>
         <div ng-show="show=='show'" style="overflow-x: hidden;height:auto; ">
           <div class="card">
-            <table style="width:100%">
-              <tr style="background-color:#edf3fc">
-                <th>
+            <table style="width:100%;">
+              <tr style="background-color:#edf3fc;" class="border-black-solid">
+                <th class="border-black-solid">
                   <b>No
                     <b>
                 </th>
-                <th>
+                <th  class="border-black-solid">
                   <b>Due Date</b>
                 </th>
-                <th>
+                <th  class="border-black-solid">
                   <b>Amount</b>
                 </th>
-                <th>
+                <th  class="border-black-solid">
                   <b>Late Fee</b>
                 </th>
               </tr>
               <tr ng-repeat="installment in structure.installments" ng-click="detail(installment.installment_id)">
-                <td style="background-color:white">
+                <td style="background-color:white"  class="border-black-solid"> 
                   {{$index+1}}
                 </td>
-                <td style="background-color:white">
+                <td style="background-color:white" class="border-black-solid">
                   {{installment.due_date}}
                 </td>
-                <td style="background-color:white">
+                <td style="background-color:white" class="border-black-solid">
                   {{installment.total}}
                 </td>
-                <td style="background-color:white">
+                <td style="background-color:white" class="border-black-solid">
                   {{installment.late_fee}} &nbsp
                   <i class="icon ion-chevron-right" style="float:right" />
                 </td>
@@ -64,13 +65,7 @@
             </table>
           </div>
           <center ng-if="structure.show_payment==true && LcStatus == false " style="margin-top:5px">
-            <a ng-if="bodyId == 1" href="#" onclick="window.open('http://sspss.veza.co.in/fees/billing-page', '_blank', 'location=no'); return false;">
-              <button class="button button-small button-balanced">Pay Fees</button>
-            </a>
-            <br>
-            <a ng-if="bodyId == 2" href="#" onclick="window.open('http://sspss.veza.co.in/fees/billing-page/gems', '_blank', 'location=no'); return false;">
-              <button class="button button-small button-balanced">Pay Fees</button>
-            </a>
+              <button class="button button-small button-balanced" ng-click="openWebView(bodyId)">Pay Fees</button>
             <br>
             <hr>
           </center>
@@ -83,19 +78,16 @@
             <br>
           </center>
           <center ng-if="structure.show_payment==false && LcStatus == false && myFees[$index].pending_fee == 0" style="margin-top:5px">
-              <!-- <div class="speech3" style="width:100%">
-                <font color="white">FEES PAID FOR {{structure.fee_name}}</font>
-              </div> -->
-              <hr>
-              <br>
-            </center>
+            <hr>
+            <br>
+          </center>
         </div>
       </div>
     </div>
     <div ng-show="clickOn=='con2'" style="height:100%;width:100%;">
       <div ng-repeat="myFee in myFees">
         <h3>
-          <b>{{myFee.structure_name}}</b>
+          <b style="color: #edf3fc">{{myFee.structure_name}}</b>
         </h3>
         <div style="float:left;">
           <div class="speech1">

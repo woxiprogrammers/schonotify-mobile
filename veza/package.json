@@ -48,13 +48,15 @@
       "cordova-plugin-whitelist": {},
       "ionic-plugin-keyboard": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-ionic-webview": {},
       "cordova-plugin-file-transfer": {},
       "cordova-plugin-android-permissions": {},
       "phonegap-plugin-push": {
         "SENDER_ID": "750487257563"
       },
       "cordova-plugin-firebase": {},
+      "cordova-plugin-ionic-webview": {
+        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
+      },
       "com-sarriaroman-photoviewer": {}
     },
     "platforms": [

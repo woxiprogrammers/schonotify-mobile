@@ -1042,6 +1042,10 @@ display: none;
     padding-left: 0px!important;
 }
 
+.border-black-solid{
+    border: 1px solid black;
+}
+
 .border-bottom{
     border-bottom: 1px solid lightgrey!important;
 }
