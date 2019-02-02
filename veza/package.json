@@ -4,6 +4,7 @@
   "description": "veza: An Ionic project",
   "dependencies": {
     "bluebird": "~3.5.0",
+    "com-sarriaroman-photoviewer": "~1.1.18",
     "cordova-android": "^6.4.0",
     "cordova-plugin-android-permissions": "^1.0.0",
     "cordova-plugin-console": "^1.1.0",

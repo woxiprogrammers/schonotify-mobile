@@ -20,13 +20,13 @@
     </div>
   </div>
    <!-- <ion-content overflow-scroll="false" padding="true" style="background-image:url('img/education-bg.jpg');">  -->
-    <ion-content overflow-scroll="false" scroll="true" padding="true" style=" background-image: linear-gradient(#000428 ,  #004e92);"> 
+    <ion-content overflow-scroll="false" scroll="true" padding="true" > 
     <div ng-show="clickOn=='con1'" style="height:100%;width:100%">
       <button class="button button-full button-balanced " style="margin-bottom:0px;">Installment Structure</button>
       <div ng-repeat="structure in studentFee">
         <span>
           <h4>
-            <b style="color: #edf3fc">Year: {{structure.fee_name}}</b>
+            <b>Year: {{structure.fee_name}}</b>
           </h4>
         </span>
         <div ng-show="show=='show'" style="overflow-x: hidden;height:auto; ">
@@ -87,7 +87,7 @@
     <div ng-show="clickOn=='con2'" style="height:100%;width:100%;">
       <div ng-repeat="myFee in myFees">
         <h3>
-          <b style="color: #edf3fc">{{myFee.structure_name}}</b>
+          <b>{{myFee.structure_name}}</b>
         </h3>
         <div style="float:left;">
           <div class="speech1">
