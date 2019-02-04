@@ -6,7 +6,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
     .constant('GLOBALS', {
         // baseUrl:'http://sspss.veza.co.in/api/v1/',
         // baseUrlImage: 'http://sspss.veza.co.in/',
-        versionCode: 1.8,
+        versionCode: 1.9,
         baseUrl: 'http://sspss_test.woxi.co.in/api/v1/',
         baseUrlImage: 'http://sspss_test.woxi.co.in/'
     })
@@ -1562,13 +1562,13 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.downloadDocument = function () {
             var url = $scope.hwrkDetail.attachment_file;
             var filename = url.split("/").pop();
-            var targetPath = cordova.file.externalRootDirectory + filename;
+            var targetPath = cordova.file.externalRootDirectory+ "/Download/SSPShikshanSanstha/Homeworks/" + filename;
             $cordovaFileTransfer.download(url, targetPath, {}, true).then(function (result) {
                 $ionicLoading.hide();
                 console.log('Success');
                 $scope.hasil = 'Save file on ' + targetPath + ' success!';
                 $scope.mywallpaper = targetPath;
-                alert('Your download is completed');
+                alert('Your download is completed \n File is downloaded at /Download/SSPShikshanSanstha/Homeworks/');
             }, function (error) {
                 $ionicLoading.hide();
                 console.log('Error downloading file');
@@ -1651,17 +1651,19 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         console.log($scope.hwrkDetail);
         $scope.fileName = $scope.hwrkDetail.attachment_file.split('/').pop();
         $scope.fileExtention = $scope.hwrkDetail.attachment_file.split('.').pop();
+        console.log($scope.fileExtention)
+        $scope.fileExtentionLength = ($scope.fileExtention).length;
         var permissions = cordova.plugins.permissions;
 
         $scope.downloadDocument = function () {
             var url = $scope.hwrkDetail.attachment_file;
             var filename = url.split("/").pop();
-            var targetPath = cordova.file.externalRootDirectory + filename;
+            var targetPath = cordova.file.externalRootDirectory + "/Download/SSPShikshanSanstha/Homeworks/" + filename;
             $cordovaFileTransfer.download(url, targetPath, {}, true).then(function (result) {
                 console.log('Success');
                 $scope.hasil = 'Save file on ' + targetPath + ' success!';
                 $scope.mywallpaper = targetPath;
-                alert('Your download is completed');
+                alert('Your download is completed \n File is downloaded at /Download/SSPShikshanSanstha/Homeworks/');
             }, function (error) {
                 console.log('Error downloading file');
                 $scope.hasil = 'Error downloading file...';
@@ -3528,7 +3530,6 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 if (response['status'] == 200) {
                     $ionicLoading.hide();
                     $scope.feeDetails = response['data'];
-                    console.log( $scope.feeDetails)
                     $ionicLoading.hide();
                 }
             }).error(function (err) {
@@ -3538,8 +3539,29 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.getPerticulars($stateParams.installment_id);
     })
 
-    .controller('FeeLandingParentCntrl', function ($ionicScrollDelegate, $rootScope, $ionicLoading, $scope, $state, $timeout, GLOBALS, userSessions, $ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
-        $scope.LcStatus = $rootScope.lcStatus
+    .controller('FeeLandingParentCntrl', function ($cordovaFileTransfer, $ionicScrollDelegate, $rootScope, $ionicLoading, $scope, $state, $timeout, GLOBALS, userSessions, $ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
+        $scope.LcStatus = $rootScope.lcStatus;
+        var permissions = cordova.plugins.permissions;
+
+        $scope.checkStoragePermissionAndDownload = function (feeId, transactionId) {
+            permissions.checkPermission(permissions.READ_EXTERNAL_STORAGE, function (status) {
+                if (status.checkPermission) {
+                    $scope.downloadFeeReceipt(feeId, transactionId);
+                }
+                else {
+                    permissions.requestPermission(permissions.WRITE_EXTERNAL_STORAGE, success, error);
+                    function error() {
+                        alert("App dosen't have storage permission");
+                    }
+
+                    function success(status) {
+                        if (!status.hasPermission) error();
+                        console.log("Permission Granted")
+                        $scope.downloadFeeReceipt(feeId, transactionId);
+                    }
+                }
+            });
+        }
         $scope.$on("$ionicView.beforeEnter", function (event, data) {
             $ionicLoading.show({
                 template: 'Loading...',
@@ -3599,6 +3621,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $scope.getFeesStudent = function () {
                 $ionicLoading.show();
                 var url = GLOBALS.baseUrl + "user/get-fee/" + userSessions.userSession.userId + "/?token=" + userSessions.userSession.userToken;
+                
                 $http.get(url).success(function (response) {
                     $ionicLoading.hide();   
                     $scope.studentFee = response.data;
@@ -3609,11 +3632,34 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 $scope.show = "show";
                 $scope.abc = "50%";
             }
+            $scope.downloadFeeReceipt = function(feeId, transactionId) {
+            var url = GLOBALS.baseUrl + "user/download-pdf/" + userSessions.userSession.userId + "/" + feeId + "/" + transactionId + "?token=" + userSessions.userSession.userToken;
+            var filename = "FeeReceipt-"+transactionId +".pdf";
+            var targetPath = cordova.file.externalRootDirectory + "/Download/SSPShikshanSanstha/FeeReceipts/" + filename;
+            $cordovaFileTransfer.download(url, targetPath, {}, true).then(function (result) {
+                console.log('Success');
+                $scope.hasil = 'Save file on ' + targetPath + ' success!';
+                $scope.mywallpaper = targetPath;
+                alert('Your download is completed \n File is downloaded at Download/SSPShikshanSanstha/FeeReceipts/');
+            }, function (error) {
+                console.log('Error downloading file');
+                $scope.hasil = 'Error downloading file...';
+                alert('Your download has failed');
+                console.log(error)
+            }, function (progress) {
+                console.log('progress');
+                $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+                // var downcountString = $scope.downloadProgress.toFixed();
+                // console.log('downcountString');
+                // $scope.downloadCount = downcountString;
+            });
+            }
             $scope.getFees = function () {
                 $ionicLoading.show();
                 var url = GLOBALS.baseUrl + "user/get-fee_details/" + userSessions.userSession.userId + "/?token=" + userSessions.userSession.userToken;
                 $http.get(url).success(function (response) {
                     if (response['status'] == 200) {
+                        console.log(response)
                         $scope.myFees = response.data.structures;
                         $scope.transactions = response.data.transaction;
                     }
