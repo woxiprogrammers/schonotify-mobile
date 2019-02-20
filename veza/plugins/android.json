@@ -7,10 +7,19 @@
     "files": {}
   },
   "installed_plugins": {
+    "com-sarriaroman-photoviewer": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
+    "cordova-plugin-android-permissions": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
     "cordova-plugin-console": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
     "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    },
+    "cordova-plugin-file-transfer": {
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     },
     "cordova-plugin-firebase": {
@@ -34,10 +43,11 @@
     "phonegap-plugin-push": {
       "SENDER_ID": "750487257563",
       "PACKAGE_NAME": "com.ionicframework.vezaandroid"
-    },
-    "com-sarriaroman-photoviewer": {
-      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
     }
   },
-  "dependent_plugins": {}
+  "dependent_plugins": {
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.ionicframework.vezaandroid"
+    }
+  }
 }
