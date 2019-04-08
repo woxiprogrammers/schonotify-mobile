@@ -22,7 +22,11 @@
   "_resolved": "https://registry.npmjs.org/ionic-plugin-keyboard/-/ionic-plugin-keyboard-2.2.1.tgz",
   "_shasum": "f2a9e169bbe9b5522400347c9fd6d3467ee3fa12",
   "_spec": "ionic-plugin-keyboard@^2.2.1",
+<<<<<<< HEAD
   "_where": "/home/mayur/MobileApps/ionic/schonotify-mobile/veza",
+=======
+  "_where": "/Users/mayurshelar/schonotify-mobile/veza",
+>>>>>>> develop
   "author": {
     "name": "Ionic"
   },

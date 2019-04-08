@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "_from": "cordova-plugin-splashscreen@^4.0.3",
+=======
+  "_from": "cordova-plugin-splashscreen@^4.1.0",
+>>>>>>> develop
   "_id": "cordova-plugin-splashscreen@4.1.0",
   "_inBundle": false,
   "_integrity": "sha1-gQKKt2Q+YVWT0n8q0CRFYR8ZRrY=",
@@ -8,12 +12,21 @@
   "_requested": {
     "type": "range",
     "registry": true,
+<<<<<<< HEAD
     "raw": "cordova-plugin-splashscreen@^4.0.3",
     "name": "cordova-plugin-splashscreen",
     "escapedName": "cordova-plugin-splashscreen",
     "rawSpec": "^4.0.3",
     "saveSpec": null,
     "fetchSpec": "^4.0.3"
+=======
+    "raw": "cordova-plugin-splashscreen@^4.1.0",
+    "name": "cordova-plugin-splashscreen",
+    "escapedName": "cordova-plugin-splashscreen",
+    "rawSpec": "^4.1.0",
+    "saveSpec": null,
+    "fetchSpec": "^4.1.0"
+>>>>>>> develop
   },
   "_requiredBy": [
     "#USER",
@@ -21,8 +34,13 @@
   ],
   "_resolved": "https://registry.npmjs.org/cordova-plugin-splashscreen/-/cordova-plugin-splashscreen-4.1.0.tgz",
   "_shasum": "81028ab7643e615593d27f2ad02445611f1946b6",
+<<<<<<< HEAD
   "_spec": "cordova-plugin-splashscreen@^4.0.3",
   "_where": "/home/mayur/MobileApps/ionic/schonotify-mobile/veza",
+=======
+  "_spec": "cordova-plugin-splashscreen@^4.1.0",
+  "_where": "/Users/mayurshelar/schonotify-mobile/veza",
+>>>>>>> develop
   "author": {
     "name": "Apache Software Foundation"
   },

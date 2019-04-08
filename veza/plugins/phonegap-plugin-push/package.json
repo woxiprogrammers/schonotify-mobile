@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "_from": "phonegap-plugin-push@^1.10.7",
+=======
+  "_from": "phonegap-plugin-push@^1.11.1",
+>>>>>>> develop
   "_id": "phonegap-plugin-push@1.11.1",
   "_inBundle": false,
   "_integrity": "sha512-AI7sV+g/ORyP0V3r6aCfekA+WC1RghbXyEAkqExMq/G0J66lAVySluemeGZsrpdNGjkq/KqLrjslHqYNPq3Nxw==",
@@ -8,12 +12,21 @@
   "_requested": {
     "type": "range",
     "registry": true,
+<<<<<<< HEAD
     "raw": "phonegap-plugin-push@^1.10.7",
     "name": "phonegap-plugin-push",
     "escapedName": "phonegap-plugin-push",
     "rawSpec": "^1.10.7",
     "saveSpec": null,
     "fetchSpec": "^1.10.7"
+=======
+    "raw": "phonegap-plugin-push@^1.11.1",
+    "name": "phonegap-plugin-push",
+    "escapedName": "phonegap-plugin-push",
+    "rawSpec": "^1.11.1",
+    "saveSpec": null,
+    "fetchSpec": "^1.11.1"
+>>>>>>> develop
   },
   "_requiredBy": [
     "#USER",
@@ -21,8 +34,13 @@
   ],
   "_resolved": "https://registry.npmjs.org/phonegap-plugin-push/-/phonegap-plugin-push-1.11.1.tgz",
   "_shasum": "a59c47c955935389f845ae76b8f04bc0c3bb6ab1",
+<<<<<<< HEAD
   "_spec": "phonegap-plugin-push@^1.10.7",
   "_where": "/home/mayur/MobileApps/ionic/schonotify-mobile/veza",
+=======
+  "_spec": "phonegap-plugin-push@^1.11.1",
+  "_where": "/Users/mayurshelar/schonotify-mobile/veza",
+>>>>>>> develop
   "author": {
     "name": "Adobe PhoneGap Team"
   },

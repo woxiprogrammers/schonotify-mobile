@@ -22,7 +22,11 @@
   "_resolved": "https://registry.npmjs.org/cordova-plugin-ionic-webview/-/cordova-plugin-ionic-webview-1.2.1.tgz",
   "_shasum": "6d2162a2b1c593de436359d0746afc28b6a28d57",
   "_spec": "cordova-plugin-ionic-webview@^1.2.1",
+<<<<<<< HEAD
   "_where": "/home/mayur/MobileApps/ionic/schonotify-mobile/veza",
+=======
+  "_where": "/Users/mayurshelar/schonotify-mobile/veza",
+>>>>>>> develop
   "author": {
     "name": "Ionic Team"
   },

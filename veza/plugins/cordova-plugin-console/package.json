@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "_from": "cordova-plugin-console@^1.0.7",
+=======
+  "_from": "cordova-plugin-console@^1.1.0",
+>>>>>>> develop
   "_id": "cordova-plugin-console@1.1.0",
   "_inBundle": false,
   "_integrity": "sha1-4vusECkBeeRMtyxf28QQpTHBzW0=",
@@ -8,12 +12,21 @@
   "_requested": {
     "type": "range",
     "registry": true,
+<<<<<<< HEAD
     "raw": "cordova-plugin-console@^1.0.7",
     "name": "cordova-plugin-console",
     "escapedName": "cordova-plugin-console",
     "rawSpec": "^1.0.7",
     "saveSpec": null,
     "fetchSpec": "^1.0.7"
+=======
+    "raw": "cordova-plugin-console@^1.1.0",
+    "name": "cordova-plugin-console",
+    "escapedName": "cordova-plugin-console",
+    "rawSpec": "^1.1.0",
+    "saveSpec": null,
+    "fetchSpec": "^1.1.0"
+>>>>>>> develop
   },
   "_requiredBy": [
     "#USER",
@@ -21,8 +34,13 @@
   ],
   "_resolved": "https://registry.npmjs.org/cordova-plugin-console/-/cordova-plugin-console-1.1.0.tgz",
   "_shasum": "e2fbac10290179e44cb72c5fdbc410a531c1cd6d",
+<<<<<<< HEAD
   "_spec": "cordova-plugin-console@^1.0.7",
   "_where": "/home/mayur/MobileApps/ionic/schonotify-mobile/veza",
+=======
+  "_spec": "cordova-plugin-console@^1.1.0",
+  "_where": "/Users/mayurshelar/schonotify-mobile/veza",
+>>>>>>> develop
   "author": {
     "name": "Apache Software Foundation"
   },

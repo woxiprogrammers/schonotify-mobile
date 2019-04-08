@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "_from": "cordova-plugin-statusbar@^2.2.3",
+=======
+  "_from": "cordova-plugin-statusbar@^2.4.2",
+>>>>>>> develop
   "_id": "cordova-plugin-statusbar@2.4.2",
   "_inBundle": false,
   "_integrity": "sha1-/B+9wNjXAzp+jh8ff/FnrJvU+vY=",
@@ -8,12 +12,21 @@
   "_requested": {
     "type": "range",
     "registry": true,
+<<<<<<< HEAD
     "raw": "cordova-plugin-statusbar@^2.2.3",
     "name": "cordova-plugin-statusbar",
     "escapedName": "cordova-plugin-statusbar",
     "rawSpec": "^2.2.3",
     "saveSpec": null,
     "fetchSpec": "^2.2.3"
+=======
+    "raw": "cordova-plugin-statusbar@^2.4.2",
+    "name": "cordova-plugin-statusbar",
+    "escapedName": "cordova-plugin-statusbar",
+    "rawSpec": "^2.4.2",
+    "saveSpec": null,
+    "fetchSpec": "^2.4.2"
+>>>>>>> develop
   },
   "_requiredBy": [
     "#USER",
@@ -21,8 +34,13 @@
   ],
   "_resolved": "https://registry.npmjs.org/cordova-plugin-statusbar/-/cordova-plugin-statusbar-2.4.2.tgz",
   "_shasum": "fc1fbdc0d8d7033a7e8e1f1f7ff167ac9bd4faf6",
+<<<<<<< HEAD
   "_spec": "cordova-plugin-statusbar@^2.2.3",
   "_where": "/home/mayur/MobileApps/ionic/schonotify-mobile/veza",
+=======
+  "_spec": "cordova-plugin-statusbar@^2.4.2",
+  "_where": "/Users/mayurshelar/schonotify-mobile/veza",
+>>>>>>> develop
   "author": {
     "name": "Apache Software Foundation"
   },
