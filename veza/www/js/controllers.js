@@ -396,7 +396,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $state.go('app.dashboard');
         }
         else {
-            $state.go('selectschool');
+            $state.go('login');
         }
 
     })
