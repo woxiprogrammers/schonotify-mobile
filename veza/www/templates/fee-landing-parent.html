@@ -19,9 +19,10 @@
       </div>
     </div>
   </div>
-  <ion-content overflow-scroll="false" padding="true" style="background-image:url('img/education-bg.jpg');">
+   <ion-content overflow-scroll="false" padding="true" style="background-image:url('img/education-bg.jpg');"> 
+    <ion-content overflow-scroll="false" scroll="true" padding="true" > 
     <div ng-show="clickOn=='con1'" style="height:100%;width:100%">
-      <button class="button button-full button-balanced" style="margin-bottom:0px">Installment Structure</button>
+      <button class="button button-full button-balanced " style="margin-bottom:0px;">Installment Structure</button>
       <div ng-repeat="structure in studentFee">
         <span>
           <h4>
@@ -30,55 +31,53 @@
         </span>
         <div ng-show="show=='show'" style="overflow-x: hidden;height:auto; ">
           <div class="card">
-            <table style="width:100%">
-              <tr style="background-color:#edf3fc">
-                <th>
+            <table style="width:100%;">
+              <tr style="background-color:#edf3fc;" class="border-black-solid">
+                <th class="border-black-solid">
                   <b>No
                     <b>
                 </th>
-                <th>
+                <th  class="border-black-solid">
                   <b>Due Date</b>
                 </th>
-                <th>
+                <th  class="border-black-solid">
                   <b>Amount</b>
                 </th>
-                <th>
+                <th  class="border-black-solid">
                   <b>Late Fee</b>
                 </th>
               </tr>
               <tr ng-repeat="installment in structure.installments" ng-click="detail(installment.installment_id)">
-                <td style="background-color:white">
-                  {{installment.installment_id}}
+                <td style="background-color:white"  class="border-black-solid"> 
+                  {{$index+1}}
                 </td>
-                <td style="background-color:white">
+                <td style="background-color:white" class="border-black-solid">
                   {{installment.due_date}}
                 </td>
-                <td style="background-color:white">
+                <td style="background-color:white" class="border-black-solid">
                   {{installment.total}}
                 </td>
-                <td style="background-color:white">
+                <td style="background-color:white" class="border-black-solid">
                   {{installment.late_fee}} &nbsp
                   <i class="icon ion-chevron-right" style="float:right" />
                 </td>
               </tr>
             </table>
           </div>
-          <center ng-if="structure.show_payment==true && LcStatus == false" style="margin-top:5px">
-            <a ng-if="bodyId == 1" href="#" onclick="window.open('http://sspss.veza.co.in/fees/billing-page', '_blank', 'location=no'); return false;">
-              <button class="button button-small button-balanced">Pay Fees</button>
-            </a>
-            <br>
-            <a ng-if="bodyId == 2" href="#" onclick="window.open('http://sspss.veza.co.in/fees/billing-page/gems', '_blank', 'location=no'); return false;">
-              <button class="button button-small button-balanced">Pay Fees</button>
-            </a>
+          <center ng-if="structure.show_payment==true && LcStatus == false " style="margin-top:5px">
+              <button class="button button-small button-balanced" ng-click="openWebView(bodyId)">Pay Fees</button>
             <br>
             <hr>
           </center>
-          <hr>
-          <center ng-if="structure.show_payment==false && LcStatus == false" style="margin-top:5px">
+        
+          <center ng-if="structure.show_payment==false && LcStatus == false && myFees[$index].pending_fee != 0" style="margin-top:5px">
             <div class="speech3" style="width:100%">
               <font color="white">PLEASE PAY THE PREVIOUS PENDING FEES</font>
             </div>
+            <hr>
+            <br>
+          </center>
+          <center ng-if="structure.show_payment==false && LcStatus == false && myFees[$index].pending_fee == 0" style="margin-top:5px">
             <hr>
             <br>
           </center>

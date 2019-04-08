@@ -4,11 +4,11 @@
 var db = null;
 angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-material'])
     .constant('GLOBALS', {
-        // baseUrl: 'http://sspss.veza.co.in/api/v1/',
-        //  baseUrlImage: 'http://sspss.veza.co.in/',
+        baseUrl: 'http://sspss.veza.co.in/api/v1/',
+        baseUrlImage: 'http://sspss.veza.co.in/',
 
-        baseUrl: 'http://sspss_test.woxi.co.in/api/v1/',
-        baseUrlImage: 'http://sspss_test.woxi.co.in/'
+        // baseUrl: 'http://sspss_test.woxi.co.in/api/v1/',
+        // baseUrlImage: 'http://sspss_test.woxi.co.in/'
     })
     .factory('Data', function () {
         return { message }
@@ -125,6 +125,8 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             $scope.studentlistForSwitch = function () {
                 var url = GLOBALS.baseUrl + "user/get-switching-details?token=" + userSessions.userSession.userToken;
                 $http.get(url).success(function (response) {
+                    console.log(response);
+                    console.log(url)
                     localStorage.setItem("studentdata", JSON.stringify(response['data']['Parent_student_relation']['Students']));
                     $scope.studentdataswitch = (response['data']['Parent_student_relation']['Students']);
                 })
@@ -132,17 +134,19 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     });
             }
             $scope.studentlistForSwitch();
-            $scope.checkLcStatus = function () {
-                //check if LC is created
-                var LcUrl = GLOBALS.baseUrl + "user/lc_generated/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
-                $http.get(LcUrl).success(function (response) {
-                    if (response.status == 200) {
-                        $rootScope.lcStatus = response.is_lc_generated;
-                    }
-                })
-            }
-            $scope.checkLcStatus();
+           
         });
+        $scope.checkLcStatus = function () {
+            //check if LC is created
+            var LcUrl = GLOBALS.baseUrl + "user/lc_generated/" + userSessions.userSession.userId + "?token=" + userSessions.userSession.userToken;
+            console.log(LcUrl);
+            $http.get(LcUrl).success(function (response) {
+                if (response.status == 200) {
+                    $rootScope.lcStatus = response.is_lc_generated;
+                }
+            })
+        }
+        $scope.checkLcStatus();
         if (userSessions.userSession.userRole == 'teacher') {
             $scope.check = true;
             $scope.userData = userData.getUserData();
@@ -538,7 +542,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     });
                 }
                 if (res['status'] == 200) {
-                    // $scope.register();
+                    $scope.register();
                     $scope.studentlist = (res.data['users']);
                     localStorage.setItem('appToken', JSON.stringify($scope.studentlist['token']));
                     $scope.userDataArray = userData.setUserData(res['data']['users']);
@@ -3231,7 +3235,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.getPerticulars($stateParams.installment_id);
     })
     .controller('FeeLandingParentCntrl', function ($ionicScrollDelegate, $rootScope, $ionicLoading, $scope, $state, $timeout, GLOBALS, userSessions, $ionicPopup, $http, ionicMaterialInk, $ionicSideMenuDelegate) {
-
+        $scope.LcStatus = $rootScope.lcStatus;
         $scope.$on("$ionicView.beforeEnter", function (event, data) {
             $ionicLoading.show({
                 template: 'Loading...',
@@ -3249,6 +3253,17 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 });
             }
         });
+        $scope.openWebView = function (bodyId) {
+            console.log("about to open webview")
+            var paymentLink;
+            if(bodyId == 1) {
+                paymentLink = 'http://sspss.veza.co.in/fees/billing-page/';
+            } else if (bodyId == 2) {
+                paymentLink = 'http://sspss.veza.co.in/fees/billing-page/gems';
+            }
+            window.open(paymentLink, '_blank', 'location=no');
+            return true;
+        }
         $scope.bodyId = userSessions.userSession.bodyId;
         $scope.detail = function (id) {
             $state.go('app.feeDetail', { installment_id: id });

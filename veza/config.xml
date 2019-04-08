@@ -70,5 +70,11 @@
     <allow-navigation href="http://192.168.2.20:8104" />
     <allow-navigation href="http://192.168.2.11:8100" />
     <plugin name="com-sarriaroman-photoviewer" spec="~1.1.18" />
+    <allow-intent href="http://*/*" launch-external="yes" />
+    <allow-intent href="https://*/*" launch-external="yes" />
+    <allow-intent href="tel:*" launch-external="yes" />
+    <allow-intent href="sms:*" launch-external="yes" />
+    <allow-intent href="mailto:*" launch-external="yes" />
+    <allow-intent href="geo:*" launch-external="yes" />
     <engine name="android" spec="^6.4.0" />
 </widget>

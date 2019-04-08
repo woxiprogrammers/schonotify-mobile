@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:amazon="http://schemas.android.com/apk/lib/com.amazon.device.ads" xmlns:rim="http://www.blackberry.com/ns/widgets" id="phonegap-plugin-push" version="1.10.7">
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:amazon="http://schemas.android.com/apk/lib/com.amazon.device.ads" xmlns:rim="http://www.blackberry.com/ns/widgets" id="phonegap-plugin-push" version="1.11.1">
   <name>PushPlugin</name>
-  <description>
-		This plugin allows your application to receive push notifications on Android, iOS and Windows devices.
-    Android uses Google Cloud Messaging.
-    iOS uses Apple APNS Notifications.
-    Windows uses Microsoft WNS Notifications.
-	</description>
+  <description>		This plugin allows your application to receive push notifications on Android, iOS and Windows devices.    Android uses Google Cloud Messaging.    iOS uses Apple APNS Notifications.    Windows uses Microsoft WNS Notifications.	</description>
   <license>MIT</license>
   <js-module src="www/push.js" name="PushNotification">
     <clobbers target="PushNotification"/>
@@ -60,8 +55,8 @@
       <service android:name="com.adobe.phonegap.push.RegistrationIntentService" android:exported="false"/>
     </config-file>
     <framework src="push.gradle" custom="true" type="gradleReference"/>
-    <framework src="com.android.support:support-v13:23+"/>
-    <framework src="com.google.android.gms:play-services-gcm:12+"/>
+    <framework src="com.android.support:support-v13:24+"/>
+    <framework src="com.google.android.gms:play-services-gcm:15+"/>
     <framework src="me.leolin:ShortcutBadger:1.1.14@aar"/>
     <source-file src="src/android/com/adobe/phonegap/push/GCMIntentService.java" target-dir="src/com/adobe/phonegap/push/"/>
     <source-file src="src/android/com/adobe/phonegap/push/PushConstants.java" target-dir="src/com/adobe/phonegap/push/"/>
