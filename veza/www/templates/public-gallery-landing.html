@@ -1,27 +1,9 @@
-<div class="row padding-0">
-    <div class="tabs-striped tabs-color-positive tabs-top">
-        <div class="tabs tab-align-inner">
-            <a class="tab-item margin-top-0">
-                <i class="icon ion-android-menu slide-button" ng-click="toggleLeftSideMenu()"></i>
-            </a>
-            <a class="tab-item margin-top-10" ui-sref="app.notification">
-                <i class="icon ion-notify"></i>
-            </a>
-            <a class="tab-item margin-top-10" ui-sref="app.dashboard">
-                <i class="icon ion-homie"></i>
-            </a>
-            <a class="tab-item margin-top-10" ui-sref="app.message">
-                <i class="icon ion-message"><span class="badge badge-assertive"></span></i>
-            </a>
-        </div>
-    </div>
-</div>
-  <div class="bar bar-subheader bar-assertive" >
+  <div class="bar bar-header bar-assertive" >
     <div class="col-10"  ng-click="myGoBack()" style="padding-top:2%">
         <button class="button-clear">
             <i class="ion-arrow-left-c button-back-white"></i>
         </button>
-        <h1 class="title">{{folderName}}</h1>
+        <h1 class="title" style="font-size:5vw;">{{folderName}}</h1>
     </div>
   </div>
   <ion-content style="margin-top:15%; padding:0% 1% 0% 1%" >

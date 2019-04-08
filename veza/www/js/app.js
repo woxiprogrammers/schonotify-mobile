@@ -71,6 +71,39 @@ angular.module('starter', ['ionic', 'ionic.cloud', 'starter.controllers', 'ngCor
                 controller: 'tokencheckCtr'
             })
 
+            .state('selectschool', {
+                url: '/publicselectschool',
+                templateUrl: 'templates/select-school.html',
+                controller: 'SelectSchoolCtr'
+            })
+
+            .state('publicDashboard', {
+                url: '/publicDashboard',
+                templateUrl: 'templates/public-dashboard.html',
+                controller: 'PublicDashboardCtr'
+            })
+
+            .state('publicEvents', {
+                url: '/publicevents',
+                templateUrl: 'templates/public-event.html',
+                controller: 'PublicEventCtr'
+            })
+
+            .state('publicGallary', {
+                url: '/publicGallary',
+                templateUrl: 'templates/public-gallery.html',
+                controller: 'PublicGallaryCtrl'
+            })
+
+            .state('publicGallaryLanding', {
+                url: '/publicGallaryLanding',
+                params:{
+                    'obj':null
+                },
+                templateUrl: 'templates/public-gallery-landing.html',
+                controller: 'PublicGallaryLandingCtrl'
+            })
+
             .state('app', {
                 url: '/app',
                 templateUrl: 'templates/menu.html',
@@ -253,15 +286,7 @@ angular.module('starter', ['ionic', 'ionic.cloud', 'starter.controllers', 'ngCor
                     }
                 }
             })
-            .state('app.achievementpublic', {
-                url: '/sharedAchievementPublic',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/achievement-public.html',
-                        controller: 'app.PublicAchievementCtrl'
-                    }
-                }
-            })
+           
 
             .state('app.achievementDetailParent', {
                 url: '/sharedAchievementParent',
@@ -485,18 +510,7 @@ angular.module('starter', ['ionic', 'ionic.cloud', 'starter.controllers', 'ngCor
                 }
 
             })
-            .state('app.eventstatuspublic', {
-                url: '/eventstatuspublic',
-                params: {
-                    obj: null
-                },
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/event-status-public.html',
-                        controller: 'EventStatusPublicCtrl'
-                    }
-                }
-            })
+            
             .state('app.editevent', {
                 url: '/editevent',
                 views: {
@@ -617,18 +631,7 @@ angular.module('starter', ['ionic', 'ionic.cloud', 'starter.controllers', 'ngCor
                     }
                 }
             })
-            .state('app.achievementdetailspublic', {
-                url: '/achievementdetailspublic',
-                views: {
-                    'menuContent': {
-                        templateUrl: 'templates/achievement-description-public.html',
-                        controller: 'DetailPagePublicCtrl'
-                    },
-                    'fabContent': {
-                        template: ''
-                    }
-                }
-            })
+            
             .state('app.notificationdetails', {
                 url: '/notificationdetails',
                 views: {
@@ -809,6 +812,39 @@ angular.module('starter', ['ionic', 'ionic.cloud', 'starter.controllers', 'ngCor
                     'menuContent': {
                         templateUrl: 'templates/result-view.html',
                         controller: 'ResultViewCntrl'
+                    },
+                    'fabContent': {
+                        template: ''
+                    }
+                }
+            })
+            .state('app.eventstatuspublic', {
+                url: '/eventstatuspublic',
+                params: {
+                    obj: null
+                },
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/public-event-status.html',
+                        controller: 'EventStatusPublicCtrl'
+                    }
+                }
+            })
+            .state('app.achievementpublic', {
+                url: '/sharedAchievementPublic',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/public-noticeboard.html',
+                        controller: 'app.PublicNoticeboard'
+                    }
+                }
+            })
+            .state('app.achievementdetailspublic', {
+                url: '/achievementdetailspublic',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/public-achievement-description.html',
+                        controller: 'PublicAchievementDetail'
                     },
                     'fabContent': {
                         template: ''
