@@ -4,7 +4,6 @@
   "description": "veza: An Ionic project",
   "dependencies": {
     "bluebird": "~3.5.0",
-    "com-sarriaroman-photoviewer": "^1.1.18",
     "cordova-android": "^6.4.0",
     "cordova-plugin-android-permissions": "^1.0.0",
     "cordova-plugin-console": "^1.1.0",
@@ -23,7 +22,8 @@
     "ionic": "^2.1.0",
     "ionic-datetime-picker": "^1.1.1",
     "ionic-plugin-keyboard": "^2.2.1",
-    "phonegap-plugin-push": "^1.11.1"
+    "phonegap-plugin-push": "^1.11.1",
+    "com-sarriaroman-photoviewer": "~1.1.18"
   },
   "devDependencies": {
     "@ionic/cli-plugin-gulp": "1.0.1",
@@ -54,9 +54,9 @@
       "phonegap-plugin-push": {
         "SENDER_ID": "750487257563"
       },
-      "com-sarriaroman-photoviewer": {},
       "cordova-plugin-file-transfer": {},
-      "cordova-plugin-android-permissions": {}
+      "cordova-plugin-android-permissions": {},
+      "com-sarriaroman-photoviewer": {}
     },
     "platforms": [
       "android"

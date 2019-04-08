@@ -6,7 +6,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
     .constant('GLOBALS', {
         baseUrl:'http://sspss.veza.co.in/api/v1/',
         baseUrlImage: 'http://sspss.veza.co.in/',
-        versionCode: 1.8,
+        versionCode: 1.9,
         // baseUrl: 'http://sspss_test.woxi.co.in//api/v1/',
         // baseUrlImage: 'http://sspss_test.woxi.co.in/'
     })
@@ -630,6 +630,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
     })
 
     .controller('DashboardCtrl', function ($rootScope, $ionicPlatform, $ionicPush, $scope, $state, $ionicLoading, $ionicPopup, $timeout, GLOBALS, $http, ionicMaterialInk, ionicMaterialMotion, $ionicSideMenuDelegate, $cordovaSQLite, userSessions, userData) {
+        $scope.appVersion = GLOBALS.versionCode;
         $scope.$on("$ionicView.beforeEnter", function (event, data) {
             $ionicLoading.show({
                 template: 'Loading...',
