@@ -4,11 +4,11 @@
 var db = null;
 angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-material', 'ngCordova'])
     .constant('GLOBALS', {
-        baseUrl:'http://sspss.veza.co.in/api/v1/',
-        baseUrlImage: 'http://sspss.veza.co.in/',
+        // baseUrl:'http://sspss.veza.co.in/api/v1/',
+        // baseUrlImage: 'http://sspss.veza.co.in/',
         versionCode: 1.8,
-        // baseUrl: 'http://sspss_test.woxi.co.in//api/v1/',
-        // baseUrlImage: 'http://sspss_test.woxi.co.in/'
+        baseUrl: 'http://sspss_test.woxi.co.in//api/v1/',
+        baseUrlImage: 'http://sspss_test.woxi.co.in/'
     })
 
     .factory('Data', function () {
@@ -376,10 +376,10 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
 
     .controller('tokencheckCtr', function ($rootScope, $window, $ionicPopup, userData, $http, GLOBALS, $state, $scope, $stateParams, userSessions, $timeout, ionicMaterialInk, ionicMaterialMotion) {
         var url = GLOBALS.baseUrl + "user/minimum-supported-version";
-        $http.get(url).success(function(response){
+        $http.get(url).success(function (response) {
             $scope.data = response.data;
             $rootScope.minimumAppVersion = $scope.data.minimum_app_version;
-            if(GLOBALS.versionCode >= $scope.minimumAppVersion){
+            if (GLOBALS.versionCode >= $scope.minimumAppVersion) {
                 $scope.versionCode
                 $scope.tokenData = localStorage.getItem('appToken');
                 $scope.sessionUserRole = localStorage.getItem('sessionUserRole');
@@ -413,7 +413,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                 $state.go('login');
                 $scope.showAlert();
             }
-        }).error(function(response){
+        }).error(function (response) {
             console.log(response)
         })
         $scope.showAlert = function () {
@@ -537,68 +537,68 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         };
         $scope.data = [];
         ionicMaterialInk.displayEffect();
-        
+
         $scope.submit = function (email, password) {
-            if(GLOBALS.versionCode >= $scope.minimumAppVersion){
+            if (GLOBALS.versionCode >= $scope.minimumAppVersion) {
                 $scope.sessionId = '';
-            $scope.sessionToken = '';
-            $scope.sessionUserRole = '';
-            var url = GLOBALS.baseUrl + "user/auth";
-            $http.post(url, { email: email, password: password }).success(function (res) {
-                $scope.Switchstudentlist = (res['data']['Students']);
-                $scope.data.message = res['message'];
+                $scope.sessionToken = '';
+                $scope.sessionUserRole = '';
+                var url = GLOBALS.baseUrl + "user/auth";
+                $http.post(url, { email: email, password: password }).success(function (res) {
+                    $scope.Switchstudentlist = (res['data']['Students']);
+                    $scope.data.message = res['message'];
 
-                // FCM Token is generated here
-                $scope.register = function () {
-                    window.FirebasePlugin.getToken(function (token) {
-                        // save this server-side and use it to push notifications to this device
-                        $rootScope.pushToken = token;
-                        $scope.saveToken();
+                    // FCM Token is generated here
+                    $scope.register = function () {
+                        window.FirebasePlugin.getToken(function (token) {
+                            // save this server-side and use it to push notifications to this device
+                            $rootScope.pushToken = token;
+                            $scope.saveToken();
 
-                    }, function (error) {
-                        console.error(error);
-                    });
-                }
-
-                $scope.saveToken = function () {
-                    var url = GLOBALS.baseUrl + "user/save-push?token=" + res['data']['users']['token'];
-                    $http.post(url, { pushToken: $rootScope.pushToken, user_id: res['data']['Badge_count']['user_id'] }).success(function (response) {
-                    }).error(function (err) {
-                        console.log(err)
-                    });
-                }
-                if (res['status'] == 200) {
-                    // $scope.register();
-
-                    $scope.studentlist = (res.data['users']);
-                    localStorage.setItem('appToken', JSON.stringify($scope.studentlist['token']));
-                    $scope.userDataArray = userData.setUserData(res['data']['users']);
-                    localStorage.setItem('userDataArray', JSON.stringify(res['data']['users']));
-                    $scope.sessionToken = res['data']['users']['token'];
-                    $scope.sessionUserRole = res['data']['users']['role_type'];
-                    localStorage.setItem('sessionUserRole', JSON.stringify($scope.sessionUserRole));
-                    $scope.sessionId = res['data']['Badge_count']['user_id'];
-                    localStorage.setItem('sessionId', JSON.stringify($scope.sessionId));
-                    $scope.sessionBodyId = res['data']['Badge_count']['body_id'];
-                    localStorage.setItem('sessionBodyId', JSON.stringify($scope.sessionBodyId));
-                    $scope.messageCount = res['data']['Badge_count']['message_count'];
-                    var userSet = false;
-                    var idSet = false;
-                    userSet = userSessions.setSession($scope.sessionToken, $scope.sessionUserRole, $scope.messageCount);
-                    idSet = userSessions.setUserId($scope.sessionId, $scope.sessionBodyId);
-                    if (userSet == true && idSet == true) {
-                        $state.go('app.dashboard');
+                        }, function (error) {
+                            console.error(error);
+                        });
                     }
-                }
-            })
-                .error(function (err) {
-                    console.log(err);
-                    $scope.error = err['message'];
-                });
+
+                    $scope.saveToken = function () {
+                        var url = GLOBALS.baseUrl + "user/save-push?token=" + res['data']['users']['token'];
+                        $http.post(url, { pushToken: $rootScope.pushToken, user_id: res['data']['Badge_count']['user_id'] }).success(function (response) {
+                        }).error(function (err) {
+                            console.log(err)
+                        });
+                    }
+                    if (res['status'] == 200) {
+                        // $scope.register();
+
+                        $scope.studentlist = (res.data['users']);
+                        localStorage.setItem('appToken', JSON.stringify($scope.studentlist['token']));
+                        $scope.userDataArray = userData.setUserData(res['data']['users']);
+                        localStorage.setItem('userDataArray', JSON.stringify(res['data']['users']));
+                        $scope.sessionToken = res['data']['users']['token'];
+                        $scope.sessionUserRole = res['data']['users']['role_type'];
+                        localStorage.setItem('sessionUserRole', JSON.stringify($scope.sessionUserRole));
+                        $scope.sessionId = res['data']['Badge_count']['user_id'];
+                        localStorage.setItem('sessionId', JSON.stringify($scope.sessionId));
+                        $scope.sessionBodyId = res['data']['Badge_count']['body_id'];
+                        localStorage.setItem('sessionBodyId', JSON.stringify($scope.sessionBodyId));
+                        $scope.messageCount = res['data']['Badge_count']['message_count'];
+                        var userSet = false;
+                        var idSet = false;
+                        userSet = userSessions.setSession($scope.sessionToken, $scope.sessionUserRole, $scope.messageCount);
+                        idSet = userSessions.setUserId($scope.sessionId, $scope.sessionBodyId);
+                        if (userSet == true && idSet == true) {
+                            $state.go('app.dashboard');
+                        }
+                    }
+                })
+                    .error(function (err) {
+                        console.log(err);
+                        $scope.error = err['message'];
+                    });
             } else {
                 $scope.showUpdateAppAlert()
             }
-           
+
         }
 
         $scope.showUpdateAppAlert = function () {
@@ -2927,7 +2927,19 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         };
     })
 
-    .controller('MarkAttendanceCtrl', function ($ionicLoading, $ionicHistory, $scope, $state, $timeout, $http, $ionicPopup, userSessions, GLOBALS, $filter, ionicMaterialInk, $log, $ionicSideMenuDelegate) {
+    .controller('MarkAttendanceCtrl', function (
+        $ionicLoading,
+        $ionicHistory,
+        $scope,
+        $state,
+        $timeout,
+        $http,
+        $ionicPopup,
+        userSessions,
+        GLOBALS,
+        $filter,
+        ionicMaterialInk,
+        $ionicSideMenuDelegate) {
         $scope.$parent.clearFabs();
         $scope.isExpanded = false;
         $scope.$parent.setExpanded(false);
@@ -2939,7 +2951,9 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         //Side-Menu
         $ionicSideMenuDelegate.canDragContent(true);
         $scope.gotIt = 0;
-        $scope.absentList = [];
+        $scope.absentList;
+        $scope.studentList = [];
+        $scope.presentStudentList = [];
         $scope.currentDate = new Date();
         $scope.currentBatch = '';
         $scope.currentClass = '';
@@ -2963,6 +2977,14 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
                     $scope.currentBatch = response['data']['batchName'];
                     $scope.currentClass = response['data']['className'];
                     $scope.currentDiv = response['data']['divisionName'];
+                    
+                    $scope.listLen = $scope.studentList.length;
+                    console.log("length of student: " + $scope.listLen);
+                    for (var i = 0; i < $scope.listLen; i++) {
+                        $scope.presentStudentList.push($scope.studentList[i].id)
+                    }
+                    
+
                 }
                 else {
                     $scope.msg = response['message'];
@@ -2985,14 +3007,27 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
         $scope.getStudentList();
 
         $scope.toggleCheck = function (elementData, studentId) {
+            console.log("list of present student ID");
+            console.log($scope.presentStudentList);
             var idx = $scope.absentList.indexOf(studentId);
-            if (idx > -1) {
-                $scope.absentList.splice(idx, 1);
+            var absentId = $scope.absentList[idx]
+            var idy = $scope.presentStudentList.indexOf(studentId);
+            var presntId =  $scope.presentStudentList[idy]
+
+            console.log("Absent Id: "+ absentId + " Present ID: "+ presntId);
+            
+            if (absentId === presntId) {
+               //$scope.presentStudentList.splice(idx, 1);
+               //$scope.presentStudentList.pop(studentId);
+                $scope.presentStudentList.pop(studentId);
             }
             // is newly selected
             else {
+                $scope.presentStudentList.pop(studentId);
                 $scope.absentList.push(studentId);
             }
+            console.log("list after removal");
+            console.log($scope.presentStudentList);
             var changeClass = angular.element(document.querySelector('#' + elementData.target.id));
 
             if (elementData.target.classList[2] == "mark-0" || elementData.target.classList[1] == "mark-0" || elementData.target.classList[3] == "mark-0" || elementData.target.classList[0] == "mark-0") {
@@ -3009,7 +3044,7 @@ angular.module('starter.controllers', ['naif.base64', 'ionic.cloud', 'ionic-mate
             var url = GLOBALS.baseUrl + "user/mark-attendance?token=" + userSessions.userSession.userToken;
             console.log($scope.absentList);
             $ionicLoading.show();
-            $http.post(url, { date: $scope.setDate, student_id: $scope.absentList }).success(function (response) {
+            $http.post(url, { date: $scope.setDate, student_id: $scope.presentStudentList }).success(function (response) {
                 console.log(response);
                 $ionicLoading.hide();
                 if (response['status'] == 200) {
